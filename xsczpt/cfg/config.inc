@@ -31,8 +31,8 @@ define('DB_DATABASE', 'mysql');
 define('DB_HOST', '');   
 define('DB_PORT', 3306);  
 define('DB_USER', 'root');	
-define('DB_PWD', '');	
-define('DB_NAME', 'xsczpt');	
+define('DB_PWD', '123456');	
+define('DB_NAME', 'xsc');	
 define('DB_CHARSET', 'utf8');
 define('DATA_PRE', 'a');	
   
