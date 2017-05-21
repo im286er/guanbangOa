@@ -4026,37 +4026,46 @@ switch($qname){
 //		$T->Set("pid",$pid);
 		break;
 	case 'major_cate_front':
-			$type = $_GET['type'];
-			$id = $_GET['id'];
+	    if($_GET!=""){
+	    	//var_dump($_GET);die;
+            $type = isset($_GET['type'])?$_GET['type']:1;//echo "$type";die;
+            // 选出第一个id
+            $id =$pd->fetchOne(array('field'=>'id','table'=>'major_cate','where'=>"fid=".$type));
+            $cur_id = isset($_GET['id'])?$_GET['id']:$id;
+            // 前台遍历
+            echo "$type"."===="."$cur_id";
+            $T->SetBlock("level2","select * from major_cate where fid = {$type} ");
 
-		// 选出等级为一得所有主科目
-		// 等级为一的第一条科目
-			$sql = "select * from  major_cate where level=1  limit 1";
-			$data = $pd->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-			$cur_11_id = $data['0']['id'];//等级为一的第一个科目id
-			//var_dump($id);
-		//等级二所有
-			$T->SetBlock("level2","select * from major_cate where fid = {$cur_11_id} ");
-
-
-		//等级二第一条
-			$sql = "select * from  major_cate where fid = {$cur_11_id} limit 1";
-			$data = $pd->query($sql)->fetchAll(PDO::FETCH_ASSOC);
-			$cur_21_id = $data['0']['id'];//等级为二的第一个科目id	
-			$cur_21_name = $data['0']['name'];
-			$cur_21_pic = $data['0']['pic'];
-
-			$T->set("cur_21_id",$cur_21_id);	
-			$T->set("cur_21_name",$cur_21_name);	
-			$T->set("cur_21_pic",$cur_21_pic);	
-		//等级三所有 等级为四所有 借书
-			$T->SetBlock2("level3","select name as level3name,id as level3id from major_cate where fid = {$cur_21_id}",
+            $T->SetBlock2("level3","select name as level3name,id as level3id from major_cate where fid = {$cur_id}",
 			array(array("block"=>"level4","pid"=>"level3id","sql"=>"select id as level4id,name as level4name from major_cate where fid =?")));
 
+        }
 
-			// $T->SetBlock2("list","select * from demo_tree where pid=0 order by id",
-			// array(array("block"=>"rp","pid"=>"id","sql"=>"select * from demo_tree where pid=?")));
-		//点击时传入
+
+		// // 选出等级为一得所有主科目
+		// // 等级为一的第一条科目
+		// 	$sql = "select * from  major_cate where level=1  limit 1";
+		// 	$data = $pd->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+		// 	$cur_11_id = $data['0']['id'];//等级为一的第一个科目id
+		// 	//var_dump($id);
+		// //等级二所有
+		// 	$T->SetBlock("level2","select * from major_cate where fid = {$cur_11_id} ");
+
+
+		// //等级二第一条
+		// 	$sql = "select * from  major_cate where fid = {$cur_11_id} limit 1";
+		// 	$data = $pd->query($sql)->fetchAll(PDO::FETCH_ASSOC);
+		// 	$cur_21_id = $data['0']['id'];//等级为二的第一个科目id	
+		// 	$cur_21_name = $data['0']['name'];
+		// 	$cur_21_pic = $data['0']['pic'];
+
+		// 	$T->set("cur_21_id",$cur_21_id);	
+		// 	$T->set("cur_21_name",$cur_21_name);	
+		// 	$T->set("cur_21_pic",$cur_21_pic);	
+		// //等级三所有 等级为四所有 借书
+		// 	$T->SetBlock2("level3","select name as level3name,id as level3id from major_cate where fid = {$cur_21_id}",
+		// 	array(array("block"=>"level4","pid"=>"level3id","sql"=>"select id as level4id,name as level4name from major_cate where fid =?")));
+
 		break;
 
 
