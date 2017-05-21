@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{width:100%; margin:0; padding:0; font-size:12px;}
+.bg{  
+  background:url(../image/oa_top.png);  
+  filter:"progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod='scale')";  
+  -moz-background-size:100% 100%;  
+  background-size:100% 100%;  height:139px; 
+} 
+.oa_left{width:237px; background:url(../image/oa_left.png) repeat-y; min-height:450px; position:absolute;}
+.oa_right{margin-left:237px;}
+.oa_main{width:100%; margin:0; padding:0; height:100%;}
+.oa_index_topleft{float:left; width:20%; height:126px;}
+.oa_index_topmid{float:left; width:60%; height:126px;}
+.oa_index_topright{float:left; width:20%; height:126px;}
+.index_userpic{margin:25px 0px 5px 40px; height:80px; width:100%;}
+.index_userpic_left{float:left; height:80px; width:70px;}
+.index_userpic_right{float:left; height:80px; margin-left:5px;}
+.index_userpic-font{height:30px; line-height:30px;}
+.index_userpic-font span{ font-size:24px;}
+.oa_index_title{margin:25px 0px 5px 0px; text-align:center; font-size:4em; color:#ffffff;}
+.oa_index_topsetting{margin:45px 30px 5px 0px; float:right; height:25px; line-height:25px;}
+.oa_index_topsetting span{ font-size:18px; color:#ffffff;  display:block; float:left;}
+.stu-menu-hint{color:#D5D5D5; font-size:14px; height:30px; line-height:30px; }
+.stu-menu-hint-image{float:left; height:48px;}
+.stu-menu-hint-item{height:50px; line-height:50px; width:100%;}
+.stu-menu-hint-item span{display:block; font-size:14px; float:left; margin-left:4px;}
+.oa_clear{clear:both;}
+.stu-menu-index{margin-right:15px; margin-left:10px;}
+.stu-menu-item{height:30px; line-height:30px; width:100%; border-bottom:#EEEEEE solid 1px;}
+.stu-menu-item-image{float:left; height:30px; vertical-align:middle; display:block; padding-top:4px;}
+.stu-menu-item span{display:block; font-size:14px; float:left; margin-left:4px; line-height:30px; height:30px;}
+.stu-menu-item-right{float:right; width:16px; height:30px; vertical-align:middle; margin-right:10px; padding-top:4px;}
+.stu-menu-itemchild{height:30px; line-height:30px; border-bottom:#EEEEEE solid 1px; padding-left:18px;}
+.stu-menu-content{margin-left:10px; line-height:25px;}

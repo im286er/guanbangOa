@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>浦口区云悦读空间-首页</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="html/read/css/recommend/css.css" type="text/css" rel="Stylesheet">
+{meta}
+
+
+</head>
+<body class="bgf8">
+<div class="wrap" style="padding-bottom:20px;">
+{top}
+	<div class="clear"></div>
+	<div class="main">
+		{menu}
+	</div>
+	<div class="clear"></div>
+	<div class="main" style="margin-top:20px;">
+		<div class="rea_lists_menu">
+		<!-- START rea_lists_menu -->
+			<p><a href="./?t=recommend_lists&pid={pid}">{name}</a></p>
+			<ul>
+			<!-- START rp -->
+				<li><a href="./?t=recommend_list&pid={pid}&cid={id}">{name}</a></li>
+			<!-- END rp -->
+			</ul>
+		<!-- END rea_lists_menu -->
+		</div>
+		<!-- START rea_list -->
+		<div class="rea_lists">
+			<div class="rea_list">
+				<p>{name}</p>
+				<a href="./?t=recommend_list&pid={pid}&cid={id}" target="">更多</a>
+				<ul>
+					<!-- START rp -->
+					<li>
+						<a href="./?t=recommend_info&id={id}" target="" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+						<a href="./?t=recommend_info&id={id}" target="" class="bk_des">
+							<span title="{title}">{title}</span>
+							<span title="{author}">{author}</span>
+						</a>
+					</li>
+					<!-- END rp -->
+				</ul>
+			</div>
+		</div>
+		<!-- END rea_list -->
+	</div>
+</div>
+{foot}
+
+</body>
+</html>

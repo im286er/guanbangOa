@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<span class="floatright">
+				<script type="text/javascript">
+					document.write('<img src="images/add.gif" class="padding5"/><a href="./?t=skills_add">添加技能素质记录</a> | <img src="images/add.gif" class="padding5"/><a href="./?t=zhsz_import">批量导入技能素质记录</a>');
+				</script> 
+			</span>
+			<label class="current"><a href="javascript:void(0);">技能素质记录列表</a></label> 
+		</div>
+		<div class="boxtitle2">
+			<form action="./?t=skills_manage" method="post">
+				<span>
+					<select name="tyear" id="tyear">
+					
+					</select>
+					<script type="text/javascript">
+					  //if({isMaster1}!=1){
+						document.write("<select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select> ");
+					 // }
+					</script> 
+					姓名：<input type="text" name="truename" id="truename" value="" size="15" />
+				</span> 
+				<input type="submit" id="choose" name="choose" value="技能素质记录筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="8%" class="tabtd">学期</td>
+					 <td width="5%" class="tabtd">姓名</td>
+					 <td width="6%" class="tabtd">班级</td>
+					{str_menu}
+					
+				</tr>
+				{str_total}
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+        selectShowDataNoH1("#tyear",JSON.parse(d),"id","term_name","year"); $("#tyear").prepend("<option value='0' selected>请选择学期</option>");     
+		$('#tyear').val('{tyear}');
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$("#truename").val("{truename}");
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+//删除体质记录
+function delSkill(uid,tid){
+	if(confirm("此操作会删除该学生全部技能素质记录，确认删除吗?")){
+		$.post("./srv/sdo.php", {tpl:"delSkill","uid":uid,"tid":tid}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				location.href = location.href;
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

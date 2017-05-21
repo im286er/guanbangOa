@@ -1,0 +1,14 @@
+各个模块的存储以模块名(或者缩写)命名后跟日期.
+
+class 班级
+group-grp 群组
+class-cls 班级
+zone-z 个人空间上传的文件
+
+
+
+
+
+O 其它的文件
+
+三级目录分为 img,vod,doc

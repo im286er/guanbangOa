@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间—{name}</title>      
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+{cssjs}
+<style type="text/css">
+p{margin:0 !important;padding:0;}
+body{height:692px;width:973px;background:url('imgs/growfm.jpg') no-repeat center center;}
+</style>
+<script type="text/javascript">
+var num=1;
+</script>
+</head>
+<body>
+	<div style="font-size:30px;font-weight:bold;">
+		<div class="rightgrow">
+			<div class="growhead">
+				{truename}老师五年主动发展规划
+			</div>
+			<div class="growtitle">
+				<div class="sqnumber">01</div><div class="growlist"><a href="./?t=grow_my&uid={uid2}&s={s}">基本情况</a></div>
+			</div>
+			<!-- START list -->    
+			<div class="growtitle">
+				<div class="sqnumber">0<script>num++;document.write(num);</script></div><div class="growlist"><a href="./?t=grow_info&uid={uid}&s={s}&type={id}">{name}</a></div>
+			</div>
+			<!-- END list -->    
+		</div>
+	</div>
+</body>
+</html>

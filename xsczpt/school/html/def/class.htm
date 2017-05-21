@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>班级主页-{name}-{gtitle}</title>
+<meta charset="gbk">   
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+<link rel="stylesheet" type="text/css" href="html/def/css/class_index.css"> 
+<script src="/ppf/js/jquery-1.min.js"></script>
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>   
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/cookies.min.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+<script src="/js/comm_login_bt.js" type="text/javascript"></script>
+<!--<script src="js/local.js" type="text/javascript"></script>-->
+</head> 
+<body>
+{top}   
+<div class="container class_index_main">
+  {head}
+  <!--内容开始 第一屏-->
+  <div class="row">
+   <div class="col-sm-4 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>今日学生</strong><span><a href="#"></a></span></dt>
+        <dd class="class_height6">
+          <ul class="class_index_box_list3">
+          <!-- START stu -->          
+          <li><a href="/zone/?id={id}" target=_blank><img src="/upd/face/{id}.jpg " width="40"  onerror="this.src='/error/face.jpg';"></a>
+          <h3>{truename}</a><small>{pre}</small></h3>
+         </li>
+          <!-- END stu -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-5 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>推荐班级</strong><span><a href="./?t=class_list&s={s}&c=1" >更多》</a></span></dt>
+        <dd>
+          <ul class="class_index_box_list">
+<!-- START cls1 -->          
+<li><img src="/upds/upds/class/logo/{id}.jpg" width="70" onerror="this.src='/error/logo.jpg';">
+<h3><a href="/class?c={id}" target=_blank>{name}</a></h3>
+<p>{slogan}<a href="#"></a></p></li>
+<!-- END cls1 -->  
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-3 class_width2 class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>最新加入</strong><span><a href="./?t=class_list&s={s}&c=2" >更多》</a></span></dt>
+        <dd class="class_height5">
+          <ul class="class_index_box_list2">
+          <!-- START cls2 -->      
+          <li><a href="/class?c={id}" target=_blank>{name}</a></li>
+          <!-- END cls2 -->   
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <!--第二屏-->
+  <div class="row">
+    <div class="col-sm-4 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>今日教师</strong><span><a href="#"></a></span></dt>
+        <dd class="class_height4">
+          <ul class="class_index_box_list3">
+          <!-- START tech -->          
+          <li><a href="/zone/?id={id}" target=_blank><img src="/upd/face/{id}.jpg " width="40"  onerror="this.src='/error/face.jpg';"></a>
+          <h3><a style="float:left;border:none;padding:0;" href="/zone/?id={id}" target=_blank>{truename}</a>
+           <small>{pre}</small></h3>
+         </li>
+          <!-- END tech -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-5 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box" style="height:417px;">
+        <dt><strong>优秀班级</strong><span><a href="./?t=class_list&s={s}&c=3" >更多》</a></span></dt>
+        <dd>
+          <ul class="class_index_box_list">            
+          <!-- START cls3 -->           
+          <li class="class_nobd"><img src="/upds/class/logo/{id}.jpg" width="90" height="70" onerror="this.src='/error/logo.jpg';">
+          <h3><a href="/class?c={id}" target=_blank>{name}</a></h3>
+          <p>{slogan}<a href="#"></a></p>
+          </li>
+          <!-- END cls3 -->  
+          </ul>
+        </dd>
+      </dl>      
+    </div>
+    <div class="col-sm-3 class_width2 class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>班级荣誉</strong><span></span></dt>
+        <dd class="class_height3">
+          <ul class="class_index_box_list2">             
+          <!-- START new1 -->           
+          <li><a href="/class?t=art&c={cid}&id={id}" target=_blank>{name}</a></li>
+          <!-- END new1 --> 
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <!--第二个banner-->
+  <div class="row class_margin_top20">
+    <div class="col-sm-12"><img src="html/def/img/class_banner.jpg" /> </div>
+  </div>
+  <!--第三屏-->
+  <div class="row">
+    <div class="col-sm-4 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>热门</strong><span><a href="#" style="display:none;">更多》</a></span></dt>
+        <dd>
+          <div class="class_index_box_top">
+             <!-- START cls_pic1 -->   
+            <img src="/upds/class/logo/{id}.jpg"  onerror="this.src='/error/logo.jpg';" width="120">
+                 <h3><a href="/class?c={id}"  target=_blank>{name}</a></h3>
+            <p>{wishes}</p>
+            <!-- END cls_pic1 -->
+          </div>
+          <ul class="class_index_box_list4">
+            <!-- START cls5 -->           
+            <li><a href="/class?c={id}" target=_blank>{name}</a></li>
+            <!-- END cls5 -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-5 class_width class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>活跃</strong><span><a href="#" style="display:none;">更多》</a></span></dt>
+        <dd>
+          <div class="class_index_box_top"> 
+           <!-- START cls_pic2 -->   
+            <img src="/upds/class/logo/{id}.jpg"  onerror="this.src='/error/logo.jpg';">
+            <h3><a href="/class?c={id}"  target=_blank>{name}</a></h3>
+            <p>{wishes}</p>
+            <!-- END cls_pic2 -->
+          </div>
+          <ul class="class_index_box_list4">
+            <!-- START cls6 -->           
+            <li><a href="/class?c={id}" target=_blank>{name}</a></li>
+            <!-- END cls6 -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-3 class_width2 class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>班级日记</strong><span></span></dt>
+        <dd class="class_height2">
+          <ul class="class_index_box_list2">
+            <!-- START diary -->           
+           <li><a href="/class?t=art&id={id}&c={cid}" target=_blank>{name}</a></li> 
+            <!-- END diary -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  
+  <!--第三屏-->
+  <div class="row">
+    <div class="col-sm-9 class_width3 class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>班级相册</strong><span></span></dt>
+        <dd>
+          <ul class="class_index_box_list5">
+            <!-- START album -->
+            <li><a href="/class?t=cls_photo&c={cid}&id={id}" target=_blank><img src="/upds/class/album/{cid}/{id}/t_{logo}" width="191" height="143" onerror="this.src='/error/logo.jpg';"></a>
+              <h3>{name}</h3>
+              <p>{slogan}</p>
+            </li>
+            <!-- END album -->
+            
+          </ul>
+        </dd>
+      </dl>
+    </div>
+    <div class="col-sm-3 class_width2 class_float_left class_margin_top20">
+      <dl class="class_index_box">
+        <dt><strong>班级动态</strong><span></span></dt>
+        <dd class="class_height">
+          <ul class="class_index_box_list6">
+            <!-- START new2 --> 
+              <li><a href="/class?t=art&id={id}&c={cid}" target=_blank>{name}</a></li>          
+            <!-- END new2 -->
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </div>
+  <!--结束--> 
+  
+</div>
+
+<!--footer-->
+{foot}
+<script>
+
+$(document).ready(function(){
+
+	var num = $('.class_flash_pic li').length         //总数
+	var width = $('.class_flash_pic li').width();     //单个宽度
+	var index = 0;                                    //默认0
+	
+	
+	//设定ul的宽度
+	$('.class_flash_pic').width(width*num);
+	var sum = $('.class_flash_pic').width();
+	
+	//按钮事件
+	$('.class_flash_btn li').click(function(){
+		var i = $('.class_flash_btn li').index(this);
+		index = i ;
+	    show(i);
+	})
+	
+	//自动移动
+	var automove = setInterval(func,3000);
+	function func(){
+	    show(index);
+		index++;
+		if(index == num){index = 0}	
+	}
+	
+	//移动的效果
+	function show(index){
+		var move_width = -index * width ;
+		$('.class_flash_pic').animate({'left':move_width},500);
+		$('.class_flash_btn li').eq(index).addClass('on').siblings().removeClass('on');
+	}
+});
+</script>
+</body>
+</html>

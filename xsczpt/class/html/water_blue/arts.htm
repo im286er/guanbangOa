@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级博客-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('待审核','已审核','注销中'); 
+</script>
+</head>
+<body class="cl_bg">
+{top}
+      <!--头部文件-->
+      <div class="logo_out w1" style="background:url(/upds/class/logo/{c}_1000.jpg);">
+      	<div class="logo">
+      		<img src="/upds/class/logo/{c}.jpg" onerror="this.src='/error/logo.jpg';" width="100" height="100"/>
+      	</div>
+      	<div class="text_logo">
+      		<p>{name} </p>
+      		<span>{slogan} 寄语：{wishes}</span>
+      	</div>
+      </div>
+      <div class="w1 nav">
+      	<div class="main">
+      		<div class="menu">
+      			<ul>                                
+      				<li><a href="./?c={c}" target="">首页</a></li>
+              <li><a href="./?t=cls_album&c={c}" target="">相册</a></li>
+              <!-- START cate -->
+              <li><a href="./?t=arts&cc={id}&c={c}">{name}</a></li>     
+              <!-- END cate -->
+      				<li><a href="./?t=members&c={c}" target="">成员</a></li>
+      				<li><a href="./man/?c={c}" target=_blank>管理</a></li>
+      			</ul>
+      		</div>
+      		<div class="menu_r">
+      			<ul> 
+      				<li><a href="/subject?s={s}" target="">学科</a></li>
+      				<li><a href="/school?s={s}" target="">学校</a></li>
+      			</ul>
+      		</div>
+      	</div>
+      </div>
+
+<div class="w1">
+	<div class="main" style="padding:0 20px 0;">
+  <div class="page-header">
+   <h3 style="height: 36px;">{cname} <small></small> 
+   <a href="./?t=art_edt&c={c}" class="btn btn-default pull-right" >+发布</a> </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>标题</th> 
+<th>发布人</th>      
+<th>时间</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="./?t=art&c={c}&id={id}" target=_blank>{name}</a></td> 
+<td><code>{truename}</code></td> 
+<td><cite><script>document.write(utctime("{timestamp}"));</script></cite></td>       
+  
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div> 
+</div>
+
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+  /* $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });  
+  */ 
+});
+ 
+ 
+</script>     

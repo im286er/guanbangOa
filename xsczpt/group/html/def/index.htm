@@ -1,0 +1,295 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-{gtitle}</title>
+{cssjs}
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script> 
+<script charset="utf-8" src="/widget/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/widget/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="js/docs.min.css" media="all">
+ <style type="text/css">
+/*  body{
+ 	background:url('imgs/bg7.jpg') no-repeat top center fixed;
+ } */
+
+ a{
+	color:#31708f;
+	cursor:pointer;
+ }
+.panel-body{
+	padding:10px 15px 0px 10px;
+}
+.container .navbar a:hover{
+	background-color: #333333 !important;
+	border-color: #204d74 !important;
+}
+.img-circle{
+	margin-right:10px;
+}
+.img-circle:hover{
+	-webkit-animation: imgRotate 2s alternate 1; 
+}
+.affix{
+top:0 !important;
+width:350px;
+}
+.rep{
+font-size: 90%;
+color: #c7254e;
+background-color: #f9f2f4;
+border-radius: 4px;
+}
+.bs-callout{
+	padding:5px !important;
+	margin:0 !important;
+	border: 1px solid #eee
+	border-left-width:5px;
+	word-wrap:break-word;
+}
+@-webkit-keyframes imgRotate { 
+0% { 
+-moz-transform:rotate(0deg); -webkit-transform:rotate(0deg); -o-transform:rotate(0deg); transform:rotate(0deg);
+    } 
+100% { 
+-moz-transform:rotate(360deg); -webkit-transform:rotate(360deg); -o-transform:rotate(360deg); transform:rotate(360deg);
+    } 
+} 
+ </style>
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="col-xs-8 "> 
+<div class="row" >     
+<div class="col-sm-12" style="padding-left:0px !important;">
+<form id="form1"> 
+<p>
+<textarea  type="text" id="des" name="des" data-edit="ke" class="form-control" style="width:100%;height:100px;visibility:hidden;"></textarea>
+<input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="gid" value="{g}" style="display:none;"/> 
+<p style="position:absolute;right:20px;top:5px;">
+	<span class="word_count1">0</span>/<span class="word_count2">0</span>
+</p>
+</p>
+</form>
+<p>
+<button type="button" class="btn btn-primary pull-right" id="btn"> 立即发表 </button>
+</p>
+</div>
+</div> 
+
+
+ 
+<div class="page-header"></div>
+<div class="row" id="list" >
+<!-- START list -->
+	<div class="panel panel-default">
+	<div class="panel-heading"> <img class="img-circle" src="/upd/face/{uid}.jpg" width="50" alt='' onerror="this.src='/error/face.jpg';"/>     
+	{tname}  <code><script>document.write(utctime("{timestamp}"));</script></code></div>
+	<div class="panel-body" rel="{id}">
+	{des}<p class="_p"><input type="hidden" value="{id}"/></p>
+	<!-- START rp -->
+	<div class='bs-callout'><img class="img-circle" src="/upd/face/{uid}.jpg" width="30" alt='' onerror="this.src='/error/face.jpg';"/><span class='text-primary'>{tname}</span> 在<code><script>document.write(utctime("{timestamp}"));</script></code> 回复 <span class='text-info'>{rname}</span>：
+	<p style='float:right;display:none;'><a onclick="comment2('{id}','{tname}','{uid}',this);" class="glyphicon">回复</a>
+	<a onclick="vote({tbl:'grp_weibo_comment',do:'up',id:{id}},this)" class="glyphicon glyphicon-hand-up" title="顶一下">[{up}]</a>   
+	<a onclick="vote({tbl:'grp_weibo_comment',do:'bad',id:{id}},this)" class="glyphicon glyphicon-thumbs-down" title="踩一下">[{bad}]</a>
+	<a onclick="delths2('{id}',this);" class="glyphicon isopen" rel="gr_del">删除 </a> </p>
+	<br/>
+	{des}
+	</div>
+
+	<!-- END rp --> 
+	<p></p>
+	<p class="pull-right">
+	<a onclick="comment('{id}','{tname}','{uid}',this);" class="glyphicon">回复</a>
+	<a onclick="vote({tbl:'grp_weibo',do:'up',id:{id}},this)" class="glyphicon glyphicon-hand-up" title="顶一下">[{up}]</a>   
+	<a onclick="vote({tbl:'grp_weibo',do:'bad',id:{id}},this)" class="glyphicon glyphicon-thumbs-down" title="踩一下">[{bad}]</a>
+	<a onclick="delths('{id}',this);" class="glyphicon isopen" rel="gr_del">删除 </a>  
+	</p>
+
+</div>
+</div>  
+<!-- END list --> 
+</div>
+       
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+
+<div class="col-xs-4" >
+<!-- right -->
+	<div>
+		<div class="page-header">
+		   <h3>{name} </h3>
+			<div class="panel-body">
+			{des}
+		   </div>
+		</div>
+		 
+		<div class="panel">
+		   <div class="panel-heading">
+			  <h4 class="panel-title">{slogan}</h4>
+		   </div>
+		   <div class="panel-body">
+			<p>人数：{nums}</P>
+			<p>管理员：{mannums}</P>
+			<p>单位：{schools}</P>
+		   </div>
+		</div>
+	</div>
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+	//页面ajax调用全局设置,异步改成同步
+	$.ajaxSetup({
+  async: false
+	});
+	//群组空间权限
+	var isopen="{isopen}";
+	var keditor=[];
+	KindEditor.ready(function(K) {
+		keditor["des"] = K.create('#des',{
+			cssPath : '/widget/kindeditor/plugins/code/prettify.css',
+			uploadJson : '/widget/kindeditor/php/upload_json.php',
+			fileManagerJson : '/widget/kindeditor/php/file_manager_json.php',
+			allowFileManager : false,
+			themeType : 'simple',
+			items : [
+				 'emoticons', 'image','link','unlink'],
+			afterChange : function() {
+				K('.word_count1').html(this.count('text'));
+				K('.word_count2').html(300-this.count('text'));
+				if(K('.word_count2').html()<0){
+					K('.word_count2').html("0");
+				}
+			},
+			pasteType : 1
+		});  
+	}); 
+ uid="{uid}";
+
+ $(function () { 
+	//微博操作块显示效果
+	$(".bs-callout").mouseover(function(){
+		$(this).children("p").css("display","block");
+		}	
+	 );
+	$(".bs-callout").mouseout(function(){
+		$(this).children("p").css("display","none");
+		}	
+	 );
+	if(isopen=="0"){$(".isopen").remove();}
+    $("#btn").bind("click", function(){    
+  	  var word_count=$(".word_count1").html();
+  	  
+  	  if(isopen=="0"){layer.msg("非本组成员无法发表内容！");return;}
+        if(word_count<1){layer.msg("内容太短(1-300)");return;}    
+        if(word_count>300){layer.msg("内容太长(1-300)");return;} 
+  	  
+  	  //alert(ue.getContentTxt().length);
+        SaveAM({tpl:"grp_weibo","do":"a",frmid:"#form1",showok:"",callback:"dosome2"});
+   });
+  });
+  function dosome2(ed,data){
+  	if(data.indexOf("ok")>-1&&data.indexOf("ok")<5){
+  		location.reload();
+  	}else
+  	 alert(data);
+  }
+  function dosome(ed,data){
+     if(data.indexOf("ok")>-1&&data.indexOf("ok")<5){
+		// $("html,body").animate({scrollTop:$("#form1").offset().top},0);
+       //  location.reload();
+	   var tname=$("[name='tname']").val();
+	   var rname=$("[name='rname']").val();
+	   var id=$("[name='wid']").val();
+	   var uid="{uid}";
+	   var mytime=gettime();
+	   var des=$("#form2 #des").val();
+	   des=delHtmlTag(des);
+	   $("[rel="+id+"]").children("p._p").after("<div class='bs-callout'><img class='img-circle' src='/upd/face/"+uid+".jpg' width='30'/><span class='text-primary'>"+rname+"</span> 在<code>"+mytime+"</code> 回复 <span class='text-info'>"+tname+"</span>：<br/>"+des+"</div>");
+	    $('#form2')[0].reset();
+    }else 
+      alert(data);
+  } 
+/*
+ function replay(d){
+    vid="#rp"+d;
+    data=$(vid).val();
+    if(data.length<1){alert("评论内容太短");return;}
+    $.post("./srv/sdo.php?",{tpl:"weibo_comment",g:"{g}",wid:d,"data":data},function (da, e) {  
+        if(da.indexOf("ok")>-1){
+            id=da.substr(da.indexOf("ok")+2);
+            $("#p"+d).append('<p><img src="/upd/face/'+uid+'.jpg" width="30" onerror=this.src="/error/face.jpg"/> ：'+data+'</p>');
+        }
+        else 
+          alert(d);
+      });
+ }   */
+ function delths(v,obj){     
+	layer.confirm('确定删除吗？', {icon: 3,title: false,shadeClose:true}, function(index){
+		layer.close(index);
+	   $.post("./srv/sdo.php", {tpl:"del_weibo",id:v,g:"{g}"}, function (d, e) { 
+		  if(d.indexOf("ok")>-1){
+			$(obj).parent().parent().parent().remove();
+			layer.msg("删除成功！");}
+		  else 
+		  layer.msg(d);
+	  });
+	});
+}  	
+function delths2(v,obj){     
+	layer.confirm('确定删除吗？', {icon: 3,title: false,shadeClose:true}, function(index){
+		layer.close(index);
+	   $.post("./srv/sdo.php", {tpl:"del_weibo",id:v,g:"{g}"}, function (d, e) { 
+		  if(d.indexOf("ok")>-1){
+			$(obj).parent().parent().remove();
+			layer.msg("删除成功！");}
+		  else 
+		  layer.msg(d);
+	  });
+	});
+}  	
+</script>
+
+ <div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">回复</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form2"> 
+ <div class="form-group">    
+    <div class="col-sm-12">
+      <textarea id="des" name="des" class="form-control" rows="4"  placeholder="请输入评论内容1-250字" ></textarea>    
+     </div>  
+ </div>   
+<input type="text" id="gid" value="{g}" style="display:none"/> 
+<input type="text" id="rid" name="rid" value="" style="display:none"/>
+<input type="text" id="wid" name="wid" value="" style="display:none"/>     
+</form>
+<input type="text" id="tname" name="tname" value="" style="display:none"/>
+<input type="text" id="rname" name="rname" value="{nick}" style="display:none"/>
+<input type="text" id="_id" name="_id" value="{nick}" style="display:none"/>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick=savcomment("grp_weibo_comment")> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div> 

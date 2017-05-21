@@ -1,0 +1,4 @@
+db:
+school  tpl
+class lastupdate 
+group rcmd,lastudpate

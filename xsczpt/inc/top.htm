@@ -1,0 +1,96 @@
+
+<style type="text/css">
+  .inc_navbar {
+    *position: relative;
+    *z-index: 2;
+    overflow: visible;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    position: relative;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    margin-bottom:0px;
+	min-height:auto !important;
+	border-bottom: 1px solid #F7F7F7;
+	
+}
+.inc_navbar a{font-size:12px !important;}
+.navbar-inner {
+  padding-right: 0px;
+  padding-left: 0px;*zoom:1;
+  background: #ffffff;/* Old browsers */
+  -moz-linear-gradient(top, #ffffff 0%,#f4f4f4 100%);/* FF3.6+ */
+  background: 
+  -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#f4f4f4));/* Chrome,Safari4+ */
+  background: 
+  -webkit-linear-gradient(top, #ffffff 0%,#f4f4f4 100%);/* Chrome10+,Safari5.1+ */
+  background: 
+  -o-linear-gradient(top, #ffffff 0%,#f4f4f4 100%);/* Opera 11.10+ */
+  background: 
+  -ms-linear-gradient(top, #ffffff 0%,#f4f4f4 100%);/* IE10+ */
+  background: linear-gradient(to bottom, #ffffff 0%,#f4f4f4 100%);/* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f4f4f4',GradientType=0 );/* IE6-9 */
+  -webkit-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+  -moz-box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+  box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1);
+  margin:0 auto;
+}
+.inc_navbar-number{
+  width:80%;
+  margin:0 auto;
+  height:41px;
+}
+.inc_navbar-menu{
+float:left;
+}
+.inc_navbar-login{
+float:right;
+z-index:999;
+}
+.inc_navbar-nav>li>a{
+padding-top:10px !important;
+padding-bottom:10px !important;
+color:#63606a;
+text-decoration:none;
+}
+.inc_nav>li>a:focus, .inc_nav>li>a>li>a:hover{
+background-color:transparent !important;
+}
+.inc_navbar-nav>li {
+    float: left;
+}
+.inc_navnav>li {
+    position: relative;
+    display: block;
+}
+.inc_nav {
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+}
+.inc_nav>li>a {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+	text-decoration:none;
+}
+</style>
+
+<div class="inc_navbar">
+	<div class="navbar-inner">
+		<div class="inc_navbar-number">
+			<div class="inc_navbar-menu">
+			  <ul class="inc_nav inc_navbar-nav navbar-left">
+				<li ><a style="color:rgb(0,153,103);" href="/">{gtitle}</a></li>        
+				<li><a href="/?t=school">学校空间</a></li> 
+				<li><a href="/subjecter" target="_blank">学科空间</a></li>       
+			  </ul> 
+			</div>
+			<div class="inc_navbar-login" style="position:relative;"><ul class="inc_nav inc_navbar-nav inc_navbar-right"  id="top_user_login"></ul><span id="inc_man" style="right:-30px;top:10px;position:absolute;line-height: 14px;"></span></div>
+		</div>
+	</div>
+</div>

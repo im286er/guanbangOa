@@ -1,0 +1,256 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+	<title>资源管理-{gtitle}</title>
+	{cssjs}
+	<script type="text/javascript" src="js/func.js"></script>
+	<style>
+		a {cursor:pointer;}
+	</style>
+</head>
+<body>
+{top}
+<div class="container"> 
+	<div class="col-sm-3">
+	{menu}
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>资源管理<small></small>
+				<div class="btn-group pull-right">
+					<a class="btn btn-primary" href="./?t=sub_resources_add&s={s}&sid={subid}&d=a" target="_blank">+ 添加</a>
+				</div>
+			</h3>
+		</div>
+		
+		<form class="form-horizontal" role="form" method="post" id="from1">
+			<div class="form-group">
+				<div class="col-sm-4">
+					<input id="title" type="text" value="{srctitle}" class="form-control" placeholder="请输入资源标题"/>
+				</div>
+				<div class="col-sm-2">
+					<select id="subject" class="form-control">{sel_subject}</select>
+				</div>
+				<div class="col-sm-2">
+					<input  type="button" class="btn btn-success" value="搜索" id="btnSearch"/>
+					<input  type="button" class="btn btn-success" value="刷新" onclick="btnRefresh('sub_resources');"/>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2">
+					<select id="grade" class="form-control">{sel_grade}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="edition" class="form-control">{sel_edition}</select> 
+				</div>
+				<div class="col-sm-2">
+					<select id="volume" class="form-control">{sel_volume}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="restype"  class="form-control">{sel_restype}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="state" class="form-control">
+						<option value="">—审核—</option>
+						<option value="2">已审核</option>
+						<option value="1">未审核</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="recommended" class="form-control">
+						<option value="">—推荐—</option>
+						<option value="1">已推荐</option>
+						<option value="0">未推荐</option>
+					</select>
+				</div>
+			</div>
+		</form>
+		
+		<table class="table table-hover">
+			<thead>
+				<tr>  
+					<th>科目</th> 
+					<th>标题</th>
+					<th>类型</th>					
+					<th>学段</th>   
+					<th>册/章/节</th>
+					<th>教材</th>
+					<th>发布时间</th>
+					<th>审核</th>
+					<th>推荐</th>
+					<th>操作</th>
+				</tr>
+			</thead>              
+			<tbody>
+			<!-- START list -->              
+			<tr>
+				<td><code><span data-subject="{subject}"></span></code></td>   
+				<td align="left">
+					<a href="/subject/?t=resource&s={s}&sid={subid}&id={id}" target="_blank" title="{title}">
+						<script>document.write("{title}".length > 10 ? "{title}".substr(0,10) + ".." : "{title}");</script>
+					</a>
+				</td>
+				<td><span data-restype="{restype}"></span></td>
+				<td><span data-period="{period}"></span>/<span data-grade="{grade}"></span></td>  
+				<td><span data-volume="{volume}"></span>/<span data-chapter="{chapter}"></span></td>  
+				<td><span data-edition="{edition}"></span></td>
+				<td>{postdate}</td>
+				<td><em id="em{id}" data-state="{state}"></em></td>
+				<td align="center">
+					<span id="sp{id}">
+						<script>document.write("{recommended}" == "1" ? "<cite style='color:red;'>推荐</cite>" : "<a class='glyphicon glyphicon-heart' title='推荐' onclick='recomths({id},this)'></a>");</script>
+					</span>
+				</td>
+				<td> 
+					<a href="./?t=sub_resources_add&s={s}&sid={subid}&id={id}&d=m" title="编辑" class="glyphicon glyphicon-pencil" target="_blank"></a>  
+					<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+					<script>document.write("{state}" == "2" ? "" : "<a class='glyphicon glyphicon-ok' title='审核' onclick='audit({id}, this)'></a>");</script>
+				</td>
+			</tr>
+			<!-- END list --> 
+			</tbody>
+		</table>
+		
+		<ul class="pagination pull-right">
+		{page}
+		</ul>
+	</div> 
+</div> 
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">
+	var subject,period,grade,edition,volume,chapter,restype;
+	$(function(){
+		// 页面回发时下拉框控件状态绑定
+		var title = getUrlParam('title');
+		var sel_sjt = getUrlParam('sjt');
+		var sel_gra = getUrlParam('gra');
+		var sel_edt = getUrlParam('edt');
+		var sel_vol = getUrlParam('vol');
+		var sel_res = getUrlParam('res');
+		var sel_state = getUrlParam('state');
+		var sel_rec = getUrlParam('rec');
+		if(title!=null && title!="") {
+			//$("#title").val(unescape(title));
+		}
+		if(sel_sjt!=null && sel_sjt!="") {
+			$("#subject").val(sel_sjt);
+		}
+		if(sel_gra!=null && sel_gra!="") {
+			$("#grade").val(sel_gra);
+		}
+		if(sel_edt!=null && sel_edt!="") {
+			$("#edition").val(sel_edt);
+		}
+		if(sel_vol!=null && sel_vol!="") {
+			$("#volume").val(sel_vol);
+		}
+		if(sel_res!=null && sel_res!="") {
+			$("#restype").val(sel_res);
+		}
+		if(sel_state!=null && sel_state!="") {
+			$("#state").val(sel_state);
+		}
+		if(sel_rec!=null && sel_rec!="") {
+			$("#recommended").val(sel_rec);
+		}
+		
+		$.getJSON("/data/subject.json.txt", function (data) {  
+			subject=data;
+			$("span[data-subject]").each(function (a, b) {
+				$(this).text(subject[$(this).data("subject")]);
+			});
+		});
+		$.getJSON("/data/period.json.txt", function (data) {  
+			period=data;
+			$("span[data-period]").each(function (a, b) {
+				$(this).text(period[$(this).data("period")]);
+			});
+		});
+		$.getJSON("/data/grade.json.txt", function (data) {  
+			grade=data;
+			$("span[data-grade]").each(function (a, b) {
+				$(this).text(grade[$(this).data("grade")]);
+			});
+		});
+		$.getJSON("/data/textbook_ver.json.txt", function (data) {  
+			edition=data;
+			$("span[data-edition]").each(function (a, b) {
+				$(this).text(edition[$(this).data("edition")]);
+			});
+		});
+		$.getJSON("/data/textbook_volume.json.txt", function (data) {  
+			volume=data;
+			$("span[data-volume]").each(function (a, b) {
+				$(this).text(volume[$(this).data("volume")]);
+			});
+		});
+		$.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+			chapter=data;
+			$("span[data-chapter]").each(function (a, b) {
+				$(this).text(chapter[$(this).data("chapter")]);
+			});
+		});
+		$.getJSON("/data/restype.json.txt", function (data) {  
+			restype=data;
+			$("span[data-restype]").each(function (a, b) {
+				$(this).text(restype[$(this).data("restype")]);
+			});
+		});
+		
+		// 审核状态显示
+		$.getJSON("/data/state.json.txt", function (data) {
+			for(i=0;i<5;i++)$("em[data-state='"+i+"']").html(data[i]);      
+		});
+		
+		// 查询功能绑定
+		$("#btnSearch").bind("click",function(){
+			location.href = "./?t=sub_resources&s={s}&sid={subid}&title="
+				+ $("#title").val()
+				+ "&sjt=" + $("#subject").val()
+				+ "&gra=" + $("#grade").val()
+				+ "&edt=" + $("#edition").val()
+				+ "&vol=" + $("#volume").val()
+				+ "&res=" + $("#restype").val()
+				+ "&state=" + $("#state").val()
+				+ "&rec=" + $("#recommended").val();
+		});
+	});
+
+	// 页面刷新
+	function btnRefresh(param) {
+		location.href = "./?t=" + param +"&s={s}&sid={subid}";
+	}
+	// 删除资源
+	function delths(v,obj){
+		if (confirm("确定删除该资源？资源文件本身并不会被删除。")) {
+			$.post("./srv/sdo.php", {tpl:"del_resource",id:v}, function (d, e) { 
+				if(d.indexOf("ok")>-1) {
+					$(obj).parent().parent().remove();
+				}
+				else 
+					alert(d);
+			});
+		}
+	}
+	// 资源推荐
+	function recomths(id, obj) {
+		if( $("#em" + id).attr("data-state") != "2" ) {
+			alert("资源尚未审核通过，不能推荐！");
+			return;
+		}
+		$.post("./srv/sdo.php?", {tpl:"sub_resource_recommended","id":id}, function (data, e) {
+			$("#sp" + id).html("<cite style='color:red;'>推荐</cite>");
+		});
+	}
+	// 资源审核
+	function audit(id, obj) {
+		$.post("./srv/sdo.php?", {tpl:"sub_resource_audit","id":id}, function (data, e) {
+			$("#em" + id).html("<i class='glyphicon glyphicon-ok-circle text-success'/>");
+			$("#em" + id).attr("data-state", "2");
+			$(obj).attr("style", "display:none;");
+		});
+	}
+</script>

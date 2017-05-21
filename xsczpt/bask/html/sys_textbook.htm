@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+{cssjs}
+</head>
+<body>  
+<h4>课文库</h4> 
+
+<div class="c12 centered">
+<p class="note info"> 
+<form class="hform" id="qry" onsubmit="return false">   
+ 
+名称<input id="title" type="text" style="width:100px"/>
+别名<input id="alias" type="text" style="width:100px"/>
+
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="desc" title="排序方向" style="display:none;"/> 
+<button class="skyblue" onclick="loadPage({l_page:1})">查询</button> 
+<button class="blue"  id="cbtn">新建</button>
+<button class="green" onclick="location.reload();">刷新</button>    
+跳转到：<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:50px;"/>页   
+</form>
+</p>
+</div>
+
+<table class="table">
+  <thead>  
+<tr>
+<th name="id">编号</th><th name="title">名称</th><th name="alias">别名</th>
+<th name="grade">年级</th><th name="edition">教材</th><th name="subject">学科</th>
+<th name="volume">册</th>
+<th name="chapter">章节</th><th name="no">序号</th>
+<th name="timestamp">时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr id="row{id}">
+<td>{id}</td> 
+<td>{title}</td>   
+<td>{alias}</td>   
+
+<td>{period}/{grade}</td> 
+<td>{edition}</td> 
+<td>{subject}</td> 
+<td>{volume}册</td>
+<td>{chapter}章节</td> 
+<td>{no}</td>
+<td>{timestamp}</td> 
+<td>
+<button class="small orange" onclick="Mod({id:'{id}'})">改</button> 
+<button class="small red" onclick="delRow({id:'{id}'});">删</button>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>  
+<tr>
+<td class="page" colspan="10"> 
+<ul class="pagin text-center" id="page"></ul>
+</td>
+</tr>     
+</table>
+
+</body>
+</html>
+<div id="dlg1" title="【添加/编辑】" style="width:500px;height:400px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ SaveAM({frmid:'#dlg1'});}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+<label>名称</label><input type="text" id="title" value="" maxlength="50"/><br/>    
+<label>别名</label><input type="text" id="alias" value="" maxlength="100" /> <br/> 
+<label>序号</label><input type="text" id="no" value="" maxlength="10" placeholder="0-9数字" onkeyup="value=value.replace(/[^0-9]/ig,'')"/>
+<br/>
+<label>年级</label><select id="period"></select> <select id="grade"></select> <a id="btn_period">刷新</a><br/>  
+<label>教材</label> <select id="edition"></select><br/>
+<label>册</label> <select id="volume"></select><br/>
+<label>章节</label> <select id="chapter"></select><br/>
+<label>学科</label> <select id="subject"></select><br/>
+
+<input type="text" id="id"  value="" style="display:none;"/>   
+</form>
+</div>
+<script>
+formatunixs = "{formatdates}";
+$(function () {	
+    /* $.get("/data/grade_n1.txt",function(d){$("#grade").html(d);$("#dlg1 #grade").html(d);$("#grade").prepend("<option value=''>—年级—</option>");});
+    $.get("/data/subject.txt",function(d){$("#subject").html(d);$("#dlg1 #subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");});
+    $.get("/data/textbook_ver.txt",function(d){$("#edition").html(d);$("#dlg1 #edition").html(d);$("#edition").prepend("<option value=''>—教材—</option>");});
+    $.get("/data/textbook_volume.txt",function(d){$("#volume").html(d);$("#dlg1 #volume").html(d);$("#volume").prepend("<option value=''>—册—</option>");});
+    $.get("/data/textbook_chapter.txt",function(d){$("#chapter").html(d);$("#dlg1 #chapter").html(d);$("#chapter").prepend("<option value=''>—章节—</option>");});
+    */
+    $.get("/data?t=sys_textbook_edition&f=txt", function (d) {$("#edition").html(d);}); 
+    $.get("/data?t=sys_textbook_chapter&f=txt", function (d) {$("#chapter").html(d);}); 
+    $.get("/data?t=sys_textbook_volume&f=txt", function (d) {$("#volume").html(d);}); 
+    $.get("/data?t=sys_period&f=txt", function (d) {$("#period").html(d); getPeriodChild($("#period").val());});  
+    $("#dlg1 #period").change(function(){
+        getPeriodChild($("#dlg1 #period").val());
+    });  
+    $("#btn_period").click(function(){
+      getPeriodChild($("#dlg1 #period").val());
+    });  
+    	
+    loadPage({l_page:1});  
+    initAddBtn({btn:"#cbtn",frmid:"#dlg1"});	
+});       
+ function getPeriodChild(v){      
+    $.get("/data?t=sys_grade&f=txt&pn=period&pv="+v, function (d) {$("#dlg1 #grade").html(d);}); 
+    $.get("/data?t=sys_subject&f=txt&pn=period&pv="+v, function(d){$("#dlg1 #subject").html(d);}); 
+  }  
+</script>

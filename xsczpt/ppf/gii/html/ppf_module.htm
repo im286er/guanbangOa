@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <title>{gtitle}</title>
+   {cssjs}  
+  </head>
+  <body class="">   
+{top}        
+    <div class="sidebar-nav">
+ {left}
+    </div>  
+
+    
+    <div class="content">
+        
+        <div class="header">   <h1 class="page-title">权限模块</h1> </div>
+        
+        <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li class="active">权限模块</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+    <button class="btn btn-primary" id="cbtn"><i class="icon-plus"></i> 添加</button>
+    <button class="btn">导入</button>
+    <button class="btn">导出</button>
+  <div class="btn-group">
+  </div>
+</div>
+<div class="search-well">  
+    <form class="form-inline" id="qry">
+         <input  placeholder="Search Help..." id="name" type="text">
+        <input  placeholder="Search Help..." id="id" type="text">
+        <button class="btn btn-primary" type="button" onclick="loadPage({page:1})"><i class="icon-search"></i> Go</button>          
+<a class="btn btn-info" type="button" onclick="location.href=location.href;">刷新</a>
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="desc" title="排序方向" style="display:none;"/>   
+    </form>
+</div>
+
+<div class="well">
+    <table class="table">
+      <thead>  
+<tr>
+<th name="id">id</th><th name="name">name</th><th>tpl</th><th>odx</th>
+<th name="timestamp">timestamp</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr  class="" name="{id}">
+
+<td>{id}</td>
+
+<td>{name}</td>
+<td>{tpl}</td>
+<td>{odx}</td>
+<td>{timestamp}</td>
+<td>
+<a onclick="Mod({id:'{id}'})" title="修改"><i class="icon-pencil"></i></a>  &nbsp;
+<a onclick="delRow({id:'{id}'});" title="删除"><i class="icon-remove"></i></a>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+</div>
+<div class="pagination">
+<ul id="page"> 
+</ul>
+</div>
+{foot}                       
+</div>
+        </div>
+    </div>
+    
+<div class="modal hide" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">用户数据</h3>
+    </div>
+<div class="modal-body">         
+ <form id="form1">
+<label>名称</label><input type="text" id="name" value=""/> 
+<label>tpl</label><input type="text" id="tpl" value="" />  
+<label>排序</label><input type="text" id="odx" value=""/> 
+<label>des</label><textarea id="des" edit="des" rows="3"></textarea> 
+<input type="text" id="id"  value="" style="display:none;"/> <br/>      
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="sav">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>
+ 
+
+  </body>
+</html>
+<script> 
+    formatunixs = ",timestamp,";
+    $(function () {
+        loadPage({l_tpl:queryStr("t"),l_page:1});
+        //dlgInit({ width: 700, height: 600, modal: true, frmid: "#dlg1", btnid: "#cbtn", showok: false, callback: "amcallback" });
+        //$("#timestamp").datepicker({ changeYear: true, showButtonPanel: true, showWeek: true, firstDay: 1, dateFormat: "yy-mm-dd 0:0" });
+        $("#sav").click(function(){
+          SaveAM({tpl:queryStr("t"),"do":$("#dlg1").data("dotype"),id:$("#dlg1 #id").val(),frmid:"#dlg1",showok:"",callback:"bkcallback"});
+         });
+         initAddBtn({btn:"#cbtn",frmid:"#dlg1"});
+        
+    });  
+ </script>

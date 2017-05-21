@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}                      
+</head>
+<body>
+{top}
+<div class="container">   
+{head1}
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>报名人员      <small></small> 
+<div class="btn-group pull-right" >  
+</div>
+</h3>
+</div>
+
+ 
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th> 
+<th>分组</th>
+<th>备注</th>  
+<th>邮箱/手机</th>  
+<th>身份</th>  
+<th>年级</th>  
+<th>学校</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id1}">
+<td><div class="thumbnail"><a href="/zone?id={id}" target=_blank><img  width="60" src="/upd/face/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></a></div></td>
+<td>昵称：{nick}</a><br/>姓名：{truename} <br/>英文名：{ename}</td>
+<td><gid v="{gid}"></gid></td>
+<td>{remark}</td>
+<td>{eamil}/{mboile}</td>
+<td><idtype v="{idtype}"></idtype></td>
+<td><grade v="{grade}"></grade></td>
+<td><sch v="{school}"></sch></td>
+<td><st v="{state1}"></sch></td>
+<td><a class="glyphicon glyphicon-ok" title="审核" onclick="auditID({id:'{id1}','do':'o'})"></a> &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id1}'})"></a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+</div>  
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+l_tpl="active_member"; 
+ $(function () {
+ $.getJSON("/data/?t=sys_state&f=json", function (d) {
+    for(k=0;k<d.length;k++)$("st[v="+d[k].id+"]").html(d[k].name);
+  }); 
+ $.getJSON("/data/?t=sys_grade&f=json", function (d) {
+    for(k=0;k<d.length;k++)$("grade[v="+d[k].id+"]").text(d[k].name);
+  });
+  $.getJSON("/data/?t=sys_type&f=json", function (d) {
+    for(k=0;k<d.length;k++)$("idtype[v="+d[k].id+"]").text(d[k].name);
+  });
+  $.getJSON("/data/?t=school&f=obj", function (d) {
+    $("sch").each(function(a,b){
+      $(b).text(d[$(b).attr("v")]);
+    });   
+  });
+  
+    $("#btn").bind("click",function(){     $('#dlg1').modal('show');    }); 
+    $("#btnq").bind("click",function(){                           
+      location.href="./?t=frd&g="+$("#gid").val()+"&so="+$("#so").val();          
+   });             
+ });   
+ 
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   if($("#odx").val()==""){$("#odx").val("0");}          
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'',callback:"dosome"});  
+} 
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+      $('#dlg1').modal('hide');
+  }
+}
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+</script>
+
+
+<div class="modal " id="dlg1" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">[编辑]</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">备注</label>
+<div class="col-sm-8"><input type="text" id="remark" value="" class="form-control"/> </div>  
+</div>
+<div class="form-group"> 
+<label class="col-sm-2 control-label">分组</label>
+<div class="col-sm-3"><select id="gid" class="form-control" ></select></div>
+</div>
+<input type="text" id="id" value="" style="display:none;"/>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="savesome()">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div>
+</div>
+</div>
+</div>

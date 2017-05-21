@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form id="form1" name="form1" action="./srv/physique_modify_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">体质信息详情</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="25%" class="tabtd2_L">学生姓名</td>
+						 <td width="75%" class="tabtd2_R">
+							{truename}
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">所在班级</td>
+						 <td width="80%" class="tabtd2_R">
+							{gradeName}{class_name}
+						  </td>
+					</tr>
+					<tr id="tr_height">
+						 <td width="20%" class="tabtd2_L">身高</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="height" name="height" size="15" value="{height}" readonly/> CM
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">体重</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="weight" name="weight" size="15"  value="{weight}" readonly/> KG
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">左眼</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="left_eye" name="left_eye" size="15"  value="{left_eye}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">右眼</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="right_eye" name="right_eye" size="15"  value="{right_eye}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">肝</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="liver" name="liver" size="20"  value="{liver}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">胆</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="guts" name="guts" size="20"  value="{guts}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">心肺听诊</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xf_ting" name="xf_ting" size="20"  value="{xf_ting}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">外科常规</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="wkcg" name="wkcg" size="20"  value="{wkcg}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">血压</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="blood" name="blood" size="15"  value="{blood}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">肺活量</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="vc" name="vc" size="15"  value="{vc}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">脾</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="spleen" name="spleen" size="20"  value="{spleen}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">眼科</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="yanke" name="yanke" size="20"  value="{yanke}" readonly/>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">口腔</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="mouth" name="mouth" size="20"  value="{mouth}" readonly/>
+						  </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+l_tpl="oa_zhsz_physique";
+readID({"do":"r",id:queryStr("id"),frmid:"#form1"});
+
+</script> 

@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}       
+</head>
+<body>
+{top}
+<div class="container">   
+{head1}       
+<div class="col-sm-10">
+<div class="page-header">
+   <h3>查找学校      <small></small>  </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" id="from1">
+  <div class="form-group">      
+    <label for="firstname" class="col-sm-1 control-label">名称</label>           
+     <div class="col-sm-3"><input  type="text" class="form-control" value="" id="so" placeholder="学校名称"/></div>  
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+<th>学段</th>
+<th>校训</th>   
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/school/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/school?s={id}" target=_blank>{name}</a><br/>{mininame}</td>
+<td><period v="{period}"></td>
+<td>{motto}</td> 
+<td>
+
+<a class="glyphicon glyphicon-plus" title="申请加入" onclick="joinths('{id}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+$(function () {            
+  if(queryStr("so")!="") $("#so").val(queryStr("so")); 
+  $("#btn").bind("click",function(){   　
+    location.href="./?t=school_apply&so="+$("#so").val();     
+       });  
+  $.getJSON("/data/period.json.txt", function (data) {   
+        for(i=1;i<5;i++) $("period[v='"+i+"']").text(data[i]);      
+  });     
+ });   
+
+function joinths(v){      
+  $.post("./srv/sdo.php?", {tpl:"join_sch",id:v}, function (d, e) {                     
+     alert(d); 
+  });
+} 
+
+</script> 

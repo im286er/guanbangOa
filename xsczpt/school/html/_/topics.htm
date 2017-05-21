@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>专题-{gtitle}</title>
+{cssjs}     
+</head>
+<body>
+{top}
+<div class="container">  
+{head}              
+
+<div class="col-xs-10 ">      
+<h3>专题</h3>
+
+<table class="table table-striped"> 
+<tbody>
+<!-- START list -->
+<tr>
+ <td><img src="pic/{s}/t_{pic}" width="93" height="62"></td>
+ <td><h4><a href="./?t=topic&id={id}&s={s}" target=_blank>{title}</a> </h4>
+  <small class=""></small>
+ </td>
+ <td><script>document.write(utctime('{timestamp}'));</script>
+ </td>
+</tr>
+<!-- END list -->           
+</tbody>
+</table>
+    
+<ul class="pagination pull-right">
+{page}
+</ul> 
+ 
+</div>
+
+ 
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ 
+
+ $(function () { 
+    //$('#myModal').modal({keyboard: true});
+  }); 
+ function replay(d){
+   $('#myModal').modal({keyboard: true}); 
+   //$('#myModal h4').modal({keyboard: true}); 
+ }
+	
+</script>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" 
+               aria-hidden="true">×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               模态框（Modal）标题
+            </h4>
+         </div>
+         <div class="modal-body">
+            按下 ESC 按钮退出。
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

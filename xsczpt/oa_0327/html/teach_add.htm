@@ -1,0 +1,210 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<style type="text/css">
+	.dept_warp{
+		width:100%; height:auto; overflow:auto; margin-bottom:10px;
+	}
+	.dept_div{
+		width:100%; height:26px; line-height:26px; font-weight:bold;
+	}
+	.dept_ul{
+		width:100%; height:auto;
+	}
+	.dept_li{
+		float:left; margin-left:5px; margin-left:5px;
+	}
+	.teacher_warp{
+		width:100%; height:auto; overflow:auto; margin-bottom:10px;
+	}
+	.teacher_div{
+		width:100%; height:26px; line-height:26px; font-weight:bold;
+	}
+	.teacher_ul{
+		width:100%; height:auto;
+	}
+	.teacher_li{
+		float:left; margin-left:5px; margin-left:5px;
+	}
+	.grade_warp{
+		width:100%; height:auto; overflow:auto; margin-bottom:10px;
+	}
+	.grade_div{
+		width:100%; height:26px; line-height:26px; font-weight:bold;
+	}
+	.grade_ul{
+		width:100%; height:auto;
+	}
+	.grade_li{
+		float:left; margin-left:5px; margin-left:5px;
+	}
+	.class_warp{
+		width:100%; height:auto; overflow:auto; margin-bottom:10px;
+	}
+	.class_div{
+		width:100%; height:26px; line-height:26px; font-weight:bold;	
+	}
+	.class_ul{
+		width:100%; height:auto;
+	}
+	.class_li{
+		float:left; margin-left:5px; margin-left:5px;
+	}
+</style> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/teach_add_submit.php" method="post" onsubmit="return checkTeach();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以添加任课信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="20%" class="tabtd2_L">任课教师：</td>
+						 <td width="80%" class="tabtd2_R" style="padding:0;">
+							<div class="dept_warp">
+								<div class="dept_div">&nbsp;&nbsp;&nbsp;&nbsp;所在部门</div>
+								<ul class="dept_ul">
+									<li class="dept_li"><input type="radio" name="dept" value="0" checked="checked" onclick="selectTeacher(this);" />&nbsp;&nbsp;全部</li>
+									<!-- START list --> 
+										<li class='dept_li'><input type='radio' name='dept' value='{id}' onclick='selectTeacher(this);' />&nbsp;&nbsp;{dept_name}</li>
+									<!-- END list -->
+								</ul>
+							</div>
+
+							<div class="teacher_warp">
+								<div class="teacher_div">&nbsp;&nbsp;&nbsp;&nbsp;教师选择</div>
+								<ul class="teacher_ul" id="teacher_list">
+									<!-- START list1 --> 
+										<li class='teacher_li'><input type='radio' name='teacher' value='{id}' />&nbsp;&nbsp;{truename}</li>
+									<!-- END list1 -->
+
+								</ul>
+							</div>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">所教课程：</td>
+						 <td width="80%" class="tabtd2_R">
+							<!-- START list2 --> 
+								<input type='radio' name='course' value='{id}'  />&nbsp;&nbsp;{course_name}&nbsp;&nbsp;&nbsp;&nbsp;
+							<!-- END list2 -->
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">所教班级：</td>
+						 <td width="80%" class="tabtd2_R" style="padding:0;">
+							<div class="grade_warp">
+								<div class="grade_div">&nbsp;&nbsp;&nbsp;&nbsp;年级选择</div>
+								<ul class="grade_ul">
+									<!-- START list3 --> 
+										<li class='grade_li'><input type='radio' name='grade' value='{id}' onclick='selectClass(this);' />&nbsp;&nbsp;{grade_name}</li>
+									<!-- END list3 -->
+								</ul>
+							</div>
+							<div class="class_warp">
+								<div class="class_div">&nbsp;&nbsp;&nbsp;&nbsp;班级选择</div>
+								<ul class="class_ul" id="class_list">
+									<!-- START list4 --> 
+										<li class='class_li'><input type='checkbox' name='class[]' value='{id}' />&nbsp;&nbsp;{class_name}</li>
+									<!-- END list4 -->
+								</ul>
+							</div>
+						 </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+				<a href="./?t=teach_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a>
+			</div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+
+$(function(){
+	$(":radio[name=grade][value='{gradeId}']").attr("checked","true");
+	$(":radio[name=course][value='{courseId}']").attr("checked","true");
+});
+
+//表单提交验证
+function checkTeach()
+{
+	var tLen = $("input[name='teacher']:checked").size();
+	var cLen = $("input[name='class[]']:checked").size();
+	if(tLen==0){
+		alert("请选择任课教师。");
+		return false;
+	}
+	if(cLen==0){
+		alert("请选择任课班级。");
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+//查询班级
+function selectClass(obj)
+{
+	var id = $(obj).val();
+	
+	$.post("./srv/sdo.php", {tpl:"select_class","grade_id":id}, function (d, e) {
+		l=JSON.parse(d);
+		if(l.flag=="true"){
+			var len  = l.value.length;
+			var html = "";
+			for(var i=0;i<len;i++){
+				html += "<li class='class_li'><input type='checkbox' name='class[]' value='"+l.value[i]["id"]+"' />&nbsp;&nbsp;"+l.value[i]["class_name"]+"</li>";	
+			}
+			$("#class_list").html("");
+			$("#class_list").html(html);
+		}else{
+			$("#class_list").html("<font color='#ff0000'><b>&nbsp;&nbsp;&nbsp;&nbsp;"+l.value+"</b></font>");
+		}
+	});
+}
+
+//查询老师
+function selectTeacher(obj)
+{
+	var id = $(obj).val();
+	
+	$.post("./srv/sdo.php", {tpl:"select_teacher","dept_id":id}, function (d, e) {
+		l=JSON.parse(d);
+		if(l.flag=="true"){
+			var len  = l.value.length;
+			var html = "";
+			for(var i=0;i<len;i++){
+				html += "<li class='teacher_li'><input type='radio' name='teacher' value='"+l.value[i]["id"]+"' />&nbsp;&nbsp;"+l.value[i]["truename"]+"</li>";	
+			}
+			$("#teacher_list").html("");
+			$("#teacher_list").html(html);
+		}else{
+			$("#teacher_list").html("<font color='#ff0000'><b>&nbsp;&nbsp;&nbsp;&nbsp;"+l.value+"</b></font>");
+		}
+	});
+}
+
+</script> 

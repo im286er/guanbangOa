@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<label class="current"><a href="javascript:void(0);">技能素质记录列表</a></label> 
+		</div>
+		
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="8%" class="tabtd">学期</td>
+					 <td width="5%" class="tabtd">姓名</td>
+					 <!--<td width="6%" class="tabtd">班级</td> -->
+					{str_menu}
+					<td width="6%" class="tabtd">操作选项</td>
+				</tr>
+				{str_total}
+			</table>
+		
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+
+});
+
+
+</script> 

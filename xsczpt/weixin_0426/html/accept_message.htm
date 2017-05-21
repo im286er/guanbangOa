@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>海安中学移动端-列表页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="dns-prefetch" href="#" id="static"/>
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/lib/weui.min.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">  
+    <link rel="stylesheet" href="css/ionic.min.css">
+	<script src="/ppf/js/jquery-1.min.js"></script> 
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+	<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+	<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+	<script src="/ppf/js/select.js"></script> 
+	<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+	<script src="js/iscroll.js"></script> 
+</head>
+<body>
+<section class="fl wout mt10">
+	<form action="./?t=accept_message" method="post" id="t_zdy" style="display:none;">
+	        <div class="page">
+	        <div class="page__bd" style="height: 100%;">
+			  <div class="weui-cells mt_5">
+			<div class="weui-cell weui-cell_select weui-cell_select-after" id="grade_id">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">年级：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select name="gid" id="gid" class="weui-select" onchange="selectClass(this);">
+					</select> 
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">姓名：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input type="text" name="truename" id="truename" value="" class="weui-input"/>
+                </div>
+            </div>
+		 </div>
+		 
+		 <div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+        </div>
+		</div>
+		</div>
+		</form>
+		<div id="frm_show" style="width:100%;text-align:center;font-size:9px;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<ul class="check_list">
+			<div class="check_box che_all" title="全选">
+				<input type="checkbox" id="_checkall" onclick="checkall(this.checked)"> 
+			   <label class="check" for="" onclick="$('#_checkall').click()">  
+					<i class="iconfont" id="#icon-duihao2"></i>
+				</label> 全选
+			</div>
+            <!-- START list -->   			
+			<li class="_ytt">
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="{id}" name="check" _name="{truename}" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="{id}">  
+							<i class="iconfont"></i>
+						</label> 
+					</div> 
+				{truename}</a>
+			</li>
+			<!-- END list -->
+		</ul>
+	<!-- </form> -->
+	<div class="" style="float:right;width:20%;margin-right:2%;margin-top:20px;"><input type="button" class="BigButton" value="确认" onclick="getAllcheck();" style="border:0;border-radius:5px;height:2rem;line-height:2rem;color:#fff;text-align:center;width:100%;background:#e12f3d;"></div>
+</section>
+
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav" style="display:none;">
+	<a href="index.html"><i class="iconfont">&#xe606;</i>首页</a>
+	<a href="group_list.html"><i class="iconfont">&#xe601;</i>成长</a>
+	<a href="user.html"><i class="iconfont">&#xe60a;</i>我的</a>
+</nav>
+</body>
+
+<script type="text/javascript">
+function checkall(v){
+	$('.everyvb').each(function(){
+		this.checked=v;
+	})
+};
+$(".checkchild").bind("click",function(){
+	$("#_checkall").prop("checked", false);
+});
+$("._ytt").bind("click",function(){
+	if($(this).find(".everyvb").prop("checked")){
+		$(this).find(".everyvb").prop("checked", false);
+	}else{
+		$(this).find(".everyvb").prop("checked", true);
+	}
+});
+$().ready(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+	
+	$("#truename").val("{truename}");
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$("#grade_id").nextAll("div[id='class_id']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = ' <div class="weui-cell weui-cell_select weui-cell_select-after" id="class_id"><div class="weui-cell__hd"><label for="" class="weui-label">班级：</label> </div><div class="weui-cell__bd"><select name="cid" id="cid" class="weui-select">';
+						html += "<option value='0'>全部</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select> </div></div>";
+						$("#grade_id").after(html);
+					}
+				}
+			}
+
+			$("#cid").val({cid});
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$("#grade_id").nextAll("div[id='class_id']").remove();
+	}	
+}
+
+function slide(){
+	$("#frm_show").hide();
+	$("#t_zdy").fadeIn();
+}
+
+function getAllcheck(){
+	var allid="";
+	var allidtxt="";
+	$(".everyvb").each(function(){
+		if($(this).prop("checked")){
+			allid+=$(this).attr("id")+",";
+			allidtxt+=$(this).attr("_name")+",";
+		}
+	});
+	allid=allid.substring(0,allid.length-1);
+	allidtxt=allidtxt.substring(0,allidtxt.length-1);
+	parent.$('#collection').val(allidtxt);
+	parent.$('#_recid').val(allid);
+	var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+	parent.layer.close(index); //再执行关闭   
+}
+</script>
+</html>

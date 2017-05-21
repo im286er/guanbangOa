@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>财富-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('--','获取','使用');    
+</script> 
+</head>
+<body>
+{top} 
+<div class="container">   
+
+<div class="col-sm-3">
+{left} 
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>{goldname}      <small></small>     
+<div class="btn-group pull-right"> 
+</div>
+   </h3>
+</div>
+ 
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr> 
+<th>时间</th>
+<th>类型</th> 
+<th>备注</th>   
+</tr>
+</thead>              
+<tbody id="list">
+<!-- START list -->              
+<tr> 
+<td><script>document.write(utctime('{id}'));</script></td>
+<td><label class="blue0" data-ctype="{ctype}"></label></td> 
+<td><a class="blue0">{des}</a></td>    
+</tr>
+<!-- END list --> 
+</tbody>   
+</table> 
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+</div>
+{foot}  
+</body>
+</html> 
+    
+<script>  
+var ltype;
+$(function () {
+     $("label[data-ctype='1']").text(arr[1]);
+     $("label[data-ctype='2']").text(arr[2]);   
+   
+ }); 
+</script> 

@@ -1,0 +1,101 @@
+@charset "utf-8";
+/* 代码整理：懒人之家 www.lanrenzhijia.com */
+* {
+	margin:0;
+	padding:0;
+	list-style-type:none;
+}
+a, img {
+	border:0;
+}
+body {
+	font:12px/180% Arial, Helvetica, sans-serif, "新宋体";
+}
+/* lanrenzhijia */
+#lanrenzhijia {
+	width:1366px;
+	height:310px;
+	margin:50px auto;
+	position:relative;
+	overflow:hidden;
+	background:#eee;
+	 
+}
+#inner {
+	display:block;
+	width:5464px;
+	height:310px;
+	position:absolute;
+	left:0;
+	top:0;
+}
+#inner li {
+	display:block;
+	width:1366px;
+	height:310px;
+	float:left;
+	font-size:72px;
+	line-height:300px;
+	text-align:center;
+	content:#666;
+	text-shadow:3px 3px 2px #999, 5px 5px 2px #ccc;
+	background:#eee;
+}
+#nav {
+	width:200px;
+	height:40px;
+	padding-left:600px;
+	position:absolute;
+	bottom:0;
+	left:0;
+	opacity:0.8;
+	filter:alpha(opacity=80);
+}
+#nav em {
+	display:block;
+	float:left;
+	width:24px;
+	height:24px;
+	margin-right:8px;
+	margin-top:8px;
+	line-height:24px;
+	text-align:center;
+	font-size:14px;
+	color:white;
+	font-style:normal;
+	font-family:Arial;
+	background:#eee;
+	border-radius:12px;
+	cursor:pointer;
+}
+#nav .ehover {
+	background:#360;
+	color:#fff;
+}
+#left, #right {
+	width:40px;
+	height:100px;
+	position:absolute;
+	top:100px;
+	background:#333;
+	opacity:0.4;
+	color:#fff;
+	font-size:36px;
+	text-align:center;
+	line-height:100px;
+	cursor:pointer;
+}
+#left:hover, #right:hover {
+	opacity:0.8
+}
+#left {
+	left:0;
+	border-top-right-radius:10px;
+	border-bottom-right-radius:10px;
+}
+#right {
+	right:0;
+	border-top-left-radius:10px;
+	border-bottom-left-radius:10px;
+}
+/* 代码整理：懒人之家 www.lanrenzhijia.com */

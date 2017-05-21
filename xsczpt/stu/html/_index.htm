@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>学生空间-{gtitle}</title>
+{cssjs}       
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header"><h3>
+学生空间首页 
+</h3>
+</div>
+
+<div class="row">
+<div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=courseware" ><img width="120" src="/ico/sys/7.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>我的课件</a> </h5>         
+          
+    </div>
+ </div>
+ </div>
+ 
+ <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=homework" ><img width="120" src="/ico/sys/2.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>我的作业</a> </h5>         
+          
+    </div>
+ </div>
+</div>
+
+  <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=schedule" ><img width="120" src="/ico/sys/3.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>我的计划</a> </h5>         
+          
+    </div>
+ </div>
+ </div>
+            
+<div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=datum" ><img width="120" src="/ico/sys/10.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>学习资料</a> </h5> 
+    </div>
+ </div>
+ </div>
+ 
+ <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=score" ><img width="120" src="/ico/sys/9.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>我的成绩</a> </h5> 
+    </div>
+ </div>
+ </div>
+ 
+ <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=note" ><img width="120" src="/ico/sys/8.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>我的笔记</a> </h5> 
+    </div>
+ </div>
+ </div> 
+ 
+</div>
+<hr/>
+<div class="row"> 
+
+<div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=timetable" ><img width="120" src="/ico/sys/11.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>课表</a> </h5>         
+          
+    </div>
+ </div>
+ </div>     
+ 
+   <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=class" ><img width="120" src="/ico/sys/16.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>班级</a> </h5>         
+          
+    </div>
+ </div>
+ </div>
+ 
+
+  <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=faq" ><img width="120" src="/ico/sys/10.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>FAQ</a> </h5> 
+    </div>
+ </div>
+ </div>
+ 
+ 
+</div>
+<hr/>
+<div class="row">
+
+  
+ 
+ 
+  
+  <div class="col-sm-2"> 
+  <div class="col-sm-9">
+    <div class="thumbnail">
+     <a href="./?t=info" ><img width="120" src="/ico/sys/6.png" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+    <div class="caption" style="text-align:center;">
+       <h5><a>空间信息</a> </h5>         
+          
+    </div>
+ </div>
+ </div> 
+ 
+ 
+</div>  
+
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">     
+ $(function () { 
+      
+  }); 
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_album",id:v,g:"{g}"}, function (d, e) {     
+      if(d.indexOf("ok")>-1)
+        $(obj).parent().parent().parent().remove();
+      else 
+        alert(d);
+  });
+}  
+	
+</script>

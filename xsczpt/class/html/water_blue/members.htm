@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级成员-{gtitle}</title>
+{cssjs}   
+</head>
+<body class="cl_bg">
+{top}
+      <!--头部文件-->
+      <div class="logo_out w1" style="background:url(/upds/class/logo/{c}_1000.jpg);">
+      	<div class="logo">
+      		<img src="/upds/class/logo/{c}.jpg" onerror="this.src='/error/logo.jpg';" width="100" height="100"/>
+      	</div>
+      	<div class="text_logo">
+      		<p>{name} </p>
+      		<span>{slogan} 寄语：{wishes}</span>
+      	</div>
+      </div>
+      <div class="w1 nav">
+      	<div class="main">
+      		<div class="menu">
+      			<ul>                                
+      				<li><a href="./?c={c}" target="">首页</a></li>
+              <li><a href="./?t=cls_album&c={c}" target="">相册</a></li>
+              <!-- START cate -->
+              <li><a href="./?t=arts&cc={id}&c={c}">{name}</a></li>     
+              <!-- END cate -->
+      				<li><a href="./?t=members&c={c}" target="">成员</a></li>
+      				<li><a href="./man/?c={c}" target=_blank>管理</a></li>
+      			</ul>
+      		</div>
+      		<div class="menu_r">
+      			<ul> 
+      				<li><a href="/subject?s={s}" target="">学科</a></li>
+      				<li><a href="/school?s={s}" target="">学校</a></li>
+      			</ul>
+      		</div>
+      	</div>
+      </div>
+
+<div class="w1">
+	<div class="main" style="padding:0 20px 0;">      
+<div class="col-sm-3">   
+{menu_mem}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3 id="mem_list_name">老师 <small></small>      
+ 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>头像</th>
+<th>姓名</th>  
+<th>学科</th> 
+<th>身份</th> 
+<th>职务</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="../zone/?id={uid}" target=_blank><img width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /></a></td> 
+<td>姓名:{truename}<br/>昵称:{nick}</td> 
+<td><label data-subject="{subject}"></label></td> 
+<td><idtype v="{idtype}"></idtype></td> 
+<td>{dutys}</td>    
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+</div> 
+</div>
+</div>
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+    $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+$.getJSON("/data/type_duty.json.txt", function (data) {  
+      duty=data;
+      $("label[data-duty]").each(function (a, b) {
+        $(this).text(duty[$(this).data("duty")]);
+      });
+  });  
+$.getJSON("/data/type.json.txt", function (d) {   
+      $("idtype").each(function (a, b) {
+        $(this).text(d[$(this).attr("v")]);
+      });
+  });
+  $("#mem_list li").each(function(){
+    if($(this).find("a").attr("val")==queryStr("i")){
+      $("#mem_list_name").html($(this).find("a").html());
+    }
+  });
+});
+ 
+</script>

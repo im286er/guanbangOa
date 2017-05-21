@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>浦口区云悦读空间-文章详情</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>  
+<link href="html/read/css/css.css" type="text/css" rel="Stylesheet">
+{meta}	
+<style type="text/css">
+.to-top { display: none; padding: 10px; color: #fff; background-color: #6eba34;z-index:999;}
+.to-top:hover{ color: #fff; }
+</style>
+</head>
+<body class="bgf8">
+<div class="wrap">
+	{top}
+	<div class="clear"></div>
+	<div class="main">
+		{menu}
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="bk_navga">
+			<!--<span><a href="#" target="">科立邦首页</a>&gt; 
+			<a href="#"> 新闻动态</a>&gt;
+			<a href="#">title</a></span>-->
+		</div>
+		<div class="rea_left" style="width:732px;">
+      <!-- START art -->
+			<div class="bk_artinfo bgf">
+				<h3 class="tit">{title}</h3>
+				<span class="time">时间：{created} 人气：{see}</span>
+				{des}
+			</div>
+      <!-- END art -->
+		</div>
+		<div class="rea_right bgf boa" style="width:250px;">
+			<div class="act_tit cgres_bb">
+				<p>推荐阅读</p>
+				<a href="{url}" target="">更多+</a>
+			</div>
+			<ul class="lesnews_list">
+        <!-- START art_list -->
+				<li style="width:85%;"><a href="./?t=art_info&id={id}" target="">{title}</a></li>
+				<!-- END art_list -->
+			</ul>
+		</div>
+	</div>
+</div>
+{foot}
+<a class="to-top">返回顶部</a>
+<script src="html/read/js/jquery.min.js"></script>
+<script src="html/read/js/read.js"></script>
+<script charset="utf-8" src="/read/html/read/js/jquery.toTop.min.js"></script>
+<script type="text/javascript">
+	$(function() {   
+	  vote({tbl:"push_list",do:"see",showok:"",callback:"",id:queryStr("id")},null); 
+	 });  
+$('.to-top').toTop();
+</script>
+</body>
+</html>

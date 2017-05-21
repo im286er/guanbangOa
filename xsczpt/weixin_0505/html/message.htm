@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta charset="utf-8">
+<meta name="applicable-device" content="mobile"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="yes" name="apple-mobile-web-app-capable"/>
+<meta http-equiv="Cache-Control" content="no-transform"/>
+<meta http-equiv="Cache-Control" content="no-siteapp"/>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+
+<link href="js/mui/mui.min.css" type="text/css" rel="stylesheet" />
+<link href="js/mui/mui.previewimage.css" type="text/css" rel="stylesheet" />
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+
+
+<style>
+#wrapper #list-box{
+	padding: 0 10px;
+}
+#wrapper .list{
+	background: #fff;
+	padding: 10px 0;
+	border-bottom: 1px solid #efefef;
+}
+#wrapper .list .title{
+	text-align: left;
+	font-size: 0.8rem;
+	color:#333;
+	line-height: 0.8rem;
+	margin-bottom: 0.15rem;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	white-space:nowrap;
+	
+}
+#wrapper .list .title .name{
+	color:#75b9f4;
+	font-size: 0.9rem;
+}
+#wrapper .list .title .module{
+	padding-right: 7px;
+	border-right: 1px solid #ccc;
+	padding-left: 10px;
+}
+#wrapper .list .title .type{
+	padding-left: 6px;
+}
+#wrapper .list .content{
+	font-size: 0.8rem;
+}
+#wrapper .list .content .leaveword{
+	font-size: 0.8rem;
+	line-height: 1.2rem;
+	color:#999;
+	text-align: left;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:3;
+	-webkit-box-orient: vertical;
+	margin-bottom: 5px;
+}
+#wrapper .list .content a{
+	display:block;
+}
+#wrapper .list .content .des{
+	font-size: 0.8rem;
+	line-height: 1.2rem;
+	color:#666;
+	text-align: left;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp:3;
+	-webkit-box-orient: vertical;
+	margin-bottom: 5px;
+}
+#wrapper .list .content .all{
+	color:#9c3;
+}
+#wrapper .list .content .ret{
+	display: none;
+	color:#9c3;
+}
+#wrapper .list .content .img{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	margin-top: 5px;
+}
+#wrapper .list .content .img li{
+	flex:1;
+}
+#wrapper .list .content .img li .img-box{
+	width: 100%;
+	position: relative;
+}
+#wrapper .list .content .img li .img-box .dummy{
+	padding-top: 100%;
+}
+#wrapper .list .content .img li img{
+	border-radius: 8px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	max-width: 80%;
+	max-height: 80%;
+	width: 80%;
+	height: 80%;
+	display: block;
+	margin:auto;
+	padding: auto;
+}
+#wrapper .list .content .b-time .time{
+	color:#aaa;
+}
+#wrapper .list .content .b-time .set{
+	float: right;
+	color:#000;
+}
+#wrapper .list .content .b-time .isread{
+	float: right;
+	color:#000;
+	padding-right: 5px;
+}
+
+
+</style>
+</head>
+<body>
+<header style="z-index:999"><a href="javascript:history.go(-1);" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>海安中学学生成长系统</h1><a href="#" target=""></a></header>
+
+
+<div id="wrapper" class="pullrefresh mui-content mui-scroll-wrapper" style="background: #fff;margin-top:55px">
+	<div class="mui-scroll">
+		<div id="list-box">
+			<!-- <div class="list">
+				<div class="title">
+						<span class="name">刘诗羽</span>
+						<span class="module">成长经历</span>
+						<span class="type">审美素养艺术特长</span>
+				</div>
+				<div class="content">
+					<div class="des">
+						啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
+					</div>
+					<div class="all">展开</div>
+					<div class="ret">收起</div>
+					<ul class="img">
+						<li>
+							<div class="img-box">
+								<div class="dummy"></div>
+								<img src="images/20150606204156_KZ8ic.jpeg"  data-preview-src="" data-preview-group="2"/>
+							</div>
+						</li>
+						<li>
+							<div class="img-box">
+								<div class="dummy"></div>
+								<img src="images/20150606204156_KZ8ic.jpeg"  data-preview-src="" data-preview-group="2"/>
+							</div>
+						</li>
+						<li>
+							<div class="img-box">
+								<div class="dummy"></div>
+								<img src="images/20150606204156_KZ8ic.jpeg"  data-preview-src="" data-preview-group="2"/>
+							</div>
+						</li>
+						<li>
+							<div class="img-box">
+								<div class="dummy"></div>
+								<img src="images/20150606204156_KZ8ic.jpeg"  data-preview-src="" data-preview-group="2"/>
+							</div>
+						</li>
+					</ul>
+					<div class="b-time">
+						<span class="time">2012-04-21 12:22:20</span>
+						<span class="set">已审核</span>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
+<script src="js/mui/mui.min.js"></script>
+<script src="js/mui/mui.previewimage.js"></script>
+<script src="js/mui/mui.zoom.js"></script>
+<script src="js/jquery-1.11.1.js" ></script>
+<script>
+//mui('body').on('tap','a',function(){document.location.href=this.href;});
+mui.previewImage();
+var count=0;
+var role_id={role_id};
+var pagenumber=1;
+var getInfoUrl="./?t=message_json";
+var goInfoUrl="./?t=is_read_json";
+mui.init({
+	pullRefresh : {
+		container:'.pullrefresh',
+		down : {
+			height:50,
+			auto: false,
+			contentdown : "下拉可以刷新",
+			contentover : "释放立即刷新",
+			contentrefresh : "正在刷新...",
+			callback : function() {
+				var self = this; 
+				// 加载更多的内容
+				loading(this);
+			} 
+		},
+		up : {
+			height:50,
+			auto:false,
+			contentrefresh : "正在加载...",
+			contentnomore:'没有更多数据了',
+			callback : function() {
+				var self = this; 
+				// 加载更多的内容
+				loadMore(this);
+			} 
+		}
+	},
+  
+});
+
+function loading(pullRefresh) {
+	 pullRefresh.endPulldownToRefresh();
+}
+	
+function loadMore(pullRefresh) {
+	 pullRefresh.endPullupToRefresh(++count > 2);
+	 alert(count);
+	 getinfos();
+}
+getinfos();
+function getinfos(){
+	mui.ajax(getInfoUrl,{
+		data:{
+			p:pagenumber,
+		},
+		dataType:'json',
+		type:'post',
+		timeout:10000,
+		success:function(data){  
+			//alert(JSON.stringify(data));return false;
+			var photolist = document.getElementById("list-box");
+			fragmen = document.createDocumentFragment();
+			var lie;
+			
+			mui.each(data,function(index,item){	
+				var id = item.id,
+				menuname1 = item.menuname1,
+				menuname2 = item.menuname2,
+				subject= item.subject,
+				stime= item.stime,
+				subject= item.subject,
+				from_id = item.from_id,
+				is_read = item.is_read,
+				str_href = item.str_href,
+				flag_true = item.flag_true,
+				leaveword = item.leaveword,
+				content = item.content;
+				if(item.imgs1){
+					var	imgs1 = item.imgs1;
+				}
+				if(item.imgs1){
+					var	 imgs2 = item.imgs2;
+				}
+				if(item.imgs1){
+					var	 imgs3 = item.imgs3;
+				}
+				if(item.imgs1){
+					var	 imgs4 = item.imgs4;
+				}
+				if(is_read==1){
+					true_read='已读';
+				}else{
+					true_read='未读';
+				}
+				if(role_id==4||role_id==5){
+					var truename = item.xname,
+					grade_name = item.grade_name,
+					class_name = item.class_name;
+					
+				}else{
+					var truename = item.truename;	
+				}
+				if(!content){
+					content=leaveword;
+				}
+				
+
+				//生成一个节点
+				lie = document.createElement("div");
+				//为li节点指定class
+				lie.className = 'list';
+			    if(role_id==1){
+				    lie.innerHTML = '<div class="title">'+
+										'<span class="name">'+truename+'</span>'+
+										'<span class="grade">('+grade_name+class_name+')</span>'+
+										'<span class="module">'+menuname1+'</span>'+
+										'<span class="module">'+menuname2+'</span>'+
+										'<span class="type">'+subject+'</span>'+
+								'</div>'+
+								'<div class="content">'+
+									//'<a href="#" >'+
+										'<div class="des" data-id="'+id+'" data-href="'+str_href+'">'+									
+												content+
+										'</div>'+
+									//'</a>'+
+									'<div class="all">展开</div>'+
+									'<div class="ret">收起</div>'+
+									
+									'<ul class="img">'+
+										'<li>'+
+											'<div class="img-box">'+
+												'<div class="dummy"></div>'+
+												'<img src="'+imgs1+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+											'</div>'+
+										'</li>'+
+										'<li>'+
+											'<div class="img-box">'+
+												'<div class="dummy"></div>'+
+												'<img src="'+imgs2+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+											'</div>'+
+										'</li>'+
+										'<li>'+
+											'<div class="img-box">'+
+												'<div class="dummy"></div>'+
+												'<img src="'+imgs3+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+											'</div>'+
+										'</li>'+
+										'<li>'+
+											'<div class="img-box">'+
+												'<div class="dummy"></div>'+
+												'<img src="'+imgs4+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+											'</div>'+
+										'</li>'+
+									'</ul>'+
+									'<div class="b-time">'+
+										'<span class="time">'+stime+'</span>'+
+										'<span class="set">'+flag_true+'</span>'+
+										'<span class="isread">'+true_read+'</span>'+
+									'</div>'+
+									
+								'</div>'+;
+								'<div class="leaveword">'+
+									'<span class="module" style="color:red;">未通过原因</span>'+
+									'<span class="module">'+leaveword+'</span>'+
+								'</div>';
+					fragmen.appendChild(lie);
+				}else{
+					lie.innerHTML = '<div class="title">'+
+											'<span class="name">'+truename+'</span>'+
+											'<span class="grade">('+grade_name+class_name+')</span>'+
+											'<span class="module">'+menuname1+'</span>'+
+											'<span class="module">'+menuname2+'</span>'+
+											'<span class="type">'+subject+'</span>'+
+									'</div>'+
+									'<div class="content">'+
+										//'<a href="#" >'+
+											'<div class="des" data-id="'+id+'" data-href="'+str_href+'">'+									
+													content+
+											'</div>'+
+										//'</a>'+
+										'<div class="all">展开</div>'+
+										'<div class="ret">收起</div>'+
+										
+										'<ul class="img">'+
+											'<li>'+
+												'<div class="img-box">'+
+													'<div class="dummy"></div>'+
+													'<img src="'+imgs1+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+												'</div>'+
+											'</li>'+
+											'<li>'+
+												'<div class="img-box">'+
+													'<div class="dummy"></div>'+
+													'<img src="'+imgs2+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+												'</div>'+
+											'</li>'+
+											'<li>'+
+												'<div class="img-box">'+
+													'<div class="dummy"></div>'+
+													'<img src="'+imgs3+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+												'</div>'+
+											'</li>'+
+											'<li>'+
+												'<div class="img-box">'+
+													'<div class="dummy"></div>'+
+													'<img src="'+imgs4+'" data-preview-src="" data-preview-group="'+from_id+'"/>'+
+												'</div>'+
+											'</li>'+
+										'</ul>'+
+										'<div class="b-time">'+
+											'<span class="time">'+stime+'</span>'+
+											'<span class="set">'+flag_true+'</span>'+
+											'<span class="isread">'+true_read+'</span>'+
+										'</div>'+
+									'</div>';
+					fragmen.appendChild(lie);
+				}
+			});
+			//将li节点挂在父节点上
+			photolist.appendChild(fragmen);
+			pagenumber++;
+			$(".img-box img").error(function(){
+				$(this).parent().hide();
+			});
+			$(".module").each(function(){
+				var menu = $(this).html();
+				var menu = menu.replace('null', ''); //去掉  "" 
+				if(!menu){
+					$(this).hide();
+				}				
+			});
+			$(".grade").each(function(){
+				var menu = $(this).html();
+				var menu = menu.replace('null', ''); //去掉  "" 
+				var menu = menu.replace('undefinedundefined', ''); //去掉  ""
+				var menu = menu.replace('(', ''); //去掉  ""
+				var menu = menu.replace(')', ''); //去掉  ""
+				if(!menu){ 
+					$(this).hide();
+				}				
+			});
+			//展开-收起
+			$('.all').click(function(){
+				$(this).parent('.content').children('.des').css('webkit-line-clamp','10');
+				$(this).hide();
+				$(this).next().show();
+			})
+			$('.ret').click(function(){
+				$(this).parent('.content').children('.des').css('webkit-line-clamp','3');
+				$(this).hide();
+				$(this).prev().show();
+			});
+			mui(".content").on('tap','.des',function(){
+				var id=$(this).data('id');
+				var str_href=$(this).data('href');
+				
+				mui.ajax(goInfoUrl,{
+					data:{
+						id:id,
+					},
+					dataType:'json',
+					type:'post',
+					timeout:10000,
+					success:function(data){  
+						location.href="./?t="+str_href;
+					}
+				});
+			});	
+
+		},
+		error:function(){
+			console.log("发生了异常");
+		}
+	});
+}
+
+function goinfo(id,str_href){
+	
+}
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

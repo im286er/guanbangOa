@@ -1,0 +1,393 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<style>
+.select-main{float:right !important;}
+._ha_content{margin-top:15px;float:left;}
+.layer-anim{top:10%!important;}
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+._ha_content{display:none;clear:both;min-height:0 !important;}
+._ha_content label{min-height:0 !important;line-height:normal !important;}
+.ha_cont{float:left;color:red;}
+.ha_cont pre{color:red;background-color:white;}
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+.ha_tacontent{width:100%;max-height:100px;overflow:hidden;text-overflow:ellipsis;padding:0;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;line-height:23px;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ha_cls">
+	        <div class="ha_selectlist">
+				<form action="./srv/report_self_submit.php" method="POST"  onsubmit="return checkForm();">
+					<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn"></a>
+					<div class="ha_row">
+						<div class="has_selbox">
+							<span >分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类：</span>
+							<select name="report_type_add" id="report_type_add" class="ui-select">
+							<option value="">请选择分类</option>
+								{str_report_type}
+							</select>
+						</div>
+						{str_content}
+						<div class="ha_content ha_stext">
+							<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="content" name="content"></textarea>
+							</div>
+						</div>
+						<div class="ha_content ha_stext">
+							<label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="note" name="note"></textarea>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<input type='hidden' id='partner_id' name='partner_id' value=''>
+						<input type='hidden' id='geter' name="geter" value='{master_val}'>
+						<input type='hidden' id='menu1' name="menu1" value=''>
+						<input type='hidden' id='menu2' name="menu2" value=''>
+						<input type="hidden" name="subject" id="subject" value=""/>
+						<input type="hidden" name="uid" value="{uid}"/>
+						<input type="hidden" name="title" value=""/>
+						<input type="hidden" name="flag" id="h_flag" value=""/>
+						<div class="ha_bot">
+							<input class="ha_save" type="submit" name="Submit" value="保存" /> 
+						</div>
+					</div>
+				</form>
+			</div>
+			</div>
+	</div>
+</div>
+<div class="ha_corbox">
+	<form name="check" id="" method="post">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<dl class="ha_addname">
+			<dt><input type="button" value="全选" onclick="selectAll(document.check)" /><input type="button" value="取消" onclick="clearAll(document.check)" /></dt>
+			<dd>
+				{str_partner}
+			</dd>    
+		</dl>
+		<div class="clear"></div>
+		<div class="ha_bot">
+			<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn">返回</a>
+			<input class="ha_save" type="text" onclick="get_partner()" value="保存" /> 
+		</div>
+	</form>
+</div>
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/plain" id="upload_img" name="upload_img"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.all.js"></script>
+<script src="js/layer/layer.js"></script>
+<script type="text/javascript">
+//全选
+function selectAll(obj){
+	for(var i = 0;i<obj.elements.length;i++)
+	if(obj.elements[i].type == "checkbox")
+	obj.elements[i].checked = true;
+}
+//取消全部
+function clearAll(obj){
+	for(var i = 0;i<obj.elements.length;i++)
+	if(obj.elements[i].type == "checkbox")
+	obj.elements[i].checked = false;
+}
+</script>
+<script type="text/javascript">
+$(function(){
+	//menu
+	$('.ha_menu li').hover(function(){
+		$('span',this).stop().css('height','2px');
+		$('span',this).animate({
+			left:'0',
+			width:'100%',
+			right:'0'
+		},200);
+	},function(){
+		$('span',this).stop().animate({
+			left:'50%',
+			width:'0'
+		},200);
+	});
+	//edit弹出form
+	$("#ha_add_cor").hover(function(){
+		$(this).stop().animate({
+			opacity: '0.8'
+		});
+	}, function () {
+		$(this).stop().animate({
+			opacity: '1'
+		});
+	}).on('click', function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#ha_cortext").fadeIn("slow");
+		$(".ha_corbox").fadeIn("slow")
+	});
+	//关闭
+	$(".close_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$(".ha_corbox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//close-quote
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#39a7b7' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+		$(".ha_corbox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+});
+
+//获取合伙人
+function get_partner(){
+	$(".ha_corbox").fadeOut("fast");
+	$("#mask").css({ display: 'none' });
+	
+	var partner_id = new Array();
+	var partner_name = new Array();
+	$("[name='partner']").each(function(a,b){
+		if($(b).prop( "checked" )){
+			partner_id.push($(b).attr("id"));
+			partner_name.push($(b).attr("pname"));
+		}
+	})
+	
+	/*if(partner_id.length>5){
+		alert("合伙人最多只能选择5个，请重新选择");
+		return false;
+	}*/
+	
+	$("#partner").val(partner_name);
+	$("#partner_id").val(partner_id);
+	
+	if($("#partner").val()==""){
+		document.getElementById("captain_show").style.display="none";
+		document.getElementById("task_show").style.display="none";
+	}else{
+		document.getElementById("captain_show").style.display="";
+		document.getElementById("task_show").style.display="";
+	}
+}
+
+//文件上传验证
+function checkFiles(obj){
+	//文件名称及路径
+	var $pathFile  = $(obj).val();
+	var expArray   = $pathFile.split('.');
+	var extendName = expArray.pop();
+	var allowExt = 'zip,rar';
+	var searchResult = allowExt.search(extendName.toLowerCase());
+	var img;
+	if(extendName.length!=3||searchResult==-1){
+		alert('仅允许上传的文件格式：zip、rar。');
+		$(obj).val('');
+	}
+	document.getElementById('path_name').value=obj.value
+}
+
+$(document).ready(function(){		
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	$("#report_type").selectWidget({
+		change: function (changes) {
+			if($(".select-list").length>1){
+				var index=$(".select-list").eq(1).children("li").index($(".active")[1])-1;
+			}else{
+				var index=$(".select-list").eq(0).children("li").index($(".active")[0])-1;
+			}
+			if(index!=-1){
+				$(".s2_tips").hide();
+				cont=$(".s1_tips .ha_cont pre").eq(index).html();
+				if(cont!=""){
+					$(".s1_tips").hide();
+					$(".s1_tips").eq(index).show();
+				}else{
+					$(".s1_tips").hide();
+				}
+			}else{$(".s1_tips").hide();
+				$(".s2_tips").hide();
+			}
+			selectType($("#report_type"));
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+});	
+
+//选择报表子类
+function selectType(obj)
+{
+	var val = $(obj).val();
+	//if($(obj).nextAll(".select-main").length>1){return false;};
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_report","id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			var len = d.value.length;
+
+			if($(obj).nextAll(".select-main").length>1){
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select").remove();
+				$(obj).next(".select-main").remove();
+			};
+			
+			if(len>0){
+				//动态生成下拉框
+				var html = "<select name='rid' id='rid' class='ui-select'>";
+				html += "<option value=''>请选择分类</option>";
+				var content='';
+				$(".s2_tips").remove();
+				for(var i=0;i<len;i++){
+					html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["code_name"]+"</option>"
+					content += "<div class=\"ha_content ha_stext _ha_content s2_tips\"><label>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</label><div class=\"ha_cont\"><pre>"+d.value[i]["content"]+"</pre></div></div>";
+				}
+				html += "</select>";
+				$(obj).after(html);
+				$(".ha_selbox").after(content);
+			}
+			
+			$("#rid").selectWidget({
+				change       : function (changes) {
+				var index=$(".select-list").eq(0).children("li").index($(".active")[0])-1;
+				if(index!=-1){
+					$(".s1_tips").hide();
+					cont=$(" .s2_tips .ha_cont pre").eq(index).html();
+					
+					if(cont!=""&&cont!="null"){
+						$(".s2_tips").hide();
+						$(".s2_tips").eq(index).show();
+					}else{
+						$(".s2_tips").hide();
+					}
+				}else{$(".s2_tips").hide();}
+					return changes;
+				},
+				effect       : "slide",
+				keyControl   : true,
+				speed        : 200,
+				scrollHeight : 250
+			});
+			//$("#rid").val("{rid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select").remove();
+		if($(obj).nextAll(".select-main").length>1){
+			$(obj).next(".select-main").remove();
+		}
+	}	
+}
+
+//检查提交表单
+function checkForm()
+{
+	if($("#report_type").val()==""){
+		alert("请选择分类。");
+		return false;	
+	}
+	
+	if($("#report_type").val()!="" && $("#rid").val()==""){
+		alert("请选择分类。");
+		return false;	
+	}
+	
+	if($("#title").val()==""){
+		alert("请输入标题。");
+		return false;	
+	}
+	if($("#content").val()==""){
+		alert("请输入内容。");
+		return false;	
+	}
+	
+	if($("#content").val().length<10){
+		alert("输入内容请不要少于10个字。");
+		return false;	
+	}
+	return true;
+}
+
+ //上传图片
+var editor=UE.getEditor('upload_img');
+editor.ready(function(){
+	editor.setDisabled();
+	editor.hide();
+	editor.addListener('beforeInsertImage',function(t,arg){
+		var limit=(arg.length>3)?3:arg.length;
+		var num=Math.floor(Math.random()*1000);
+		for(i=0;i<limit;i++){
+			var total = "<div style='width:100px;float:left;margin-right:20px;text-align:center;' class='ha_eimglist'>";
+			var str="<input type='hidden' id='PicUrl"+num+"' name='PicUrl[]' value='"+arg[i].src+"'>";
+			var st="<input type='hidden' id='PicName"+num+"' name='PicName[]' value='"+arg[i].title+"'>";
+			var s="<img id='preview"+num+"' style='width:100px;height:100px;margin-top:20px;' src='"+arg[i].src+ "'/><a id='del"+num+"' onclick='delimg2("+num+")' style='display:block;width:100%;line-height:25px;height:25px;cursor:pointer;'>删除</a>";
+			total+=str+st+s;
+			total += "</div>";
+			$('#uploadPic').append(total);               	
+		}
+		
+		
+		$(".ha_eimglist img").each(function(){
+			$(this).bind("click",function(){
+				var src=$(this).attr('src');
+				layer.open({
+				  type: 1,
+				  title: false,
+				  closeBtn: 0,
+				  area: '500px',
+				  skin: 'layui-layer-nobg', //没有背景色
+				  shadeClose: true,
+				  content: '<a href='+src+' target="_blank"><img src="'+src+'" style="width:100%;"></a>'
+				});	
+			})
+		});	
+	})
+})
+function upImagefj(){
+	var myImage=editor.getDialog("insertimage");
+	myImage.open();
+}
+function delimg2(i){
+	$("#preview"+i).remove();
+	$("#del"+i).remove();
+	$("#PicUrl"+i).remove();
+	$("#PicName"+i).remove();
+}
+//获取顶部和左侧的栏目id
+var menu2="";
+function getUrlParam(name)
+{
+var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
+menu2=getUrlParam('id');
+
+//var uid="{uid}";
+var menu1=""; 
+var menu2=""; 
+menu1=self.parent.frames.lef_m.menu1;
+menu2=self.parent.frames.lef_m.menu2;
+$("#menu1").val(menu1);
+$("#menu2").val(menu2);
+</script>
+</body>
+</html>

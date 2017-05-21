@@ -1,0 +1,277 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<style>
+#myEditor{
+	width:100% !important;
+}
+</style>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" src="common/jquery.min.js"></script>
+
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle2">
+			<form action="./?t=senior_message_search" method="post" style="float:left;width:40%;">
+				<span>
+					学生姓名：<input type="text" name="truename" id="truename" value="" size="15" />
+				</span> 
+				<input type="submit" id="choose" name="choose" value="按学生查找" />	
+			</form>
+			
+		<div class="ha_addbtn">
+			<a href="#" target="" id="ha_add" style="background:#fff;">添加+</a>
+		</div>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<form action="./?t=senior_message_search" method="post" onsubmit="return checkSubmit();">
+				{str_check}
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+						{str_top}
+						 <td width="10%" class="tabtd" style="text-align:center;">毕业生姓名</td>
+						 <td width="10%" class="tabtd" style="text-align:center;">毕业届</td>
+						 <td width="15%" class="tabtd" style="text-align:center;">时间</td>
+						 <td class="tabtd" style="text-align:center;">留言</td>
+						 {str_show}
+					</tr>
+					{str_event}
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+<input type="hidden" name="h_id" id="h_id"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="mop" id="h_mop" value=""/>
+<input type="hidden" name="flag2" id="flag2" value=""/>
+<input type="hidden" name="subject" id="subject" value=""/>
+{footer}   
+
+<div id="LoginBox" style="width:85%;left:5%;">
+	<form action="./srv/report_self_submit.php" method="POST"  onsubmit="return checkForm();">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<div class="ha_row">
+			<textarea id="myEditor" name="content" ></textarea>
+			<div class="ha_bot" style="width:18%;text-align:center;">
+				<input class="ha_save" type="submit" name="Submit" value="保存" /> 
+			</div>
+		</div>
+	</form>
+</div>
+</body>
+</html> 
+<div id="tc" style="display:none;padding:10px;">
+<p>说明:</p>
+	<div><textarea id="btg_content" cols=40 rows=4 ></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="button" onclick="check_btg();" value="确定"  style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div>
+<input id="geter" style="display:none;" value=""></div>
+<script type="text/javascript">
+var ueditor = UE.getEditor('myEditor',{
+	initialFrameHeight:200
+});
+
+$(function(){
+	$("#truename").val("{truename}");
+	
+	//弹出登录
+	$("#ha_add").hover(function(){
+		$(this).stop().animate({
+			opacity: '0.8'
+		});
+	}, function () {
+		$(this).stop().animate({
+			opacity: '1'
+		});
+	}).on('click', function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#LoginBox").fadeIn("slow");
+	});
+	//
+	//按钮的透明度
+	$("#loginbtn").hover(function(){
+		$(this).stop().animate({
+			opacity: '1'
+		}, 600);
+	}, function () {
+		$(this).stop().animate({
+			opacity: '0.8'
+		}, 1000);
+	});
+	//关闭
+	
+	$(".close_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$("#LoginBox").fadeOut("fast");
+		$(".").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//关闭
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$(".ha_edit").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//close-quote
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#39a7b7' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+		$("#LoginBox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//
+	
+});
+
+//提交表单处理
+function checkSubmit()
+{
+	var len = $("input[name='id[]']:checked").size();
+	if($("#op").val()=="0"){
+		alert("请选择要进行的操作");
+		return false;	
+	}
+	if(len==0){
+		alert("请选择记录");
+		return false;
+	}
+}
+var menu2="";
+function getUrlParam(name)
+{
+var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
+menu2=getUrlParam('id');
+
+var uid="{user_id}";
+var menu1=""; 
+menu1=self.parent.frames.lef_m.test;
+function check_btg(){
+var geter=$("#geter").val();
+var content=$("#btg_content").val();
+var id=$("#h_id").val();
+var flag=$("#flag2").val();
+var subject=$("#subject").val();
+$.ajax({
+    type: 'POST',
+    url: "./srv/senior_message_search.php" ,
+    data: {tpl:"set_checked",uid:uid,geter:geter,content:content,id:id,flag:flag,menu1:menu1,menu2:menu2,subject:subject} ,
+    success: function(d){
+	 if(d=="ok"){
+		layer.closeAll();
+		layer.msg('提交成功！');
+		location.reload();
+	  }else{
+		layer.msg('提交失败！');
+	  }
+	} 
+});
+}
+
+function selectAll(){
+	var checklist = document.getElementsByName ("id[]");
+	if(document.getElementById("all_select").checked){
+		for(var i=0;i<checklist.length;i++){
+			checklist[i].checked = 1;
+		} 
+	}else{
+		for(var j=0;j<checklist.length;j++){
+			checklist[j].checked = 0;
+		}
+	}
+}
+
+
+
+$(document).ready(function(){
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+	$("#gid").selectWidget({
+		change       : function (changes) {
+			selectClass($("#gid"));
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+});
+
+function abc(id,geter,subject){
+	if(confirm('确定要执行此操作吗?')) 
+     { 
+   $("#h_but_op").val("确定");
+   $("#h_flag").val("已审核");
+   $("#h_mop").val("1");
+   $("#h_id").val(id);
+   $("#subject").val(subject);
+   $.ajax({
+    type: 'POST',
+    url: "./srv/senior_message_search.php" ,
+    data: {tpl:"set_tg",uid:uid,geter:geter,id:id,flag:"已审核",menu1:menu1,menu2:menu2,subject:subject} ,
+    success: function(d){
+	
+	 if(d=="ok"){
+			layer.closeAll();
+			layer.msg('提交成功！');
+			location.reload();
+		  }else{
+			layer.msg('提交失败！');
+		  }
+		} 
+	});
+     } else{
+	location.reload(); 
+	 }
+}
+
+function shwtg(id,geter,flag,subject){
+	$("#h_id").val(id);
+	$("#geter").val(geter);
+	$("#flag2").val(flag);
+	$("#subject").val(subject);
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc')
+	});
+}
+
+</script> 

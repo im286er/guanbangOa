@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+<title>{name} - {gtitle}</title> 
+{cssjs} 
+<link rel="stylesheet" type="text/css" href="./css/pic.css"></link>
+</head>   
+<body>
+{top}
+{head}
+<!--资讯列表及最新更新开始-->
+<div class="middle">
+	<div class="middle_left">
+    	<div class="top"><span>专题</span><span class="more"><a href="./?t=topics&s={s}">更多</a></span></div>
+    	<div class="list">
+        	<ul>
+<!-- START topic --> 
+<li><div class="left_pic"><img src="/upds/school/topic/t_{pic}" width="93" height="62"></div>
+<div class="right_txt">
+<p class="title"><span><a href="./?t=topic&id={id}&s={s}" target=_blank>{title}</a></span>
+<br>{pre}</p>
+</div>
+</li>
+<!-- END topic --> 
+          </ul>
+        
+        </div>
+    </div>
+	<div class="middle_right">
+    	<div class="webnav">
+        	当前所在位置 > {name}
+      </div>
+        <div class="latestnewsbox">
+        	<div class="left_pic">
+            <!--图片轮换开始-->
+            	<div class="box-zzsc">
+                    <div class="ctrl-panel">
+                        <a class=m-page href="javascript:;" rel=js_btn_list>1</a>
+                        <a class=m-page href="javascript:;" rel=js_btn_list>2</a>
+                        <a class=m-page href="javascript:;" rel=js_btn_list>3</a>
+                        <a class=m-page href="javascript:;" rel=js_btn_list>4</a>	
+                        <a class=m-page href="javascript:;" rel=js_btn_list>5</a>    
+                    </div>
+                    <div class=scroll-wrap>
+                        <div class=scroll_box_content rel="scroll_box_content">
+<!-- START slide -->
+<div class=content_list>
+<img src="/upds/school/slide/{pic}" />			
+</div>
+<!-- END slide -->   
+                        </div>
+                    </div>
+               </div>
+				 <!--图片轮换结束-->
+             
+            
+            </div>
+       	  <div class="right_txt">
+            	<div class="top"><span>最新更新</span><span class="more"><a href="./?t=news&s={s}">更多</a></span></div>
+            <div class="list">
+                	<ul>
+<!-- START list -->
+<li><span> <a href="./?t=new&id={id}&s={s}" target=_blank> {title}</a></span></li>
+<!-- END list -->
+ </ul>                
+                </div>
+          </div>
+      </div>
+    </div>
+</div>
+
+<!--banner-->
+<div class="middle_banner">
+<a><img src="html/def/img/banner2.jpg" width="1216" height="125"></a>
+</div>
+
+<div class="class_box">
+<!-- START cate -->
+<div class="box">
+<div class="top"><div class="title"><span class="txt">{name}</span><span class="more"><a>更多</a></span></div>
+</div>
+<div class="list">
+	<ul>
+<!-- START rp --> 
+<li><span class="title"><a href="./?t=new&id={id}&s={s}" target=_blank>{title}</a></span><span class="date"></span></li>
+<!-- END rp -->                 
+</ul>          
+</div></div>
+<!-- END cate --> 
+</div>
+<!--图片轮换引入js-->
+<script src="./js/pic.js"></script>        
+{foot}
+</body>
+</html>
+<script> 
+</script>

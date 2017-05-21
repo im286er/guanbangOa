@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>海安中学成长平台--消息提示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script src="/ppf/js/select.js"></script>
+<style>
+
+.gridtable_stu li{position:relative;float:left;display:block;width:100px;height:40px;border:1px solid #e6e6e6;line-height:40px;text-align:center;}
+.gridtable_stu li a{display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+			<div id="table_content" class="">
+			<form action="" method="POST" >
+				<div class="boxtitle" style="padding:0;background:#deebff">
+					<div class="fl" style="width:60%;">
+						<span style="margin-left:10px;"></span>
+						<select name="term_id" id="term_id" class="ui-select">
+								<option value="">请选择学期</option>
+								{str_term}
+						</select>
+						<span>
+							<select name="gid" id="gid" onchange="selectClass(this);">
+							</select> 
+						</span> 
+						<span>
+							<span>姓名：</span>
+							<input name="truename" id="truename" value="{truename}" size="12" type="text" style="height:21px;padding:0px">
+						</span>	
+						<input type="submit" id="choose" name="choose" value="查询" />
+						<div class="clear"></div>
+					</div>	
+					{str_import}
+				</div>
+				<div class="clear"></div>
+					<div id="">
+						
+						<div class="ha_content ha_tipsul mt15">
+							<span class="" style="{var_wcl}">未处理审核：</span>
+							<ul class="no_audited">
+								{str_sh}
+							</ul>
+						</div>
+							<div class="ha_row">
+								<div class="clear"></div>
+								<div style="width;100%; height:30px; line-height:30px; text-align:center; font-size:14px;margin-top: 0px;">{tips}</div>
+								<div id="table_content">
+									<ul class="gridtable_stu">
+										{str}
+									</ul>
+								</div>
+								<div class="clear"></div>
+								<!--<div class="boxfooter" style="width:80%;padding-left:0;margin-left:0;" >
+								  <a href="./?t=zhsz_comment&dept={class_dept}" target="" style="width:100px; background:#277fc2;color:#fff;border-radius:10px;" onclick="layer.msg('请等待，数据加载中。。。', {icon: 16,skin: 'layer-ext-moon',time: 100000});">综评表统计</a>
+								</div>-->
+								<p style="text-align:right;padding-right:30px;">共有学生：{user_num}人</p>
+							</div>
+						
+					</div>
+					</form>
+			</div>
+	<div class="blank30">&nbsp;</div>
+</div>
+
+<script type="text/javascript">
+
+$(".user_list2").each(function(a,b){
+  if($(this).attr("num")!=0&&$(this).attr("num")!=undefined){
+	$(this).css({"background":"#edcdcd"});
+    $(this).find("a").css("display","block");
+  }
+})
+</script>
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option class='ui-select' selected value='0' >请选择年级</option>");
+		$('#gid').val('{gid}');	
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$('#term_id').val('{term_id}');	
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select class='ui-select' name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+$(document).ready(function(){
+	$("#report_type").selectWidget({
+		change       : function (changes) {
+			selectType($("#report_type"));
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+	$("#term_id").val({term_id});	
+	report_index=$("#term_id").get(0).selectedIndex;
+	$(".select-list").eq(0).children("li").removeClass("active");
+	$(".select-list").eq(0).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(0).text($("#term_id option:selected").text());
+	
+	$("#report_type").val({report_type});
+
+	$(".select-list").eq(1).children("li").removeClass("active");
+	$(".select-list").eq(1).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(1).text($("#report_type option:selected").text());
+	var is_admin="{is_admin}";
+	if(is_admin){
+		$("#gid").val({gid});
+		report_index=$("#gid").get(0).selectedIndex;
+		$(".select-list").eq(2).children("li").removeClass("active");
+		$(".select-list").eq(2).children("li").eq(report_index).addClass("active");
+		$(".select-set").eq(2).text($("#gid option:selected").text());
+		
+		selectClass($("#gid"));
+	}
+	
+});
+</script> 
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组相册-{gtitle}</title>
+{cssjs} 
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<style type="text/css">
+.container .navbar a:hover{
+	background-color: #333333 !important;
+	border-color: #204d74 !important;
+}
+ a{
+	color:#31708f;
+	cursor:pointer;
+ }
+</style>
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header"><h3>
+<button type="button" class="btn btn-primary glyphicon glyphicon-picture" id="btn"> 创建相册 </button>  
+</h3>
+</div>
+
+<div class="row">
+<!-- START list --> 
+ <div class="col-sm-3" style="">
+  <div class="col-sm-6">
+        <div class="thumbnail">
+     <a href="./?t=photo&g={g}&id={id}" ><img width="120" src="/upds/group/album/{gid}/{id}/t_{logo}" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+   </div>
+    <div class="caption col-sm-6">
+       <h5><a href="./?t=photo&g={g}&id={id}">{name}</a>  <small>{nums}张</small></h5>
+       <p>{nick} </p> 
+        <p>{des}</p>    
+    </div>
+ </div>
+<!-- END list -->    
+</div>  
+<hr/>
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">    
+//群组空间权限
+var isopen="{isopen}";
+if(isopen=="0"){$(".isopen").remove();}
+ $(function () { 
+    //$('#myModal').modal({keyboard: true});
+    $("#btn_ok").click(function(){
+		if(isopen=="0"){layer.msg("非本组成员无法上传图片！");return;};
+        if($("#dlg1 #name").val()==""){alert("请输入名称！");return;}
+        if($("#dlg1 #des").val()==""){alert("请输入描述！");return;}
+        if($("#dlg1 #des").val().length>250){alert("描述限制250个字符！");return;}
+        $.post("./srv/album.php", {tpl:"add_album",gid:"{g}",name:$("#dlg1 #name").val(),data:$("#dlg1 #des").val()}, function (d, e) { 
+            if(d.indexOf("ok")>-1)
+              location.reload();
+            else 
+              alert(d);
+        });         
+      });
+   $("#btn").click(function(){if(isopen=="0"){layer.msg("非本组成员无法上传图片！");return;}; $('#dlg1').modal('show');});      
+  }); 
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_album",id:v,g:"{g}"}, function (d, e) {     
+      if(d.indexOf("ok")>-1){
+		layer.msg("删除成功！");
+        $(obj).parent().parent().parent().remove();
+	  }
+      else 
+        layer.msg(d);
+  });
+}  
+	
+
+</script>
+
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">创建相册</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+    <label for="firstname" class="col-sm-2 control-label">名字</label>
+    <div class="col-sm-10">
+       <input type="text" class="form-control" id="name"  maxlength="50" placeholder="请输入名字">
+           <input type="text" id="id" value="" style="display:none;"/>
+          <input type="text" id="cid" value="{c}" style="display:none;"/>
+    </div>
+ </div> 
+ <div class="form-group">
+    <label class="col-sm-2 control-label">描述</label>
+    <div class="col-sm-10">
+        <textarea class="form-control" id="des" rows="5" maxlength="250"></textarea> 
+     </div>  
+ </div>   
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn_ok"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

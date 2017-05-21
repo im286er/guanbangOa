@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="common/jquery.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+
+<style>
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<label class="current"><a href="javascript:void(0);">评价管理</a></label>
+			<span class="floatright"  id="ha_add_py" style="margin:8px 5px 0 0">
+				<img src="images/add.gif" class="padding5"><a href="#">添加学期评语</a>  
+			</span>
+		</div>
+		
+		<div class="boxtitle2">
+			<form action="./?t=master_comment_manage" method="post">
+				<span>
+					<select name="tid" id="tid">
+					</select>
+					<select name="gid" id="gid" onchange="selectClass(this);"></select>
+					姓名：<input name="truename" id="truename" value="" size="15" type="text">
+				</span> 
+				<input id="choose" name="choose" value="查询" type="submit">	
+			</form>
+		</div>
+		
+		
+	<div class="clear"></div>
+			
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+	<div class="clear"></div>
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+						 <td width="7%" class="tabtd">姓名</td>
+						 <td width="12%" class="tabtd">学期</td>
+						 <td width="8%" class="tabtd">班级</td>
+						 <td width="7%" class="tabtd">班主任</td>
+						 <td class="tabtd">学期评语</td>
+						 <td width="10%" class="tabtd">操作</td>
+					</tr>
+					{str}
+			</table>
+		</div>
+		<ul class="pagination pull-right">
+			{page}
+		</ul>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+	</div>
+<!--表格中间 end-->
+</div>
+
+<div id="LoginBox">
+	<form action="./srv/commemt_add_submit.php" method="POST"  onsubmit="return checkForm();">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<div class="ha_row">
+			<div class="ha_content ha_stext">
+				<label>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</label>
+				<label style="color:red;width:60%;">该操作仅对当前学期有效。</label>
+			</div>
+			<div class="ha_content ha_stext" id="tr_stamina">
+				<label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+				<div class="ha_text_right">
+					<input type="text" id="username" name="username" size="35" />
+					<input type="hidden" id="user_id" name="user_id" />
+					<span>支持即时搜索显示，什么是<a href="#" target="" style="color:#900;" title="当您在输入框架输入名字时，系统会自动帮您去匹配相关信息，并显示在输入框的下方。例如：您输入”孙“下面会显示所有孙姓人名。">即时搜索显示。</a></span>
+				</div>
+			</div>
+			<div class="ha_content ha_stext">
+				<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+				<div class="ha_text_right">
+					<textarea rows="3" cols="20" id="content" name="content"></textarea>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+			<div class="ha_bot">
+				<!--<input type="hidden" id="uid" value="{uid}" name="uid" size="15" />-->
+				<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn" style="height:28px;line-height:28px;">返回</a>
+				<input class="ha_save" type="submit" name="Submit" value="保存"  style="height:28px;line-height:28px;"/> 
+			</div>
+		</div>
+	</form>
+</div>
+<div id="LoginBox_edit">
+	<form action="./srv/commemt_edit_submit.php" method="POST"  onsubmit="return checkForm1();">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<div class="ha_row">
+			<div class="ha_content ha_stext">
+				<label>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</label>
+				<label style="color:red;width:60%;">该操作仅对当前学期有效。</label>
+			</div>
+			<div class="ha_content ha_stext" id="tr_stamina">
+				<label>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+				<label style="width:60%;" id="realname"></label>
+				<input type="hidden" id="c_id" value="" name="c_id" size="15" />
+				<input type="hidden" id="uid_edit" value="" name="uid_edit" size="15" />
+			</div>
+			<div class="ha_content ha_stext"><label>所在班级：</label><label style="width:60%;" id="class_name"></label></div>
+			<div class="ha_content ha_stext">
+				<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+				<div class="ha_text_right">
+					<textarea rows="3" cols="20" id="content_edit" name="content_edit"></textarea>
+				</div>
+			</div>
+			
+			<div class="clear"></div>
+			<div class="ha_bot">
+				<!--<input type="hidden" id="uid" value="{uid}" name="uid" size="15" />-->
+				<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn" style="height:28px;line-height:28px;">返回</a>
+				<input class="ha_save" type="submit" name="Submit" value="保存"  style="height:28px;line-height:28px;"/> 
+			</div>
+		</div>
+	</form>
+</div>
+{footer} 
+
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#tid",JSON.parse(d),"id","term_name","year"); $("#tid").prepend("<option  value='0'>请选择学期</option>");
+		$('#tid').val('{tid}');     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+});
+
+$(document).ready(function(){
+	//初始化auto complete
+	$("#username").autocomplete("./srv/search_student_skill.php", {
+		selectFirst : false,
+		parse:function(data){//解释返回的数据，把其存在数组里 
+				var parsed = [];
+				var jsonData = eval("("+data+")");
+				for (var i=0;i<jsonData.length;i++){ 
+					parsed[parsed.length] = { 
+						data   : jsonData[i], 
+						value  : jsonData[i].truename, 
+						result : jsonData[i].truename} //返回的结果显示内容 
+				}; 
+				return parsed;
+		},
+		formatItem: function(item) {//显示下拉列表的内容 
+			return item.truename+"("+item.username+")"; 
+		}, 
+		formatMatch: function(item) { 
+			return item.truename; 
+		}, 
+		formatResult: function(item) { 
+			return item.id; 
+		} 
+	});
+	$("#username").result(function(event,data,formatted){
+		$("#user_id").val(data.id);
+		$.post("./srv/sdo.php?", {tpl:"student_info","uid":data.id}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//显示班级信息
+				html = '<div class="ha_content ha_stext"><label>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</label><label style="width:60%;">'+d.tips+'</label></div>';
+				$("#tr_stamina").after(html);
+			}
+		});
+	});	
+});
+
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+
+//弹出登录
+$("#ha_add_py").hover(function(){
+	$(this).stop().animate({
+		opacity: '0.8'
+	});
+}, function () {
+	$(this).stop().animate({
+		opacity: '1'
+	});
+}).on('click', function(){
+	$("body").append("<div id='mask'></div>");
+	$("#mask").addClass("mask").fadeIn("slow");
+	$("#LoginBox").fadeIn("slow");
+});
+//
+//按钮的透明度
+$("#loginbtn").hover(function(){
+	$(this).stop().animate({
+		opacity: '1'
+	}, 600);
+}, function () {
+	$(this).stop().animate({
+		opacity: '0.8'
+	}, 1000);
+});
+//关闭
+$(".close_t_btn,.close_btn").hover(function () { $(this).css({ color: '#333' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+	$("#LoginBox").fadeOut("fast");
+	$("#LoginBox_edit").fadeOut("fast");
+	$(".ha_edit").fadeOut("fast");
+	$("#mask").css({ display: 'none' });
+});
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#user_id").val())==""){
+		alert("请填写正确的学生");	
+		return false;
+	}
+	if($.trim($("#content").val())==""){
+		alert("请填写学期评语。");	
+		return false;
+	}
+	return true;
+}
+
+//表单提交验证
+function checkForm1()
+{
+	if($.trim($("#content_edit").val())==""){
+		alert("请填写学期评语。");	
+		return false;
+	}
+	return true;
+}
+
+function edit(id)
+{
+	$(".ha_maedit").click(function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#LoginBox_edit").fadeIn("slow");
+	});
+	
+	$.post("./srv/sdo.php", {tpl:"content_edit",id:id}, function (d, e) {
+		l=JSON.parse(d); 
+		
+		if(l.flag=="true"){
+			$("#content_edit").val(l.value[0].content);
+			$("#uid_edit").val(l.value[0].user_id);
+			$("#realname").text(l.value[0].truename);
+			$("#class_name").text(l.value[0].class_name);
+			$("#c_id").val(l.value[0].id);
+		}else{
+			alert(l.value);
+			return false;
+		}
+		
+	});
+}
+</script>      
+</body>
+</html> 

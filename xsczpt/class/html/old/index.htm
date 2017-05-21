@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="gb2312" />
+<title>{name}-{gtitle}</title>
+{cssjs}
+</head>
+<body>
+{top}
+  <div class="select">
+  <!--头部头像部分-->
+      <div class="content">
+          {head}
+  <!--中间内容部分-->        
+          <div class="article">
+              <div class="exhib">
+                  <div class="img">
+                      <ul>
+<!-- START cr2 -->    
+<li><a href="./?t=cls_photo&c={c}&id={id}"><img src="/upds/class/mien/{logo}" onerror="this.src='./img/1.jpg';" width="615" height="328"></a></li>
+<!-- END cr2 -->       
+                       </ul>
+                  </div> 
+                  <div class="clas">
+                      <div class="clas_top">
+                          <li>班级简介</li>
+                      </div>
+                      <div class="clas_bom">
+                          <p>
+                              &nbsp;&nbsp;&nbsp;&nbsp;{des}
+                          </p>
+                          <span class="more"></span>
+                      </div>
+                  </div>
+                  <div class="tech">
+                      <div class="clas_top tech_top">
+                          <li>我们的老师</li>
+                      </div>
+                      <div class="tech_bom">
+                          <ul>
+                          <!-- START tech --> 
+                              <li><a href="../zone/?id={uid}" target=_blank><img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" width="53" height="53" alt="{truename}" /></a><em>{truename}</em></li>
+                          <!-- END tech --> 
+                          </ul>
+                          <span class="more"><a href="./?t=members&c={c}" target=_blank>查看更多</a></span>
+                      </div>
+                  </div>
+              </div>
+              
+              <div class="article_left">
+                  <div class="album">
+                      <div class="album_top">
+                          <li>班级相册</li>
+                      </div>
+                      <div class="album_bom">
+                           <ul>
+                           <!-- START album -->
+                               <li><a href="./?t=cls_photo&c={c}&id={id}" title="{name}"><img src="/upds/class/album/{cid}/{id}/{logo}" onerror="this.src='/error/logo.jpg';" width="137" height="137" alt="{name}" /><i>{nums}</i></a><em>{name}</em></li>
+                               
+                           <!-- END album -->
+                           </ul>
+                           <span class="more"><a href="./?t=cls_album&c={c}"  target=_blank>查看更多</a></span>
+                      </div>
+                  </div>
+                  <div class="dynamic">
+                      <div class="album_top dynamic_top">
+                          <li>班级动态</li>
+                      </div>
+                      <div class="dynamic_bom">
+                           <ul>
+                           <!-- START activity --> 
+                               <li class="unif"><a href="./?t=cls_activity_end&c={c}&id={id}" target="_blank">{title}</a><span><script>document.write(utctime('{timestamp}'));</script></span></li>
+                               
+                               
+                           <!-- END activity -->    
+                           </ul>
+                           <span class="more"><a href="./?t=cls_activity&c={c}"  target=_blank>查看更多</a></span>
+                      </div>
+                  </div>
+                  <div class="dynamic">
+                      <div class="album_top periodical">
+                          <li>班级期刊</li>
+                      </div>
+                      <div class="dynamic_bom">
+                           <ul>
+                           <!-- START diary --> 
+                               <li class="unif"><a href="./?t=cls_diary_end&c={c}&id={id}" target=_blank>{title}</a><span><script>document.write(utctime('{timestamp}'));</script></span></li>
+                              
+                           <!-- END diary -->
+                           </ul>
+                           <span class="more"><a href="./?t=cls_diary&c={c}"  target=_blank>查看更多</a></span>
+                      </div>
+                      <div class="both"></div>
+                  </div>
+              </div>
+              <div class="article_rig">
+                  <div class="notice">
+                      <div class="notice_top">
+                          <li>班级通知</li>
+                      </div>
+                      <div class="noticl_bom">
+                          <ul>
+                          <!-- START notice -->  
+                              <li><a href="./?t=cls_notice_end&c={c}&id={id}" target=_blank>{title}</a><span><script>document.write(utctime('{timestamp}'));</script></span></li>
+                              
+                          <!-- END notice -->     
+                          </ul>
+                          <span class="more"><a href="./?t=cls_notice&c={c}"  target=_blank>查看更多</a></span>    
+                      </div>
+                      <div class="both"></div>
+                  </div>
+                  <div class="notice honor">
+                      <div class="notice_top honor_top">
+                          <li>班级荣誉</li>
+                      </div>
+                      <div class="noticl_bom">
+                          <ul>
+                          <!-- START honor -->
+                              <li><a href="./?t=cls_honor_end&c={c}&id={id}"  target=_blank>{title}</a><span><script>document.write(utctime('{timestamp}'));</script></span></li>
+                              
+                          <!-- END honor -->    
+                          </ul>
+                          <span class="more"><a href="./?t=cls_honor&c={c}"  target=_blank>查看更多</a></span>    
+                      </div>
+                      <div class="both"></div>
+                  </div>
+                  <div class="schedule">
+<table width="321" align="center" border="0" cellspacing="1" id="timetable">
+<thead>
+<tr>
+<th>课\周</th>
+<th>一</th>
+<th>二</th>
+<th>三</th>
+<th>四</th>
+<th>五</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>早</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>1</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>2</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>3</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>4</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>5</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>6</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>7</td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td>晚</td><td></td><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table>
+                  </div>
+              </div>
+         
+          </div>
+      </div>  
+  </div>
+{foot}
+</body> 
+</html>  
+<script src="./img_tpl/local.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+    //$(".img").local();
+   $.post("./srv/rdo.php", {tpl:'get_timetable','id':'{id}'}, function (d, e) {                 
+         v=JSON.parse(d);
+         for(k=0;k<v.length;k++){
+            $("#timetable tbody").children().eq(v[k].row).children().eq(v[k].col).text(v[k].name); 
+         }  
+      });  
+})
+</script>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>同心圆父母学堂-博客页面</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/> 
+<link href="/html/blog/css/school/circle.css" type="text/css" rel="Stylesheet">
+{meta}	
+</head>
+<body>
+{top}
+<div class="wrap">
+	{school_logo}
+	{menu}
+	{school_menu}
+	<div class="main">
+		<div class="main mt15">
+			<div class="act_content">
+				<!--发现班级-->
+				<div class="xcl_bigfound">
+					<div class="found">
+					<div class="act_tit">
+						<p>教育新闻 </p>
+					</div>
+				</div> 
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<!-- START list -->
+		<div id="list"> 
+			<div class="news_container clearfix">
+				<h2 class="art_title">{title}</h2>
+				<div class="info_wrap">
+					<div class="info">
+						<span>时间：{timestamp}</span>
+						<span>浏览量：<label id="hits">{see}</label></span>
+						<a href="javascript:void(0);" class="print" onclick="history.go(-1)">【返回】</a>
+						<a href="/?t=school_news" class="print" >【列表】</a>
+						<!-- <a href="javascript:window.print();" class="print" onclick="window.print();">【打印】</a> -->
+					</div>
+				</div>
+				<div class="article"> 
+          {des}
+				</div>
+		<script type="text/javascript">
+		(function(){
+			vote({tbl:"push_list",do:"see",showok:"",callback:"",id:"{id}"},null);     
+		})();
+		</script> 
+		<!-- END list -->
+				<div class="title" style="border-width:2px;">
+					<h2>相关阅读</h2>
+				</div>
+				<div class="rela">
+					<ul class="clearfix">
+             <!-- START list_about -->
+             <li id="{id}" ><a href="/?t=school_info&id={id}" target=_blank>{title}</a></li>
+             <!-- END list_about -->
+					</ul>
+				</div>  
+				<div class="clear"></div>
+				<div class="pr_next">
+          <!-- START listpre -->
+          <li><label>上一篇</label>&nbsp;&nbsp;<a href="/?t=school_info&id={id}">{title}</a></li>
+          <!-- END listpre -->
+          <!-- START listnext -->
+          <li><label>下一篇</label>&nbsp;&nbsp;<a href="/?t=school_info&id={id}">{title}</a></li>
+          <!-- END listnext --> 
+				</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+	</div>
+	<a class="to-top">回到顶部</a>
+	<script src="/html/blog/js/school/jquery.toTop.min.js"></script>
+	<script>
+	$(function() {
+		$('.to-top').toTop();
+	});
+	</script>
+{foot}
+</div>
+</body>
+
+</html>

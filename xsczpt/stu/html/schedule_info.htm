@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>计划详情-{gtitle}</title> 
+{cssjs}  
+<script src="js/local.js" type="text/javascript"></script> 
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+
+<div class="col-sm-12">
+<div class="page-header">
+   <h3>{title}<small><script>document.write(utctime('{timestamp}'));</script></small>  
+   <a href="./?t=schedule" class="btn btn-primary pull-right" >返回</a>  </h3>
+</div>
+
+<div class="rows">
+{des}
+</div>
+</div>      
+</div>
+</div>
+
+{foot}
+</body>
+</html>
+<script type="text/javascript">      
+$(function(){
+  //see({tbl:"note",id:queryStr("id")});
+  vote({tbl:"stu_schedule",do:"see",showok:"",callback:"",id:queryStr("id")});
+}); 
+</script>

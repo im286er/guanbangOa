@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>任教附加学科-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog}  
+<link rel="stylesheet" href="css/list.css">                                         
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+<h2>班级管理</h2>
+<div >
+<ul> 
+<li><a href="./?t=class">代课的班级</a></li> 
+<li><a href="./?t=class_man">我是班主任</a></li>
+<li><a href="./?t=class_new">+创建班级</a></li>
+</ul>
+</div>
+</div>
+</dt>
+<dd>  
+<div class="banner"><label>任教附加学科</label> 
+<span><a id="btnc" class="btn">+添加学科</a>
+</span>    
+</div>
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>   
+<th>任教学科</th>
+<th>教材版本</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>  
+<td><label data-subject="{subject}"></label></td>
+<td><label data-edition="{edition}"></label></td>                      
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;">      
+<li onclick="delths('{id}')">删除</li>
+
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+
+
+<script type="text/javascript">  
+$(function(){   
+  $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#dlg2 #subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");});
+  $.get("/data/textbook_ver.txt", function (data) {$("#edition").html(data);$("#dlg2 #edition").html(data);$("#edition").prepend("<option value=''>—教材版本—</option>");});
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });     
+   
+   $("#btnc").bind("click",function(){
+      $("#dlg1").dialog("open"); 
+      $("#dlg1").data("dotype","a");
+      $("#dlg1 #id").val("");        
+   });  
+}); 	
+function addsubject(){
+  if($("#subject").val()==""){alert("请选择任教学科");return;}
+  if($("#edition").val()==""){alert("请选择一个教材版本");return;} 
+  $("#dlg1 #cid").val(queryStr("id"));
+  
+  SaveAM({tpl:"tech_class_subject","do":$("#dlg1").data("dotype"),frmid:"#dlg1",showok:"添加成功",callback:"dosome"});    
+}  
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1)
+    location.reload();
+    
+}
+function delths(v){
+   $.post("./srv/sdo.php", {tpl:"del_tech_class_subject",id:v}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}    
+</script>
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:350px;height:200px;padding:10px;" title="添加任教学科" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+        addsubject();
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<table class="">      
+    <tr>
+        <td style="width:60px;">任教学科</td>
+        <td><select id="subject"></select> 
+        <input type="text" id="id" value="" style="display:none;"/>
+        <input type="text" id="cid" value="" style="display:none;"/>
+        </td>
+    </tr>
+    <tr>
+        <td>教材版本</td>
+        <td><select id="edition"></select>
+        </td>
+    </tr>   
+</table>
+</div>
+
+<div id="dlg2" class="easyui-dialog dialoga" style="width:350px;height:250px;padding:10px;" title="添加" data-dotype="m"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+      if($('#dlg2 #subject').val()==undefined|| $('#dlg2 #subject').val()==''){alert('请选择一个学科');return;}  
+      if($('#dlg2 #edition').val()==undefined|| $('#dlg2 #edition').val()==''){alert('请选择一个教材版本');return;}
+      chgdata2();    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]">
+<div id="tips" class="tips">tips</div>
+<form id="form1">
+<table class="">  
+    <tr>
+        <td style="width:80px;">任教学科：</td>
+        <td><select id="subject"></select>
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr> 
+    <tr>
+        <td>教材版本</td>
+        <td><select id="edition"></select></td>
+    </tr>     
+</table>
+</form>
+</div>

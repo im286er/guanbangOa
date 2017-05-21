@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人帐号中心-{gtitle}</title>
+{cssjs}     
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>身份信息 <small></small>   <a href="./" class="btn btn-primary glyphicon glyphicon-arrow-left pull-right"> 返回 </a> </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+    
+  <div class="form-group">
+    <label class="col-sm-2 control-label">单位：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="schools">{schools}</p>
+    <p class="help-block" id="addrs">地区：{addrs}</p>
+    <p class="help-block">入学（年）：{intoyear}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学段年级：</label>
+    <div class="col-sm-10"><p class="form-control-static"><c id="periods"></c>/<c id="grades"></c></p></div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="idtypes">{idtypes}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学科：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="subjects">{subjects}</p></div>
+  </div>
+  <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 修 改 </button>   
+       <input type="text" id="id" value="0" style="display:none;"/>
+   </div>
+    </div>      
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+$("#btn").bind("click",function(){      $('#dlg1').modal('show');   }); 
+     
+  $("#btn1").bind("click", {type:"save"}, modidtype); 
+   //$.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+   // $.get("/data/type.txt", function (data) {$("#idtype").html(data);$("#idtype").prepend("<option value=''>—身份—</option>");});   
+     //$("#addr1").bind("change", function(){getaddr2($(this).val());}); 
+    //$("#addr2").bind("change", function(){getunits($(this).val());selectSelValTo("#addr",this);}); 
+    //$("#unit").bind("change", function(){selectSelTxtTo("#units",this);});
+    $.post("./srv/rdo.php", {tpl:"get_sch_byid",id:"{school}"}, function (d, e) {        
+      l=JSON.parse(d); 
+      $("#schools").text(l[0].name);        
+    }); 
+    $.post("./srv/rdo.php", {tpl:"get_addr",id:"{addr}"}, function (d, e) {        
+      l=JSON.parse(d); 
+      $("#addrs").text("地区："+l[0].name);        
+    }); 
+    $.getJSON("/data/period.json.txt", function (d,e) {$("#periods").text(d[{period}]); });
+    $.getJSON("/data/grade.json.txt",  function (d,e) {$("#grades").text(d[{grade}]); });
+    $.getJSON("/data/type.json.txt",  function (d,e) {$("#idtypes").text(d[{idtype}]); });
+    $.getJSON("/data/subject.json.txt",  function (d,e) {$("#subjects").text(d[{subject}]); });
+     
+    $.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+    $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#subject").prepend("<option value=''>—主学科—</option>");});    
+    $("#grade").bind("change",function(){
+      if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period);
+      $('#grades').val($.trim($(this).find('option:selected').text()));
+      $('#periods').val($('#grade optgroup:eq('+(period-1)+')').attr('label')); 
+    }); 
+    //$("#idtype").bind("change", function(){selectSelTxtTo("#idtypes",this);});
+    $("#subject").bind("change", function(){selectSelTxtTo("#subjects",this);});
+ 
+ });   
+ 
+function modidtype(e) { 
+  if($("#period").val()==""){alert("请选择一个年级"); return;} 
+  if($("#subjects").val()==""){alert("请选择一个主学科"); return;} 
+  if($("#year").val()==""){alert("请输入一个年份"); return;}    
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"mod_idtype",grade:$("#grade").val(),period:$("#period").val(),subject:$("#subject").val(),grades:$("#grades").val(),periods:$("#periods").val(),subjects:$("#subjects").val(),y:$("#year").val()}, function (d, e) {                  
+      alert(d);
+       $('#dlg1').modal('hide');         
+  });
+}	
+</script>    
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">修改</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/updp.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">学段年级</label>
+    <div class="col-sm-10">
+ <select  id="grade" class="form-control" style="width:30%;"></select> 
+<input id="grades" type="text" style="display:none;"/>
+<input id="period" type="text" style="display:none;"/>
+<input id="periods" type="text" style="display:none;"/>
+    </div>
+  </div> 
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">主学科</label>
+    <div class="col-sm-10">
+<select  id="subject" class="form-control" style="width:30%;"></select> 
+<input id="subjects" type="text" style="display:none;"/> 
+
+<input id="id" type="text" style="display:none;" value="{id}">
+    </div>
+  </div> 
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">入学时间(年)</label>
+    <div class="col-sm-10">
+<input type="text" id="year" class="form-control" style="width:50%;" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
+readonly onclick="WdatePicker({dateFmt:'yyyy'})"/>
+    </div>
+  </div> 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn1" >提交更改</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>             
+         </div>
+      </div>
+   </div>
+</div> 

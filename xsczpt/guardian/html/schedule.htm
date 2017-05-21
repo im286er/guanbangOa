@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>学习计划-{gtitle}</title>
+{cssjs}     
+<script>
+var arr=new Array('待审核','已审核','注销中');  
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}
+
+<div class="col-sm-10 main">  
+<div class="page-header">
+   <h3>学习计划      <small></small></h3>
+</div>
+
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">      
+    <div class="col-sm-2"> 
+   <select id="child" class="form-control"><option>--子女--</option></select> 
+   </div> 
+    <div class="col-sm-1">      
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div> 
+   <p class="help-block">*默认显示近50个查询结果</p>      
+</form> 
+
+ 
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr> 
+<th>日期</th>
+<th>标题</th>
+<th>创建时间</th>
+ 
+</tr>
+</thead>              
+<tbody id="list">
+<!-- START list -->              
+<tr>
+<td><span class="blue0">{stime}</span></td>
+<td><b class="blue0" onclick="showths('{id}')">{title}</b></td>  
+<td><code><script>document.write(utctime('{timestamp}'));</script></code></td>  
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;">
+<li onclick="modths('{id}')">修改</li> 
+<li onclick="delths('{id}',this)">删除</li>
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+</div> 
+</div>  
+{foot}
+</body> 
+</html>
+<script type="text/javascript">  
+$(function(){
+  $.post("./srv/rdo.php?", {tpl:"get_child"}, function (d, e) {                 
+       selectShowDataNoH("#child",JSON.parse(d),"id","name"); $("#child").prepend("<option value=''>—子女—</option>");      
+    });  
+ $("#btn").bind("click",function(){ 
+     if($("#child").val()==""){alert("请选择一个子女");return;}
+     $.post("./srv/rdo.php", {tpl:"get_child_schedule",id:$("#child").val()}, function (d, e) { 
+        t=JSON.parse(d);
+         $("#list").empty();
+          for (i = 0; i < t.length; i++) {
+                  rows = $("#listnon").html();                         
+                  for (var _n in t[i]) {
+                      try { 
+                          if (t[i][_n] == null || t[i][_n] == "")
+                              val = "";
+                          else
+                              val = t[i][_n];
+                      } catch (e1) {
+                          alert(e1);                            
+                      }
+                      if(_n=="timestamp")val = utctime(val); 
+                      if(_n=="subject")val = subject[val];                
+                      reg = new RegExp("@" + _n + "#", "g");                      
+                      rows = rows.replace(reg, val);                                        
+                  }                    
+                  $("#list").append(rows);
+              }
+
+    });  
+  });
+});
+
+ function showths(v){
+    readID({tpl:"stu_schedule","do":"r",id:v,frmid:"#form2"});
+   ifrmid="#dlg2"; 
+   $(ifrmid).dialog('setTitle','计划');  
+   //$(ifrmid+' .tips').text('修改计划');  
+   $(ifrmid).dialog("open"); 
+} 
+
+</script>
+
+
+<div id="dlg2" class="easyui-dialog dialoga" style="width:500px;height:340px;padding:10px;" title="计划" data-dotype="a"  data-options="closed:true,
+buttons: [ {
+   text:'关闭',
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]">  
+<form id="form2">
+<div id="tips" class="tips"><input type="text" id="title" style="width:300px;border:none;" readonly/></div>
+<table class="">   
+     <tr> 
+        <td><input type="text" id="stime" style="width:160px;border:none;" readonly/></td>
+    </tr>      
+    <tr> 
+        <td><textarea id="des" style="width:400px;height:100px;border:none;overflow:auto;"></textarea></td>
+    </tr>       
+</table>
+</form>
+</div>
+
+<table style="display:none;">
+<tbody id="listnon" > 
+<tr>
+<td><span class="blue0">@stime#</span></td>
+<td><a href="./?t=schedule_info&id=@id#" target=_blank>@title#</b></td>  
+<td><code>@timestamp#</code></td>       
+</tr>
+</tbody>          
+</table>

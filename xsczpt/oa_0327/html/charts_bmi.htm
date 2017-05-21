@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main bgf7" style="float:left;">
+	<div class="ha_content fl">
+		<ul class="tit_left fr chart_tit">                                                                           
+			<li><a href="./?t=charts_height" target="">身高</a></li>
+			<li><a href="./?t=charts_weight" target="">体重</a></li>
+			<li class="active"><a href="./?t=charts_bmi" target="">BMI</a></li>
+			<li><a href="./?t=charts_sight" target="">视力</a></li>
+			<li><a href="./?t=charts_lung" target="">肺活量</a></li>
+			<li><a href="./?t=charts_liver" target="">肝</a></li>
+			<li><a href="./?t=charts_bravery" target="">胆</a></li>
+			<li><a href="./?t=charts_xf" target="">心肺听诊</a></li>
+			<li><a href="./?t=charts_surgical" target="">外科常规</a></li>
+			<li><a href="./?t=charts_blood" target="">血压</a></li>
+			<li><a href="./?t=charts_spleen" target="">脾</a></li>
+			<li><a href="./?t=charts_eyes" target="">眼科</a></li>
+			<li><a href="./?t=charts_oral" target="">口腔</a></li>
+		</ul>
+		<form action="" method="get">
+			<div class="fl ha_content">
+				<ul class="tab-hd_c claname">
+					{str_grade}
+					
+				</ul>
+				<ul class="tab-bd_c pr">
+					<li class="thisclass fl">
+						<div class="per_list pa">
+							<div class="c_yearlist" style="float:left;width:150px;">{str_year}</div>
+						</div>
+						<div class="pr" id="echart" style="width:900px;height:550px;margin:15px 0 15px 6%"></div>
+						<script type="text/javascript">
+							var myChart = echarts.init(document.getElementById('echart'));
+							myChart.on('click', function (classname){ 
+								
+								var classid=classname.data.classid;
+								var grade=classname.data.grade;
+								var tyear=classname.data.tyear;
+								window.location.href="./?t=charts_bmi_classdis&classid="+classid+"&grade="+grade+"&tyear="+tyear;    
+
+							}); 
+							
+						option = {
+						 title : {
+								text: '班级BMI均值表',
+								subtext: '',
+								x:'center'
+							},
+							tooltip: {
+								trigger: '',
+								axisPointer: { // 坐标轴指示器，坐标轴触发有效
+									type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+								}
+							},
+							legend: {
+								orient: 'vertical',
+								left: '150',
+								data:['男生','女生']
+							},
+							calculable : true,
+							xAxis : [
+								{
+									name: '班级',
+									type : 'category',
+									data : [{str_class}]
+								}
+							],
+							 yAxis :[
+								{ 
+									name: 'BMI',
+								   type : 'value', 
+								   splitLine:{show:false},
+								   min:16, 
+								} 
+							],
+
+							series : [
+								{
+									name:'男生',
+									type:'bar',
+									data:[{boy_bmi}],
+								},
+								{
+									name:'女生',
+									type:'bar',
+									data:[{girl_bmi}],
+								}
+							]
+						}
+						// 使用刚指定的配置项和数据显示图表。
+						myChart.setOption(option);
+						</script>
+						<div class="clear"></div>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 

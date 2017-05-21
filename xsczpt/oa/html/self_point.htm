@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">积分记录列表</a></label>
+		</div>
+		<div class="boxtitle2" style="margin-bottom:0;">
+			<form action="./?t=self_point" method="post">
+				<select name="term_id" id="term_id">
+				</select> 
+				<span>
+					<select name="report_id" id="report_id">
+					  {str_option}
+					</select>
+					</select> 
+				</span> 
+				<input type="hidden" id="geter" name="geter" value="">
+				<input type="hidden" name="uid" value="{uid}"/>
+				<input type="submit" id="but_update" name="but_update" value="查询" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+			<div style="width:100%; height:30px; line-height:30px; text-align:center; font-size:14px;display:inline-block;">积分查询</div>
+		<div class="tabbody">
+		    <form action="./?t=self_point" method="post" onsubmit="return checkSubmit();">
+			<div class="clear"></div>
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+						 <td width="8%" class="tabtd">姓名</td>
+						 <td width="6%" class="tabtd">班级</td>
+						 <td width="6%" class="tabtd">班主任姓名</td>
+						 {str_report}
+					</tr>
+					{str}
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+				<input type="hidden" name="menu1" id="menu1" value=""/>
+		        <input type="hidden" name="menu2" id="menu2" value=""/>
+		</div>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+		</form>
+	</div>
+<!--表格中间 end-->
+</div>
+<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+<input type="hidden" name="h_id" id="h_id"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="mop" id="h_mop" value=""/>
+<input type="hidden" name="flag2" id="flag2" value=""/>
+<input type="hidden" name="title" id="title" value=""/>
+<input type="hidden" name="subject" id="subject" value=""/>
+<input type="hidden" id="geter" name="geter" value="">
+{footer}      
+</body>
+</html>
+<div id="tc" style="display:none;padding:10px;">
+<p>说明:</p>
+	<div><textarea id="btg_content" cols=40 rows=4 ></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="button" onclick="check_btg();" value="确定" style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option selected value='0'>请选择学期</option>");
+		$('#term_id').val('{term_id}');     
+	});
+
+	$("#report_id").val("{report_id}");
+});
+</script> 

@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>FAQ详情-FAQ-{gtitle}</title> 
+{cssjs_edit} 
+<link rel="stylesheet" href="css/forms.css">
+{editor} 
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+    <h2>FAQ管理</h2>    
+    <ul> 
+    <li><a href="./?t=faq" >学员问答</a></li>
+    <li><a href="./?t=faq1" >我的问答</a></li> 
+    </ul> 
+  </div> 
+</dt>
+<dd>
+
+<h1>{title}</h1>
+<hr/>
+<table class="table1">
+<tr>
+<td>作者：</td>
+<td><span>{truename}</span> <cite><script>document.write(utctime('{timestamp}'));</script></cite></td>
+</tr>
+<tr>
+<td>问：</td>
+<td>{des}</td>
+</tr> 
+</table> 
+       
+      <h1>答</h1>
+      <hr/>  
+<table class="table1" cellpadding="0" cellspacing="0">    
+<!-- START list -->              
+<tr>   
+<td></td> 
+<td><code>{truename}</code> <cite><script>document.write(utctime('{timestamp}'));</script></cite> <br/>
+{des}</td>        
+</tr>
+<tr><td colspan="4"><hr/></td></tr>
+<!-- END list --> 
+</table>
+
+      <h1>回答</h1>
+      <hr/> 
+      
+<form id="form1">
+<table class="table1">      
+<tr>
+<td></td>
+<td> <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>
+<script type="text/plain" id="umdes" style="width:600px;height:250px;"></script>
+</td>
+</tr>        
+<tr>
+<td></td>
+<td>
+<input type="text" id="fid" value="" style="display:none;"/>
+<input type="text" id="id" value="" style="display:none;"/>
+<input type="button" id="btn"  value="保存信息"/>
+<input type="reset" class="but1" value="取消"/>
+</td>
+</tr>
+</table> 
+</form>       
+</dd>
+</dl>
+</div>
+{footer}
+</body>
+<script type="text/javascript">
+var um = UM.getEditor('umdes'); 
+$(function(){
+  see({tbl:"tech_faq",id:queryStr("id")});
+});
+$(function () {  
+    $("#btn").bind("click", function(){
+      $("#fid").val(queryStr("id"));
+       SaveAM({tpl:queryStr("t"),"do":"a",frmid:"#form1",showok:'回答完成',callback:"desome"});
+    
+    });     
+ }); 
+ function desome(e,data){
+   if(data.indexOf('ok')>-1){
+     renums({tbl:"tech_faq",child:"tech_faq_question",col:"questions",pid:"fid",id:queryStr("id"),callback:"recall"});       
+   }
+   else
+      alert(data);
+}  
+function recall(){
+   location.reload(); 
+}	
+</script>
+</html>

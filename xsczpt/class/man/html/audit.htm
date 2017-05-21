@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>成员审核-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('申请加入','申请中','已审核'); 
+</script>
+</head>
+<body>
+{top}
+<div class="container">  
+
+<div class="col-sm-3"> 
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>消息审核
+      <small></small>
+   </h3>
+</div>
+ <table class="table  table-hover"> 
+<thead>
+<tr>
+ <th>头像 </th>
+ <th>姓名</th>  
+ <th>状态</th>
+ <th>时间</th> 
+ <th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><img id="logo{id}" width="40" src="/F/{id}/face.jpg" onerror="this.src='/error/face.jpg';" /> </td>
+<td><a href="#" target="_blank">{truename}</a></td>
+<td><script>document.write(arr[{state}]);</script></td>    
+<td><script>document.write(utctime('{timestamp}'));</script></td> 
+<td>
+<button type="button" class="btn btn-primary" onclick="modths('{id}',this)">通过</button>
+<button type="button" class="btn btn-danger" onclick="delths('{id}',this)">拒绝</button> 
+</td> 
+</tr> 
+<!-- END list --> 
+     
+   </tbody>
+</table>
+
+<ul class="pagination pull-right">
+ <li><a href="#">&laquo;</a></li>
+  <li><a href="#">1</a></li>
+  <li><a href="#">2</a></li>
+  <li><a href="#">3</a></li>
+  <li><a href="#">4</a></li>
+  <li><a href="#">5</a></li>
+  <li><a href="#">&raquo;</a></li>
+</ul>
+
+</div>
+ 
+ 
+ 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () { 
+    //$('#myModal').modal({keyboard: true});
+  }); 
+ function replay(d){
+   $('#myModal').modal({keyboard: true}); 
+   //$('#myModal h4').modal({keyboard: true}); 
+ }
+function modths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"audit_cls_m",id:v,cid:"{c}"}, function (d, e) {
+      if(d.indexOf("ok")>-1)
+         $(obj).parent().parent().remove();
+      else
+        alert(d);         
+  });  
+}  	
+function delths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"del_cls_m",id:v,cid:"{c}"}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+        $(obj).parent().parent().remove();
+      else alert(d);
+  });
+} 	
+</script>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" 
+               aria-hidden="true">×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               模态框（Modal）标题
+            </h4>
+         </div>
+         <div class="modal-body">
+            按下 ESC 按钮退出。
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

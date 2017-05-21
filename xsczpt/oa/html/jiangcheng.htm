@@ -1,0 +1,320 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">学生奖惩记录列表</a></label>
+				
+				<span class="floatright">
+				<script type="text/javascript">
+				  if(1){
+					document.write('<img src="images/add.gif" class="padding5"/><a href="./?t=jiangcheng_op">添加奖惩记录</a>  | <img src="images/add.gif" class="padding5"/><a href="./?t=jiangcheng_import">导入奖惩记录</a>');
+				  }
+				  </script>
+			</span>
+			
+			
+		</div>
+		<div class="boxtitle2" style="margin-bottom:0;">
+			<form action="./?t=jiangcheng" method="post">
+				<select name="term_id" id="term_id">
+				</select> 
+				<span>
+					<script type="text/javascript">
+					  if({isMaster1}!=1){
+						document.write("<select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select> ");
+					  }
+					</script> 
+					<select name="flag_type" id="flag_type">
+					</select> 
+					姓名：<input type="text" name="truename" value="" />&nbsp;&nbsp;
+				</span> 
+				<input type="hidden" id="geter" name="geter" value="">
+				<input type="hidden" name="uid" value="{uid}"/>
+				<input type="submit" id="choose" name="choose" value="记录筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+			<div style="width:100%; height:30px; line-height:30px; text-align:center; font-size:14px;display:inline-block;">学生奖惩记录</div>
+		<div class="tabbody">
+		    <form action="./?t=jiangcheng" method="post" onsubmit="return checkSubmit();">
+			{str_check}
+			<div class="clear"></div>
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+					     {str_top}
+						 <td width="8%" class="tabtd">姓名</td>
+						 <td width="6%" class="tabtd">班级</td>
+						 <td width="10%" class="tabtd">学期</td>
+						 <td width="5%" class="tabtd">类型</td>
+						 <td class="tabtd">奖惩内容</td>
+						 <td class="tabtd" width="12%">记录日期</td>
+						 <td class="tabtd" width="5%">状态</td>
+						 <td class="tabtd" width="9%">操作</td>
+					</tr>
+					<!-- START list --> 
+					<tr id="tr_c_{id}">
+					    <td class="tabtd"><input type="checkbox" name="id[]" id="id_{id}" value="{id}" /></td>
+						<td class="tabtd" style="display:none;"><input type="checkbox" name="uid[]" uid="uid_{user_id}" value="{user_id}" /></td>
+						<td class="tabtd">{truename}</td>
+						<td class="tabtd">{class_name}</td>
+						<td class="tabtd">{term_name}</td>
+						<td class="tabtd">{flag_type}</td>
+						<td class="tabtd">{content}</td>
+						<td class="tabtd">{create_time}</td>
+						<td class="tabtd">{flag_status}</td>
+						<td class="tabtd">
+							<a id="shtg" href="javascript:void(0);" class="glyphicon glyphicon-ok" title="审核通过" onclick="abc({id},'{user_id}','{flag_type}');"></a>&nbsp;&nbsp;<span class="caozuo" title="审核不通过"><a id="shwtg" href="javascript:void(0);" class="glyphicon glyphicon-minus-sign" onclick="shwtg({id},'{user_id}','未通过','{flag_type}');" style="width:14px;overflow:hidden;margin-right:2px;" target="_blank">&nbsp;&nbsp;</a></span>
+							<a href="./?t=jiangcheng_op&id={id}" class="glyphicon glyphicon-pencil" title="编辑" style="width:15px;overflow:hidden;"></a>
+							<!--<a id="shwtg" href="#" onclick="delJiangcheng({id});" class="glyphicon glyphicon-remove" title="删除" style="width:15px;overflow:hidden;"></a>-->
+						</td>
+
+					</tr>
+					<!-- END list --> 
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+				<input type="hidden" name="menu1" id="menu1" value=""/>
+		        <input type="hidden" name="menu2" id="menu2" value=""/>
+		</div>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+		</form>
+	</div>
+<!--表格中间 end-->
+</div>
+<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+<input type="hidden" name="h_id" id="h_id"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="mop" id="h_mop" value=""/>
+<input type="hidden" name="flag2" id="flag2" value=""/>
+<input type="hidden" name="title" id="title" value=""/>
+<input type="hidden" name="subject" id="subject" value=""/>
+<input type="hidden" id="geter" name="geter" value="">
+{footer}      
+</body>
+</html>
+<div id="tc" style="display:none;padding:10px;">
+<p>说明:</p>
+	<div><textarea id="btg_content" cols=40 rows=4 ></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="button" onclick="check_btg();" value="确定" style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option selected value='0'>请选择学期</option>");
+		$('#term_id').val('{term_id}');     
+	});
+
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"jiangcheng",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#flag_type",JSON.parse(d),"code_name","code_name"); $("#flag_type").prepend("<option selected value='0'>全部</option>");
+		var flag_type = "{flag_type}";
+		if(flag_type)
+			$('#flag_type').val('{flag_type}');     
+	});
+	
+	$("#truename").val("{truename}");
+});
+
+var uid="{uid}";
+function check_btg(){
+var geter=$("#geter").val();
+var content=$("#btg_content").val();
+var id=$("#h_id").val();
+var flag=$("#flag2").val();
+var flag_type=$("#subject").val();
+
+$.ajax({
+    type: 'POST',
+    url: "./srv/jiangcheng.php" ,
+    data: {tpl:"set_checked",uid:uid,geter:geter,content:content,id:id,flag:flag,menu1:0,menu2:68,subject:flag_type} ,
+	success: function(d){
+	 if(d=="ok"){
+		layer.closeAll();
+		layer.msg('提交成功！');
+		location.reload();
+	  }else{
+		layer.msg('提交失败！');
+	  }
+	} 
+});
+}
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+//删除体能记录
+function delJiangcheng(id){
+	if(confirm("你确定删除此体能记录吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_jiangcheng","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#tr_c_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+
+function shwtg(id,geter,flag,flag_type){
+	$("#h_id").val(id);
+	$("#geter").val(geter);
+	$("#flag2").val(flag);
+	//$("#title").val(title);
+	$("#subject").val(flag_type);
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc')
+	});
+}
+
+function abc(id,geter,flag_type){
+	if(confirm('确定要执行此操作吗?')) 
+    { 
+	   $("#h_but_op").val("确定");
+	   $("#h_flag").val("已审核");
+	   $("#h_mop").val("1");
+	   $("#h_id").val(id);
+	   $("#subject").val(flag_type);
+	   $.ajax({
+		type: 'POST',
+		url: "./srv/jiangcheng.php" ,
+		data: {tpl:"set_tg",uid:uid,geter:geter,id:id,flag:"已审核",menu1:0,menu2:68,subject:flag_type} ,
+		success: function(d){
+			if(d=="ok"){
+				layer.closeAll();
+				alert('提交成功！');
+				location.reload();
+			}else{
+				alert('提交失败！');
+			}
+		} 
+		});
+     } else{
+	location.reload(); 
+	 }
+}
+
+//提交表单处理
+function checkSubmit()
+{
+	if (confirm("是否确认")){
+		var len = $("input[name='id[]']:checked").size();
+		if($("#op").val()=="0"){
+			alert("请选择要进行的操作");
+			return false;	
+		}
+		if(len==0){
+			alert("请选择记录");
+			return false;
+		}
+	}else{
+		return false;
+	}
+}
+
+function selectAll(){
+	var checklist = document.getElementsByName ("id[]");
+	if(document.getElementById("all_select").checked){
+		for(var i=0;i<checklist.length;i++){
+			checklist[i].checked = 1;
+		} 
+	}else{
+		for(var j=0;j<checklist.length;j++){
+			checklist[j].checked = 0;
+		}
+	}
+	selectAll2();
+}
+
+function selectAll2(){
+	var checklist = document.getElementsByName ("uid[]");
+	if(document.getElementById("all_select").checked){
+		for(var i=0;i<checklist.length;i++){
+			checklist[i].checked = 1;
+		} 
+	}else{
+		for(var j=0;j<checklist.length;j++){
+			checklist[j].checked = 0;
+		}
+	}
+}
+$("input[type=checkbox][name='id[]']").bind("click",function(){
+	if($(this).is(':checked')==false){ 
+		$(this).parent().next().children().removeAttr("checked");
+	}else{
+		$(this).parent().next().children().prop("checked", "checked");
+	}
+	
+});
+
+$("input[type=checkbox][name='selectAll('id[]')']").bind("click",function(){
+	if($(this).is(':checked')==false){ 
+		$(this).parent().next().children().removeAttr("checked");
+	}else{
+		$(this).parent().next().children().prop("checked", "checked");
+	}
+	
+});
+</script> 

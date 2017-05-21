@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>班级主页-{name}-{gtitle}</title>
+{cssjs}
+</head> 
+<body>
+{top}   
+<div class="container class_index_main">
+  {head}  
+
+  <div class="row" style="margin:20px 0;">
+    <div class="col-sm-3">
+      <div class="panel panel-default">                                          
+         <div class="panel-heading"><h3 class="panel-title">类别</h3></div>
+         <div class="panel-body">
+         <p><a href="./?t=class_list&s={s}&c=1">推荐班级</a> </p>
+         <p><a href="./?t=class_list&s={s}&c=2">优秀班级</a> </p>
+         <p><a href="./?t=class_list&s={s}&c=3">最新加入</a> </p>
+     
+         </div>
+       </div> 
+ 
+    </div>
+
+
+<div class="col-sm-9">    
+ 
+
+<div class="panel panel-default">                                          
+   <div class="panel-heading"><h3 class="panel-title">班级</h3></div>
+   <div class="panel-body">
+<table class="table table-striped"> 
+<thead>
+<tr>
+<th>logo</th>
+<th>名称</th>
+<th>人数</th>
+<th>时间戳</th>
+</tr>
+</thead>
+   <tbody>
+<!-- START list -->   
+<tr>
+<td><a href="/class?c={id}" target=_blank><img src="/upds/class/logo/{id}.jpg" style="max-width:72px;" onerror="this.src='/error/logo.jpg';"></a></td>
+<td><a href="/class?c={id}" target=_blank>{name}</a>
+  <br/><code>口号：{slogan}</code></td>
+<td>{nums}</td>
+<td><script>show_TS('{timestamp}');</script><code></code></td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table> 
+<ul class="pagination pull-right">
+{page}
+</ul>   
+</div>
+</div> 
+
+ 
+</div>
+  
+</div>
+</div>   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() { 
+   if(queryStr("so")!="") $("#so").val(queryStr("so"));
+  //$.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {   
+  //}); 
+  $("#btn").bind("click",function(){ 
+    //if($("#so").val()==""){alert("请输入一个名称");return;}
+    location.href="./?t=class&s="+queryStr("s")+"&so="+$("#so").val();    
+  });  
+  /*$.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+  $("#addr1").bind("change", function(){getaddr($(this).val());getaddrv($(this).val());}); 
+  $("#addr2").bind("change", function(){getaddrv($(this).val());});  
+  $.post("./srv/rdo.php",{"tpl":"getperiod"},function (s,e) {   
+    d=JSON.parse(s);$("#period").empty();   
+    for(i=0;i<d.length;i++){
+      $("#period").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#period a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#period1").val($(this).attr("v"));
+    });       
+  }); 
+  $.post("./srv/rdo.php",{"tpl":"getorgtype"},function (s,e) {   
+    d=JSON.parse(s);$("#orgtype").empty();   
+    for(i=0;i<d.length;i++){
+      $("#orgtype").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#orgtype a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#orgtype1").val($(this).attr("v"));
+    });       
+  }); 
+     */
+ }); 
+/*
+function getaddr(v){ 
+  $.post("./srv/rdo.php?", {tpl:"getaddr","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");                
+  });
+}*/
+ 
+</script>

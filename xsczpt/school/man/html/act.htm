@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>用户管理-{gtitle}</title>
+{cssjs}  
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+ 
+<style>
+   .form-group div{padding-left:0;padding-right:0;}
+   .form-group .control-label{text-align:center;}
+</style>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>用户管理      <small></small>
+     <div class="btn-group pull-right">
+       <a class="btn btn-primary" href="./?t=act_add&s={s}" target=_blank>+添加</a>   
+       <a onclick="location.reload();" class="btn btn-primary" >刷新</a>       
+     </div>
+   </h3>
+</div>
+
+<div class="col-sm-12" style="padding-left:0;">
+<form class="form-inline" role="form" id="from1">
+  <div class="form-group"><select id="idtype" class="form-control"></select> 
+    </div>      
+  <div class="form-group">用户名
+       <input id="su" type="text" value="" class="form-control" placeholder="请输入用户名" style="width:120px;"/>  
+    </div> 
+    <div class="form-group">姓&nbsp;名 
+       <input id="st" type="text" value="" class="form-control" placeholder="请输入姓名" style="width:120px;"/>  
+    </div>
+  <div class="form-group">昵&nbsp;称 
+       <input id="sn" type="text" value="" class="form-control" placeholder="请输入昵称" style="width:120px;"/>  
+    </div>       
+  <div class="form-group">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+    </div>      
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>logo</th>
+<th>用户名</th>
+<th>姓名</th>
+<th>昵称</th>
+<th>邮箱</br>手机</th> 
+<th>身份</th> 
+<th>登录次数</br>最后登录时间</th>
+<th>审核</th> 
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id1}">   
+<td><img id="logo{id}" width="40" src="/upd/face/{id}.jpg" onerror="this.src='/error/face.jpg';" />                   
+</td>
+<td><a href="/zone?id={id}" target=_blank>{username}</a></td>
+<td>{truename}</td>
+<td>{nick}</td>
+<td>{email}</br>{mobile}</td>          
+<td><c n={idtype}></c></td>
+<td>{lgnums}次</br><script>document.write(utctime('{lasttime}'));</script></td>
+<td><st v="{state1}"></st></td>
+<td> 
+<a class="glyphicon glyphicon-ok-circle" title="审核" onclick="auditID({id:'{id1}',do:'o'})"></a>&nbsp; 
+<a class="glyphicon glyphicon-pencil" title="编辑" href="./?t=act_edt&d=m&s={s}&id={id}" target=_blank></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({id:'{id1}',do:'d'})"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+ var obj_st;
+ l_tpl="act_school";
+ $(function () {
+  $.getJSON("/data/?t=sys_state&f=obj", function (d) {obj_st=d;  
+        for(i=0;i<5;i++)$("st[v='"+i+"']").html(d[i]);      
+  });
+  $.get("/data/?t=sys_type&f=txt", function (d) {selectAddHead("#idtype","身份");$("#idtype").append(d);});   
+  $("#btn").bind("click",function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val("");$('#dlg1 #school').val("{s}");$('#dlg1').modal('show');});
+    $.getJSON("/data/?t=sys_type&f=obj", function (d) { 
+          for(i=0;i<4;i++)$("c[n='"+i+"']").text(d[i]);      
+    });
+      
+    $("#btnq").bind("click",function(){
+     if($("#su").val()=="" && $("#st").val()=="" && $("#sn").val()=="" && $("#idtype").val()=="")return;   
+     location.href="./?t=act&s={s}&su="+$("#su").val()+"&st="+$("#st").val()+"&sn="+$("#sn").val()+"&sp="+$("#idtype").val();  
+    });  
+ }); 
+ 
+function delths(v,obj) {
+   if (!confirm("确认删除吗？")) return;  
+   $.post("./srv/sdo.php?", {tpl:"del_act","id":v,"s":{s}}, function (d, e) {   
+      $(obj).parent().parent().remove();       
+  });
+} 
+</script>

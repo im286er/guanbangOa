@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>子女设置-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('待审核','已审核','注销中');  
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>子女设置      <small></small>  <a id="btn" class="btn btn-primary pull-right" >+添加子女</a>  </h3>
+</div>
+
+ 
+<div class="query" style="display:none;">
+        <select>
+           <option>课程分类</option>
+        </select>
+        <select>
+           <option>课程状态</option>
+        </select>
+        <select>
+           <option>标题</option>
+        </select>
+        <input class="btn"  type="button" value="搜索"/>
+        <a href="javascript:;">最新上传</a>
+        <a href="javascript:;">最高评分</a>
+        <a href="javascript:;" >最多下载</a>
+        <span class="right">共9999个资源</span>
+  </div>
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr> 
+<th>姓名</th>
+<th>昵称</th>
+<th>创建时间</th>
+<th>状态</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td><span class="blue0">{aname}</span></td>
+<td><b class="blue0" onclick="showths('{id}')">{anick}</b></td>  
+<td><code><script>document.write(utctime('{timestamp}'));</script></code></td>  
+<td><code><script>document.write(arr[{state}]);</script></code></td>  
+<td>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{cid}',this)"></a>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table> 
+</div> 
+</div> 
+{foot}
+</body> 
+</html>
+<script type="text/javascript">  
+$(function(){      
+    $("#btn").bind("click",function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val("");$('#dlg1').modal('show');});
+});   
+function addrel(){  
+  if($("#cardno").val()==""){alert("请输入身份证号");return;}
+  $.post("./srv/sdo.php", {tpl:"add_children",no:$("#cardno").val()}, function (d, e) {                 
+      if(d.indexOf("ok")>-1)
+        location.reload();
+      else
+        alert(d);
+  }); 
+}     
+function moda(d){
+  readID({tpl:"stu_schedule","do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}   
+ 
+function delths(v,obj){
+   if(!confirm("确定删除吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_children",id:v}, function (d, e) {                 
+      $(obj).parent().parent().remove();
+  });
+}    
+
+</script>
+
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">身份证号</label>
+    <div class="col-sm-10">
+       <input type="text" class="form-control" id="cardno"  maxlength="18" placeholder="身份证号"> 
+    </div>
+ </div>     
+  <input type="text" id="id" value="" style="display:none;"/> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick=addrel()> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

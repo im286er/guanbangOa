@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>日志-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('--','未读','<em>已读</em>');    
+</script> 
+</head>
+<body>
+{top} 
+<div class="container">   
+
+<div class="col-sm-3">
+{left} 
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>日志      <small></small>     
+<div class="btn-group pull-right"> 
+</div>
+   </h3>
+</div>
+ 
+
+<div class="row">
+<select id="ltype"></select>        
+<input class="btn btn-primary" id="btn" type="button" value="查询"/>  
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr> 
+<th>时间</th>
+<th>类型</th> 
+<th>备注</th>   
+</tr>
+</thead>              
+<tbody id="list">
+<!-- START list -->              
+<tr> 
+<td><script>document.write(utctime('{id}'));</script></td>
+<td><label data-ltype="{ltype}"></label></td> 
+<td><a>{des}</a></td>    
+</tr>
+<!-- END list --> 
+</tbody>   
+</table> 
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+</div>
+{foot}  
+</body>
+</html> 
+    
+<script>  
+var ltype;
+$(function () {
+   $.get("/data/logtype.txt", function (data) {$("#ltype").html(data);$("#ltype").prepend("<option value=''>—日志类型—</option>");});   
+   $.getJSON("/data/logtype.json.txt", function (data) {  
+      ltype=data;
+      $("label[data-ltype]").each(function (a, b) {
+        $(this).text(ltype[$(this).data("ltype")]);
+      });
+  });
+   $("#btn").bind("click",function(){
+      location.href="./?t=log&type="+$("#ltype").val();     
+   }); 
+ }); 
+</script> 

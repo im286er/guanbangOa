@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <title>{gtitle}</title>
+   {cssjs} 
+  </head>
+  <body class=""> 
+ {top}         
+        <div class="header">   <h1 class="page-title">显示字段</h1> </div>
+        
+        <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li class="active">自动化模板中心</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+    <button class="btn btn-primary" id="cbtn"><i class="icon-plus"></i> 添加</button>
+    <button class="btn" onclick="location.href=location.href;" >刷新</button> 
+  <div class="btn-group">
+  </div>
+</div>
+<div class="search-well">
+    <form class="form-inline" id="qry">                       
+    <input  id="ptid" type="text" style="display:none;">
+        <input  placeholder="Search Help..." id="a" type="text">
+        <input  placeholder="Search Help..." id="b" type="text">
+        <button class="btn btn-primary" type="button" onclick="loadPage({l_page:1})"><i class="icon-search"></i> Go</button> 
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="desc" title="排序方向" style="display:none;"/>   
+    </form>
+</div>
+
+<div class="well">
+    <table class="table">
+      <thead>  
+<tr>
+<th name="id">编号</th>
+<th name="col">名称</th>
+<th name="name">中文</th>
+<th name="odx">排序</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr name="{id}">
+<td>{id}</td>
+<td>{col}</td>
+<td>{name}</td>
+<td>{odx}</td>
+<td>
+<a onclick="Mod({id:'{id}'})" title="修改"><i class="icon-pencil"></i></a>
+<a onclick="delRow({id:'{id}'});" title="删除"><i class="icon-remove"></i></a>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+</div> 
+{foot}                       
+</div>
+        </div>
+ 
+    
+<div class="modal hide" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">用户数据</h3>
+    </div>
+<div class="modal-body">         
+ <form id="form1">
+<label>字段名</label>
+<input type="text" id="col" />     <br/>  
+<label>中文</label>
+<input type="text" id="name" />        <br/>
+<label>排序</label>
+<input type="text" id="odx" />             <br/>
+<label>隐藏</label>
+<input type="checkbox" id="hidden" value="0"  />    <br/>
+
+<input type="text" id="id"  style="display:none;"/>
+<input type="text" id="ptid"  data-flag="def"  style="display:none;"/>
+ 
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" onclick="dosave()">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>
+
+<script src="lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+    $("[rel=tooltip]").tooltip();
+    $(function() {
+        $('.demo-cancel-click').click(function(){return false;});
+    });
+</script>
+
+  </body>
+</html>
+<script> 
+    formatunixs = ",timestamp,";
+    $(function () {
+	 $("#ptid").val(queryStr("id"));
+     $("#dlg1 #ptid").val(queryStr("id"));	
+	 loadPage({l_page:1});	
+       
+        //dlgInit({ width: 700, height: 600, modal: true, frmid: "#dlg1", btnid: "#cbtn", showok: false, callback: "amcallback" });
+        //$("#timestamp").datepicker({ changeYear: true, showButtonPanel: true, showWeek: true, firstDay: 1, dateFormat: "yy-mm-dd 0:0" }); 
+         initAddBtn({btn:"#cbtn",frmid:"#dlg1"});
+        
+    });  
+    function dosave() {
+       SaveAM({tpl:queryStr("t"),"do":$("#dlg1").data("dotype"),id:$("#dlg1 #id").val(),frmid:"#dlg1",showok:"",callback:"bkcallback"});
+    }
+ 
+ </script>

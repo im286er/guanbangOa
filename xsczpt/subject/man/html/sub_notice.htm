@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>管理员-{gtitle}</title>
+{cssjs}
+<script charset="utf-8" src="js/layer1.9.3/layer/layer.js"></script>
+<script charset="utf-8" src="js/func.js"></script>
+<link rel="stylesheet" href="/widget/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="/widget/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/widget/kindeditor/lang/zh_CN.js"></script>
+<script>
+	var keditor=[];
+	KindEditor.ready(function(K) {
+		keditor["content"] = K.create('#content');
+	});
+	
+	function btnRefresh(param) {
+		location.href = "./?t=" + param +"&s={s}&sid={subid}";
+	}
+</script>
+<style>
+	a {cursor:pointer;}
+	.modal-dialog {
+		width:900px !important;
+	}
+</style> 
+</head>
+<body>
+{top}
+<div class="container">   
+	<div class="col-sm-3">
+	{menu}    
+	</div>
+
+
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>通知公告管理<small></small>
+				<div class="btn-group pull-right"> 
+					<input  type="button" class="btn btn-primary" value="+ 发布" id="btn"/>
+				</div>
+			</h3>
+		</div>      
+
+		<form class="form-horizontal" role="form" method="post" id="srcForm">
+			<div class="form-group">      					 
+				<div class="col-sm-4">
+				   <input id="srctitle" type="text" value="" class="form-control" placeholder="请输入通知公告标题"/>  
+				</div>        
+				<div class="col-sm-2">
+				   <input  type="button" class="btn btn-success" value="搜索" id="btnSearch"/>
+				   <input  type="button" class="btn btn-success" value="刷新" onclick="btnRefresh('sub_notice')"/>
+				</div>
+			</div>
+		</form>
+
+		<table class="table  table-hover"> 
+			<thead>
+				<tr>
+					<th>通知标题</th>
+					<th>发布人</th>
+					<th>发布时间</th>
+					<th>浏览次数</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>
+		<!-- START list -->
+				<tr> 
+					<td><a class="layer_a" rel="{id}" title="{title}">{title}</a></td>
+					<td>{truename}</td>
+					<td><script>document.write(utctime('{timestamp}'));</script></td>
+					<td>{visit}</td>
+					<td>
+						<a class="glyphicon glyphicon-pencil" title="编辑" href="?t=sub_notice_edit&p={pageindex}&srctitle={srctitle}&s={s}&sid={subid}&id={id}"></a>
+						<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+					</td>
+				</tr>
+		<!-- END list -->
+			</tbody>
+		</table>
+
+		<ul class="pagination pull-right">
+		{page}
+		</ul>
+	</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+	$(function () {
+		var srctitle = getUrlParam('srctitle');
+		if(srctitle!=null && srctitle!="") {
+			$("#srctitle").val(unescape(srctitle));
+		}
+		$("#btn").bind("click", function(){$('#dlg1').modal('show');  });
+		$("#btnSearch").bind("click",function(){ 
+			location.href="./?t=sub_notice&s={s}&sid={subid}&srctitle=" + escape($("#srctitle").val());
+		});
+		
+		$(".layer_a").bind("click",function(){
+			var _id=$(this).attr("rel");
+			layer.open({
+				type: 2,
+				title: "信息查看",
+				area: ['900px', '500px'],
+				content: ['index.php?t=sub_dialog&tb=sub_notice&id='+_id]
+			});
+		});
+	});
+	function delths(v,obj) {
+	   if (!confirm("确认删除吗？")) return;  
+		$.post("./srv/sdo.php?", {tpl:"del_notice","id":v}, function (data, e) {	  
+		// $(obj).parent().parent().remove();
+		alert('删除成功！');
+		location.href="?t=sub_notice&s={s}&sid={subid}";
+	  });
+	}
+	function saveContent(){
+		if($("#title").val()==""){alert("请输入通知标题！");return;}       
+		SaveAM({tpl:"sub_notice","do":"a",frmid:"#form1",showok:"发布成功",callback:"dosome"});
+	}
+	function dosome(ed,data){		 
+		if(data.indexOf("ok")>-1){
+			location.reload();
+		}
+	}
+</script>
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="label">发布通知公告</h4>
+			</div>
+			
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" id="form1">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">标题</label>
+						<div class="col-sm-6">
+						   <input type="text" id="title" class="form-control"  placeholder="通知标题">
+						</div>
+					</div>   
+					<div class="form-group">
+						<label class="col-sm-2 control-label">通知内容</label>
+						<div class="col-sm-8">
+							<!-- id=lst -->
+							<textarea name="content" id="content" data-edit="ke" style="width:700px;height:350px;visibility:hidden;">{content}</textarea>
+							<!-- 别的要赋值的字段必须使用隐藏控件绑定值 -->
+							<input type="text" id="sid" value="{subid}" style="display:none;"/>
+							<input type="text" id="school" value="{s}" style="display:none;"/>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-success" onclick="saveContent()"> 发 布  </button>
+			  <button type="button" class="btn btn-success" data-dismiss="modal">关 闭</button>        
+			</div>
+		</div>
+	</div>
+</div>

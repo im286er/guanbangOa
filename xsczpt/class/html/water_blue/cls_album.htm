@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级相册-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body class="cl_bg">
+
+{top}
+<!--头部文件-->
+<div class="logo_out w1" style="background:url(/upds/class/logo/{c}_1000.jpg);">
+	<div class="logo">
+		<img src="/upds/class/logo/{c}.jpg" onerror="this.src='/error/logo.jpg';" width="100" height="100"/>
+	</div>
+	<div class="text_logo">
+		<p>{name} </p>
+		<span>{slogan} 寄语：{wishes}</span>
+	</div>
+</div>
+<div class="w1 nav">
+	<div class="main">
+		<div class="menu">
+			<ul>                                
+				<li><a href="./?c={c}" target="">首页</a></li>
+        <li><a href="./?t=cls_album&c={c}" target="">相册</a></li>
+        <!-- START cate -->
+        <li><a href="./?t=arts&cc={id}&c={c}">{name}</a></li>     
+        <!-- END cate -->
+				<li><a href="./?t=members&c={c}" target="">成员</a></li>
+				<li><a href="./man/?c={c}" target=_blank>管理</a></li>
+			</ul>
+		</div>
+		<div class="menu_r">
+			<ul> 
+				<li><a href="/subject?s={s}" target="">学科</a></li>
+				<li><a href="/school?s={s}" target="">学校</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+  
+<div class="w1">
+  <div class="main">
+  <h2 class="pho_tit_list">
+  	<span>班级相册</span>
+  	<a style="display:{isDisplay}" class="btn btn-primary pull-right" id="btn">+创建相册</a>
+  </h2>
+  
+  <table class="table  table-hover" style="width:95%;margin:25px;"> 
+  <thead>
+  <tr>    
+  <th>封面</th> 
+  <th>名称</th>      
+  <th>状态</th> 
+  </tr>
+  </thead>
+  <tbody>      
+  <!-- START list --> 
+  <tr>  
+  <td><a href="./?t=cls_photo&c={c}&id={id}" ><img width="120" src="/upds/class/album/{cid}/{id}/t_{logo}" onerror="this.src='/error/logo.jpg';" /></a></td> 
+  <td><a  class="blue0">{name}</a> <br/> <code><em>{nums}</em>张照片</code>  <br/><code>创建人：{truename}</code> </td> 
+  <td><cite>{lastupdate}</cite></td>     
+     
+  </tr> 
+  <!-- END list -->   
+  </tbody>
+  </table> 
+  
+  <ul class="pagination pull-right" style="margin-right:25px;">
+  {page}
+  </ul>
+  </div>
+</div>
+{foot}  
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+   $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  
+  $("#btn").bind("click",function(){
+  $('#dlg1').modal('show');      
+   });  
+});
+function add_album(){
+  if($("#dlg1 #name").val()==""){alert("请输入名称！");return;}
+  if($("#dlg1 #des").val()==""){alert("请输入描述！");return;}
+  if($("#dlg1 #des").val().length>250){alert("描述限制250个字符！");return;}
+  $.post("./srv/album.php", {tpl:"add_album",cid:"{c}",name:$("#dlg1 #name").val(),data:$("#dlg1 #des").val()}, function (d, e) { 
+      if(d.indexOf("ok")>-1)
+        location.reload();
+      else{ 
+        alert($.trim(d).substr(3));  $('#dlg1').modal('hide'); 
+      }
+  });   
+}
+ 
+/*
+function delths(v,obj){  
+var show = "{isDisplay}";
+   if(show=="none"){alert('无权操作');return false;}   
+   $.post("./srv/sdo.php", {tpl:"del_album",id:v,c:"{c}"}, function (d, e) { 
+    alert(d);
+      if(d.indexOf("ok")>-1)
+        $(obj).parent().parent().remove();
+      else 
+        alert(d);
+  });
+}  */
+</script>   
+
+<div class="modal " id="dlg1" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">创建相册</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="form1" name="form1">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">名称</label>
+   <div class="col-sm-10">
+      <input type="text" id="name" class="form-control" style="width:50%;" maxlength="50"/> 
+          <input type="text" id="id" value="" style="display:none;"/>
+          <input type="text" id="cid" value="{c}" style="display:none;"/>
+    </div>
+  </div> 
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">描述</label>
+   <div class="col-sm-10">
+      <textarea id="des" class="form-control" rows="5"></textarea>
+      <p class="help-block">(5-250)</p>
+    </div>
+  </div> 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="add_album(1)">提交</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>

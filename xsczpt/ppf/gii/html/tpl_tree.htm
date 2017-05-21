@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>     
+    <title>{name}-{gtitle}</title>     
+    {cssjs}
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/easyui/themes/icon.css">
+    <script type="text/javascript" src="/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="js/tree.js"></script>       
+  </head>   
+<body class="">  
+{top}    
+<div class="sidebar-nav">
+{left}
+</div> 
+        
+    <div class="content">         
+        <div class="header"> <h1 class="page-title">{name}</h1></div>        
+         <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li> 
+            <li class="active">{name}</li>
+        </ul> 
+        
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+  <div class="btn-group">  
+    <button class="btn btn-primary" id="btn1" onclick="addTreeRootNode({tree:'#tree',dlg:'#dlg1'})">添加根</button>
+    <button class="btn btn-primary" id="btn2" onclick="addTreeNode({tree:'#tree',dlg:'#dlg1'});">添加叶子</button>
+    <a class="btn btn-primary" onclick="modTreeNode({tree:'#tree',dlg:'#dlg2'});getodx();">重命名</a>
+    <button class="btn btn-primary" id="btn3" onclick="delTreeNode({tree:'#tree'});">删除节点</button> 
+     <a class="btn btn-waring" onclick="location.reload();">刷新</a>   
+    </div>  
+</div>
+<div class="well">
+
+<div id="myTabContent" class="tab-content">
+  <div class="tab-pane active in" id="home">  
+  <ul class="easyui-tree" id="tree" data-options="lines:true"	url="./srv/tree.php?tpl={tpl}"></ul>         
+  </div> 
+</div> 
+</div>  
+{foot}                      
+</div>
+</div>
+</div>
+  </body>
+</html> 
+<script>
+    var dotype = "m";
+    var tbl="{tpl}";
+    $(function () {
+       //readID({ "tpl": queryStr("t"), "do": "r", "id": "1", frmid: "#form1" });          
+    });  
+</script> 
+
+<div class="modal small hide fade" id="dlg1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">节点</h3>
+    </div>
+    <div class="modal-body">
+<form id="form1">
+<label>节点名称</label>  <input id="name" type="text" value="" class="input-xlarge" maxlength="30"> 
+<label>排序(数字大在前)</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')" >    
+ <input type="text" id="id" style="display:none;" value="" disabled/>
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="addTreeNodeDo('#dlg1')">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        
+    </div>
+</div>
+
+<div class="modal small hide fade" id="dlg2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">修改</h3>
+    </div>
+    <div class="modal-body">
+<form id="form1">
+<label>节点名称</label>  <input id="name" type="text" value="" class="input-xlarge" maxlength="30">  
+<label>排序(数字大在前)</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')" >   
+ <input type="text" id="id" style="display:none;" value="" disabled/>
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="modTreeNodeDo('#dlg2')">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>             
+    </div>
+</div>

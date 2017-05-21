@@ -1,0 +1,120 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>添加新成员-{gtitle}</title>   
+{cssjs}    
+</head>
+<body>
+{top}
+<div class="container"> 
+<div class="col-sm-3">
+{menu}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>添加新成员 </h3>
+</div>     
+<form class="form-horizontal" role="form">      
+  <span class="help-block">请复制或者手工输入学生或者家长信息到下面的文本框中，按照以下格式排版即可批量生成帐号 </span>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份</label>
+    <div class="col-sm-3"><select id="idtype" class="form-control"></select></div>
+     <label class="col-sm-1">默认密码</label>
+     <div class="col-sm-3"><input id="pwd" value="000000" class="form-control"></div>
+  </div>
+  <div class="form-group">
+   
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">年级</label>
+    <div class="col-sm-3"><select id="grade" class="form-control"></select> </div>
+    <label class="col-sm-1 control-label">班级</label>
+    <div class="col-sm-3"><select id="cid" class="form-control"></select></div>
+  </div>                                                                    
+  
+  <div class="form-group">
+    <label class="col-sm-2 control-label">字段</label>
+    <div class="col-sm-10">
+       <label class="checkbox-inline"><input id="a" type="checkbox" checked disabled>姓名</label>
+       <label class="checkbox-inline"><input id="b" type="checkbox" checked disabled>身份证号</label>
+       <label class="checkbox-inline"><input id="c" type="checkbox" checked disabled>邮箱</label>
+       <label class="checkbox-inline" style="display:none;"><input id="d" type="checkbox" disabled >孩子身份号
+       </label>
+       <label class="checkbox-inline"><input id="e" type="checkbox" >手机号</label>           
+    </div> 
+  </div>  
+  <div class="form-group">
+    <label class="col-sm-2 control-label">数据</label>
+     <div class="col-sm-10">
+    <textarea id="des" class="form-control" rows="10"></textarea>
+    <span class="help-block">"，"逗号分隔每个字段<br/>
+     示例：张三,32132419******x,zlen@topnt.cn,189****88 <br/>
+      *每行一个成员信息，不能有空行  <br/>
+      *导入成功 请使用邮箱或者手机号登录，用户名可以在登录成功后自行修改      
+     </span>
+    </div>
+  </div>
+ 
+ 
+     <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">   
+       <input type="text" id="id" value="0" style="display:none;"/>      
+   <button type="button" class="btn btn-primary" id="btn"> 开始导入 </button>     
+   </div>     
+    </div>
+    
+      <div class="form-group">
+    <label class="col-sm-2 control-label">结果</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" rows="10" id="des1" readonly></textarea>
+    </div>
+  </div>
+</form> 
+
+</div>
+</div> 
+{foot}  
+</body>
+</html>
+<script type="text/javascript">
+
+$(function () {
+   $.get("/data?t=sys_type&f=txt", function (d) {$("#idtype").html(d);$("#idtype").find("option[value='4']").attr("disabled","true");});   
+   $.get("/data/?t=sys_grade&f=txt&pn=period&pv={period}", function (d) {$("#grade").html(d);getclass();}); 
+     
+    $("#idtype").change(function(){
+      var idtype = $(this).val();
+      if(idtype == 3){
+        $("#d").parent().show();
+        $("#d").prop("checked",true);
+      }else{
+        $("#d").parent().hide();
+        $("#d").attr("checked",false);
+      }
+    });
+    $("#grade").change(function(){getclass()});
+    
+    $("#btn").bind("click", function(){        
+      if($("#grage").val()==""){alert("请输入用户默认密码");return;}
+      if($("#idtype").val()==""){alert("请输入要导入的用户信息");return;}  
+      if($("#cid").val()==undefined||$("#cid").val()==""){alert("请选择班级，没有班级请先创建！");return;} 
+      if($("#pwd").val()==""){alert("请输入用户默认密码");return;}
+      if($("#des").val()==""){alert("请输入要导入的用户信息");return;}
+      str=$.base64.btoa($("#des").val(),true);        
+      var mb=$("#e").is(":checked")?"1":"0"; 
+      $("#des1").val("正在导入……");
+      $.post("./srv/import.php?", {"tpl":"add","sid":"{s}",pwd:$("#pwd").val(),gid:$("#grade").val()
+      ,idtype:$("#idtype").val(),cid:$("#cid").val(),"period":"{period}","mb":mb,data:str},
+      function (data, state) {
+             $("#des1").val(data);               
+        });    
+    });       
+ });  
+ function getclass(){
+   gid=$("#gid").val(); 
+    $.post("./srv/rdo.php",{"tpl":"get_cls","sid":"{s}","gid":$("#grade").val()}, function (d, e) {
+      selectShowData("#cid",JSON.parse(d),"id","name");
+    });  
+ }
+</script>

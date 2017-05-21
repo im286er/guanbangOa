@@ -1,0 +1,416 @@
+ul,li,p,dl,dt,dd{ list-style:none; margin:0; padding:0;}
+a:hover{text-decoration:none;}
+*{font-size:13px;}
+/*名师主页  author liw*/
+
+.f_index_main{width:1218px; margin:0 auto; padding:0;}
+
+.f_nav{
+	height:40px;
+}
+
+.f_nav_content{
+	width:822px;
+	line-height:40px;
+	
+}
+
+.f_nav_content,.f_nav_right{
+	float:left;
+	position:relative
+}
+
+.menu-item:hover .sub-menu{display:block;}
+.sub-menu{position:absolute;left:271px;top:40px;display:none;width:137px;padding:7px 0;
+	background:#f6f6f6;
+	z-index:999;
+}
+
+.sub-menu li a:link{
+	font-size: 14px;
+	text-decoration: none;
+	display:block;
+}
+.sub-menu li a:link, .sub-menu li a:visited {	
+	color:#000;	
+}
+
+.sub-menu li a:hover, .sub-menu li a:active {
+	color: #1CB177;	
+	background:#ccc;
+}
+
+
+.f_nav_content li{
+	float:left;
+	list-style-type:none;
+	width:137px;
+	font-family:"微软雅黑";
+	text-align:center;
+	background:url(images/teach_03.gif) right no-repeat; 
+}
+
+.f_nav_content .none{
+	background:none;
+}
+
+.f_nav_right{
+	line-height:40px;
+	float:right;
+}
+.f_nav_right li{
+	list-style-type:none;
+	float:right;
+	font-family:"微软雅黑";
+	color:#999;
+	padding-left:28px;
+}
+
+.f_nav_right .win{
+	background:url(images/t_03.gif) left no-repeat;
+}
+
+.f_nav_right .mac{
+	background:url(images/t_05.gif) left no-repeat;
+}
+
+.f_nav_right .app{
+	background:url(images/t_07.gif) left no-repeat;
+}
+
+.f_nav_right li span{
+	background:url(images/sep_03.gif) left no-repeat;
+	padding:5px 0px 20px 5px; 
+}
+
+.f_nav_content a:link, .f_nav_content a:visited {
+	font-size: 16px;
+	color:#000;
+	text-decoration: none;
+}
+
+.f_nav_content a:hover, .f_av_content a:active {
+	font-size: 16px;
+	color: #1CB177;
+	text-decoration: none;
+}
+
+.f_top{	
+	height:235px;
+	margin-top:5px;
+}
+
+.f_top_left{
+	height:231px;
+	float:left;
+	
+	border:1px solid #DBDBDB;
+	padding:5px 17px;
+}
+
+.f_top_right{
+	float:left;
+	width:775px;
+	border:1px solid #DBDBDB;
+	padding:0px 17px;
+	height:231px;
+	margin-left:15px;
+}
+
+.f_title {
+	height: 45px;
+	border-bottom: 1px solid #E8E8E8;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	line-height: 45px;
+	font-weight: bold;
+	color: #786F66;
+	margin-left:0px;
+	
+}
+
+.f_title_left {
+	font-size: 16px;
+	width:40%;
+	float: left;
+	background:url(images/tit_07.gif) left no-repeat;
+	padding-left:16px;	
+}
+
+.f_title_right {
+	
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+
+.f_title_right a {
+	color: #999;
+	text-decoration: none;
+	font-family: "宋体";
+	font-size: 13px;
+	font-weight: normal;
+	padding-right: 10px;
+}
+
+.f_news_list {
+	margin-top: 6px;
+	_height: 284px;
+	min-height:284px;
+}
+
+.f_news_list li ,.fl_news_list li{
+	
+	list-style-type: none;
+	//overflow:hidden;
+	margin: 8px 0;
+	border-bottom: 1px dotted #CCC;
+	height: 20px;
+	line-height: 20px;
+}
+.f_news_list span ,.fl_news_list span{
+	float: right;
+	color: #999;
+}
+.f_news_list a:link, .f_news_list a:visited ,.fl_news_list a:link,.fl_news_list a:visited{
+	text-decoration: none;
+	color: #000;
+}
+.f_news_list a:hover, .f_news_list a:active ,.fl_news_list a:hover,.fl_news_list a:active{	
+	color: #1CB177;
+	text-decoration: none;
+}
+
+.f_slidepic,.f_sp_content{
+	margin-top:5px;
+}
+
+.f_slidepic{
+	margin-top:5px;
+	height:214px;
+	padding-left:16px;
+	border:1px solid #DBDBDB;
+}
+.f_sp_pic{
+	float:left;
+	margin:20px 28px;
+}
+
+.f_main{
+	width:875px;
+	margin:5px 0;
+	float:left;
+}
+
+.f_m_content{
+	width:412px;
+	float:left;
+	border:1px solid #DBDBDB;
+	margin:5px 25px 5px 0;
+	padding-left:16px;
+	padding-right:16px;
+}
+
+.f_news_bg{
+	background:url(images/news_bg_03.gif) left no-repeat;
+	padding-left:15px;
+}
+
+.f_pub{
+	float:left;
+	margin:5px 0;
+	border:1px solid #DBDBDB;
+	width:848px;
+	padding-left:16px;
+}
+
+.f_p_container{
+	width:848px;
+	float:left;
+}
+
+.f_pub_content{
+	width:184px;
+	float:left;
+	margin:10px;
+	padding-left:10px
+}
+
+.f_pub_content h2{
+	font-size:14px;
+	margin:5px 0;
+}
+
+.f_pub_content p,.f_pub_content span{
+	font-size:13px;
+	font-family: "宋体";
+}
+
+.f_pub_content span{
+	padding-left:48px;
+	color:#41BA8F;
+	background:url(images/tech_02.gif) center no-repeat;
+}
+
+.f_sidebar{
+	width:340px;
+	margin-top:10px ;
+	
+	float:right;
+}
+
+.f_course,.f_res,.f_member,.f_count{
+	border:1px solid #DBDBDB;
+	margin-bottom:10px ;
+	padding-left:16px;
+}
+
+.f_res{
+	
+	height:380px;
+}
+
+.f_member,.f_count{
+	height:317px;
+}
+
+.f_c_content{
+	background:url(images/tech_29.gif) left no-repeat;
+	height:165px;
+	margin:10px 0;
+
+}
+
+
+.f_c_content li{
+	list-style-type:none;
+	height:29px;
+	line-height:29px;
+	padding-left:20px;
+}
+
+.f_c_content span img{
+	
+	padding:5px 0 0 20px;
+}
+
+.f_res_pic{
+	height:50px;
+	width:300px;
+	margin-top:10px;
+}
+
+.f_res_pic img{
+	float:left;
+}
+
+.f_res_pic p{
+	padding-top:10px;
+	padding-left:60px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.f_res h1{
+	color:#9B9B9B;
+	text-align:center;
+	font-size:14px;
+	width:300px;
+	margin-top:0px;
+}
+
+.f_m_container{
+	float:left;
+}
+
+.f_mem_pic{
+	margin:10px 11px 0 0;
+	width:86px;
+	float:left;
+}
+
+.f_mem_pic p{
+	text-align:center;
+	margin:10px 0;
+}
+
+.f_count_det{
+	margin-top:20px;
+	background:url(images/tech_59.gif) left no-repeat;
+	padding-left:30px;
+	height:245px;
+}
+
+.f_count_det li{
+	
+	list-style-type:none;
+	font-size:14px;
+	height:30px;
+	line-height:30px;
+	color:#8E8E8E;
+	
+}
+.f_count_det span{
+
+	float:left;
+	
+}
+.f_count_det p{
+	
+	float:left;
+	
+}
+
+//List样式
+
+.fl_main{
+	width:840px;
+	margin:5px 0;
+	float:left;
+}
+
+.fl_list{
+	border:1px solid #DBDBDB;
+	width:840px;
+	margin:10px 0;
+	float:left;
+	padding:10px 17px;
+	margin-left:25px;
+}
+
+.fl_news_list{
+	margin: 6px;
+}
+
+.fd_content{
+	line-height:40px;
+	text-indent:2em;
+}
+/**后面添加内容**/
+.f_news_list a{width:650px;float:left;overflow:hidden;}
+.f_news_list1{margin-top:6px;}
+.f_news_list1 li{
+	
+	list-style-type: none;
+	//overflow:hidden;
+	margin: 8px 0;
+	border-bottom: 1px dotted #CCC;
+	height: 20px;
+	line-height: 20px;
+}
+.f_news_list1 span {
+	float: right;
+	color: #999;
+}
+.f_news_list1 a:link, .f_news_list1 a:visited ,.fl_news_list1 a:link,.fl_news_list1 a:visited{
+	text-decoration: none;
+	color: #000;
+  width:320px;
+  float:left;
+  overflow:hidden;
+}
+.f_news_list1 a:hover{
+color: #1CB177;
+	text-decoration: none;
+}
+.f_nav_right li a{font-size:16px;padding-right:10px;}

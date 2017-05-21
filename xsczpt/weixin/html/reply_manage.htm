@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.blockui.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+}
+</style>
+<script type="text/javascript">
+$().ready(function(){	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+ 
+//删除评论
+function delReply(id){
+	if(confirm("你确定删除此评论吗?")){
+		$.post("./srv/rdo.php", {tpl:"del_reply","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#reply_"+id).fadeOut("slow");
+				$("#reply_nums").text($("#reply_nums").text()-1);	
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+
+//审核评论
+function checkReply(){
+	var val = $("input[name='priv']:checked").val();
+	var id  = $("#reply_id").val();
+	$.post("./srv/rdo.php", {tpl:"check_reply","id":id,"val":val}, function (d, e) {
+		l=JSON.parse(d);
+		if(l.flag=="true"){
+			alert(l.value);
+			$("#reply_"+id).fadeOut("slow");
+			location.href = location.href;
+		}else{
+			alert(l.value);
+		}
+	});
+}
+
+var html = "";
+//显示评论项
+function showReply(id,val)
+{
+	html = $("#div_detail").html();
+	$("#div_detail").html('');
+	$.blockUI({ 
+	message: html, 
+	fadeIn: 700, 
+	fadeOut: 700, 
+	showOverlay: true,
+		css: { 
+			top:  ($(window).height() - 300) /2 + 'px', 
+			left: ($(window).width() - 300) /2 + 'px', 
+			width: '250px',
+			height:'200px',
+			border: 'none' ,
+		} 
+	});
+	$("input[name='priv']:checked").attr("checked",false);
+	$("#reply_id").val(id);
+	$("#priv"+val).attr("checked",true);
+}
+
+function closeDiv()
+{
+	$("#div_detail").html(html);
+	$.unblockUI();	
+}
+</script>
+</head>
+<body>
+<header><a href="?t=admin_index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>他人评价</h1></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			  <div class="weui-cells__title" style="display:none;">选择条件</div>
+			  <form action="./?t=reply_manage" method="post" id="t_zdy" style="display:none;">
+			  <div class="weui-cells mt_5">
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">姓名：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input type="text" name="truename" id="truename" value="" class="weui-input"/>
+                </div>
+            </div>
+		 </div>
+		 
+		 <div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+        </div>
+		</form>
+		<div id="frm_show" style="width:100%;text-align:center;font-size:9px;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow" id="wrapper">
+			<table width="800px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+				<tr class="tabtitle" height="26">
+					<td width="5%" class="tb_td tb_txt_bgc">序号</td>
+					 <td  width="9%" class="tb_td tb_txt_bgc">被评论学生</td>
+					 <td  class="tb_td tb_txt_bgc">内容</td>
+					 <td width="9%" class="tb_td tb_txt_bgc">状态</td>
+					 <td width="8%" class="tb_td tb_txt_bgc">评论人</td>
+					  <td  width="8%" class="tb_td tb_txt_bgc">操作选项</td>
+				</tr>
+				{str_total}
+			</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+		<ul class="pagination wx_center">
+					{page}
+		</ul>
+		</div>
+		
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=admin_index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=admin_user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	$("#wrapper").height($(document.body).height()-220);
+	myScroll = new iScroll('wrapper',{
+		momentum:false,
+		onScrollMove:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		},
+		onScrollEnd:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		}
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function slide(){
+	$("#frm_show").hide();
+	$("#t_zdy").fadeIn();
+}
+</script>
+</body>
+</html>
+
+<div id="div_detail" style="display:none;">
+	<div style="background:#9b0221; width:250; height:30px; line-height:30px; font-weight:bold; color:#fff; font-size:13px; padding-left:10px; text-align:left;">评价审核<div style="float:right"><a href="javascript:closeDiv();" style="color:#ffffff;">X</a>&nbsp;&nbsp;</div>
+	<div style="color:#000000; margin-top:5px; margin-left:10px;">
+		<input type="hidden" id="reply_id" value="" />
+		<input type="radio" name="priv" id="priv1" value="1"  />&nbsp;全体学生公开&nbsp;<br />
+		<input type="radio" name="priv" id="priv2" value="2"  />&nbsp;只对本班公开&nbsp;<br />
+		<input type="radio" name="priv" id="priv3" value="3"  />&nbsp;只对这个学生公开&nbsp;<br />
+		<input type="radio" name="priv" id="priv0" value="0"  />&nbsp;不公开&nbsp;<br />
+		<input type="button" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand; margin:5px auto 0 auto;" value="审 核" id="but_add" onclick="checkReply()" name="but_add" />&nbsp;&nbsp;
+		<input type="button" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand; margin:5px auto 0 auto;" value="取 消" onclick="closeDiv()" />
+	</div>
+	</div>
+</div>

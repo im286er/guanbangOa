@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>创建班级-{gtitle}</title>  
+{cssjs_edit}    
+<link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+  <div class="menu_a">
+    <h2>班级管理</h2>
+    <ul> 
+<li><a href="./?t=class">代课的班级</a></li> 
+<li><a href="./?t=class_man">我是班主任</a></li>
+<li><a href="./?t=class_new">+创建班级</a></li>
+    </ul>
+  </div> 
+</dt>
+<dd>
+<form id="form1">
+      <h1>创建班级</h1>
+     <hr/> 
+      
+      <table class="table1">
+    <tr>
+        <td style="width:60px;">班级名称：</td>
+        <td><input type="text" id="name" style="width:200px;"/></td>
+    </tr>
+    <tr>
+        <td>所属学校</td>
+        <td>      
+         <select id="school"></select> 
+           <input type="text" id="schools" value="" style="display:none;"/> 
+        </td>
+    </tr> 
+    <tr>
+        <td>年级：</td>
+        <td>
+        <select id="grade"></select>  
+        <input type="text" id="period" value="" style="display:none;"/> 
+        <input type="text" id="grades" value="" style="display:none;"/> 
+        <input type="text" id="periods" value="" style="display:none;"/> 
+        </td>
+    </tr>
+    <tr>
+        <td>入学(届)</td>
+        <td>
+       <input type="text" id="intoyear" style="width:100px;" maxlength="4"   onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+        </td>
+    </tr> 
+    <tr>
+        <td>班级口号</td>
+        <td>
+       <input type="text" id="slogan" style="width:200px;"/>
+        </td>
+    </tr>
+      <tr>
+        <td>班主导寄语</td>
+        <td>
+       <input type="text" id="wishes" style="width:200px;"/>
+        </td>
+    </tr>   
+    <tr>
+        <td class="f_top"><span>班级简介：</span></td>
+        <td><textarea id="des"></textarea></td>
+    </tr>
+        <tr>
+          <td></td>
+          <td>
+           <input type="text" id="id" value="" style="display:none;"/>
+          <input type="button" id="btn"  value="确定"/>
+          <input type="reset" class="but1" value="取消"/>
+          </td>
+        </tr>
+      </table> 
+</form>       
+</dd>
+</dl>
+</div>
+{footer}
+</body>
+<script type="text/javascript">
+$(function(){
+  $.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+  $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+       selectShowData("#school",JSON.parse(d),"id","name");    
+  }); 
+  $("#school").bind("change",function(){ $("#schools").val($.trim($(this).find('option:selected').text()));});
+  $("#grade").bind("change",function(){
+   if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period);
+      $('#grades').val($.trim($(this).find('option:selected').text()));
+      $('#periods').val($('#grade optgroup:eq('+(period-1)+')').attr('label')); 
+   });  
+    //readID({tpl:"tech","do":"r",id:"{id}",frmid:"#form1"});  
+    $("#btn").bind("click", function(){   
+      if($("#name").val()==""){alert("请输入名称");return;}
+      if($("#school").val()==""){alert("请选择学校");return;}
+      if($("#grade").val()==""){alert("请选择年级");return;}
+      if($("#intoyear").val()==""){alert("请输入入学(届)");return;}   
+       SaveAM({tpl:queryStr("t"),"do":"a",frmid:"#form1",showok:'创建完成,等待审核',callback:"dosome"});      
+    });     
+ });   
+function dosome(ed,data){
+  id=data.substr(data.indexOf('ok')+2);
+   $.post("./srv/sdo.php?", {tpl:"join_class","id":id,subject:"{subject}",subjects:"{subjects}"}, function (d, e) {                     
+     
+  });
+
+}	
+</script>
+</html>

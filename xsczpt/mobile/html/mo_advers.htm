@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>首页广告-{gtitle}</title>
+{cssjs}      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>移动广告      <small></small>     
+<div class="btn-group pull-right">
+<a href="./?t=mo_advam&d=a" class="btn btn-primary" target=_blank>+添加</a>
+</div>
+   </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">      
+    <label class="col-sm-1">名称</label>    
+  <div class="col-sm-2">
+       <input id="so" type="text" value="" class="form-control" placeholder="请输入关键字"/>  
+    </div>        
+    <div class="col-sm-2">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+       <input  type="button" class="btn btn-info  " value="刷新" onclick="location.reload();"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<td></td> 
+<th>名称</th>
+<th>创建者</th> 
+<th>时间</th>  
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}"> 
+<td><img src="/upds/mo_advers/t_{pic}" width="120"/></td>
+<td><a href="" target=_blank>{name}</a></td>  
+<td> {truename}</td>          
+<td><code><script>document.write(utctime('{timestamp}'));</script></code></td>   
+<td><em data-state="{state}"></em></td>
+<td> 
+<a class="glyphicon glyphicon-ok" title="审核" onclick="audit('{id}',this)"></a>
+<a class="glyphicon glyphicon-pencil" title="编辑" href="./?t=mo_advam&d=m&id={id}"  target=_blank></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}',callback:'delcall'})"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div>
+{foot} 
+</body>
+</html>
+   <script type="text/javascript">  
+   l_tpl="mo_advers"; 
+ $(function () {
+   $.getJSON("/data/mo_state.json.txt", function (data) { 
+           jsnState=data;    
+        for(i=0;i<5;i++)$("em[data-state='"+i+"']").html(data[i]);      
+  });      
+    $("#btnq").bind("click",function(){ 
+      //if($("#so").val()=="")return;   
+     location.href="./?t=mo_advers&so="+$("#so").val();  
+    });  
+ });   
+ function audit(v,obj) {  
+   $.post("./srv/sdo.php?", {tpl:"audit_advers","id":v}, function (d, e) {             
+      $(obj).parent().prev().html(jsnState[2]);             
+  });
+}
+function delcall(e,d){
+  if(d.indexOf("ok")>-1){
+    $("#row"+e.id).remove();
+  }
+}
+</script>

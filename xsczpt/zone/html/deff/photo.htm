@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-相册展示-{nick}空间</title>
+{cssjs}        
+
+
+<script src="/widget/layerv2/layer/layer.js" type="text/javascript"></script> 
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header">{name}<h3>  
+ <a href="./?t=album&id={zid}" class="btn btn-primary" >返回相册</a> 
+</h3>
+</div>  
+ 
+
+
+<div id="layer-photos-demo" class="layer-photos-demo">            
+<!-- START list -->   
+<img layer-pid="" layer-src="/upd/album/{uid}/{aid}/{pic}" src="/upd/album/{uid}/{aid}/t_{pic}" alt="{ofname}"  width="120" >
+<!-- END list -->
+</div>
+
+
+<hr/>
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">    
+layer.config({
+    extend: 'extend/layer.ext.js'
+}); 
+       
+ $(function () {  
+         layer.ready(function(){ //为了layer.ext.js加载完毕再执行
+            layer.photos({
+                photos: '#layer-photos-demo'
+            });
+        });   
+  });  
+</script>

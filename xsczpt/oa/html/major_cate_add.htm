@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+</head>
+
+<body>
+
+
+<div class="main">
+		<div class="box">
+			<!-- <form action="./srv/major_cate_add_submit.php" id="ttts" method="post" class="ha_editform"> -->
+
+				<form action="./srv/major_cate_add_submit.php" enctype="multipart/form-data" method="POST" >
+				<div class="boxtitle">
+					<label class="current"><a href="javascript:void(0);">添加专业分类</a></label> 
+				</div>
+				<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+                        <tr>
+							 <td width="20%" class="tabtd2_L">上级分类</td>
+							 <td width="80%" class="tabtd2_R"> 
+								<select  type="text" id="m_id" name="pid" class="stu-cnt-pd-input ha_stuinputf">
+			    
+								</select></td>
+						</tr>
+                        <tr>
+							 <td width="20%" class="tabtd2_L">分类名称</td>
+							 <td width="80%" class="tabtd2_R"><input type="text" id="cate_name" name="cate_name" class="stu-cnt-pd-input ha_stuinputf"/></td>
+						</tr>
+     
+                        <tr>
+							 <td width="20%" class="tabtd2_L">分类等级</td>
+							 <td width="80%" class="tabtd2_R"><input type="text" id="cate_level" name="cate_level" class="stu-cnt-pd-input ha_stuinputf"/></td>
+						</tr> 
+                        <tr>
+							 <td width="20%" class="tabtd2_L">分类图片</td>
+							 <td width="80%" class="tabtd2_R">
+							 	<div class="ha_content pr fl">
+											<input type='text' name='path_name' id='path_name' class='txt' readonly />  
+											<input type='button' class='ha_filebtn' value='上传文件' />
+											<input type="file" name="pic_file" id="att_file" class="ha_filerar" size="28" onchange="checkFiles(this)" />
+											<span>（最大上传2Mb文件）</span>
+								</div>
+								<!-- <input type ="file" name="files" multiple	/><br/> -->
+							 </td>
+						</tr>
+                    
+
+
+					</table>
+				</div>
+				<div class="boxfooter2">
+					<input type="text" id="id" value="" style="display:none;"/>
+					<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+		</div>
+	</div>
+<script type="text/javascript">
+// $(function () {	
+//     $.post("./srv/rdo.php", {"tpl":"zhsz_features"}, function (d, e) { 
+//         selectShowDataNoH("#pid",JSON.parse(d),"id","fea_name"); $("#pid").prepend("<option value='0'>—根目录—</option>"); 
+// 		selectShowDataNoH("#m_id",JSON.parse(d),"id","fea_name"); $("#m_id").prepend("<option value='0'>—根目录—</option>"); 
+//     });	   
+// 	});
+	$(function(){
+		$.post("./srv/rdo.php",{"tpl":"cate_add_fid"},function(d,e){
+			selectShowDataNoH("#m_id",JSON.parse(d),"id","name");
+		});
+	})
+
+//文件上传验证
+function checkFiles(obj){
+	//文件名称及路径
+	var $pathFile  = $(obj).val();
+	var expArray   = $pathFile.split('.');
+	var extendName = expArray.pop();
+	var allowExt = 'png,jpg,gif';
+	var searchResult = allowExt.search(extendName.toLowerCase());
+	var img;
+	if(extendName.length!=3||searchResult==-1){
+		alert('仅允许上传的文件格式：png,jpg,gif。');
+		$(obj).val('');
+	}
+	document.getElementById('path_name').value=obj.value
+}
+</script>
+</body>
+</html>

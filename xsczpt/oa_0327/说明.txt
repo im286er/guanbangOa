@@ -1,0 +1,9 @@
+oa_zhsz_system  增加schools字段
+oa_zhsz_dept    增加school字段
+oa_zhsz_stamina 增加school字段
+oa_zhsz_term    增加school字段
+oa_zhsz_grade   增加school字段
+oa_zhsz_class  
+oa_zhsz_course_select
+oa_zhsz_course
+oa_zhsz_teach

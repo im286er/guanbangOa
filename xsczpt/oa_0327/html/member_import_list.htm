@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />  
+<script type="text/javascript" language="javascript" src="common/ajaxfileupload.js"></script> 
+<script type="text/javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>  
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="15%" class="tabtd">登录名</td>
+					 <td width="20%" class="tabtd">姓名</td>
+					 <td width="5%" class="tabtd">性别</td>
+					 <td width="20%" class="tabtd">导入状态</td>
+				</tr>
+				{str_total}
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+			<label id="member_nums">共{total}条数据，可正常导入{memberC}条数据</label>&nbsp;&nbsp;
+		</div>        
+		<div class="boxfooter2" style="text-align:center; width:100%; height:30px; overflow:hidden;">
+			<a href="./srv/member_import_okay.php" onclick="return confirm('你确定导入？该操作仅导入正确的数据。');" style="font-size:12px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; display:block; overflow:hidden; line-height:25px; text-align:center; float:left; margin-right:10px;">确认导入</a>
+			<a href="./?t=member_import" style="font-size:12px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; display:block; overflow:hidden; line-height:25px; text-align:center; float:left; margin-right:10px;">重新导入</a>
+			<a href="./srv/download_example.php?flag=9" style="font-size:12px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; display:block; overflow:hidden; line-height:25px; text-align:center; float:left;">问题名单</a>
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+
+});
+
+</script> 

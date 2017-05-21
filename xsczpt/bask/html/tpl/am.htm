@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<title></title>
+{cssjs}   
+</head>
+<body class="">  
+<form class="hform" id="form1"  onsubmit="return false">   
+<table class="table-stripped">
+<thead>
+<tr><th colspan="3" class="text-left"><label></label><button class="small blue" id="btn">确定</button> <button class="small green" onclick="cancel()" >取消</button></th></tr>
+</thead>
+<!-- START display --><tr><td>{column_name}</td><td><input type="text" id="{column_name}" value="" /></td></tr> 
+<!-- END display -->  
+<tr><td style="width:90px;"></td><td colspan="3"><button class="small blue" id="btn1">确定</button> <button class="small green" onclick="cancel()" >取消</button></td></tr>
+</table> 
+</form> 
+</body>
+</html>
+ <script> 
+l_tpl="{tpl}";
+dotype=queryStr("d");   
+$(function () {       
+if(queryStr("d")=="m")
+    readID({"id": queryStr("id"), frmid: "#form1" });
+     $("#btn").click(clk1);   
+     $("#btn1").click(clk1);  
+}); 
+function clk1(){
+  SaveAM({"do":dotype,frmid:"#form1",showok:"操作成功",callback:"doover"});  
+}
+function doover(ed,data){  
+   if(dotype=="a")
+        parent.location.reload();
+   else{ 
+        var index = parent.layer.getFrameIndex(window.name); 
+        parent.layer.close(index);   
+   }
+}
+function cancel(){
+    var index = parent.layer.getFrameIndex(window.name); 
+    parent.layer.close(index);   
+}
+</script>    

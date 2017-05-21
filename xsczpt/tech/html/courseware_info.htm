@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>课件详情-{gtitle}</title> 
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main"> 
+
+<div class="page-header">
+   <h3>{title}  <small> <span id="restype"></span>  <script>document.write(utctime('{timestamp}'));</script></code></small>  
+   <div class="btn-group pull-right"> 
+  <a href="./?t=courseware" class="btn btn-primary">返回</a></div>  </h3>
+</div> 
+
+
+<div class="panel panel-default">
+<div class="panel-heading">
+    <h3 class="panel-title">学校：{schools}<small> 班级:{classs} 浏览：{see}</small></h3>
+   </div> 
+ <div class="panel-heading">
+    <h3 class="panel-title">学科:<span id="subject"></span> <small> 学段：<span id="period"></span> 年级:<span id="grade"></span> </small></h3>
+   </div>  
+
+<div class="panel-heading">
+    <h3 class="panel-title">课文:{textbooks} <small>版本：<span id="edition"></span>  上下册：<span id="volume"></span> 章节：<span id="chapter"></span></small>  </h3>
+   </div>         
+<div class="panel-body"> 
+<p>资源：<a href="?t=fdl&id={resmd5}">{resname}</a></p>
+ {des}
+</div>  
+</div>
+{foot}
+ 
+</body>
+<script type="text/javascript">   
+$(function(){
+    vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"res_courseware",col:"see"}); 
+});
+$(function () {  
+   $.getJSON("/data/subject.json.txt", function (data) {  
+      $("#subject").text(data[{subject}]); 
+  });
+  $.getJSON("/data/period.json.txt", function (data) {  
+      $("#period").text(data[{period}]);  
+  });
+   $.getJSON("/data/grade.json.txt", function (data) {  
+       $("#grade").text(data[{grade}]); 
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+       $("#edition").text(data[{edition}]); 
+  });
+  $.getJSON("/data/textbook_volume.json.txt", function (data) {  
+       $("#volume").text(data[{volume}]); 
+  });
+  $.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+      $("#chapter").text(data[{chapter}]); 
+  });
+  $.getJSON("/data/restype.json.txt", function (data) {    
+      $("#restype").text(data[{restype}]);      
+  });   
+ }); 
+  
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" src="layer/layer.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<div style="margin:10px 0 5px 10px;line-height:30px;">
+				<form action="./?t=zhsz_all_statistics" method="post">
+					  <select name="term_id" id="term_id">
+					  </select>
+					  &nbsp;&nbsp;&nbsp;
+					  <select name="report_id" id="report_id">
+					  {str_option}
+					  </select>
+					  <input type="submit" id="but_update" name="but_update" value="查询" />
+				</form>              
+		  </div>
+		  
+		  <div style="width;100%; height:auto; margin-bottom:5px; line-height:30px;" id="sta_tips">
+				&nbsp;&nbsp;&nbsp;&nbsp;说明：<font>黑色</font>&nbsp;为已填数量&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">蓝色</font>&nbsp;为已审核数量&nbsp;&nbsp;&nbsp;&nbsp;<font color="#990000">红色</font>&nbsp;为未审核数量
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0" counts="{countclass}" nums="20">
+					<tr class="tabtitle" height="26">
+						<td width="3%" class="tabtd">序号</td>
+						<td width="8%" class="tabtd">班级</td>
+						<td width="5%" class="tabtd">人数</td>
+						{str_report}
+					</tr>
+					{str}
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+			</div>
+			<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+			</div>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");
+		$('#term_id').val('{term_id}');     
+	});
+	
+	$("#report_id").val("{report_id}");
+});
+
+</script> 

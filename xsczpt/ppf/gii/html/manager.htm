@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>   
+    <title>{gtitle}</title>
+   {cssjs}  
+  </head>
+
+  <body class=""> 
+
+{top}        
+    <div class="sidebar-nav">
+ {left}
+    </div>  
+
+    
+    <div class="content">
+        
+        <div class="header">   <h1 class="page-title">管理员</h1> </div>
+        
+        <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li class="active">管理员</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+    <button class="btn btn-primary" id="cbtn"><i class="icon-plus"></i> 添加</button>
+    <button class="btn">导入</button>
+    <button class="btn">导出</button>
+  <div class="btn-group">
+  </div>
+</div>
+<div class="search-well">  
+    <form class="form-inline" id="qry">
+         <input  placeholder="Search Help..." id="name" type="text">
+        <input  placeholder="Search Help..." id="id" type="text">
+        <button class="btn btn-primary" type="button" onclick="loadPage({page:1})"><i class="icon-search"></i> Go</button>          
+<a class="btn btn-info" type="button" onclick="location.href=location.href;">刷新</a>
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="desc" title="排序方向" style="display:none;"/>   
+    </form>
+</div>
+
+<div class="well">
+    <table class="table">
+      <thead>  
+<tr>
+<th name="lastip">最后ip</th><th name="id">编号</th><th name="username">用户名</th><th name="name">名称</th><th name="lasttime">最后登录</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr  class="" name="{id}">
+
+<td>{lastip}</td>
+
+<td>{id}</td>
+
+<td>{username}</td>
+
+<td>{name}</td>
+
+<td>{lasttime}</td> 
+<td>
+<a onclick="Mod({id:'{id}',tpl:'ppf_manager'})" title="修改"><i class="icon-pencil"></i></a>
+<a onclick="delRow({id:'{id}',l_tpl:'ppf_manager'});" title="删除"><i class="icon-remove"></i></a>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+</div>
+<div class="pagination">
+<ul id="page"> 
+</ul>
+</div>
+{foot}                       
+</div>
+        </div>
+    </div>
+    
+<div class="modal small hide fade" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">用户数据</h3>
+    </div>
+<div class="modal-body">         
+ <form id="form1">
+<label>用户名</label>
+<input type="text" id="username" value="" maxlength="{maxlength}" class="text ui-widget-content ui-corner-all" />      
+
+<label>名称</label>
+<input type="text" id="name" value="" maxlength="{maxlength}" class="text ui-widget-content ui-corner-all" />      
+
+<label>登录次数</label>
+<input type="text" id="lgnums" value="0" maxlength="{maxlength}" class="text ui-widget-content ui-corner-all" />      
+ 
+<label style="display:;">密码*</label><input type="password" id="password" value="" style="display:;" class="text ui-widget-content ui-corner-all" />    
+ 
+<input type="text" id="id"  value="0" style="display:none;"/>   
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="sav">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>
+
+ 
+
+  </body>
+</html>
+<script> 
+    formatunixs = ",timestamp,";
+    $(function () {
+        loadPage({l_tpl:"ppf_manager",l_page:1});
+        //dlgInit({ width: 700, height: 600, modal: true, frmid: "#dlg1", btnid: "#cbtn", showok: false, callback: "amcallback" });
+        //$("#timestamp").datepicker({ changeYear: true, showButtonPanel: true, showWeek: true, firstDay: 1, dateFormat: "yy-mm-dd 0:0" });
+        $("#sav").click(function(){
+          SaveAM({tpl:"ppf_manager","do":$("#dlg1").data("dotype"),id:$("#dlg1 #id").val(),frmid:"#dlg1",showok:"",callback:"bkcallback"});
+         });
+         initAddBtn({btn:"#cbtn",frmid:"#dlg1"});
+        
+    });  
+ </script>

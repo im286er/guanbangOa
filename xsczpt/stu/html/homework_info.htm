@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>作业详情-{gtitle}</title> 
+{cssjs}  
+</head>
+<body>
+{top}<div class="container"> 
+{head}  
+
+<div class="page-header">
+   <h3>作业详情 <small>起止时间：<code>{stime} 至 {etime}</code></small></h3>
+    <h3><small>提交<span>{submits}/{nums}</span> 批阅：<span>{remarks}/{nums}</span> </small>  </h3>
+</div>    <div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">{title} 老师：{techer} 学科：{subjects} 浏览次数：{see}
+        时间：<script>document.write(utctime('{timestamp}'));</script></h3>
+   </div>     
+<div class="panel-body"> 
+ {des}
+</div>  
+</div>
+
+
+</div>
+{foot}
+</body>
+<script type="text/javascript">   
+$(function(){
+   //see({tbl:"tech_homework",id:queryStr("id")});
+   vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"tech_homework",col:"see"}); 
+});
+$(function () {  
+     
+ }); 
+  
+</script>
+</html>

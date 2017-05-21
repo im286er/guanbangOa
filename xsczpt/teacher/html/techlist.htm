@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间-{name}</title>
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+<!--[if IE 6]>
+<script type="text/javascript" src="js/png.js" ></script>
+<script type="text/javascript">
+	DD_belatedPNG.fix(".cion1,.cion2,.cion3,.cion4,.cion5,.cion6,.cion7,img")
+</script>
+<![endif]-->
+{cssjs}
+<script type="text/javascript" src="css/js/index.js"></script>
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<script type="text/javascript">
+var numm=0;
+//得到科目
+function getSub(num){
+	var sub=null;
+	$.ajaxSettings.async = false;
+	$.getJSON("/data/subject.json.txt",  function (d,e) {
+		sub=d[num];
+	}); 
+	return sub;
+};
+function getTimeLength(lastStr){
+	T_lth=getTimer(lastStr);
+	return T_lth;
+};
+</script>
+</head>
+<body>
+{top}
+{head}
+<div class="wrap banner">
+	<div class="main pr">
+	<img src="css/images/nbanner.jpg" width="1000" height="351" align="top" />
+	<div class="news_ba pa">
+		<div class="tab_list_n">
+			<ul class="tabbtn_n" id="fadetab_n">
+				<li class="current"><a href="#" target="">精选日志</a></li>
+				<li><a href="#" target="">通知公告</a></li>
+			</ul>
+			<div class="tabcon_n" id="fadecon_n">
+				<ul class="sublist_n">
+				<!-- START Hotnews -->   
+					<li><a href="/teacher/?t=info&id={id}" target="">{title}</a></li>
+				<!-- END Hotnews -->   
+				</ul><!--tabcon end-->
+				<ul class="sublist_n">
+				<!-- START Notices -->   
+					<li><a href="/teacher/?t=info&id={id}" target="">{title}</a></li>
+				<!-- END Notices -->   
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	</div>
+</div>
+<div class="wrap">
+	<div class="main">
+		<div class="tit"><p class="fs20">教师团队</p><span class="fs16"><a href="/teacher/?s={s}">返回首页>></a></span></div>
+		<div class="tab_list">
+			<div class="tabcon" id="fadecon">
+				<div class="sublist">
+				<!-- START TechEngine -->   
+					<dl class="pic">
+						<dd class="des_all"> 
+							<a href="/teacher/?t=feed&uid={id}&s={s}" title="" target="_blank">
+								<img src="/upd/face/{id}.jpg" class="imgbord" width="122" height="128" onerror="this.src='/error/face.jpg'"/>
+								<div class="des">
+									<p>{nick}</p>
+									<p>授课科目：<script>document.write(getSub('{subject}'));</script></p>
+									<i>进入TA的工作室</i>
+								</div>
+							 </a> 
+						</dd>
+					</dl>
+				<!-- END TechEngine -->   
+
+				</div>
+			</div>
+			  <ul class="pagination pull-right">
+			{page}
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+<div id="footer">{foot}</div>
+</div>
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+<script type="text/javascript" src="css/js/jquery.js"></script>
+<script type="text/javascript" src="css/js/tabs.js"></script>
+<script type="text/javascript">
+	//检测登录
+	var uopen="{uopen}";
+	var uppen="{uppen}";
+	if(uopen=="1"){
+		$("#uopen").css("display","block");
+	}else{
+		$("#uopen").remove();
+	}
+	if(uopen=="1"){
+		$("#uppen").css("display","block");
+	}else{
+		$("#uppen").remove();
+	}
+	function cksearch(){
+		if (document.getElementById("keyword_s").value=='')
+		{
+			alert('关键字不能为空!');
+			return false;
+		}
+	};
+	$(document).ready(function($){
+		$(".des_all").bind({
+			mouseover:function(){$(this).find(".des").css("display","block");},  
+			mouseout:function(){$(this).find(".des").css("display","none");}  
+		});
+		$("#fadetab_n").tabso({
+			cntSelect:"#fadecon_n",
+			tabEvent:"mouseover",
+			tabStyle:"fade"
+		});
+
+		/*	
+		window.onload=function(){
+			var ck=new Cookie("HasLoaded");
+			if(ck.Read()==null){//未加载过，Cookie内容为空
+
+			
+				ck.Write("true");  //设置Cookie。只要IE不关闭，Cookie就一直存在
+			}
+		}
+		*/
+	});
+</script>
+</body>
+</html>

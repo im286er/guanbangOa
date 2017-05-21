@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script>
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="./srv/teach_score_import_submit.php" method="post" onsubmit="return checkBatch();" enctype="multipart/form-data">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">批量导入学生成绩记录</a></label> 
+			</div>
+			<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+						<tr>
+							 <td width="22%" class="tabtd2_L">说明：</td>
+							 <td class="tabtd2_R" style="color:#f00;">该操作仅对当前学期有效。</td>
+						</tr>
+						<tr>
+								 <td width="20%" class="tabtd2_L">可导入的成绩：</td>
+								 <td class="tabtd2_R">
+                                 	<select name="course_id" id="course_id" onchange="check_course();">
+                                    <option value="0">请选择科目</option>
+								 	{str_sub}
+									<!-- <?php
+									/*$teachArray  = $db->query("select A.*,B.is_score from oa_zhsz_teach as A inner join oa_zhsz_course AS B ON A.course_id=B.id where A.user_id="{uid}" group by A.course_id")->fetchAll(PDO::FETCH_ASSOC);
+									foreach($teachArray as $rs){
+										   echo "<option value='{$rs['course_id']}'>{$rs['course_name']}</option>";
+					
+									}*/
+								    ?>-->
+                                    </select>
+                                 </td>
+							</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">选择文件：</td>
+							 <td class="tabtd2_R"><input type="file" name="table_file" id="table_file" value="" onchange="checkXls(this);" /></td>
+						</tr>
+						<script type="text/javascript">
+						  /*if({isMaster1}!=1){
+							document.write("<tr><td width=\"20%\" class=\"tabtd2_L\">导入班级：</td><td class=\"tabtd2_R\"><select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select></td></tr> ");
+						  }*/
+
+						</script>
+						<tr>
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+								<?php
+									//查询考试类型
+									$examType = $db->fetchAll(array('field'=>array('*'),'table'=>'zhsz_code','where'=>"parent_no='EXAM_TYPE' and flag_status=1"));
+									foreach($examType as $rs){
+										   echo "<option value='{$rs['code_name']}'>{$rs['code_name']}</option>";
+					
+									}
+								?>
+							</select>
+						  </td>
+					</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">重复处理：</td>
+							 <td class="tabtd2_R">
+								<input type="radio" name="repeat_op" value="1" checked="checked" /> 覆盖原有记录 
+								<input type="radio" name="repeat_op" value="2" /> 跳过重复记录
+							 </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">示例文件：</td>
+							 <td class="tabtd2_R"><a href="#" onclick="return setHref(this);" target="_blank">点击下载</a>（成绩示例文件）</td>
+						</tr>
+					</table>
+			</div>
+			<div class="boxfooter2">
+			<input type="hidden" name="flag" value="4" />
+			<input id="but_update" name="but_update" type="submit" value="上传文件" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;padding:0;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+		</div>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+var uid="{uid}";
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        selectShowDataNoH("#exam_type",JSON.parse(d),"name","name");
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>全部</option>;");
+	});
+});
+
+//密码信息提交客户端验证
+function checkBatch()
+{
+    if($.trim($("#course_id").val())==0){
+		alert("请选择导入的科目。");	
+		return false;
+	}
+	if($.trim($("#table_file").val())==""){
+		alert("请选择要上传的文件。");	
+		return false;
+	}
+	if(confirm("您当前选择上传 【"+$("#exam_type").val()+"】 成绩，点击 确定 继续 或 取消 操作。")){
+		$("#but_update").attr("disabled","disabled");
+		return true;
+	}
+	return false;
+}
+
+//设置下载链接
+/*function setHref(obj)
+{
+	var gid  = $("#gid").val();
+	var cid  = $("#cid").val();
+	var et   = $("#exam_type").val();
+	if(cid==undefined){
+		cid = 0;	
+	}
+	var rp   = $("input[name='repeat_op']:checked").val();
+	var href = "./srv/download_example.php?flag=4&rp="+rp+"&gid="+gid+"&cid="+cid+"&exam_type="+et;
+	$(obj).attr("href",href);
+	return true;
+}*/
+
+function setHref(obj)
+{
+	var et   = $("#exam_type").val();
+	var courseId = $("#course_id").val();
+	var href = "./srv/download_example.php?flag=11&exam_type="+et+"&course_id="+courseId;
+  $(obj).attr("href",href);
+	return true;
+}
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>所有班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+</script> 

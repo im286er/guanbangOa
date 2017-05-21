@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle2">
+			<form action="./?t=work_exp_search" method="post">
+				<span>
+					学生姓名：<input type="text" name="truename" id="truename" value="" size="15" />
+				</span> 
+				<input type="submit" id="choose" name="choose" value="按学生查找" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					<td width="5%" class="tabtd" style="text-align:center;">序号</td>
+					 <td width="10%" class="tabtd" style="text-align:center;">毕业生姓名</td>
+					 <td width="10%" class="tabtd" style="text-align:center;">毕业届</td>
+					 <td width="15%" class="tabtd" style="text-align:center;">时间</td>
+					 <td width="15%" class="tabtd" style="text-align:center;">工作单位</td>
+					 <td width="15%" class="tabtd" style="text-align:center;">职务</td>
+					 <td class="tabtd" style="text-align:center;">说明</td>
+					 <td width="6%" class="tabtd" style="text-align:center;">操作选项</td>
+				</tr>
+				{str_event}
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$("#truename").val("{truename}");
+});
+  
+//删除经历感悟
+function delEvent(id)
+{
+	if(confirm("你确定删除该条工作经历记录吗？")){
+		$.post("./srv/sdo.php", {tpl:"del_biye","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#exp_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+
+</script> 

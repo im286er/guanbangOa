@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="GBK">
+<title>空间信息-{gtitle}</title>
+
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+<style>
+	.list-group-item ul{list-style:none;padding-left:22px;line-height:36px;}
+	.list-group-item ul a{color:#888;}
+</style>
+{cssjs} 
+</head>
+<body>
+{top}
+
+<div class="container">   
+	<div class="col-sm-3">	
+	
+	{nav}      
+	</div>
+	
+<div class="col-sm-9">
+	<div class="page-header">
+	   <h3>新闻发布 <small></small>   <a href="./?f={id}" class="btn btn-primary glyphicon glyphicon-arrow-left pull-right"> 返回 </a> </h3>
+	</div>
+	<form class="form-horizontal" role="form"  id="form1">
+	    
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">用户ID：</label>
+	    <div class="col-sm-10"><p class="form-control-static">{uid}</p>
+	    
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">空间ID：</label>
+	    <div class="col-sm-10"><p class="form-control-static">{id}</p></div>
+	  </div> 
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">标题：</label>
+	    <div class="col-sm-10">
+	    	<input type="text" class="form-control" id="title"  style="width:100%" placeholder="输入名称">
+	    </div>
+	    </div>
+	    
+	  
+	    	<input type="text" id="cid" value="-1" style="display:none;"/>
+	    
+	    
+	    
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">作者：</label>
+	    <div class="col-sm-10">
+	    	<input type="text" class="form-control" id="author"  style="width:100%" placeholder="输入作者">
+	    </div>
+
+	  </div>
+	  
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">内容描述：</label>
+	    <div class="col-sm-10">
+	    	<textarea class="form-control" id="des"   
+	    	data-edit="ue" placeholder="输入描述" name="des" 
+	    	rows="15" style="display:none;"></textarea>
+	    	<script type="text/plain" id="uedes" style="width:100%;height:400px;"></script>
+	    </div>
+	  </div>
+	   
+	  <div class="form-group">
+	     <div class="col-sm-10 col-sm-offset-2">         
+	      <button type="button" class="btn btn-primary" id="btn"> 修 改 </button>   
+	      <input type="text" id="fid" style="display:none"/>
+	      <input type="text" id="id" style="display:none"/>
+	   </div>
+	    </div>      
+	</form>	          
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+var ue = UE.getEditor('uedes');
+$(function () {
+
+	if(queryStr("d")=="m"){
+		
+	    readID({tpl:"famous_article","do":"r",id:queryStr("id"),frmid:"#form1"}); 
+	    
+	}
+	
+	
+	
+    
+    $("#btn").bind("click", function(){
+    	
+    	
+    	
+      $("#fid").val("{id}");
+      //表单验证
+      if($("#title").val()==""){alert("请输入标题");return;}
+     
+      
+      SaveAM({tpl:"famous_article","do":queryStr("d"),frmid:"#form1",showok:'操作完成',callback:"desome"});
+    });     
+ }); 
+ function desome(e,data){
+   if(data.indexOf('ok')>-1){  
+	   cid = $("#cid").val()
+	   location.href="./?t=art_newsList&f={id}&fc="+cid;    
+   }
+   else
+      alert(data);
+}  	
+</script>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>海安中学移动端-消息提醒列表页</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+<header><a href="?t={user_back}" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>修改密码</h1></header>
+<section class="fl wout">
+     <form action="" method="post" id="t_user">
+		 <div class="weui-cells">
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">新密码</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" type="password" id="passpwd" name="passpwd" value=""/>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">确认密码</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" type="password" id="passpwd2" name="passpwd2" value=""/>
+                </div>
+            </div>
+		  </div>
+		
+		<div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_warn" href="javascript:" id="s_user" onclick="checkPass()">修 改</a>
+        </div>
+	</form>
+</section>
+
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t={index_back}"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t={user_back}"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+</body>
+</html>
+
+<script type="text/javascript">
+
+//密码信息提交客户端验证
+function checkPass()
+{
+	if($.trim($("#passpwd").val())==""){
+		alert("请输入新密码");
+		$("#passpwd").focus();
+		return false;
+	}
+	if($.trim($("#passpwd").val())!=$.trim($("#passpwd2").val())){
+		alert("两次输入密码不一致");
+		$("#passpwd2").focus();
+		return false;
+	}
+	
+	var passpwd = $.trim($("#passpwd").val());
+	var passpwd2 = $.trim($("#passpwd2").val());
+	
+	$.post("./srv/sdo.php?", {tpl:"change_pass","passpwd":passpwd,"passpwd2":passpwd2}, function (d, e) {
+		var d = eval('(' + d + ')');
+		if(d.flag=="false"){
+			alert(d.value);
+			$("#passpwd").select();	
+		}else{
+			alert(d.value);
+		}
+	});
+	$("#but_update").attr("disabled","disabled");
+}
+
+</script> 

@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的微博-{gtitle}</title>
+{cssjs}   
+<script type="text/javascript" src="html/red/js/weibo.js"></script> 
+</head>
+<body>
+{top}
+{head}
+<div class="container main">    
+<div class="row">
+
+<div class="col-xs-3 main-nav-left" style="width:200px;margin-left:15px;padding:0;">
+    <div class="main-nav-title"><span>我的微博</span></div>
+    <ul class="nav nav-pills nav-stacked">
+       <li><a href="./?t=index&id={zid}">首页</a></li>
+    </ul> 
+</div>
+
+
+<div class="col-xs-9 " style="margin:0 0 0 23px;"> 
+
+<div class="row" id="list" style="margin-top: 15px;">
+<!-- START list -->
+          <div class="panel panel-default" style="border-color:#717172!important;">
+              <div class="panel-header">
+        	   	   <img src="/upd/face/{uid}.jpg" class="content-face" alt='' onerror="this.src='/error/face.jpg';"/>
+              </div>
+              <div class="panel-body">
+                  <div class="main-con-human">
+                      <label class="human-name">{truename}</label>
+                      <label class="human-grade">冠邦大学</label>
+                      <label class="human-cla">三三班</label>
+                  </div>
+                  
+                  <div class="main-con-body">
+                      <label class="content-body">{des}</label>
+                  </div>
+                  
+                  <!--评论时间及按钮-->
+                  <div class="main-comm-time">
+                    <script>document.write(utctime("{timestamp}"));</script>
+                  </div>
+              </div>
+              
+              <div class="panel-footer main-comm-critical">
+                  <div class="col-xs-4"><a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'weibo',do:'up',id:{id}},this);">（{up}）</a></div>
+                  <div class="col-xs-4"><a class="glyphicon glyphicon-share-alt" onclick="share({tbl:'weibo',do:'share',id:{id}},this);">（{share}）</a></div>
+                  <div class="col-xs-4"><a onclick="comment('{id}',0,'{nick}');">评论（{comments}）</a></div>
+              </div>
+                  
+              <!--评论内容-->
+               <div id="p{id}" class="comment-box" uid="{uid}" style="display:none;">
+                    
+                    <div class="input-group col-xs-12 comment-input">
+                      <input type="text" class="form-control" id="re{id}" placeholder="说点什么吧" maxlength="200">
+                      <div class="main-contain-icon"></div>
+                      <a class="btn btn-default btn-submit" id="comment_btn" onclick="replay('{id}','0','{rnick}');">评论</a>
+                    </div>
+                   
+                    <div id="pa{id}">
+                      <!-- START rp -->
+                        <div class="comm-box-body" id="pc{id}"> 
+                          <div class="comm-act"><img src="/upd/face/{uid}.jpg" width="30" height="30" onerror="this.src='/error/face.jpg';"></div> 
+                          <div class="comm-con">
+                            <div style="word-break:break-all; word-wrap:break-word;"><a> {nick} </a> {redo} <a>{renick} </a> ：{des} &nbsp;<a style="top:2px;right:5px;" class="glyphicon glyphicon-comment" onclick="comment('{wid}','{id}','{nick}')" ></a><a class="glyphicon glyphicon-remove isshow" title="删除" onclick="delwb_comment({id},this)" style="display:none;"></a></div>
+                            <small class="mes_tit"><code style="padding:0;"><span>{created}</span></code>
+                                
+                            </small>
+                          </div>
+                        </div>
+                        <!-- END rp -->
+                      
+                    </div>
+                    <p id="pm{id}"><a onclick="load_comments('{id}',this);" id="more{id}" data-page="0" style="cursor:pointer;">更多……</a></p>
+                    
+                  </div>
+                  
+          </div>
+          <!-- END list --> 
+</div>   
+       
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+
+
+</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var uid="{uid}";
+var nick="{nick}";
+var mynick="{mynick}";
+var isme = "{isme}";
+var limit_comment=0,limit_leave=0;    
+$(function(){
+   
+   $(".comment-input input").focus(function(){
+      if(uid==''){$('#Login').modal('show');$(".comment-input input").attr("disabled","disabled");}
+   });
+                                           
+   $(".nav-down").click(function(){
+      var height=(parseInt($(this).parent().find("li").css("height"))+2)*($(this).parent().find("li").length);
+      $(this).parent().find("ul").css("height",height+"px");
+      $(this).hide();
+   });
+   
+   $.post("./srv/rdo.php", {tpl:"get_limit_do","id":queryStr("id")}, function (d, e) { 
+      d1=JSON.parse(d);
+      limit_comment=d1.comment;
+      limit_leave=d1.leave;
+  }); 
+  
+}) 
+
+ $(function () { 
+     $("#btn").bind("click", function(){
+      if(uid==''){$('#Login').modal('show');}             
+      if(ue.getContent().length<10){alert("内容太短(10-300)");return;}    
+      if(ue.getContent().length>300){alert("内容太长(10-300)");return;}      
+      SaveAM({tpl:"weibo","do":"a",frmid:"#form1",showok:"",callback:"dosome"});
+   });
+   $("#more").bind("click",function(){loadNxtPage();});
+  });
+function dosome(ed,data){
+   if(data.indexOf("ok")>-1&&data.indexOf("ok")<5){
+      location.reload();
+  }else 
+    alert(data);
+} 
+	
+function delths(v,obj) {  
+   $.post("./srv/sdo.php", {tpl:"del_wb","id":v}, function (d, e) { if(d.indexOf("ok")>-1){$(obj).parent().parent().parent().remove();}});
+}
+</script>

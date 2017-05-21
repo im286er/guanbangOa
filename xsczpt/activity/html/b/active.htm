@@ -1,0 +1,262 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{cssjs} 
+<script type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<script src="js/active.js" type="text/javascript"></script> 
+
+<link type="text/css" rel="stylesheet" href="/widget/umeditor/themes/default/css/umeditor.css" >
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>
+ 
+</head>
+<body> 
+{top}
+<div class="container">
+{head}   
+<div class="col-sm-12">
+<div class="page-header">
+   <h3>{name} <small><script>document.write(utctime('{timestamp}'));</script></small></h3>
+</div>
+</div>
+<div class="col-sm-12">   
+<div class="row">
+<div class="col-sm-3 text-center"><img src="/upds/activity/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" width="200"/> </div>
+<div class="col-sm-6">
+<p class="text-muted">报名方式:<e v="{enroll}"></e> | 访问权限:<v v="{visit}"></v></p>  
+<p class="text-muted">级别：<l v="{lvl}"></l> | 类型：<c v="{cid}"></c></p>   
+<p class="text-muted">年级：<grades v="{grades}"></grades></p>
+<p class="text-muted">学科：<subjects v="{subjects}"></subjects></p>
+<p class="text-muted">发起人：{truename} | 联系方式：{contacts}</p>
+<p class="text-success">活动地址：{addrs} <a href="./?t=map_bds&pos={addrs}" class="btn btn-success" target=_blank>查看</a></p> 
+<hr/>
+<a id="enroll" class="glyphicon glyphicon-eye-open">报名</a> 
+<a href="#comment" class="glyphicon glyphicon-comment">评论</a> 
+<a id="fav" class="glyphicon glyphicon-folder-open">收藏</a>    
+</div>
+<div class="col-sm-3">
+<blockquote class="small">
+<p  class="text-success ">
+状态：<em v="{status}"></em> <br/>
+报名时间：<br/>{rstime}到<br/>{retime}<br/>
+活动时间：<br/>{stime}到<br/>{etime}</p><br/>
+</blockquote>
+</div>
+
+</div>
+<!-- baidu share -->
+ <div class="bdsharebuttonbox">
+   <a href="#" class="bds_more" data-cmd="more" data-bdSize="24"></a>
+   <a href="#" class="bds_qzone" data-cmd="qzone"></a>
+   <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+   <a href="#" class="bds_tqq" data-cmd="tqq"></a>
+   <a href="#" class="bds_renren" data-cmd="renren"></a>
+   <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+ </div>
+<script>
+	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+ 
+<!-- baidu share end -->
+<br/>
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动内容</h3></div>
+<div class="panel-body">
+{des}    
+</div>
+</div> 
+
+<br/>  
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动成员</h3></div>
+<div class="panel-body">
+<h5>参与人员</h5><hr/>      
+<div class="col-sm-12">
+<!-- START member -->
+<div class="col-sm-1"><a><img src="/upd/face/{id}.jpg" onerror="this.src='/error/face.jpg';" width="48"/><br/>{truename}</a>    </div>
+<!-- END member -->  
+</div>    
+</div>
+</div>
+
+<br/>
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动随拍 
+<a class="glyphicon glyphicon-plus pull-right" id="btnp">添加</a></h3></div>
+<div class="panel-body" id="photo">
+<!-- START photo -->
+<div class="col-sm-2"><a href="/upds/active/{aid}/{pic}" target=_blank><img src="/upds/active/{aid}/t_{pic}" onerror="this.src='/error/logo.jpg';" width="120"/></a> </div>
+<!-- END photo -->  
+   
+</div>
+</div> 
+
+
+
+<br/>
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动心得
+<a  class="glyphicon glyphicon-plus pull-right" id="btnart">添加</a></h3></div>
+<div class="panel-body">
+<table class="table" id="arts"><tbody>
+<!-- START arts -->
+<tr id="art{id}"><td><a href="./?t=active_art&id={id}" target=_blank>{name}</a></td>
+<td><code>{truename} {timestamp} <a onclick="del_art('{id}',this)">删除</a></code></td></tr> 
+<!-- END arts -->       
+</tbody></table>   
+</div>
+</div>
+
+
+<br/>
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动总结
+<a  class="glyphicon glyphicon-plus pull-right" id="btnret">添加</a></h3></div>
+<div class="panel-body" >
+<table class="table" id="rets"><tbody>
+<!-- START rets -->
+<tr id="art{id}"><td><a href="./?t=active_summary&id={id}" target=_blank>{name}</a></td>
+<td><code>{truename} {timestamp} <a onclick="del_ret('{id}',this)">删除</a></code></td></tr> 
+<!-- END rets -->       
+</tbody></table>  
+</div>
+</div>
+
+<br/>
+<div class="panel panel-default">                                          
+<div class="panel-heading"><h3 class="panel-title">活动评论      
+<a  class="glyphicon glyphicon-plus pull-right" id="comment">评论</a></h3></div>
+<div class="panel-body" id="comments">
+<!-- START comment -->
+<p id="comment{id}"> 
+<a> {truename} </a> {redo} <a>{renick} </a> ：   
+{des} 
+<small class="pull-right"><code>  {timestamp} 
+   <a onclick="del_comment('{id}',this)">删除</a>
+  </code>
+</small>  
+</p> 
+<!-- END comment -->       
+</div>
+</div>
+</div>
+
+
+
+ 
+</div>
+  
+<div class="col-sm-3">     
+<hr/>  
+</div>
+   
+{foot}
+
+</body>
+</html>       
+ 
+
+<div class="modal" id="dlgp" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4 class="modal-title" id="label">上传随拍</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_p.php?id={id}" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="{id}" style="display:none;"/>
+    <span class="help-block">(上传不大于3Mb的.jpg照片)</span>
+    </div>
+  </div> 
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" id="btn" onclick="$('#from2').submit(); ">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div></div></div></div>     
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+<div class="modal" id="dlgc" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4 class="modal-title" id="label">评论</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="fromc">
+ <div class="form-group">    
+    <div class="col-sm-12">
+      <textarea id="des" name="des" class="form-control" rows="4"  placeholder="请输入评论内容0-250字" ></textarea>    
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="wid" value="0" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/>       
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" id="btc" onclick="savcomment()">立即评论</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div></div></div></div>
+
+<div class="modal" id="dlgart" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" style="width:630px;"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">添加心得</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="fromart">
+ <div class="form-group">    
+    <div class="col-sm-12"><input type="text" id="name" class="form-control"  placeholder="请输入标题" /></div>  
+ </div> 
+ <div class="form-group">    
+    <div class="col-sm-12">      
+     <script type="text/plain" id="umdes" style="width:600px;height:200px;"></script>        
+    </div>  
+ </div>   
+ <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>  
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="aid" value="{id}" style="display:none;"/>
+<input type="text" id="see" value="0" style="display:none;"/>   
+<input type="text" id="up" value="0" style="display:none;"/>      
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" onclick="savart()">立即发布</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div></div></div></div>
+  
+
+<script>  
+var um = UM.getEditor('umdes');  
+var  visita=new Array("公开，所有可以访问","登录，需要登录用户","指定人，仅限指定的用户才可访问","秘密活动，参与活动可见");
+var  enrolla=new Array("公开报名","报名需审核","仅限邀请","");
+var nick="{nick}";
+$(function() {
+   $.getJSON("/data/active.object.txt", function (d) {obj_l=d;
+      $("c").text(d.cate["{cid}"]);
+      $("l").text(d.lvl["{lvl}"]);
+      $("e").text(d.enroll["{enroll}"]);
+      $("v").text(d.visit["{visit}"]);
+  }); 
+   $.getJSON("/data/active_status.json.txt", function (d) {
+      $("em").text(d["{status}"]);
+  }); 
+  $.post("./srv/rdo.php", {tpl:"get_grades","ids":"{grades}"}, function (d, e) {                     
+    $("grades").text($.trim(d));      
+  });
+  $.post("./srv/rdo.php", {tpl:"get_subjects","ids":"{subjects}"}, function (d, e) {                     
+    $("subjects").text($.trim(d));      
+  });
+ });
+ 
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){   
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         //$("#clogo").attr("src","?"+Math.random());                  
+         $('#dlgp').modal('hide'); 
+         $("#photo").prepend('<div class="col-sm-2"><a><img src="/upds/active/{id}/t_'+d.fname+'"  width="120"/></a> </div>');
+          addphoto2(d.fname);
+      }
+       else{
+         alert(d.msg);
+       }        
+    }      
+}  
+</script>

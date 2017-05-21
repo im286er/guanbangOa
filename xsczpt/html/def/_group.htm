@@ -1,0 +1,523 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>群组主页-易教育云</title>
+<meta charset="gbk">   
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<!--[if lt IE 9]>
+<script src="/ppf/js/jquery-1.min.js"></script>
+<script src="/ppf/js/html5shiv.min.js"></script>
+<script src="/ppf/js/respond.js"></script>  
+<!--[else]>
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<![endif]-->
+<!--[if !IE]><!--> 
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<!--<![endif]-->
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>   
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/cookies.min.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+<script src="/js/comm_login_bt.js" type="text/javascript"></script>
+<script src="/js/local.js" type="text/javascript"></script>
+<style>
+.grp_a1{padding-left:10px;}
+.grp_a1 a{margin-right:15px;line-height:25px;color:#555;}
+.ul1{list-style:none;line-height:30px;font-size:0.9em;padding-left:10px;}
+.ul2 {list-style:none;line-height:30px;font-size:0.9em;padding-left:10px;}
+.ul2 li{border-bottom:1px dotted #ccc;}
+.ul2 li img{margin:6px 5px;}
+.badge-green{background:green;font-style:normal;}
+.greenA a{color:#58991a;}
+</style>
+</head>
+<body> 
+<div style="width:100%;" class="navbar-inverse">
+<div class="">
+<nav class="navbar navbar-inverse fixed-top" style="width:85%;margin:0 auto;border-radius:0px;border:none;">
+   <div class="navbar-header">
+    <a id="logo" class="brand" href="/" ><img width="40" id="logo" src="/img/logoa.png"/></a>
+   </div>
+   
+   <div>
+      <!--向左对齐-->
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="/">易教育云</a></li>   
+        <li><a href="/zone">个人空间</a></li>
+         
+        <li><a href="/?t=group">群组主页</a></li>     
+        <li><a href="/classttest/class.htm">班级主页T</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               应用程序 
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="http://pan.k83.cn">易云盘</a></li> 
+               <li class="divider"></li>
+               <li><a href="#">官方推荐</a></li> 
+            </ul>
+         </li>
+      </ul> 
+      <p class="navbar-text navbar-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>  
+      <!--向右对齐-->
+      <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown" id="top_user_login"></li>           
+      </ul>   
+        
+   </div>  
+</nav>  
+</div>
+</div>
+<div class="container">  
+
+<div class="row" style="margin-top:30px;">
+<div class="col-sm-9">
+  <div id="cr" class="carousel slide" style="width:850px;height:260px;">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators" id="cr1">
+<li data-target="#cr"  class="active" data-slide-to="1"></li><li data-target="#cr" data-slide-to="1"></li><li data-target="#cr" data-slide-to="2"></li><li data-target="#cr" data-slide-to="3"></li>     
+   </ol>   
+   <!-- 轮播（Carousel）项目 active-->
+   <div class="carousel-inner" id="cr2">     
+<div class="item active"><img src="/img/t/grp_slide1.jpg"></div><div class="item"><img src="img/t/grp_slide2.jpg"></div>
+<div class="item"><img src="img/t/grp_slide3.jpg"></div><div class="item"><img src="img/t/grp_slide4.jpg"></div>
+   </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#cr" data-slide="prev">&lsaquo;&lsaquo;</a>
+   <a class="carousel-control right" href="#cr" data-slide="next">&rsaquo;&rsaquo;</a>
+</div>  
+</div>
+<div class="col-sm-3">
+<center>   <a href="#" ><img width="100" src="/img/t/group.png" onerror="this.src='/error/logo.jpg';" /></a> </center>   
+ <div class="row">
+ <h3><center><label style="color:#f29504;">6910</label><small>万个兴趣群组</small></center></h3>
+ <center><span style="color:#999;">每天2000个新群诞生</span></center>
+ <center><a href="/user?t=group_new" class="btn btn-warning" style="font-weight:bold;">立即创建群组</a></center>
+ </div>
+
+  
+
+</div>
+</div> 
+<!--2-->
+<div class="row"  style="margin-top:20px;">   
+ <form role="form"> 
+ <div class="col-sm-4">
+  <input type="text" class="form-control" id="name"   placeholder="请输入名称">
+</div>  
+ <div class="col-sm-1"> 
+  <button type="submit" class="btn btn-primary glyphicon glyphicon-search">查找群</button>
+</div> 
+</form>
+ <div class="col-sm-7"> 
+  <span class="glyphicon glyphicon-bullhorn" style="font-weight:bold;color:#4383A1;">群公告</span>
+  <span style="color:#999;line-height:35px;">
+  发现群里有精彩内容？欢迎推荐给微群小助手！快来点这里吧<a href="">http://t.cn/aKrUBN</a> </span>        
+</div>
+</div>
+<!--3-->
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title">群组分类 </h3>
+   </div>
+   <div class="panel-body">   
+   <div class="col-sm-2" style="border-right:1px solid #ddd;"> 
+      <button type="submit" class="btn btn-primary">明星粉丝</button>
+      <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div>       
+     <div class="col-sm-2" style="border-right:1px solid #ddd;"> 
+      <button type="submit" class="btn btn-success">明星粉丝</button>
+      <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div>  
+   <div class="col-sm-2" style="border-right:1px solid #ddd;"> 
+      <button type="submit" class="btn btn-info">明星粉丝</button>
+     <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div>  
+   <div class="col-sm-2" style="border-right:1px solid #ddd;"> 
+      <button type="submit" class="btn btn-danger">明星粉丝</button>
+      <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div> 
+   <div class="col-sm-2" style="border-right:1px solid #ddd;"> 
+      <button type="submit" class="btn btn-warning">明星粉丝</button>
+      <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div>  
+     <div class="col-sm-2"> 
+      <button type="submit" class="btn btn-info">明星粉丝</button>
+      <div class="row grp_a1" style="margin-top:10px;"> <a href="" class="W_linkb">港台</a><a href="" class="W_linkb">内地</a><a href="">日韩</a><a href="" class="W_linkb">欧美</a>
+      <a href="" class="W_linkb">电影</a><a href="" class="W_linkb">音乐</a><a href="" class="W_linkb">更多</a>
+      </div>
+   </div> 
+   </div>
+</div>     
+<!--4-->  
+<div class="row" style="margin-top:20px;">
+<div class="col-sm-8">
+<!--l1--> 
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">群组推荐 </h3>
+   </div>
+   <div class="panel-body"> 
+    
+<div class="col-sm-3" style="">
+  <div class="thumbnail"><a><img width="120" src="/group/logo/1419324380.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+  <p><a href="/group?g=1419324380" target="_blank">幼儿园欢乐组</a></p>
+</div>
+    
+<div class="col-sm-3" style="">
+  <div class="thumbnail"><a><img width="120" src="/group/logo/1419302341.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+  <p><a href="/group?g=1419302341" target="_blank">小学老师娱乐群</a></p>
+</div>
+    
+<div class="col-sm-3" style="">
+  <div class="thumbnail"><a><img width="120" src="/group/logo/1419239478.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+  <p><a href="/group?g=1419239478" target="_blank">易空间</a></p>
+</div>
+    
+<div class="col-sm-3" style="">
+  <div class="thumbnail"><a><img width="120" src="/group/logo/1419239431.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+  <p><a href="/group?g=1419239431" target="_blank">云开发组</a></p>
+</div>
+
+   </div>
+</div>
+<div class="row"> <!--adv--> 
+<div class="thumbnail">
+<img src="img/t/adv1.jpg" style="width:95%;height:160px;"/></div>
+</div>
+<!--l2--> 
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">热门群组 </h3>
+   </div>
+   <div class="panel-body"> 
+
+<div class="col-sm-6" style="">
+<div class="col-sm-4" style="">
+  <div class="thumbnail"><a ><img width="120" src="/group/logo/23.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+</div>
+<div class="col-sm-8" style="">
+  <p><a href="/group?g=23" target="_blank" class="">学生6群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：人</p>
+  <p style="color:#999;"></p> 
+</div>
+</div>
+
+<div class="col-sm-6" style="">
+<div class="col-sm-4" style="">
+  <div class="thumbnail"><a ><img width="120" src="/group/logo/22.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+</div>
+<div class="col-sm-8" style="">
+  <p><a href="/group?g=22" target="_blank" class="">学生5群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：人</p>
+  <p style="color:#999;"></p> 
+</div>
+</div>
+
+<div class="col-sm-6" style="">
+<div class="col-sm-4" style="">
+  <div class="thumbnail"><a ><img width="120" src="/group/logo/21.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+</div>
+<div class="col-sm-8" style="">
+  <p><a href="/group?g=21" target="_blank" class="">学生4群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：人</p>
+  <p style="color:#999;"></p> 
+</div>
+</div>
+
+<div class="col-sm-6" style="">
+<div class="col-sm-4" style="">
+  <div class="thumbnail"><a ><img width="120" src="/group/logo/20.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+</div>
+<div class="col-sm-8" style="">
+  <p><a href="/group?g=20" target="_blank" class="">学生3群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：人</p>
+  <p style="color:#999;"></p> 
+</div>
+</div>
+  
+   </div>
+</div>
+
+<div class="row"> <!--adv--> 
+<div class="thumbnail">
+<img src="img/t/adv1.jpg" style="width:95%;height:160px;"/></div>
+</div>
+<!--l3--> 
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">热门群组 </h3>
+   </div>
+   <div class="panel-body">       
+<div class="col-sm-5" style="">
+  
+<div class="col-sm-8" style="">
+  <div class="thumbnail"><a><img width="120" src="/group/logo/19.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+</div>
+<div class="col-sm-10" style="">
+  <p><a href="/group?g=19" target="_blank">学生B群</a> </p>
+  <p style="color:#999;">成员：人</p>
+  <p style="color:#999;"><a class=""></a></p> 
+  <p><a  class="btn btn-primary"><b>+加入该群</b></a></p> 
+</div>
+  
+</div>
+<!--l3 right-->
+<div class="col-sm-7" >
+  
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style="">
+  <a><img width="60" src="/group/logo/18.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=18" target="_blank">金陵旅游群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：10人</p>
+  <p style="color:#999;">金陵旅游群<a class=""></a></p> 
+</div>
+</div>
+  
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style="">
+  <a><img width="60" src="/group/logo/17.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=17" target="_blank">家长群空间</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：10人</p>
+  <p style="color:#999;">家长群空间<a class=""></a></p> 
+</div>
+</div>
+  
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style="">
+  <a><img width="60" src="/group/logo/16.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=16" target="_blank">学生A群</a> <a  class="label label-info pull-right">+加入</a></p>
+  <p style="color:#999;">成员：10人</p>
+  <p style="color:#999;">学生A群<a class=""></a></p> 
+</div>
+</div>
+    
+ </div> </div>
+</div>
+</div> 
+<div class="col-sm-4">
+<!--right1-->
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">群组精选 </h3>
+   </div>
+   <div class="panel-body">  
+   
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style=""> <a ><img width="40" src="/group/logo/15.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=15" target="_blank">小微金融</a> <span style="color:#999;">(10人)</span></p>   
+</div>
+</div>
+   
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style=""> <a ><img width="40" src="/group/logo/14.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=14" target="_blank">adfs</a> <span style="color:#999;">(10人)</span></p>   
+</div>
+</div>
+   
+<div class="row" style="border-bottom:1px dotted #ccc;margin-bottom:10px;">
+<div class="col-sm-3" style=""> <a ><img width="40" src="/group/logo/13.jpg" onerror="this.src='/error/logo.jpg';" /></a></div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=13" target="_blank">dfsa</a> <span style="color:#999;">(10人)</span></p>   
+</div>
+</div>
+ 
+<ul class="ul1">
+
+<li><a href="/group?g=12" target="_blank">	dsaf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=11" target="_blank">	asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=10" target="_blank">	dasfdfsa</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=9" target="_blank">	asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=8" target="_blank">	asdf</a><span style="color:#999;">(10人)</span></li>
+  
+</ul> 
+   </div>
+</div>
+<!--r2-->
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">群组俱乐部 </h3>
+   </div>
+   <div class="panel-body">   
+ 
+<div class="row" style="margin-bottom:10px;">
+<div class="col-sm-3">
+  <a><img width="40" src="/group/logo/15.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=15" target="_blank">小微金融</a> </p>   
+  <p><span style="color:#999;">成员：10人</span> </p>
+</div>
+</div>
+ 
+<div class="row" style="margin-bottom:10px;">
+<div class="col-sm-3">
+  <a><img width="40" src="/group/logo/14.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=14" target="_blank">adfs</a> </p>   
+  <p><span style="color:#999;">成员：10人</span> </p>
+</div>
+</div>
+ 
+<div class="row" style="margin-bottom:10px;">
+<div class="col-sm-3">
+  <a><img width="40" src="/group/logo/13.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+</div>
+<div class="col-sm-9" style="">
+  <p><a href="/group?g=13" target="_blank">dfsa</a> </p>   
+  <p><span style="color:#999;">成员：10人</span> </p>
+</div>
+</div>
+ 
+ 
+   </div>
+</div>
+
+<!--r5-->
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title glyphicon glyphicon-tower">排行榜 </h3>
+   </div>
+   <div class="panel-body">     
+<ul class="ul2">
+
+<li><em class="badge badge-green">T</em> <a href="/group?g=12" target="_blank"><img width="40" src="/group/logo/12.jpg" onerror="this.src='/error/logo.jpg';" /> dsaf</a><span style="color:#999;">(10人)</span></li>
+
+<li><em class="badge badge-green">T</em> <a href="/group?g=11" target="_blank"><img width="40" src="/group/logo/11.jpg" onerror="this.src='/error/logo.jpg';" /> asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><em class="badge badge-green">T</em> <a href="/group?g=10" target="_blank"><img width="40" src="/group/logo/10.jpg" onerror="this.src='/error/logo.jpg';" /> dasfdfsa</a><span style="color:#999;">(10人)</span></li>
+
+<li><em class="badge badge-green">T</em> <a href="/group?g=9" target="_blank"><img width="40" src="/group/logo/9.jpg" onerror="this.src='/error/logo.jpg';" /> asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><em class="badge badge-green">T</em> <a href="/group?g=8" target="_blank"><img width="40" src="/group/logo/8.jpg" onerror="this.src='/error/logo.jpg';" /> asdf</a><span style="color:#999;">(10人)</span></li>
+    
+			</ul> 
+   </div>
+</div> 
+<!--r3-->
+ 
+<!--r5-->
+<div class="well well-sm">群组专题！</div>
+<div class="row" >
+<center> <a> <img width="90%" src="/img/t/spe1.jpg" onerror="this.src='/error/logo.jpg';" /></a></center> 
+</div>  
+<ul>
+
+<li><a href="/group?g=12" target="_blank">dsaf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=11" target="_blank">asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=10" target="_blank">dasfdfsa</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=9" target="_blank">asdf</a><span style="color:#999;">(10人)</span></li>
+
+<li><a href="/group?g=8" target="_blank">asdf</a><span style="color:#999;">(10人)</span></li>
+     
+</ul> 
+
+</div> 
+
+<!--brow-->
+<div class="row" >
+<div class="col-sm-2" style=""> 
+<h3 class="greenA"><a>群组在成长</a></h3>
+<ul class="ul1 greenA">
+<li><a>	新闻资讯</a><span style="color:#999;">(583367人)</span></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+</ul> 
+</div> 
+<div class="col-sm-2" style=""> 
+<h3>手机上群</h3>
+<ul class="ul1">
+<li><a>	新闻资讯</a><span style="color:#999;">(583367人)</span></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+</ul> 
+</div>     
+<div class="col-sm-2" style=""> 
+<h3>热门微群</h3>
+<ul class="ul1">
+<li><a>	新闻资讯</a><span style="color:#999;">(583367人)</span></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+</ul> 
+</div> 
+<div class="col-sm-2" style=""> 
+<h3>热门群话题</h3>
+<ul class="ul1">
+<li><a>	新闻资讯</a><span style="color:#999;">(583367人)</span></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+</ul> 
+</div>  
+<div class="col-sm-2" style=""> 
+<h3>热门群话题</h3>
+<ul class="ul1">
+<li><a>	新闻资讯</a><span style="color:#999;">(583367人)</span></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+<li><a>	新闻资讯</a></li>
+</ul> 
+</div>     
+</div>   
+     
+<!---->     
+</div>   
+
+          
+<hr style="height:2px;" />
+<div class="container" style="background-color:">
+<footer class="footer">
+<p class="pull-right"><a href="#logo">返回顶部</a></p>
+<p>&copy;2014 NanJing GuanBang Networking Technology Co.,Ltd. &nbsp;&nbsp;苏ICP备08111765号-1</p>
+<p>Designed by YiYun Development in GB-YY</p>
+<p>版权声明： <a href="#" target="_blank">联系我们</a> <a href="#" target="_blank">意见反馈</a> | 
+<a href="http://weibo.com/lr001" target="_blank">易教育云官方微博</a> | 
+<a href="http://jq.qq.com/?_wv=1027&k=TATQ9L" target="_blank">QQ群：176723216  </a> | <a href="/bask" target="_blank">管理中心</a>
+| <a href="/dl/TopntIM_Demo_0.1.1.apk" target="_blank">手机APP Android版</a>
+ <img src="/dl/im.png" width="80">
+</p>
+</footer>
+</div>
+       
+</body>
+</html>
+<script>
+  $(function(){
+        $("#cr").carousel('cycle');
+  });
+</script>

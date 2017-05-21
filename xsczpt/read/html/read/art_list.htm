@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>浦口区云悦读空间-分类列表页</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>  
+<link href="html/read/css/css.css" type="text/css" rel="Stylesheet">
+{meta}	
+</head>
+<body class="bgf8">
+<div class="wrap">
+	{top}
+	<div class="clear"></div>
+	<div class="main">
+		{menu}
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="bk_navga">
+		</div>
+		<div class="list_left bgf boa">
+			<div class="c_cate_list">
+				<div class="c_catitle"><a href="./?t=art_list&pc={pid}">{pname}</a></div>
+				<ul>
+          <!-- START art_cate -->
+					<li><a target="_self" href="./?t=art_list&pc={pid}&c={id}">{name}</a></li>
+          <!-- END art_cate -->
+				</ul>
+			</div>
+		</div>	
+		<div class="list_right " style="display:{display1}">
+      <!-- START art_lists -->
+      <div class="bgf boa" style="margin-bottom:15px;">
+  			<ul class="c_title">
+  				<li><a href="./?t=art_list&pc={pid}&c={id}" >{name}</a></li>
+  			</ul>
+  			<div class="c_nav fl">&nbsp;</div>
+  			<div class="c_conlist fl">
+  				<ul class="cnews_list">
+            <!-- START rp -->
+  					<li><a href="./?t=art_info&id={id}" target="_blank">{title}</a><span>{created}</span></li>
+  				  <!-- END rp -->
+          </ul>
+  			</div>
+      </div>
+      <div class="clear"></div>
+      <!-- END art_lists -->
+		</div>                     
+    
+    <div class="list_right bgf boa" style="display:{display2}">
+			<ul class="c_title">
+				<li><a href="./?t=art_list&pc={pid}&c={c}" target="">{cname}</a></li>
+			</ul>
+			<div class="c_nav fl">&nbsp;</div>
+			<div class="c_conlist fl">
+				<ul class="cnews_list">
+          <!-- START art_list -->
+					<li><a href="./?t=art_info&id={id}" target="_blank">{title}</a><span>{created}</span></li>
+		      <!-- END art_list -->
+				</ul>
+			</div>
+			<div class="clear"></div>
+      <div class="tc" style="margin-right:10px;">
+         <ul class="pagination pull-right">
+    			{page}
+         </ul>
+    	</div>
+		</div>
+	</div>
+</div>
+{foot}
+<script src="html/read/js/jquery.min.js"></script>
+<script src="html/read/js/read.js"></script>
+<script type="text/javascript">
+	$(function(){
+	function tabs(tabTit,on,tabCon){
+	$(tabCon).each(function(){
+	  $(this).children().eq(0).show();
+	  });
+	$(tabTit).each(function(){
+	  $(this).children().eq(0).addClass(on);
+	  });
+	 $(tabTit).children().hover(function(){
+		$(this).addClass(on).siblings().removeClass(on);
+		 var index = $(tabTit).children().index(this);
+		 $(tabCon).children().eq(index).show().siblings().hide();
+	});                       
+	}
+  tabs(".tab1-hd","active",".tab1-bd");
+  tabs(".tab_recom-hd","active",".tab_recom-bd");
+ $(function(){
+	$('.pic_nr').hide();
+		$('.pic_nr').first().show();
+		$('.b_name').first().hide();
+	$(".list_boxdl").mouseover(function() {
+		$(".b_name").show();
+		$(this).find(".b_name").hide();
+		$(".pic_nr").hide();
+		$(this).find(".pic_nr").show();
+	});
+ });
+});
+</script>
+</body>
+</html>

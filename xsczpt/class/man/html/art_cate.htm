@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+  <h3>分类管理<small></small>
+  <div class="btn-group pull-right"> 
+    <a class="btn btn-primary"  id="btna">+添加</a>
+    <a onclick="location.reload()" class="btn btn-default"><i class="fa fa-repeat"></i>刷新</a> 
+</div> </h3> 
+</div>
+ 
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>     
+<th>名称</th>  
+<th>排序</th> 
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr id="row{id}">
+<td>{name}</td>
+<td>{odx}</td> 
+<td> 
+<a class="fa fa-edit" title="修改" onclick="moda({id:'{id}'})"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}'})"></a>  
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+ 
+{foot} 
+</body> 
+</html>  
+
+<script type="text/javascript"> 
+l_tpl="cls_art_cate"
+$(function(){     
+ 
+   $("#btna").bind("click",function(){$('#dlg1').data("dotype","a"); $('#dlg1').modal('show');}); 
+}); 
+
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}  
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   if($("#odx").val()==""){$("#odx").val("0");}          
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'',callback:"dosome"});  
+} 
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+     $('#dlg1').modal('hide');
+     lalert("成功");
+     location.reload();
+  }
+}
+</script> 
+<div class="modal " id="dlg1" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">[添加/编辑]</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">名称</label>
+<div class="col-sm-8"><input type="text" id="name" value="" class="form-control"/> </div>  
+</div> 
+<div class="form-group"> 
+<label class="col-sm-2 control-label">排序</label>
+<div class="col-sm-2"><input type="text" id="odx" value="" class="form-control" onkeyup="value=value.replace(/[^0-9/]/ig,'')" /> </div>  
+</div> 
+<input type="text" id="id" value="" style="display:none;"/>
+<input type="text" id="cid" value="{c}" style="display:none;"/>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="savesome()">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div>
+</div>
+</div>
+</div>

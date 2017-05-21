@@ -1,0 +1,219 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>课表-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/timetable.css"> 
+<style>  
+/**/
+.bias{border-top:60px #fff solid;border-left:180px #f2f2f2 solid;width:0;height:0;position:relative;color:#1bb177;}
+.bias dfn{display:block;width:60px;font:600 14px/30px "";}
+.bias_l{position:absolute;bottom:0px;right:120px;}
+.bias_r{position:absolute;top:-50px;left:-60px;}
+</style>
+</head>
+<body>
+{top}
+{head}
+<div class="main">
+  <dl>
+    <dt>
+      <div class="menu_c">
+        <h2>课表管理</h2>        
+        <ul> 
+        <li><a href="./?t=timetable" >班级课表</a></li> 
+        </ul>
+      </div>
+    </dt>   
+  <dd>
+   <div class="banner">
+          <label>课表</label>
+          <span> <select id="class"><option>--班级--</option></select></span>
+        </div>        
+        <br/>        
+      <table class="table">
+            <thead>
+               <tr>
+<td colspan="2" style="border-left:none;">  <div class="bias">
+<dfn class="bias_l">类 别</dfn> 
+<dfn class="bias_r">时 间</dfn>
+</div>
+</td>
+                   <td>星期一</td>
+                   <td>星期二</td>
+                   <td>星期三</td>
+                   <td>星期四</td>
+                   <td>星期五</td>
+               </tr>
+            </thead>
+            
+            <tbody>
+                <tr>
+                   <td style="border-left:none;">早读</td>
+                   <td style="width:100px;"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td rowspan="4" width="65" style="border-left:none;">上<br>午</td>
+                   <td>第一节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第二节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第三节课</td>
+                    <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第四节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td rowspan="4" style="border-bottom:0;border-left:none;">下<br>午</td>
+                   <td>第一节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第二节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第三节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+               <tr>
+                   <td>第四节课</td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+                   <td data-flag="tt"></td>
+               </tr>
+            </tbody>
+      </table>
+    <br/>  
+    <div style="text-align:right;">    
+         <input type="button" id="btn"  value="保存"/>
+          <input type="reset" class="but1" value="取消"/>
+    </div>
+     <br/>  
+    </dd>
+    </dl>
+  </div>
+{footer}
+
+
+</body> 
+</html>
+<script type="text/javascript">
+    $(function(){
+      $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");});
+      $.post("./srv/rdo.php?", {tpl:"get_class"}, function (d, e) {                 
+       selectShowData("#class",JSON.parse(d),"id","name");    
+    });
+     
+    $("#class").bind("change",function(){
+      if($("#class").val()==undefined||$("#class").val()==""){return;}
+       $.post("./srv/rdo.php", {tpl:'get_timetable','id':$(this).val()}, function (d, e) {  
+       $(".table  td[data-flag='tt']").text("");               
+         v=JSON.parse(d);
+         for(k=0;k<v.length;k++){
+            $(".table  tbody").children().eq(v[k].row).children().eq(v[k].col).text(v[k].name); 
+         }  
+      });  
+    });
+    
+    $("#btn").bind("click", function(){
+      if($("#class").val()==undefined||$("#class").val()==""){alert("请选择一个班级");return;}
+      data=[];
+       $(".table  td[data-flag='tt']").each(function (a, b) {
+          if($(b).text()!=""){             
+            //alert($(b).parent().index()+"|"+$(b).index()+$(b).text());
+            data.push({row:$(b).parent().index(),col:$(b).index(),name:$(b).text()});
+          }          
+       }); 
+     $.post("./srv/sdo.php?", {tpl:'up_timetable','class':$('#class').val(),'data':JSON.stringify(data)}, function (d, e) {                 
+       alert(d);  
+    });  
+      //alert();           
+      return;
+      if($("#rname").val()==""){alert("请选择一个回答人");return;}
+      if($("#name").val()==""){alert("请输入您的问题标题");return;}
+      SaveAM({tpl:queryStr("t"),"do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   });   
+
+		$(".table  td[data-flag='tt']").click(function(d){        
+        curRow=$(this).parent().index();
+        curCol=$(this).index(); 
+				 ifrmid="#dlg1"; 
+         $(ifrmid).dialog('setTitle','选择课程');  
+         $(ifrmid+' .tips').text('选择课程'); 
+         $(ifrmid).data('dotype',"a");  
+         $(ifrmid).dialog("open"); 
+			})		
+	});
+  var curRow,curCol;
+</script>
+<div id="dlg1" class="easyui-dialog dialoga" style="width:300px;height:200px;padding:10px;" title="选择课程" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+      if($('#subject').val()==undefined|| $('#subject').val()==''){alert('请选择一个学科');return;}        
+      $('.table tbody').children().eq(curRow).children().eq(curCol).text($('#subject').find('option:selected').text()); 
+      $('#dlg1').dialog('close');   
+      $('#subject').val(''); 
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<div id="tips" class="tips">tips</div>
+<form id="form1">
+<table class="">  
+    <tr>
+        <td style="width:80px;">学科：</td>
+        <td><select id="subject"></select>
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr>   
+</table>
+</form>
+</div>
+ 

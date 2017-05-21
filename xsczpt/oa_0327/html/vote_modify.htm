@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>   
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form id="form1" name="form1">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以添加评价项信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="25%" class="tabtd2_L">评价项内容：</td>
+						 <td width="75%" class="tabtd2_R">
+							<textarea name="name" id="name" cols="50" rows="4" style="font-size:12px;"></textarea>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">评价类型：</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="vote_cat" id="vote_cat">
+								<option value="自我评价">自我评价</option>
+								<option value="学生互评">学生互评</option>
+								<option value="班主任评价">班主任评价</option>
+								<option value="父母评价">父母评价</option>
+							</select>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">结果项：</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" name="item" id="item" value="" size="40" /> 多个以英文逗号进行分隔
+						 </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="text" value="修  改" onclick="checkVote()" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;padding-left: 18px;" /><a href="./?t=vote_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a></div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+l_tpl="oa_zhsz_votelib";
+readID({"do":"r",id:queryStr("id"),frmid:"#form1"}); 
+
+//表单提交验证
+function checkVote()
+{
+	if($.trim($("#name").val())==""){
+		alert("请输入评价项");
+		$("#vote_name").select();
+		return false;
+	}
+	if($.trim($("#item").val())==""){
+		alert("请输入结果项");
+		$("#vote_item").select();
+		return false;
+	}
+	
+	vote_name=$("#name").val();
+	vote_item=$("#item").val();
+	vote_cat=$("#vote_cat").val();
+	
+	$.post("./srv/rdo.php", {tpl:"vote_modify_submit","vote_name":vote_name,"vote_item":vote_item,"vote_cat":vote_cat,"id":queryStr("id")}, function (d, e) {
+		l=JSON.parse(d);
+		if(l.flag=="true"){
+			alert(l.value);
+			location.href = location.href;
+		}else{
+			alert(l.value);
+		}
+	});
+	
+	$("#but_add").attr("disabled","disabled");
+	
+	return true;
+}
+
+</script> 

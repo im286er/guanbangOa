@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-相册展示-{nick}空间</title>
+{cssjs}        
+<link rel="stylesheet" type="text/css" href="/widget/99lime/css/kickstart.css" media="all" /> 
+<script type="text/javascript" src="/widget/99lime/js/kickstart.js"></script>   
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header">{name}<h3>  
+ <a href="./?t=album&id={zid}" class="btn btn-primary" >返回相册</a> 
+</h3>
+</div>  
+ 
+<div class="gallery">
+<!-- START list --> 
+<a href="/upd/album/{uid}/{aid}/{pic}"><img src="/upd/album/{uid}/{aid}/t_{pic}" onerror="this.src='/error/logo.jpg';" width="120" /></a>
+ 
+<!-- END list -->   
+</div>
+  
+
+<hr/>
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">     
+ $(function () {  
+          
+  });  
+</script>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />  
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<style>
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				<a href="javascript:void(0);" class="current">班级列表</a>
+				<a href="./?t=graduate_class">毕业班</a>
+				<span class="floatright">
+					<script type="text/javascript">
+					  //if({priv1}){
+						document.write('<img src="images/add.gif" class="padding5"/><a href="./?t=class_add">添加班级</a> | <img src="images/add.gif" class="padding5"/><a href="./?t=class_import">批量导入班级</a><img src="images/add.gif" class="padding5"/><a href="./?t=master_import">批量导入班主任</a>');
+					  //}
+					</script> 
+				</span>
+		</div>
+		<div class="boxtitle2">
+			<form action="./?t=class_manage" method="post">
+				<span>
+					<select name="grade_id" id="grade_id">
+						
+					</select> 
+				</span> 
+				<input type="submit" id="choose" name="choose" value="班级筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<form method="post" action="./srv/class_batch.php" onsubmit="return checkBatch();">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="8%" class="tabtd"><input type="checkbox" name="all_class" id="all_class" value="1" onclick="selectAllC(this,'class_id[]')" /> 班级ID</td>
+					 <td width="15%" class="tabtd">年级</td>
+					 <td width="15%" class="tabtd">班级</td>
+					 <td width="15%" class="tabtd">班主任</td>
+					 <td class="tabtd">操作选项</td>
+				</tr>
+				<tbody id="class_show"></tbody>
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+			<div>
+				<select name="batch_op" id="batch_op">
+					<option value="0">批量操作</option>
+					<option value="1">设为毕业班</option>
+				</select> &nbsp;&nbsp;<input type="submit" value="执行操作" />
+			</div>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#grade_id",JSON.parse(d),"id","grade_name"); $("#grade_id").prepend("<option selected value='0'>所有年级</option>;");
+		$('#grade_id').val('{grade_id}');	
+	});
+	
+	$.post("./srv/rdo.php", {tpl:"class_manage",page:"{page1}",grade_id:'{grade_id}'}, function (d, e) {
+		l=JSON.parse(d); 
+		var str="";
+		var num = 0;
+		for(var i=0;i<l.length;i++){
+			num++;
+			var str1="";
+			//if({priv2}){
+				str1+=' <img src="images/037.gif" /> <a href="./?t=class_modify&id='+l[i].id+'">修改</a> ';
+			//}
+			//if({priv3}){
+				str1+=' <img src="images/010.gif" /> <a href="javascript:delClass('+l[i].id+');">删除</a>';
+			//}
+			
+			str+='<tr id="class_'+l[i].id+'" class="tabtr" onmousemove="$(this).css(\'background-color\',\'#a3c0f9\');" onmouseout="$(this).css(\'background-color\',\'#ffffff\');"><td class="tabtd"><input type="checkbox" name="class_id[]" value="'+l[i].id+'" /> '+l[i].id+'</td><td class="tabtd">'+l[i].grade_name+'</td><td class="tabtd">'+l[i].class_name+'</td><td class="tabtd">'+l[i].classMaster+'</td><td class="tabtd" align="left">&nbsp;&nbsp;'+str1+' </td></tr>';
+			
+		}
+		$("#class_show").append(str);
+	});
+});
+
+//执行批量操作
+function checkBatch()
+{
+	if($("#batch_op").val()==0){
+		alert("请选择要执行的操作。");
+		return false;
+	}
+	if($("input[name='class_id[]']:checked").size()==0){
+		alert("请至少选择一条记录。");
+		return false;
+	}
+}
+
+//删除体质记录
+function delClass(id){
+	if(confirm("你确定删除此班级吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_class","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#class_"+id).fadeOut("slow");
+				$("#class_nums").text($("#class_nums").text()-1);
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

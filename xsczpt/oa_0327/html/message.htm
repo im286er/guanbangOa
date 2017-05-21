@@ -1,0 +1,151 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title></title>
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="common/jquery.min.js"></script>
+<script src="js/limit.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+</head>
+<body>
+<style>
+ .flag_checked p{display:none;}
+ .ha_selbox {float:left;}
+ .check_cont span{
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-webkit-text-overflow:ellipsis;
+	-moz-text-overflow:ellipsis;
+	-webkit-line-clamp:1;
+	width:450px;
+	overflow:hidden;
+  }
+</style>
+<div class="main" style="margin-bottom:10px;width:100%;float:left;">
+	<div class="ha_content">
+		<div class="ha_selbox">
+			<span>操作：</span>
+			<select id="read_select" name="read_select"><option value="">请选择操作</option><option  value="1">标记为已读</option><option  value="0">标记为未读</option>
+			</select>
+			
+		</div>
+	</div>
+</div>
+	<form action="./?t=message" method="post" id="form1">
+	<input type="hidden" name="status" id="_st" value=""/>
+	<input type="hidden" name="state" id="state" value=""/>
+	<input type="hidden" name="read_select" id="_st1" value=""/> 
+    <table class="gridtable">
+				<tr class="tit">
+				    <th width="5%"><input type="checkbox" name="all_select" id="all_select" value="1" onclick="selectAll();" /></th>
+					<th width="15%">模块</th><th width="25%">内容描述</th><th width="15%">记录时间</th><th width="10%">审核状态</th><th width="10%">消息状态</th>
+				</tr>
+				
+				{str_total}
+	</table>
+	<ul class="pagination pull-right">
+					{page}
+	</ul>
+	</form>
+
+</div>
+<script>
+$(function(){
+	$(document).ready(function(){		
+		$(".ui-select").selectWidget({
+			change       : function (changes) {
+				return changes;
+			},
+			effect       : "slide",
+			keyControl   : true,
+			speed        : 200,
+			scrollHeight : 250
+		});
+		
+		$("#read_select").selectWidget({
+			change       : function (changes) {
+				var len = $("input[name='id[]']:checked").size();
+
+				if(len==0){
+					alert("请选择记录");
+					return false;
+				}
+				
+				if (confirm("是否确认")){
+					$("#_st1").val($("#read_select").val());
+					$("#form1").submit();
+				}else{
+					location.reload();
+				}
+				return changes;
+			},
+			effect       : "slide",
+			keyControl   : true,
+			speed        : 200,
+			scrollHeight : 250
+		});
+		
+		$("#st").selectWidget({
+			change       : function (changes) {
+				$("#_st").val($('#st').val());
+				$("#state").val($('#st').val());
+				$('#form1').submit();
+				return changes;
+			},
+			effect       : "slide",
+			keyControl   : true,
+			speed        : 200,
+			scrollHeight : 250
+		});
+	});	
+	
+	/*$("#st").val({state});
+	report_index=$("#st").get(0).selectedIndex;
+	$(".select-list").eq(0).children("li").removeClass("active");
+	$(".select-list").eq(0).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(0).text($("#st option:selected").text());*/
+
+  $(".flag_checked").each(function(){ 
+   if($(this).attr("flag")=='0') $(this).html("<font color=\'#ff0000\' class='status'>待审核</font>");
+   if($(this).attr("flag")=='1') $(this).html("已审核");
+   if($(this).attr("flag")=='2') $(this).append("<font style=\'color:rgb(255,204,19)\'>未通过</font>");
+   $('.ha_serror').bind('click',function(){var content=$(this).siblings("p").text();layer.msg(content);})
+  })
+  $(".read_checked").each(function(){
+    if($(this).attr("is_read")=='1') $(this).html("已读");
+	if($(this).attr("is_read")=='0') $(this).html("<font color=\'#ff0000\'>未读</font>");
+  })
+})
+
+function selectAll(){
+	var checklist = document.getElementsByName ("id[]");
+	if(document.getElementById("all_select").checked){
+		for(var i=0;i<checklist.length;i++){
+			checklist[i].checked = 1;
+		} 
+	}else{
+		for(var j=0;j<checklist.length;j++){
+			checklist[j].checked = 0;
+		}
+	}
+}
+
+$(".check_cont").each(function(){
+	var _v=$(this).attr("v");
+	if(_v==""){
+		$(this).remove();
+	}
+	var checkNum = /<(?!img).*?>/g;
+	_v= _v.replace(checkNum,"");
+	$(this).children("span").html(_v);
+});
+
+</script>
+</body>
+</html>

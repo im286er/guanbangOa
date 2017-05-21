@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>发布课件-{gtitle}</title>   
+{cssjs}    
+<link href="/widget/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>   
+
+<link rel="stylesheet" type="text/css" href="/widget/easyui/themes/default/tree.css">
+<script type="text/javascript" src="/widget/easyui/jquery.easyui.min.js"></script> 
+
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>发布课件 <small>[添加/编辑]</small>  
+   <a href="./?t=courseware" class="btn btn-primary pull-right" >返回</a>  </h3>
+</div>
+
+ 
+<form id="form1" class="form-horizontal" >      
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">标题</label>  
+   <div class="col-sm-11"> 
+   <input type="text" id="title" class="form-control" style="width:40%;" placeholder="课件标题"  maxlength="50"/>
+  <input type="text" id="techer" value="{truename}" style="display:none;"/>
+  </div>
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">*</label>  
+   <div class="col-sm-3"> 
+   <select id="pro"  class="form-control"><option value="">选择属性</option></select>  
+   <input type="text" id="school" style="display:none;"/>  
+     <p class="help-block">*默认属性</p> 
+  </div> 
+     <div class="col-sm-8">  <a href="?t=def_property" target="_blank" class="btn btn-primary">+管理默认属性</a>
+      </div> 
+</div>    
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">属性</label>  
+   <div class="col-sm-11">
+       <select id="cid"><option value="">选择班级</option></select> 
+      <select id="grade"><option value="">选择年级</option></select> 
+          <select id="subject"><option value="">选择学科</option></select>
+          <select id="edition"><option value="">教材版本</option></select> 
+          <select id="volume"><option value="">上下册</option></select>
+          <select id="chapter"><option value="">章/节/单元</option></select>
+         
+         <input type="text" id="period" style="display:none;"/>  
+           
+      
+   </div>
+</div> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">课文</label>  
+   <div class="col-sm-2"><select id="textbook" class="form-control"><option value="">-课文-</option></select>   </div> 
+    <div class="col-sm-8">    
+     <a href="javascript:void(0);" onclick="gettextbook();" class="btn btn-success glyphicon glyphicon-repeat">重新加载课文</a>
+      <a href="./?t=textbook_add&d=a" target="_blank" class="btn btn-primary">+添加课文</a>  
+    </div> 
+</div>   
+<div class="form-group">   
+  <label class="col-sm-1 control-label">描述</label>   
+   <div class="col-sm-11">
+   <textarea id="des" name="des" placeholder="课件简介10-250字" rows="6" class="form-control" style="width:60%;"></textarea> 
+  </div>
+</div> 
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">资源</label>  
+   <div class="col-sm-3">       
+         <input type="text" id="resname" class="form-control" readonly disabled />
+         <input type="text" id="resmd5" style="display:none;"/>         
+  </div>
+   <div class="col-sm-8">    
+  <a href="javascript:void(0);" id="btn1" class="btn btn-success" >+选择网盘资源</a> 
+         <a href="{PAN_URL}api/yun?t=relogin" class="btn btn-success"  target="_blank">+上传资源</a>   
+    </div> 
+</div>
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">logo</label>  
+   <div class="col-sm-11"> 
+          <img id="logoimg" src="/error/logo.jpg" width="50" />
+          <input type="text" id="logo" style="display:none;"/> 
+          <a href="javascript:void(0);" id="btn2" class="btn btn-primary">上传logo</a>  
+    <p class="help-block">(上传不大于200kb的.jpg图片 尺寸 100x100)</p>  
+  </div>
+</div>
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">类型</label>  
+   <div class="col-sm-3">     <select id="restype"  class="form-control"><option value="">资源类型</option></select>        
+        <input type="text" id="alones" style="display:none;"/> 
+  </div>
+</div>  
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">分享</label>  
+   <div class="col-sm-3">   <select id="share"  class="form-control"><option value="">分享级别</option>
+        <option value="0">仅自己可见</option><option value="1">我的学员可见</option><option value="2">所有人</option>
+        </select> 
+  </div>
+</div> 
+<div class="form-group">  
+  <label class="col-sm-1 control-label"></label>     
+   <div class="col-sm-11">
+    <button type="button" class="btn btn-success" id="btn"> 发 布 </button>     
+    <input type="text" id="id" value="" style="display:none;"/>
+     </div>
+    </div>  
+</form> 
+ 
+</div>  
+</div>
+
+
+{foot}
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+$(function(){
+    $.get("/data/grade_n1.txt", function(d){$("#grade").html(d);$("#grade").prepend("<option value=''>—年级—</option>");});     
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>教材版本</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});
+    $.get("/data/restype.txt", function (d) {$("#restype").html(d);$("#restype").prepend("<option value=''>资源类型</option>");});   
+    $.post("./srv/rdo.php", {tpl:"get_my_cls","id":$(this).val()}, function (d, e) {                 
+        l=JSON.parse(d);  selectShowData("#cid",l,"id","name");             
+    });  
+    $.post("./srv/rdo.php?", {tpl:"get_def_property"}, function (d, e) {                 
+       selectShowDataNoH("#pro",JSON.parse(d),"id","name"); $("#pro").prepend("<option value=''>—默认属性—</option>");     
+    }); 
+    //$("#subject").bind("change",function(){$("#subjects").val($(this).find("option:selected").text());});
+    $("#grade").bind("change",function(){
+      if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period); 
+   });
+     $("#pro").bind("change",function(){
+       if($(this).val()==""){return;}
+       $.post("./srv/rdo.php", {tpl:"get_def_info","id":$(this).val()}, function (d, e) {               
+             jsn=JSON.parse(d); 
+           $("#grade").val(jsn[0].grade);  
+           $("#period").val(jsn[0].period);  
+           $("#school").val(jsn[0].school); 
+           $("#cid").val(jsn[0].cid); 
+            $("#subject").val(jsn[0].subject);   
+            $("#edition").val(jsn[0].edition);
+            $("#volume").val(jsn[0].volume);
+            $("#chapter").val(jsn[0].chapter);
+            gettextbook();
+        });  
+   }); 
+   
+    $("#chapter").bind("change",function(){
+      if($(this).val()==""){return;}
+      gettextbook();     
+   });   
+   
+   if(queryStr("d")=="m"){
+     readID({tpl:"res_courseware","do":"r",id:queryStr("id"),frmid:"#form1"});  
+  }    
+   $("#btn").bind("click", function(){  
+    if($("#title").val()==""){alert("请输入一个作业名称标题");return;}     
+    if($("#grade").val()==""){alert("请选择一个年级");return;}
+    if($("#subject").val()==""){alert("请选择学科");return;}
+    if($("#edition").val()==""){alert("请选择教材版本");return;}
+    if($("#volume").val()==""){alert("请选择上下册");return;}
+    if($("#textbook").val()==""){alert("请选择课文");return;}
+    if($("#resname").val()==""){alert("请选择一个资源");return;}   
+      SaveAM({tpl:"res_courseware","do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+   $("#btn2").bind("click", function(){ $('#dlg2').modal('show');}); 
+   $("#btn1").bind("click", function(){ $('#dlg1').modal('show');});        
+  
+});   
+
+function dosome(ed,data){  
+  if(data.indexOf('ok')>-1)
+    alert("操作成功"); 
+  if(queryStr("d")=="m"){
+       //location.href="./?t=homework_info&id="+queryStr("id");
+  }
+  else{     
+     // location.href="./?t=homework_info&id="+data.substr(data.indexOf('ok')+2);
+  }
+} 
+function gettextbook(){
+    if($("#grade").val()==""){alert("请选择一个年级");return;}
+    if($("#subject").val()==""){alert("请选择学科");return;}
+    if($("#edition").val()==""){alert("请选择教材版本");return;}
+    if($("#volume").val()==""){alert("请选择上下册");return;}   
+    $.post("./srv/rdo.php", {tpl:"get_chapter_textbook",grade:$("#grade").val(),subject:$("#subject").val(),
+      edition:$("#edition").val(),volume:$("#volume").val(),chapter:$("#chapter").val()}, function (d, e) {                 
+       selectShowDataNoH("#textbook",JSON.parse(d),"id","name");  
+       $("#textbook").prepend("<option value=''>-课文-</option>");
+    });  
+}
+
+function ifrm_dosome(){
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){
+       d=JSON.parse(v);   
+       if(d.ret=="ok"){           
+         $("#logoimg").attr("src",'/courseware/logo/'+d.fname+'?'+Math.random());           
+         $("#form1 #logo").val(d.fname);
+         $('#dlg2').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}  
+
+function seltreenod(d){
+  var t = $(d.tree);
+  var node = t.tree('getSelected'); 	
+	if(node==undefined){alert("请选择一个节点");return;}
+	if(!node||node==null){alert("请选择一个节点");return;}	
+  if(node.ftype==1){alert("请选择一个文件");return;}	
+  $("#resname").val(node.text);
+  $("#resmd5").val(node.md5); 
+  $('#dlg1').modal('hide');   
+}
+</script>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">选择文件</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form">  
+<div class="form-group">
+<div class="col-sm-10"> 
+<ul class="easyui-tree" id="tree" data-options="lines:true"	url="./srv/pan2.php"></ul>
+</div>
+</div>
+<div class="form-group">      
+  <div class="col-sm-10">  
+  <select id="treefile" class="form-control hide" size="5" style="border:none;"></select>    
+  </div>
+  </div>  
+</form>  
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary"  onclick="seltreenod({tree:'#tree'})"> 选择文件  </button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+</div>
+</div>
+</div>
+</div>  
+
+ 
+<div class="modal fade" id="dlg2" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">上传logo</h4>
+         </div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="srv/upd_logo_ware.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block">(上传不大于200kb的.jpg图片 尺寸 100x100)。</span>
+    </div>
+  </div> 
+</form></div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+         </div>
+      </div>
+   </div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人博客-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('待审核','已审核','注销中'); 
+</script>
+</head>
+<body>
+{top}     
+{head}
+<div class="container main">
+<div class="row">                
+
+<div class="col-xs-3 main-nav-left" style="padding:0;margin-left:15px;">
+   <div class="main-nav-title"><span>博客类别</span></div>
+   <ul class="nav nav-pills nav-stacked">
+      <li><a href="./?t=bloga&c=0&id={id}">默认分类</a></li>
+      <!-- START cate -->
+      <li><a href="./?t=bloga&c={id}&id={uid}">{name}</a></a></li>
+      <!-- END cate -->
+   </ul>
+</div>
+
+
+<div class="col-sm-9" style="width:830px;padding-left:23px;">
+<div class="page-header" style="margin:0;">
+   <h3>个人博客   <small></small></h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>标题</th>      
+<th>时间</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="./?t=blog&bid={id}&id={uid}" target=_blank>{title}</a></td>  
+<td><cite>{timestamp}</cite></td>    
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div> 
+</div>
+
+</div> 
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+});
+
+</script> 
+

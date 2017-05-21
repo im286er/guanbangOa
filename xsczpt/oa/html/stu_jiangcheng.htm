@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">学生奖惩记录列表</a></label>
+				
+				<span class="floatright">
+				<img src="images/add.gif" class="padding5"/><a href="./?t=jiangcheng_op">添加奖惩记录</a>
+			</span>
+		</div>
+		<div class="boxtitle2" style="margin-bottom:0;">
+			<form action="./?t=stu_jiangcheng" method="post">
+				<select name="term_id" id="term_id">
+				</select> 
+				<span>
+					<select name="flag_type" id="flag_type">
+					</select> 
+				</span> 
+				<input type="submit" id="choose" name="choose" value="记录筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+			<div style="width:100%; height:30px; line-height:30px; text-align:center; font-size:14px;display:inline-block;">学生奖惩记录</div>
+		<div class="tabbody">
+			<div class="clear"></div>
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+						 <td width="8%" class="tabtd">姓名</td>
+						 <td width="6%" class="tabtd">班级</td>
+						 <td width="12%" class="tabtd">学期</td>
+						 <td width="5%" class="tabtd">类型</td>
+						 <td  class="tabtd">奖惩内容</td>
+						 <td class="tabtd" width="12%">记录日期</td>
+						  <td class="tabtd" width="5%">状态</td>
+						 <td class="tabtd" width="8%">操作</td>
+					</tr>
+					<!-- START list --> 
+					<tr id="tr_c_{id}">
+						<td class="tabtd">{truename}</td>
+						<td class="tabtd">{class_name}</td>
+						<td class="tabtd">{term_name}</td>
+						<td class="tabtd">{flag_type}</td>
+						<td class="tabtd">{content}</td>
+						<td class="tabtd">{create_time}</td>
+						<td class="tabtd">{flag_status}</td>
+						<td class="tabtd">
+						<script type="text/javascript">
+						  if("{flag_status}"!="已审核"){
+							document.write('<img src="images/037.gif" /> <a href="./?t=jiangcheng_op&id={id}">修改</a><img src="images/010.gif"> <a href="javascript:void(0);" onclick="delJiangcheng({id});">删除</a></td> ');
+						  }
+						</script> 
+					</tr>
+					<!-- END list --> 
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+		</div>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+	</div>
+<!--表格中间 end-->
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option selected value='0'>请选择学期</option>");
+		$('#term_id').val('{term_id}');     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"jiangcheng",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#flag_type",JSON.parse(d),"code_name","code_name"); $("#flag_type").prepend("<option selected value='0'>全部</option>");
+		var flag_type = "{flag_type}";
+		if(flag_type)
+			$('#flag_type').val('{flag_type}');     
+	});
+	
+});
+
+//删除奖惩记录
+function delJiangcheng(id){
+	if(confirm("你确定删除此奖惩记录吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_jiangcheng","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#tr_c_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

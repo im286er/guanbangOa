@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>添加成员-{gtitle}</title>
+{cssjs}        
+</head>
+<body>
+{top}
+<div class="container">  
+{head} 
+<div class="col-sm-3">
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>添加成员
+      <small></small>
+   </h3>
+</div>
+
+<form class="form-horizontal" role="form">      
+   <span class="help-block">*每行一个成员信息，不能有空行  </span>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">字段</label>
+    <div class="col-sm-10">
+        <label class="checkbox-inline">
+          <input type="radio" name="radio" id="rad"  value="1" checked> 用户名
+       </label>
+       <label class="checkbox-inline">
+          <input type="radio" name="radio" id="rad1" value="2"> 邮箱
+       </label>
+        <label class="checkbox-inline">
+          <input type="radio" name="radio" id="rad2" value="3"> 手机号
+       </label>
+    </div>
+  </div>  
+  <div class="form-group">
+    <label class="col-sm-1 control-label">数据</label>
+     <div class="col-sm-10">
+    <textarea id="des" class="form-control" rows="8"></textarea>
+    </div>
+  </div>
+ 
+ 
+     <div class="form-group">
+     <div class="col-sm-11 col-sm-offset-1">         
+   <button type="button" class="btn btn-primary" id="btn"> 开始导入 </button>     
+   </div>     
+    </div>
+    
+      <div class="form-group">
+    <label class="col-sm-1 control-label">结果</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" rows="5" id="des1" readonly></textarea>
+    </div>
+  </div>
+</form> 
+
+</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ 
+ $(function () { 
+    $("#btn").bind("click", function(){     
+      if($("#des").val()==""){alert("请输入要添加的用户");return;}
+      str=$.base64.btoa($("#des").val(),true);        
+      var ty=$('input:radio[name=radio]:checked').val();
+      $("#des1").val("正在导入……");
+      $.post("./srv/import.php?" + Math.random(), {"tpl":"adda","gid":"{g}","type":ty,data:str}, function (data, state) {
+             $("#des1").val(data);               
+        });     
+    }); 
+  }); 
+ function replay(d){
+  // $('#myModal').modal({keyboard: true}); 
+   //$('#myModal h4').modal({keyboard: true}); 
+   alert();
+ }
+	
+</script>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" 
+               aria-hidden="true">×
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               模态框（Modal）标题
+            </h4>
+         </div>
+         <div class="modal-body">
+            按下 ESC 按钮退出。
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary">
+               提交更改
+            </button>
+         </div>
+      </div>
+   </div>
+</div>

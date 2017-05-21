@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+	<title>默认属性-{gtitle}</title>
+	{cssjs}
+	<style>
+		a {cursor:pointer;}
+	</style>
+</head>
+<body>
+	{top}
+	<div class="container">
+		
+		<div class="col-sm-12 main"> 
+			<div class="page-header">
+				<h3>默认标签<small> 管理</small> 
+					<div class="btn-group pull-right"> 
+						<a onclick="window.close();" class="btn btn-primary" >关闭</a>  
+						<a id="btn" class="btn btn-primary" >+ 添加</a>       
+					</div>
+				</h3>
+			</div>
+
+
+			<table class="table  table-hover">  
+				<thead>
+					<tr>  
+						<th>名称</th>        
+						<th>学段/年级</th>
+						<th>学科</th>   
+						<th>教材</th>
+						<th>章/节/单元</th>
+						<th>时间</th>  
+						<th>操作</th>
+					</tr>
+				</thead>              
+				<tbody>
+					<!-- START list -->              
+						<tr>
+							<td><a>{name}</a></td>
+							<td><span data-period="{period}"></span>/<span data-grade="{grade}"></span></td>
+							<td><code><span data-subject="{subject}"></span></code></td>
+							<td><span data-edition="{edition}"></span></td>
+							<td><span data-volume="{volume}"></span>/<span data-chapter="{chapter}"></span>章</td>
+							<td><script>document.write(utctime('{timestamp}'));</script></td>               
+							<td>
+								<a onclick="moda({id:'{id}'})" title="编辑" class="glyphicon glyphicon-pencil"></a>  
+								<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+							</td>
+						</tr>
+					<!-- END list --> 
+				</tbody>
+			</table>
+			<ul class="pagination pull-right">
+			{page}
+			</ul>
+		</div>
+	</div> 
+	{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+	var subject,period,grade,edition,volume,chapter,restype;
+	
+	$(function(){
+		$("#btn").bind("click", function(){$('#dlg1').data("dotype","a");
+		$('#dlg1 #id').val("");
+		$('#dlg1 #name').val("");
+		$('#dlg1 #grade').val("");
+		$('#dlg1 #subject').val("");
+		$('#dlg1 #edition').val("");
+		$('#dlg1 #volume').val("");
+		$('#dlg1 #chapter').val("");
+		$('#dlg1').modal('show');});
+
+		$("#btn1").bind("click", function(){  
+			if($("#name").val()==""){alert("请输入资源标题！");$("#name").focus();return;}
+			if($("#grade").val()==""){alert("请选择年级！");$("#grade").focus();return;}
+			if($("#subject").val()==""){alert("请选择学科！");$("#subject").focus();return;} 
+			SaveAM({tpl:"sub_def_labels","do":$('#dlg1').data("dotype"),frmid:"#form1",showok:"",callback:"dosome"});
+		});
+		
+		/*
+		// 选择年级，自动为学段字段赋值
+		$("#grade").bind("change",function(){
+			// period  1.学前  2.小学  3.中学  4.高中
+			if($(this).val()==""){ $("#period").val("");return;}
+			period=$(this).find('option:selected').data("period");
+			$("#period").val(period);
+		});
+		*/
+		
+		//显示初始化
+		$.getJSON("/data/subject.json.txt", function (data) {  
+			subject=data;
+			$("span[data-subject]").each(function (a, b) {
+				$(this).text(subject[$(this).data("subject")]);
+			});
+		});
+		$.getJSON("/data/period.json.txt", function (data) {  
+			period=data;
+			$("span[data-period]").each(function (a, b) {
+				$(this).text(period[$(this).data("period")]);
+			});
+		});
+		$.getJSON("/data/grade.json.txt", function (data) {  
+			grade=data;
+			$("span[data-grade]").each(function (a, b) {
+				$(this).text(grade[$(this).data("grade")]);
+			});
+		});
+		$.getJSON("/data/textbook_ver.json.txt", function (data) {  
+			edition=data;
+			$("span[data-edition]").each(function (a, b) {
+				$(this).text(edition[$(this).data("edition")]);
+			});
+		});
+		$.getJSON("/data/textbook_volume.json.txt", function (data) {  
+			volume=data;
+			$("span[data-volume]").each(function (a, b) {
+				$(this).text(volume[$(this).data("volume")]);
+			});
+		});
+		$.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+			chapter=data;
+			$("span[data-chapter]").each(function (a, b) {
+				$(this).text(chapter[$(this).data("chapter")]);
+			});
+		});
+	});
+	function dosome(e,d){  
+		if($('#dlg1').data('dotype')!="a"){
+			alert("修改完成");
+			$('#dlg1').modal('hide');
+		}
+		location.reload();
+	}
+	function moda(d){
+		readID({tpl:"sub_def_labels","do":"r","id":d.id,frmid:"#dlg1"});
+		$('#dlg1').data("dotype","m");
+		$('#dlg1').modal('show');
+	}
+	function delths(v,obj){
+		if (confirm("确定删除该组合？")) {
+			$.post("./srv/sdo.php", {tpl:"del_label",id:v}, function (d, e) {                   
+				$(obj).parent().parent().remove();
+			});
+		}
+	}
+	// 当前页跳转到新页面
+	function redirect(url) {
+		location.href = "./?t=" + url +"&s=" + queryStr("s") +"&sid=" + queryStr("sid");
+	}
+</script>
+
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="label">添加/编辑</h4>
+			</div>
+			<div class="modal-body"> 
+				<form class="form-horizontal" role="form" id="form1">
+					<div class="form-group">
+						<label class="col-sm-2 control-label">名称</label>
+						<div class="col-sm-6">
+							<input type="text" class="form-control" id="name"  maxlength="50" placeholder="请输入自定义标签组合名称"> 
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">年级</label>
+						<div class="col-sm-3">
+							<select id="grade" class="form-control">{sel_grade}</select>
+						</div>
+						<div class="col-sm-3">
+							<select id="subject"  class="form-control">
+								{sel_subject}
+							</select>
+						</div>
+					</div>
+					<div class="form-group">   
+						<label class="col-sm-2 control-label">教材</label>
+						<div class="col-sm-3">
+							<select id="edition" class="form-control">{sel_edition}</select>
+						</div>
+						<div class="col-sm-3">
+							<select id="volume" class="form-control">{sel_volume}</select>
+						</div>
+						<div class="col-sm-3">
+							<select id="chapter" class="form-control">{sel_chapter}</select>
+						</div>  
+					</div>   
+					<input type="text" id="id" value="" style="display:none;"/>
+					<input type="text" id="school" value="{s}" style="display:none;"/>
+					<input type="text" id="sid" value="{subid}" style="display:none;"/>
+					<input type="text" id="period" value="{period}" style="display:none;"/>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="btn1">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+			</div>
+		</div>
+	</div>
+</div>

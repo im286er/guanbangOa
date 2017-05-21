@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>类别-{gtitle}</title>
+{cssjs}   
+</head>
+<body>
+{top}     
+<div class="container"> 
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>类别   <small></small>
+   <div class="btn-group pull-right">
+    <a onclick="location.reload();" class="btn btn-primary" >刷新</a>
+    <a onclick="genactive();" class="btn btn-primary" >生成缓存</a>
+     <a class="btn btn-primary" id="btn">+添加类别</a>   
+    </div> 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>名称</th>      
+<th>数量</th>
+<th>排序</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr id="row{id}">  
+<td><a href="./?t=cls_notice_end&c={c}&id={id}" target=_blank>{name}</a></td>  
+<td><cite>{nums}</cite></td> 
+<td><cite>{odx}</cite></td>     
+<td> 
+<a class="glyphicon glyphicon-edit" title="编辑" onclick="moda({id:'{id}'})"></a>&nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}',callback:'delcall'})"></a>  
+</td>   
+</tr> 
+<!-- END list -->   
+</tbody>
+</table>    
+</div> 
+
+ 
+
+</div> 
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+  $("#btn").bind("click",function(){
+    $('#dlg1').data("dotype","a");
+    $('#dlg1 #id').val("");$('#dlg1').modal('show');});
+});   
+l_tpl="active_lvl";    
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   if($("#odx").val()==""){$("#odx").val("0");}          
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'',callback:"dosome"});  
+}
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    location.reload();
+  }
+}
+function delcall(e,d){
+  if(d.indexOf("ok")>-1){
+    $("#row"+e.id).remove();
+  }
+}
+function genactive(){
+  $.post("./srv/gen.php?", {tpl:"gen_active_lvl"}, function (d, e) {             
+      alert(d);         
+  });
+}
+</script>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">  
+    <label class="col-sm-2 control-label">名称</label>    
+    <div class="col-sm-10"><input type="text" id="name" class="form-control" /></div>   
+   </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">排序</label>
+    <div class="col-sm-3">
+<input type="text" id="odx" class="form-control" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="数字">  
+    </div>
+  </div>  
+  <div class="form-group">  
+    <label class="col-sm-2 control-label">是否显示</label>    
+    <div class="col-sm-10"><label><input type="checkbox" id="visible" /></label></div>   
+   </div> 
+  <input type="text" id="id" value="" style="display:none;"/>
+ <input type="text" id="nums" value="0" style="display:none;"/>      
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>     

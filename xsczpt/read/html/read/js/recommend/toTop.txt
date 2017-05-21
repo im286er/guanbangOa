@@ -1,0 +1,12 @@
+使用方法
+
+1、引入文件
+
+<script src="jsjquery.min.js"></script>
+<script src="js/jquery.toTop.min.js"></script>
+2、HTML
+
+<a class="to-top">返回顶部</a>
+3、JavaScript
+
+$('.to-top').toTop();

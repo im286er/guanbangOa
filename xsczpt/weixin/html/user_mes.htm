@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>海安中学移动端-消息提醒列表页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+	<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+	<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+	<script src="/ppf/js/select.js"></script> 
+	<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript">
+	$().ready(function(){   
+		$("#gender").val('{gender}');
+		$("#political_status").val('{political_status}');
+		
+		$("#s_user").click(function(){
+			$("#t_user").submit();
+		});
+	});
+	</script>
+</head>
+<body>
+<header><a href="?t={user_back}" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>个人资料</h1></header>
+<section class="fl wout">
+     <form action="./srv/user_modify.php" method="post" id="t_user">
+		 <div class="weui-cells">
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">用户名</label>
+                </div>
+                <div class="weui-cell__bd">
+					<div style="height:35px; line-height:35px;">{username}</div>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">姓名</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" id="truename" name="truename" type="text" placeholder="请输入姓名" value="{truename}"/>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">性别</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select id="gender" name="gender" class="weui-select">
+						<option value="男">男</option>
+						<option value="女">女</option>
+						<option value="其他">其他</option>
+					</select>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">出生日期</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" id="birthday" name="birthday" type="text" value="{birthday}"/>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">地址</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="address" name="address" value="{address}"/>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">电话</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="mobile" name="mobile" value="{mobile}"/>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">政治面貌</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select id="political_status" name="political_status" class="weui-select">
+						<option value="群众">群众</option>
+						<option value="团员">团员</option>
+						<option value="党员">党员</option>
+						<option value="国民党">国民党</option>
+						<option value="少先队">少先队</option>
+					</select>
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">邮箱</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input class="weui-input" type="text" id="email" name="email" value="{email}"/>
+                </div>
+            </div>
+		  </div>
+		
+		<div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_warn" href="javascript:" id="s_user">保 存</a>
+        </div>
+	</form>
+</section>
+
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t={index_back}"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t={user_back}"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{cssjs}    
+</head>
+<body>
+{top}
+<div class="wrap">
+	<div class="main">
+		{head}
+	</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<div id="list"> 
+			<div class="news_container clearfix" style="margin-bottom:30px;">
+				<h2 class="art_title">{name}<small>【活动心得】</small></h2>
+				<div class="info_wrap">
+					<div class="info">
+						<span>来源：{truename}</span>
+						<span>时间：<script>document.write(utctime('{timestamp}'));</script></span>
+						<span>浏览量：<label id="hits">{see}</label>&nbsp;&nbsp;&nbsp;赞: <a  class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'active_thing','do':'up','showok':'成功',id:'{id}'},this);" >{up} </a></span>
+          </div>
+				</div>
+				<div class="article"> 
+          {des}
+				</div>
+        <div style="float:right;">
+          <!-- JiaThis Button BEGIN -->
+          <div class="jiathis_style_24x24">
+          	<a class="jiathis_button_qzone"></a>
+          	<a class="jiathis_button_tsina"></a>
+          	<a class="jiathis_button_tqq"></a>
+          	<a class="jiathis_button_weixin"></a>
+          	<a class="jiathis_button_renren"></a>
+          	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+          	<a class="jiathis_counter_style"></a>
+          </div>
+          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+          <!-- JiaThis Button END -->
+        </div>
+		</div>
+	</div>
+</div>
+{foot}
+</body>
+</html>
+<script type="text/javascript" src="/html/plat/js/plat_common.js"></script>  
+<script>  
+$(function() {
+   $("#actives").addClass("hov");
+   vote({tbl:"active_thing",do:"see",showok:"",callback:"",id:queryStr("id")},null);  
+});
+</script>

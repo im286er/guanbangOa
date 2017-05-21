@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我加入的班级-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog}  
+<link rel="stylesheet" href="css/list.css">                                         
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+<h2>班级管理</h2>
+<div >
+<ul> 
+<li><a href="./?t=class">代课的班级</a></li> 
+<li><a href="./?t=class_man">我是班主任</a></li>
+<li><a href="./?t=class_new">+创建班级</a></li>
+</ul>
+</div>
+</div>
+</dt>
+<dd>  
+<div class="banner"><label>我加入的班级</label> 
+<span><a id="btnc" class="btn">+加入班级</a>
+</span>    
+</div>
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+<th>logo</th>
+<th>名称</th>
+<th>学校</th>
+<th>学段/年级</th>
+<th>届</th>
+<th>任教学科</th>
+<th>状态</th>
+<th>默认</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td><img id="logo{id}" width="40" src="/class/logo/{cid}.jpg" onerror="this.src='/error/logo.jpg';" />                   
+</td>
+<td><a href="/class?c={cid}" target="_blank">{name}</a></td>
+<td><label data-school="{school}"></label></td>
+<td><label data-period="{period}"></label>/<label data-grade="{grade}"></label></td>
+<td>{intoyear}</td>
+<td><label data-subject="{subject}"></label>/<label data-edition="{edition}"></label></td>
+<td><script>document.write(arr[{state}]);</script></td> 
+<td><script>document.write(arr1[{default}]);</script></td>                          
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;"> 
+<li onclick="modths('{cid}','{subject}')">修改</li>       
+<li><a href="./?t=class_subject&id={cid}" target="_blank">附课管理</a></li>
+<li onclick="setdef('{cid}')">默认班级</li>    
+<li onclick="delclass('{cid}')">退出</li>
+
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+
+
+<script type="text/javascript">  
+$(function(){
+  $.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+  $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#dlg2 #subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");});
+  $.get("/data/textbook_ver.txt", function (data) {$("#edition").html(data);$("#dlg2 #edition").html(data);$("#edition").prepend("<option value=''>—教材版本—</option>");});
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });
+  $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+  $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+   $.post("./srv/rdo.php", {tpl:"get_my_sch"}, function (d, e) {        
+       t=JSON.parse(d);
+       for(k=0;k<t.length;k++){
+          $("label[data-school='"+t[k].id+"']").text(t[k].name);
+       }
+  });
+  $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+       selectShowData("#school",JSON.parse(d),"id","name");    
+  });
+  $("#grade").bind("change",function(){
+    if($(this).val()==""){ $("#period").val("");return;}
+    period=$(this).find('option:selected').data("period");
+    if($("#school").val()==""){alert("请选择一个学校");return;}
+    $.post("./srv/rdo.php?", {tpl:"get_sch_1",sch:$("#school").val(),grade:$(this).val()}, function (d, e) {                     
+       selectShowData("#class",JSON.parse(d),"id","name");    
+  });
+   });  
+   
+   $("#btnc").bind("click",function(){
+      $("#dlg1").dialog("open");         
+   });  
+}); 	
+function joinclass(){
+  if($("#class").val()==undefined||$("#class").val()==""){alert("请选择一个班级");return;}
+  if($("#subject").val()==""){alert("请选择任教学科");return;} 
+  if($("#dlg1 #edition").val()==""){alert("请选择一个教材版本");return;}
+  $.post("./srv/sdo.php?", {tpl:"join_class",id:$("#class").val(),subject:$("#subject").val(),edition:$("#edition").val()}, function (d, e) {                     
+     if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}
+function setdef(v){
+   $.post("./srv/sdo.php", {tpl:"set_def_class1",id:v}, function (d, e) {                 
+    if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}
+function delclass(v){
+   $.post("./srv/sdo.php", {tpl:"out_class",id:v}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}
+function modths(v,id1){
+   ifrmid="#dlg2";
+   $(ifrmid).dialog('setTitle','修改');   
+   $(ifrmid+' .tips').text("修改数据");   
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid+' #subject').val(id1);
+   $(ifrmid).data('dotype',"m");  
+   $(ifrmid).dialog("open");    
+}
+function chgdata2(){
+  ifrmid="#dlg2";
+  $.post("./srv/sdo.php", {tpl:"mod_class",id:$(ifrmid+" #id").val(),subject:$(ifrmid+" #subject").val(),edition:$(ifrmid+" #edition").val()}, function (d, e) {                 
+       alert(d);
+  });
+  $('#dlg2').dialog('close');   
+}
+</script>
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:500px;height:300px;padding:10px;" title="加入班级" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+       joinclass();
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<table class="">
+
+    <tr>
+        <td style="width:60px;">学校</td>
+        <td><select id="school"></select></td>
+    </tr> 
+    <tr>
+        <td>学段年级：</td>
+        <td>
+        <select id="grade"></select>  
+        </td>
+    </tr>
+    <tr>
+        <td>班级</td>
+        <td> <select id="class"></select>         </td>
+    </tr>
+    <tr>
+        <td>任教学科</td>
+        <td><select id="subject"></select></td>
+    </tr>
+    <tr>
+        <td>教材版本</td>
+        <td><select id="edition"></select></td>
+    </tr>   
+</table>
+</div>
+
+<div id="dlg2" class="easyui-dialog dialoga" style="width:350px;height:250px;padding:10px;" title="修改" data-dotype="m"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+      if($('#dlg2 #subject').val()==undefined|| $('#dlg2 #subject').val()==''){alert('请选择一个学科');return;}  
+      if($('#dlg2 #edition').val()==undefined|| $('#dlg2 #edition').val()==''){alert('请选择一个教材版本');return;}
+      chgdata2();    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]">
+<div id="tips" class="tips">tips</div>
+<form id="form1">
+<table class="">  
+    <tr>
+        <td style="width:80px;">任教学科：</td>
+        <td><select id="subject"></select>
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr> 
+    <tr>
+        <td>教材版本</td>
+        <td><select id="edition"></select></td>
+    </tr>     
+</table>
+</form>
+</div>

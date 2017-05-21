@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}     
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/select.js" type="text/javascript"></script>     
+<script src="js/leave.js" type="text/javascript"></script>   
+<style>
+.panel-body img{max-width:180px;} 
+.well{border-radius:0;}
+.well p{border-bottom:#aaa dotted 1px; }
+</style>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+<div class="page-header"><h3>ÁôÑÔ°å<small></small><div class="btn-group pull-right"></div></h3></div> 
+
+<!-- START list -->   
+<div class="panel panel-default" id="row{id}">
+<div class="panel-heading"><h3 class="panel-title"><img src="/upd/face/{uid}.jpg" width="26px" alt='' onerror="this.src='/error/face.jpg';"/>     
+ {truename} <code>{created} </code> 
+
+<small class=" pull-right">
+ <a class="glyphicon glyphicon-comment" onclick="comment('{id}',0,'{truename}')" title="ÆÀÂÛ">({comments})</a> &nbsp;  
+<a class="glyphicon glyphicon-remove" title="É¾³ý" onclick="rm_c('{id}',this)"></a> &nbsp;
+ </small>  
+ </h3>
+ </div>          
+<div class="panel-body" id="pb{id}"> 
+<p>{des}</p>
+<div class="col-sm-11 well hide">    
+<!-- START rp -->
+<p><a> {truename} </a> £º{des} 
+<small class="pull-right"><code>{created}  <a onclick="rm_c_c('{id}',this)">É¾³ý</a>
+</code>
+</small>  
+</p> 
+<!-- END rp -->       
+</div> 
+         
+</div>
+</div> 
+<!-- END list --> 
+
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+
+{foot}
+</body> 
+</html> 
+<script type="text/javascript">  
+$(function(){
+   $(".well").each(function(a,b){
+      if($(b).find("p").length>0)
+       $(b).removeClass("hide"); 
+    }); 
+});
+var nick="{truename}";
+
+</script>
+
+<div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">¡Á</button>
+            <h4 class="modal-title" id="label">»Ø¸´</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1"> 
+ <div class="form-group">    
+    <div class="col-sm-12">
+      <textarea id="des" name="des" class="form-control" rows="4"  placeholder="ÇëÊäÈëÆÀÂÛÄÚÈÝ0-250×Ö" ></textarea>    
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="mid" value="0" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick=savcomment()> È·¶¨  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">¹Ø±Õ</button>        
+         </div>
+      </div>
+   </div>
+</div>

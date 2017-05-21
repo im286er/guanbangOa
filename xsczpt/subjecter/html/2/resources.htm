@@ -1,0 +1,192 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>学科资源-{gtitle}</title>
+{cssjs}
+    </head>
+    <body>
+{top}
+<!--页面主体内容-->
+<div class="container">
+{head}
+	<div class="col-sm-2">
+		<ul class="list-group" style="margin-top:20px;">
+			<li class="list-group-item active"><h4><a href="?t=resources&s={s}&sid={subid}" style="color:white;">资源类型</a></h4></li>
+			<!-- START cate -->
+			<li class="list-group-item"><a href="./?t=resources&s={s}&sid={subid}&restype={id}" style="font-size:16px;">{name}</a></li>
+			<!-- END cate --> 
+		</ul>
+	</div>
+	
+	<div class="col-sm-10">
+		<h3>>> {typename}</h3>
+		<div class="col-ms-9">
+			<div class="btn-group">
+				<button id="subject" type="button" class="btn btn-danger" value="">学科</button>
+				<button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a onclick='doLiSelect(this);' value="">----学科----</a></li>
+					{sel_subject}
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button id="grade" type="button" class="btn btn-warning" value="">年级</button>
+				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a onclick='doLiSelect(this);' value="">----年级----</a></li>
+					{sel_grade}
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button id="edition" type="button" class="btn btn-info" value="">教材</button>
+				<button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a onclick='doLiSelect(this);' value="">----教材----</a></li>
+					{sel_edition}
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button id="volume" type="button" class="btn btn-success" value="">上下册</button>
+				<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<span class="caret"></span>
+					<span class="sr-only">Toggle Dropdown</span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a onclick='doLiSelect(this);' value="">----上下册----</a></li>
+					{sel_volume}
+				</ul>
+			</div>
+			<div class="btn-group col-sm-4 pull-right">
+				<div class="input-group">
+					<input id="title" type="text" class="form-control" placeholder="输入资源名称">
+					<span class="input-group-addon" id="btnSearch" style="cursor:pointer;">搜索</span>
+				</div>
+			</div>
+		</div>
+		<br>
+		<table class="table table-striped"> 
+			<tbody>
+				<!-- START list -->
+				<tr>
+					<td></td>
+					<td>
+						<h4>
+							<a href="./?t=resource&s={s}&sid={subid}&id={id}" target="_blank">
+							{title}
+							</a>
+							&nbsp;&nbsp;
+							<span name="tag" style="font-size:14px;">{subject},{grade},{edition},{volume},{chapter}</span>
+						</h4>
+						<small class=""></small>
+					</td>
+					<td align="right" style="font-size:14px;">
+						浏览：{visit} | 下载：{download} | {shortdate} | <a href="/zone" target="_blank" style="color:#1db177;">{nickname}</a>
+					</td>
+				</tr>
+				<!-- END list -->           
+			</tbody>
+		</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+	</div>
+</div>
+{foot}
+    </body>
+</html>
+<script type="text/javascript">
+	$(function(){
+		// 页面回发时下拉框控件状态绑定
+		var title = getUrlParam('tit');
+		var sel_sjt = getUrlParam('sjt');	// 104
+		var sel_gra = getUrlParam('gra');	// 1
+		var sel_edt = getUrlParam('edt');	// 5
+		var sel_vol = getUrlParam('vol');	// 1
+		
+		if(title!=null && title!="") {
+			$("#title").val(unescape(title));
+		}
+		if(sel_sjt!=null && sel_sjt!="") {
+			var sbj = $("#subject")
+			sbj.parent().children().last().children().children("a").each(function (a, b) {
+				if($(this).attr("value") == sel_sjt) {
+					sbj.html($(this).html());
+					sbj.attr("value", sel_sjt);
+				}
+			});
+		}
+		if(sel_gra!=null && sel_gra!="") {
+			var sbj = $("#grade")
+			sbj.parent().children().last().children().children("a").each(function (a, b) {
+				if($(this).attr("value") == sel_gra) {
+					sbj.html($(this).html());
+					sbj.attr("value", sel_gra);
+				}
+			});
+		}
+		if(sel_edt!=null && sel_edt!="") {
+			var sbj = $("#edition")
+			sbj.parent().children().last().children().children("a").each(function (a, b) {
+				if($(this).attr("value") == sel_edt) {
+					sbj.html($(this).html());
+					sbj.attr("value", sel_edt);
+				}
+			});
+		}
+		if(sel_vol!=null && sel_vol!="") {
+			var sbj = $("#volume")
+			sbj.parent().children().last().children().children("a").each(function (a, b) {
+				if($(this).attr("value") == sel_vol) {
+					sbj.html($(this).html());
+					sbj.attr("value", sel_vol);
+				}
+			});
+		}
+		
+		$("span[name]").each(function(a, b) {
+			var str = $(this).html().split(",");
+			var sbj = convert("#subject", str[0]);
+			var gra = convert("#grade", str[1]);
+			var edt = convert("#edition", str[2]);
+			var vol = convert("#volume", str[3]);
+			var res = sbj + "/" + gra + "/" + edt + "/" + vol;
+			$(this).html(res);
+		});
+		
+		$("#btnSearch").bind("click",function(){
+			var subject = $("#subject");
+			var grade = $("#grade");
+			var edition = $("#edition");
+			var volume = $("#volume");
+			var title = $("#title");
+			
+			location.href = "./?t=resources&s={s}&sid={subid}&restype="
+				+ queryStr("restype")
+				+ "&tit=" + escape($("#title").val())
+				+ "&sjt=" + $("#subject").val()
+				+ "&gra=" + $("#grade").val()
+				+ "&edt=" + $("#edition").val()
+				+ "&vol=" + $("#volume").val();
+		});
+	});
+	
+	function convert(id, value) {
+		var sbj = $(id);
+		var res = "";
+		sbj.parent().children().last().children().children("a").each(function (a, b) {
+			if($(this).attr("value") == value) {
+				res = $(this).html();
+			}
+		});
+		return res;
+	}
+</script>

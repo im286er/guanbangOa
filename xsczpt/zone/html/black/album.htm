@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组相册-{gtitle}</title>
+{cssjs}       
+</head>
+<body>
+{top}
+{head}
+<div class="container main" style="margin-top:25px;">  
+<div class="row" style="margin-left:0;margin-right:0;">
+<div class="page-header" style="margin-left:15px;border-bottom:1px solid #444;">
+</div>
+<div class="col-xs-12">
+<!-- START list --> 
+ <div class="col-sm-4" style="">
+  <div class="col-sm-6">
+        <div class="thumbnail">
+     <a href="./?t=photo&g={g}&id={uid}&aid={id}" ><img width="120" style="height:120px;" src="/upd/album/{uid}/{id}/t_{cover}" onerror="this.src='/error/logo.jpg';" /></a>
+    </div>
+   </div>
+    <div class="caption col-sm-6">
+       <h5><a>{name}</a> </h5>
+       <p style="color:#888;"><small>{nums}张</small> {des}</p>
+    </div>
+ </div>
+<!-- END list -->    
+</div>  
+<hr/>
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">
+</script>

@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">   
+<title>导入用户和班级 for 旧的博客平台</title>  
+<script src="/ppf/js/jquery-1.min.js"></script>  
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/widget/99lime/css/kickstart.css" media="all" /> 
+<script type="text/javascript" src="/widget/99lime/js/kickstart.js"></script>   
+</head>
+<body> 
+<div class="grid">  
+<h3>导入用户和班级 for 旧的博客平台</h3>
+ 
+<div class="notice success">使用时请修改o1.php 和 ido.php 中对应处理代码</div>
+
+<ul class="tabs">
+<li><a href="#tabr">导入用户数据</a></li> 
+</ul>  
+<div id="tabr" class="tab-content">
+学校ID：<input id="sid" type="text" /> 默认密码：<input id="pwd" type="text" value="000000" />
+<input id="ispwd" type="checkbox" />  导入独立密码  | 
+默认学科：<input id="sub" type="text" value="100" /><br/>
+数据：<textarea id="data" rows="10" style="width:100%;"></textarea> <br/>     
+<button class=" red" id="btn">开始导入数据</button>  
+</div>  
+
+<ul class="tabs">
+<li><a href="#tab2">结果</a></li> 
+</ul>  
+<div id="tab2" class="tab-content">
+<textarea id="data1" rows="10" style="width:100%;" readonly></textarea>  
+</div> 
+</div> 
+   
+</body>
+</html>
+<script>
+  $(function(){
+    $("#btn").bind("click", function(){    
+      if($("#ispwd").is(":checked"))ispwd=1;else ispwd=0; 
+      if($("#pwd").val()==""){alert("请输入用户默认密码");return;}
+      if($("#data").val()==""){alert("请输入要导入的用户信息");return;}        
+      str=$.base64.btoa($("#data").val(),true);      
+      $("#data1").val("正在导入……");
+      $.post("ido.php?"+ Math.random(), {"tpl":"user1cls","sid":$("#sid").val(),"sub":$("#sub").val(),pwd:$("#pwd").val(),
+        "ispwd":ispwd,data:str}, function (data, state) {
+             $("#data1").val(data);               
+        });
+    });  
+  });
+</script>

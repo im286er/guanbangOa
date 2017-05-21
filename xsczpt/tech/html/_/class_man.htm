@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/list.css"> 
+
+<script>
+var arr=new Array('待审核','已审核','注销中','禁用','删除');  
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+  <div class="menu_a">
+    <h2>班级管理</h2>
+    <div >
+    <ul>     
+<li><a href="./?t=class">代课的班级</a></li> 
+<li><a href="./?t=class_man">我是班主任</a></li>
+<li><a href="./?t=class_new">+创建班级</a></li>
+    </ul>
+    </div>
+  </div>
+</dt>
+<dd>  
+  <div class="banner"><label>我创建的班级</label> 
+  <span><a href="./?t=class_new" target="_blank" class="btn">创建班级</a>
+  </span>    
+  </div>
+
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+<th>logo</th>
+<th>名称</th>
+<th>学校</th>
+<th>学段/年级</th>
+<th>届</th>
+<th>状态</th> 
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td><img id="logo{id}" width="40" src="/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" />                   
+</td>
+<td>{name}</td>
+<td>{schools}</td>
+<td>{periods}/{grades}</td>
+<td>{intoyear}</td>
+<td><script>document.write(arr[{state}]);</script></td>                     
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;">
+<li onclick="setdef('{id}')">设置默认</li>
+<li onclick="updlogo('{id}')">上传logo</li>
+<li onclick="modinfo('{id}')">修改</li>
+<li onclick="delclass('{id}')">注销</li>
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+     $.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+     $("#grade").bind("change",function(){
+      if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period);
+      //$('#grades').val($.trim($(this).find('option:selected').text()));
+      //$('#periods').val($('#grade optgroup:eq('+(period-1)+')').attr('label')); 
+   }); 
+});
+ 
+function modinfo(v){
+   readID({tpl:"class","do":"r",id:v,frmid:"#form1"});
+   ifrmid="#dlg1";
+   $(ifrmid).dialog('setTitle','修改');  
+   $(ifrmid+' #tips').text('修改');        
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid).data('dotype',"m");  
+   $(ifrmid).dialog("open"); 
+} 
+
+function delclass(v){
+   $.post("./srv/sdo.php", {tpl:"cel_class",id:v}, function (d, e) {                 
+      alert(d);
+  });
+}   
+function setdef(v){
+   $.post("./srv/sdo.php", {tpl:"set_def_class",id:v}, function (d, e) {                 
+    if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}
+function updlogo(v){
+   ifrmid="#dlg2";
+   $(ifrmid).dialog('setTitle','上传logo');     
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");    
+}
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);   
+       if(d.ret=="ok"){           
+         $("#logo"+ $("#dlg2 #id").val()).attr("src",'/class/logo/'+d.fname+'?'+Math.random());           
+         $("#dlg2").dialog("close");   
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+
+</script>
+
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:500px;height:340px;padding:10px;" title="创建新班" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+       SaveAM({tpl:'class','do':$('#dlg1').data('dotype'),id:$('#dlg1 #id').val(),frmid:'#dlg1',showok:'成功','callback':''}); 
+       $('#dlg1').dialog('close');    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<form id="form1">
+<table class="">  
+    <tr>
+        <td style="width:80px;">班级名称：</td>
+        <td><input type="text" id="name" style="width:300px;" />
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr>
+    <tr>
+        <td>年级：</td>
+        <td>
+        <select id="grade"></select>  
+        <input type="text" id="period" value="" style="display:none;"/> 
+        <input type="text" id="grades" value="" style="display:none;"/> 
+        <input type="text" id="periods" value="" style="display:none;"/> 
+        </td>
+    </tr> 
+    <tr>
+        <td>入学(届)</td>
+        <td>
+       <input type="text" id="intoyear" style="width:100px;" maxlength="4"   onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+        </td>
+    </tr> 
+    <tr>
+        <td>班级口号</td>
+        <td>
+       <input type="text" id="slogan" style="width:300px;"/>
+        </td>
+    </tr>
+      <tr>
+        <td>班主导寄语</td>
+        <td>
+       <input type="text" id="wishes" style="width:300px;"/>
+        </td>
+    </tr>   
+    <tr>
+        <td>班级简介：</td>
+        <td><textarea id="des" style="width:300px;height:50px;"></textarea></td>
+    </tr>  
+</table>
+</form>
+</div>
+
+
+<div id="dlg2" title="创建" class="easyui-dialog dialoga" style="width:400px;height:150px;padding:10px;" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',          
+    handler:function(){  
+       $('#from2').submit(); 
+    }
+},{
+   text:'取消',        
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]"> 
+<form action="srv/upd_logo_class.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<label>上传logo</label> 
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="" style="display:none;"/><br/> 
+<label>(上传不大于200kb的.jpg图片 尺寸 100x100)</label> 
+</form>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

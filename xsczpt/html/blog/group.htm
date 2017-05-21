@@ -1,0 +1,332 @@
+<!DOCTYPE>
+<html>
+<head>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<link href="/html/blog/css/group/group.css" type="text/css" rel="stylesheet">
+{meta}
+<title>群组-{gtitle}</title>
+<style>
+:after, :before{box-sizing:inherit;}
+</style>
+</head>
+
+<body>
+
+
+<!--顶部-->
+{top}
+
+{group_logo}
+{menu}
+{group_menu}
+<!--banner-->
+<div id="lanrenzhijia">
+		<ul id="inner">
+			<li><img src="/html/blog/images/group/banner.png" width="1366" height="310"></li>
+			<li><img src="/html/blog/images/group/banner2.png" width="1366" height="310"></li>
+			<li><img src="/html/blog/images/group/banner3.png" width="1366" height="310"></li>
+			 
+		</ul>
+		 
+	</div>
+<!--内容-->
+<div class="big_box">
+<!--左边-->
+<div class="left_box">
+<!--热门帖子-->
+<div class="tiezi">
+ 	<div class="tiezi_box">
+    		<img src="/html/blog/images/group/icon10.png" />
+       		 <li><h1>热门帖子</h1><a href="javascript:void(0);">更多></a></li>
+        	<div class="clear"></div>
+            
+  </div>
+<!--热门帖子-内容-->
+<!-- START hot_forum -->
+    <div class="content">
+    	<div class="content1">
+        	<a href="/group/?t=topic&id={id}&g={gid}" target="_blank"><img src="/html/blog/images/group/pic1.png" /></a>
+            <div class="text">
+            	<a href="/group/?t=topic&id={id}&g={gid}" target="_blank">{title}</a>
+                <h3>创建时间：<i class="time">{timestamp}</i>  &nbsp;&nbsp;&nbsp;    创建人：{truename}&nbsp;&nbsp;&nbsp;     </h3>
+                <div class="hot_forum">{des}</div>
+            </div>
+        </div>
+    	<div class="clear"></div>     
+    </div>
+<!-- END hot_forum -->
+</div>
+<!--推荐群组-->
+<div class="biggroup">
+  <div class="group">
+ 	  <div class="group_box">
+    		<img src="/html/blog/images/group/icon17.png">
+       		 <li><h1>推荐群组</h1><a href="/?t=group_search" target="_blank">更多></a></li>
+        	<div class="clear"></div>
+  
+      </div>  
+      
+  </div>
+  <div class="box">
+    <!-- START rcmd_group -->
+  		<div class="group1">
+    		<a href="/group/?g={id}" target="_blank"><img src="/upds/group/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+        	<div class="grouptext">
+        		<a href="/group/?g={id}" target="_blank">{name}</a>
+           	    <p>口号：{slogan}</p>
+                <span>成员：{mnums}</span>
+        	</div>
+   	  </div>
+    <!-- END rcmd_group -->
+  </div> 
+
+  
+  
+</div>  
+<!--发现群组-->
+<div class="bigfound">
+	<div class="found">
+ 	  <div class="found_box">
+    		<img src="/html/blog/images/group/icon16.png">
+       		 <li><h1>发现群组</h1><a href="/?t=group_search" target="_blank">更多></a></li>
+        	<div class="clear"></div>
+  
+      </div>  
+      
+    </div> 
+</div>
+<!--学校列表-->  
+<div class="list">
+	<div class="add">地区：</div>
+  <div id="addr" class="lists">
+    <a addrid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="list">
+	<div class="add">街道：</div>
+  <div id="street" class="lists">
+    <a streetid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="list">
+	<div class="add">学校：</div>
+  <div id="sch" class="lists">
+    <a schid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="school" id="group_list">
+</div>
+<!--群相册-->
+<div class="bigpic">
+	<div class="pic">
+ 	  <div class="pic_box">
+    		<img src="/html/blog/images/group/icon15.png">
+       		 <li><h1>群相册</h1><a href="javascript:void(0);">更多></a></li>
+        	<div class="clear"></div>
+  
+      </div>  
+      
+    </div> 
+
+
+<div class="photo_box">
+	<!-- START group_album -->  
+    <div class="photo1">
+    	<a href="/group/?t=photo&g={gid}&id={id}" target="_blank">
+        <img width=146 height=124 src="/upds/group/album/{gid}/{id}/{logo}" onerror="this.src='/error/logo.jpg';">
+      </a>
+      <li><div class="name">{name}</div>	
+        <span>{nums}</span>
+      </li>
+    </div>
+  <!-- END group_album -->
+</div>
+
+</div>
+
+</div>
+
+<!--右边-->
+<div class="right_box">  
+<!--最新发表-->
+ 
+<div class="fabiao">
+	  <div class="fabiao_box">
+    	<img src="/html/blog/images/group/icon11.png">
+       	<li><h1>最新发表</h1><a href="javascript:void(0);">更多></a></li>
+        <div class="clear"></div>
+   	</div>   
+  <!-- START new_forum -->  
+    <div class="people">
+		    <li><img src="/upd/face/{uid}.jpg" /><h3>{truename}</h3><div class="time">{timestamp}</div></li>
+        <div class="clear"></div>
+       	<a href="/group/?t=topic&id={id}&g={gid}" class="public" target="_blank">发表帖子  <span>{title}</span></a>
+    </div>   
+  <!-- END new_forum -->
+</div>   
+<!--热门群组排行-->
+<div class="paihang">
+	<div class="paihang_box">
+    	 <img class="tupian" src="/html/blog/images/group/icon12.png">
+       	 <li><h1>热门群组排行</h1><a href="/?t=group_search" target="_blank">更多></a></li>
+         <div class="clear"></div>
+    </div>
+    <div class="pai">
+      <!-- START hot_group -->
+         <li>
+        	 <div class="hot_gnums">{row_number}</div>
+        	 <a href="/group/?g={id}" target="_blank">{name}</a>
+        	 <span>{mannums}</span>
+         </li>
+      <!-- END hot_group -->   
+    </div>
+</div>      
+<!--活跃成员-->
+<div class="chengyuan">
+	<div class="chengyuan_box">
+    	<img class="picture" src="/html/blog/images/group/icon13.png">
+       	<li><h1>活跃成员</h1><a href="/?t=teacher" target="_blank">更多></a></li>
+        <div class="clear"></div>
+    </div>                
+                
+	<div class="line1">
+    <!-- START active_users -->
+		  <div class="colors1">
+    		<a href="/zone/?id={id}" target="_blank"><img class="color" src="/upd/face/{id}.jpg" /></a>
+        	<h5>{truename}</h5>
+    	</div>
+    <!-- END active_users -->
+	</div>            
+   		    
+</div>           
+<!--资源共享-->
+<div class="ziyuan">
+	<div class="ziyuan_box">
+    	<img class="zi" src="/html/blog/images/group/icon14.png">
+       	<li><h1>资源共享</h1><a href="javascript:void(0);">更多></a></li>
+        <div class="clear"></div>
+    </div>   
+
+	<div class="share" style="float:left;">
+		<li><a href=""> 教育信息化领导力培训</a><span>桑小兰</span></li>
+    	<li><a href=""> 江宁区秣陵初级中学数字化校园建设</a><span>桑小兰</span></li>
+   	    <li><a href=""> 江宁区秣陵初级中学数字化校园建设</a><span>桑小兰</span></li>
+    	<li><a href=""> 金陵中学西善桥分校信息化规划方案</a><span>桑小兰</span></li>
+    	<li><a href=""> 金陵中学西善桥分校信息化规划方案</a><span>桑小兰</span></li>
+    	<li><a href=""> 模块1+做有信息化领导力的教育管理者</a><span>桑小兰</span></li>
+    	<li><a href=""> 金陵中学西善桥分校信息化规划方案</a><span>桑小兰</span></li>
+    	<li><a href=""> 金陵中学西善桥分校信息化规划方案</a><span>桑小兰</span></li>
+    	<li><a href=""> 江宁区秣陵初级中学数字化校园建设</a><span>桑小兰</span></li>
+   
+	</div> 
+ 
+</div> 
+<div class="clear"></div> 
+</div>
+ 
+</div>	
+<div class="clear"></div> 
+<!--页脚-->
+{foot}
+
+<script type="text/javascript" src="/html/blog/js/group/lanrenzhijia.js"></script>
+<script>
+  $(function(){
+    $(".hot_gnums").slice(0, 3).addClass("yellow");
+    $(".hot_gnums").slice(3, 10).addClass("blue");
+    $(".time").each(function(){
+      $(this).html(jsDateDiff($(this).html()));
+    });
+    
+    getgroup(0,0,0);
+    $.post("/srv/rdo.php?", {tpl:"getaddr2",id:0}, function (d) {
+      d=eval(d);
+      for(var i=0;i<d.length;i++){
+        $("#addr").append('<a addrid="'+d[i].id+'" >'+d[i].name+'</a>'); 
+      }
+      $("#addr a").click(function(){
+         $("#addr a").removeClass("red");
+         $("#addr a[addrid="+$(this).attr("addrid")+"]").addClass("red");
+         if($(this).attr("addrid")==0){
+            $("#street").empty();$("#street").append('<a streetid="0" class="red">全部</a>');
+            $("#sch").empty();$("#sch").append('<a schid="0" class="red">全部</a>');
+            getgroup(0,0,0);
+            return;
+         }
+         getsch($(this).attr("addrid"),0);
+         
+         $.post("/srv/rdo.php?", {tpl:"getaddr2",id:$(this).attr("addrid")}, function (d) {
+            d=eval(d);
+            $("#street").empty();
+            for(var i=0;i<d.length;i++){
+              $("#street").append('<a streetid="'+d[i].id+'" >'+d[i].name+'</a>');
+            }
+            $("#street a").click(function(){
+              $("#street a").removeClass("red");
+              $("#sch a").removeClass("red");
+              $("#street a[streetid="+$(this).attr("streetid")+"]").addClass("red");
+              getsch($("#addr a[class='red']").attr("addrid"),$(this).attr("streetid"));
+            })
+         });
+      });
+    });
+    
+    
+  })
+  
+  function getsch(addrid,strid){
+      $.post("/srv/rdo.php?", {tpl:"get_blog_sch","addrid":addrid,"strid":strid}, function(d){
+          d = eval(d);
+          $("#sch").empty();
+          for(var i=0;i<d.length;i++){
+            $("#sch").append('<a schid="'+d[i].id+'" >'+d[i].name+'</a>')
+          }
+          $("#sch a").click(function(){
+             $("#sch a").removeClass("red");
+             $("#sch a[schid="+$(this).attr("schid")+"]").addClass("red");
+             getgroup(addrid,strid,$(this).attr("schid")); return;
+          })
+      });
+      var schid = 0;
+      if($("#sch a").hasClass("red")){
+        schid = $("#sch a[class='red']").attr("schid"); 
+      }
+      getgroup(addrid,strid,schid);
+  }
+  
+  function getgroup(addrid,strid,schid){
+      $.post("/srv/rdo.php?", {tpl:"get_blog_group","addrid":addrid,"strid":strid,"schid":schid}, function(d){
+        d =eval(d);
+        $("#group_list").empty();
+        for(var i=0;i<d.length;i++){
+            $("#group_list").append('<div class="school1">'+
+            	'<a href="/group/?g='+d[i].id+'" target="_blank"><img src="/upds/group/logo/'+d[i].id+'.jpg" onerror="this.src=`/error/logo.jpg`" /></a>'+
+                '<div class="liang"><a href="/group/?g='+d[i].id+'" target="_blank">'+d[i].name+'</a></div>'+
+                '<div class="number">'+d[i].mnums+'个成员</div></div>');
+        }
+      });
+  }                                        
+  
+  function jsDateDiff(publishTime){       
+    var d_minutes,d_hours,d_days;       
+    var timeNow = parseInt(new Date().getTime()/1000);       
+    var d;       
+    d = timeNow - publishTime;       
+    d_days = parseInt(d/86400);       
+    d_hours = parseInt(d/3600);       
+    d_minutes = parseInt(d/60);       
+    if(d_days>0 && d_days<4){       
+        return d_days+"天前";       
+    }else if(d_days<=0 && d_hours>0){       
+        return d_hours+"小时前";       
+    }else if(d_hours<=0 && d_minutes>0){       
+        return d_minutes+"分钟前";       
+    }else{       
+        var s = new Date(publishTime*1000);       
+        // s.getFullYear()+"年";
+        return (s.getMonth()+1)+"月"+s.getDate()+"日";       
+    }       
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<script src="/widget/layerv2/layer/layer.js" type="text/javascript"></script>
+
+1.
+<div id="layer-photos-demo" class="layer-photos-demo">            
+<!-- START list -->   
+<img layer-pid="" layer-src="/upd/album/{uid}/{aid}/{pic}" src="/upd/album/{uid}/{aid}/t_{pic}" alt="{ofname}"  width="120" >
+<!-- END list -->
+</div>
+
+2.
+layer.config({
+    extend: 'extend/layer.ext.js'
+});   
+
+
+3.
+$(function(){ 
+layer.ready(function(){ 
+            layer.photos({
+                photos: '#layer-photos-demo'
+            });
+        });  
+
+
+ }); 

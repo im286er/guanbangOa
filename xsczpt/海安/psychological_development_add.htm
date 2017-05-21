@@ -1,0 +1,330 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script src="common/jquery.min.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+<style>
+.select-main{float:right !important;}
+._ha_content{margin-top:15px;float:left;}
+.layer-anim{top:10%!important;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ha_cls">
+	<div id="table_content">
+				<div id="">
+					
+					    <div class="ha_row">
+					         <div class="ha_editform evaluation"  style="display:none">
+							 <form id="form_interest" action="./srv/psychological_development_add_submit.php" enctype="multipart/form-data" method="POST"  onsubmit="return checkForm();">
+								<input type="hidden" name="do" id="do" value="{do}"/>
+								<div class="ha_inlist" id="addtype_all">
+									<p>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签：</p>
+									<p style="color:#44C9DC">心理测评报告</p>
+									<input type="text" name="addtype" id="addtype" class="ha_einput" style="display:none" value="{addtype}"/>
+								</div>
+								<div class="ha_selbox">
+									<span class="ha_editse" style=" margin-right:10px;">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</span>
+									<div class="ha_selbox">
+										<select name="grade_id" id="grade_id_interest" class="ui-select">
+											<option value="">请选择年级</option>
+											{str_grade}
+										</select>
+									</div>
+								</div>
+								<div class="additype">
+									<div class="ha_inlist" id="itype_all" style="margin-top:20px;">
+										<p>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</p>
+										<input type="text" name="itype[]" id="itype" class="ha_einput itype"/>
+										<a class="btn btn-info btn-sm setbtn1" href="javascript:void(0)" onclick="additype(this)">添&nbsp;&nbsp;加</a>
+										<a class="btn btn-info btn-sm setbtn2" href="javascript:void(0)" onclick="delitype(this)">删&nbsp;&nbsp;除</a>
+									</div>
+									<div class="ha_inlist" id="feature_all"><p>特&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;征：</p>
+										<textarea name="feature[]" id="feature" rows="3" cols="20" class="ha_einput feature" style="height:130px;"></textarea>
+									</div>
+									<div class="clear"></div>
+								</div>
+								{evaluation_html}
+								<div class="ha_inlist" id="is_attshow"><p>附&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：</p>
+									<div id="ha_fileupload">
+										<div class="ha_content pr fl">
+											<input type='text' name='path_name' id='path_name' class='txt' readonly value="{path_name}"/>
+                                            <input type='hidden' name='file' id='file' value="{file}"/>											
+											<input type='button' class='ha_filebtn' value='上传文件' />
+											<input type="file" name="att_file" id="att_file" class="ha_filerar" size="28" onchange="checkFiles(this)" />
+											<span>（最大上传10Mb的pdf文件）</span>
+										</div>
+									</div>
+								</div>
+					
+								<div class="clear"></div>
+								<input type="hidden" name="uid" value="{uid}"/>
+								<div class="ha_bot haedit_save">
+									<input class="ha_save" type="submit" name="Submit" value="保存" /><input onclick="history.back();" class="ha_save" value="返回" style="background:#b9bdbe;height:26px;line-height:26px;cursor:pointer;" />
+								</div>
+								</form>
+							</div>
+					
+					         <div class="ha_editform sensibility"  style="display:none">
+							 <form id="form_story" action="./srv/psychological_development_add_submit.php" enctype="multipart/form-data" method="POST"  onsubmit="return checkForm();">
+				                <input type="hidden" name="do" id="do" value="{do}"/>
+								<input type="hidden" name="id" id="id" value="{id}"/>
+								<div class="ha_inlist" id="addtype_all">
+									<p>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;签：</p>
+									<p style="color:#44C9DC">心理感悟</p>
+									<input type="text" name="addtype" id="addtype" class="ha_einput" style="display:none" value="{addtype}"/>
+								</div>
+								<div class="ha_selbox">
+									<span class="ha_editse" style=" margin-right:10px;">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;级：</span>
+									<div class="ha_selbox">
+										<select name="grade_id" id="grade_id_story" class="ui-select">
+											<option value="">请选择年级</option>
+											{str_grade}
+										</select>
+									</div>
+								</div>
+								
+								<div class="ha_inlist" id="title_all" style="margin-top:20px;">
+									<p>标&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;题：</p>
+									<input type="text" name="title" id="title" class="ha_einput" value="{title}"/>
+								</div>
+								<div class="ha_inlist" id="content_all"><p>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</p>
+									<textarea rows="3" cols="20" class="ha_einput" name="content" id="content" style="height:200px;">{content}</textarea>
+								</div>
+						      
+								<div class="clear"></div>
+								<input type="hidden" name="uid" value="{uid}"/>
+								<div class="ha_bot haedit_save">
+									<input class="ha_save" type="submit" name="Submit" value="保存" /><input onclick="history.back();" class="ha_save" value="返回" style="background:#b9bdbe;height:26px;line-height:26px;cursor:pointer;" />
+								</div>
+								</form>
+							</div>
+					
+					    </div>						
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/plain" id="upload_img" name="upload_img"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.all.js"></script>
+<script src="js/layer/layer.js"></script>
+<script language="javascript" src="common/autocomplete.js"></script>
+<script type="text/javascript">
+var addtype="{addtype}";
+var dotype="{do}";
+if(addtype=='evaluation'&&dotype=='m'){$(".additype:first").remove();setbtn();}
+$("."+addtype).show();
+$(function(){
+	
+	//menu
+	$('.ha_menu li').hover(function(){
+		$('span',this).stop().css('height','2px');
+		$('span',this).animate({
+			left:'0',
+			width:'100%',
+			right:'0'
+		},200);
+	},function(){
+		$('span',this).stop().animate({
+			left:'50%',
+			width:'0'
+		},200);
+	});
+	//edit弹出form
+	$("#ha_add_cor").hover(function(){
+		$(this).stop().animate({
+			opacity: '0.8'
+		});
+	}, function () {
+		$(this).stop().animate({
+			opacity: '1'
+		});
+	}).on('click', function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#ha_cortext").fadeIn("slow");
+		$(".ha_corbox").fadeIn("slow")
+	});
+	//关闭
+	$(".close_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$(".ha_corbox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//close-quote
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#39a7b7' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+		$(".ha_corbox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+});
+
+
+
+//文件上传验证
+function checkFiles(obj){
+	//文件名称及路径
+	var $pathFile  = $(obj).val();
+	var expArray   = $pathFile.split('.');
+	var extendName = expArray.pop();
+	var allowExt = 'pdf';
+	var searchResult = allowExt.search(extendName.toLowerCase());
+	var img;
+	if(extendName.length!=3||searchResult==-1){
+		alert('仅允许上传的文件格式：pdf');
+		$(obj).val('');
+	}
+	document.getElementById('path_name').value=$pathFile.split('\\').pop();
+}
+var typename1="";
+var typename2="";
+$(document).ready(function(){
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	$("#report_type").selectWidget({
+		change: function (changes) {
+			if($(".select-list").length>1){
+				var index=$(".select-list").eq(1).children("li").index($(".active")[1])-1;
+			}else{
+				var index=$(".select-list").eq(0).children("li").index($(".active")[0])-1;
+			}
+			if(index!=-1){
+				$(".s2_tips").hide();
+				cont=$(".s1_tips .ha_cont pre").eq(index).html();
+				if(cont!=""){
+					$(".s1_tips").hide();
+					$(".s1_tips").eq(index).show();
+				}else{
+					$(".s1_tips").hide();
+				}
+			}else{$(".s1_tips").hide();
+				$(".s2_tips").hide();
+			}
+			//获取类型一
+			typename1=$(".select-main .select-set").eq(0).text();
+			$("#subject").val(typename1);
+			selectType($("#report_type"));
+			
+			$("._itmnum").remove();   //删除动态取出的栏目
+			
+			var sub_id = $("#report_type").val();
+			if(sub_id>0){
+				$.post("./srv/sdo.php", {tpl:"select_report_custom","sub_id":sub_id}, function (d, e) {// 获取自定义栏目内容
+					l=JSON.parse(d);
+					//console.log(l.value.length);
+					if(l.flag=="true"){
+						if(l.is_partner=="1"){
+							document.getElementById("partner_all").style.display="";
+							document.getElementById("captain_show").style.display="";
+							document.getElementById("task_show").style.display="";
+						}else{
+							document.getElementById("partner_all").style.display="none";
+							document.getElementById("captain_show").style.display="none";
+							document.getElementById("task_show").style.display="none";
+						}
+						
+						if(l.is_att=="1"){
+							document.getElementById("is_attshow").style.display="";
+						}else{
+							document.getElementById("is_attshow").style.display="none";
+						}
+						
+						if(l.is_teacher=="1"){
+							document.getElementById("is_teacher").style.display="";
+						}else{
+							document.getElementById("is_teacher").style.display="none";
+						}
+						
+						var len = l.value.length;
+						if(len>0){
+							for(var i=0;i<len;i++){
+								var str = "";
+								str += '<div class="ha_inlist _itmnum"><p>'+l.value[i].item_name+'：</p><input type="text" name="item_name[]" class="ha_einput"/><input type="hidden" name="item_real_name[]" value="'+l.value[i].id+'" class="ha_einput"/></div>';
+								$("#content_all").before(str);
+							}
+						}
+					}else{
+						alert(l.value);
+					}
+				});
+			}
+			
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+
+});	
+
+
+//检查提交表单
+function checkForm()
+{   
+	if($("#grade_id_"+addtype).val()==""){
+		alert("请选择年级。");
+		return false;	
+	}
+	
+	if(addtype=='evaluation'){   
+	    if($(".itype:first").val()==""){
+			alert("至少填写一个类型。");
+			return false;	
+		}
+	}
+	
+	if(addtype=='sensibility'){
+	    if($("#title").val()==""){
+			alert("请输入标题。");
+			return false;	
+		}
+		if($("#content").val()==""){
+			alert("请输入内容。");
+			return false;	
+		}
+	}
+}
+
+function additype(e){
+	$('<div class="additype"><div class="ha_inlist"  id="itype_all" style="margin-top:20px;"><p>类&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;型：</p><input name="itype[]" id="itype" type="text" class="ha_einput itype"/><a class="btn btn-info btn-sm setbtn1" href="javascript:void(0)" onclick="additype(this)">添&nbsp;&nbsp;加</a><a class="btn btn-info btn-sm setbtn2" href="javascript:void(0)" onclick="delitype(this)">删&nbsp;&nbsp;除</a></div><div class="ha_inlist" id="feature_all"><p>特&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;征：</p><textarea name="feature[]" id="feature" rows="3" cols="20" class="ha_einput feature" style="height:130px;"></textarea></div><div class="clear"></div></div>').insertAfter($(e).parent().parent());
+	setbtn();
+}
+function delitype(e){
+    $(e).parent().parent().remove();
+	setbtn();
+}
+function setbtn(){
+    $(".setbtn1").hide();
+	$(".setbtn1:last").show();
+	$(".setbtn2").show();
+	if($(".setbtn2").length==1)$(".setbtn2:first").hide();
+}
+</script>
+</body>
+</html>

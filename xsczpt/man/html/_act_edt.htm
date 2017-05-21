@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人帐号中心-{gtitle}</title>
+{cssjs}     
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+ 
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>个人中心 <small>修改</small>  <a href="./" class="btn btn-primary glyphicon glyphicon-arrow-left pull-right"> 返回 </a>  </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1"> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">用户名：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="username"  style="width:50%" placeholder="用户名"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">邮箱：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="email"  style="width:50%" placeholder="邮箱"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">手机：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="mobile"  style="width:50%"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">昵称：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="nick"  style="width:50%"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">姓名：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="truename"  style="width:50%"></div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">英文名：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="ename"  style="width:50%"></div>
+  </div>  
+  <div class="form-group">
+    <label class="col-sm-2 control-label">性别：</label>
+    <div class="col-sm-10"><select id="sex" class="form-control" style="width:20%">
+                  <option value="0">保密</option>
+                  <option value="1">男</option>
+                  <option value="2">女</option>
+                </select> </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">生日：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="birthday"  style="width:50%" readonly onclick="WdatePicker()"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份证号：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="cardno"  style="width:50%"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">个人简介：</label>
+    <div class="col-sm-10"><textarea class="form-control" id="pre"  rows="3" style="width:70%"></textarea></div>
+  </div>       
+    <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 保 存 </button>  
+      <button type="button" class="btn btn-primary"> 取 消 </button>
+       <input type="text" id="id" value="0" style="display:none;"/>
+   </div>
+    </div>     
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+    if(queryStr("d")=="m")
+      readID({tpl:"home","do":"r",id:queryStr("id"),frmid:"#form1"});  
+    $("#btn").bind("click", function(){        
+      SaveAM({tpl:"home","do":"m",id:$("#id").val(),frmid:"#form1",showok:"",callback:"regendrun"});
+    }); 
+     
+ });
+ function regendrun(e,data){
+   if(data.indexOf('ok')>-1){   
+      SaveAM({tpl:"user_reg1","do":"am","id":$("#id").val(),frmid:"#form1",showok:false});
+      alert("保存成功");          
+   }
+   else
+      alert(data);
+} 	
+ 	
+</script>    

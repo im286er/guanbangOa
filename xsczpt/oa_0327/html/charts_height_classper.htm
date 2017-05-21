@@ -1,0 +1,118 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main bgf7" style="float:left;">
+	<div class="ha_content fl" style="padding-top:20px;">
+		<ul class="tit_left fr chart_tit">                                                                           
+			<li class="active"><a href="./?t=charts_height" target="">身高</a></li>
+			<li><a href="./?t=charts_weight" target="">体重</a></li>
+			<li><a href="./?t=charts_bmi" target="">BMI</a></li>
+			<li><a href="./?t=charts_sight" target="">视力</a></li>
+			<li><a href="./?t=charts_lung" target="">肺活量</a></li>
+			<li><a href="./?t=charts_liver" target="">肝</a></li>
+			<li><a href="./?t=charts_bravery" target="">胆</a></li>
+			<li><a href="./?t=charts_xf" target="">心肺听诊</a></li>
+			<li><a href="./?t=charts_surgical" target="">外科常规</a></li>
+			<li><a href="./?t=charts_blood" target="">血压</a></li>
+			<li><a href="./?t=charts_spleen" target="">脾</a></li>
+			<li><a href="./?t=charts_eyes" target="">眼科</a></li>
+			<li><a href="./?t=charts_oral" target="">口腔</a></li>
+		</ul>
+		<form action="form_action.asp" method="get">
+			<div class="fl ha_content">
+				<ul class="tab-hd_c claname">
+				</ul>
+				<ul class="tab-bd_c pr">
+					<li class="thisclass fl">
+						<div class="cha_clist">
+						</div>
+						<div class="per_list pa">
+							<div class="c_yearlist" style="float:left;width:150px;">{str_analysis}</div>
+						</div>
+						<div class="pr" id="echart" style="width:861px;height:460px;margin:15px 0 15px;"></div>
+						<script type="text/javascript">
+							var myChart = echarts.init(document.getElementById('echart'));
+							
+							option = {
+									title: {
+										text: '{str_name}'
+									},
+									tooltip: {
+										trigger: 'axis'
+									},
+									color: ["#FF0000", "#00BFFF", "#FF00FF", "#1ce322", "#000000", '#EE7942'],
+									legend: {
+										data: ['年级情况', '班级情况', '个人情况']
+									},
+									grid: {
+										left: '3%',
+										right: '4%',
+										bottom: '3%',
+										containLabel: true
+									},
+									xAxis: {
+										type: 'category',
+										name: 'x',
+										splitLine: {show: false},
+										data: [{str_year}]
+									},
+									yAxis: [{
+										type: 'value',
+										axisLabel: {
+											formatter: '{value} '
+										},
+										min: 140,
+									}],
+									series: [{
+										name: '年级情况',
+										type: 'line',
+										lineStyle: {
+											normal: {
+												width: 2,
+											}
+										},
+										data: [{str_grade}]
+									}, {
+										name: '班级情况',
+										type: 'line',
+										lineStyle: {
+											normal: {
+												width: 2,
+											}
+										},
+										data: [{str_class}]
+									}, {
+										name: '个人情况',
+										type: 'line',
+										lineStyle: {
+											normal: {
+												width: 2,
+											}
+										},
+										data: [{str_person}]
+									}]
+								};
+						// 使用刚指定的配置项和数据显示图表。
+						myChart.setOption(option);
+						</script>
+						<div class="clear"></div>
+						<div class="distri_but" style="margin:0 30px;text-align:center;"><a href="javascript:history.go(-1);" target="_blank">返回</a></div>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>   
+</body>
+</html> 

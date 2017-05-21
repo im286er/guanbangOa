@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="pass_modify_submit.php" method="post" onsubmit="return checkPass();">
+			<div class="boxtitle">
+					{str}<label class="current"><a href="./?t=pass_modify">修改密码</a></label>
+                </div>	
+			<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+						<tr>
+							 <td width="50%" class="tabtd2_L">新 密 码：</td>
+							 <td width="50%" class="tabtd2_R"><input type="password" id="passpwd" name="passpwd" size="15" /></td>
+						</tr>
+						<tr>
+							 <td width="50%" class="tabtd2_L">确认密码：</td>
+							 <td width="50%" class="tabtd2_R"><input type="password" id="passpwd2" name="passpwd2" size="15" /></td>
+						</tr>
+					</table>
+			</div>
+			<input type="text" id="id" value="" style="display:none;"/>
+			<div class="boxfooter2"><input id="but_update" name="but_update" type="text" value="修 改" onclick="checkPass()" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;padding-left: 20px;" /></div>
+		</form>
+		</div>
+	</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+
+//密码信息提交客户端验证
+function checkPass()
+{
+	if($.trim($("#passpwd").val())==""){
+		alert("请输入新密码");
+		$("#passpwd").focus();
+		return false;
+	}
+	if($.trim($("#passpwd").val())!=$.trim($("#passpwd2").val())){
+		alert("两次输入密码不一致");
+		$("#passpwd2").focus();
+		return false;
+	}
+	
+	var passpwd = $.trim($("#passpwd").val());
+	var passpwd2 = $.trim($("#passpwd2").val());
+	
+	$.post("./srv/sdo.php?", {tpl:"change_pass","passpwd":passpwd,"passpwd2":passpwd2}, function (d, e) {
+		var d = eval('(' + d + ')');
+		if(d.flag=="false"){
+			alert(d.value);
+			$("#passpwd").select();	
+		}else{
+			alert(d.value);
+		}
+	});
+	$("#but_update").attr("disabled","disabled");
+}
+
+</script> 

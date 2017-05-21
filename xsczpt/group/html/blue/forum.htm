@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组论坛-{gtitle}</title>
+
+{cssjs}   
+<script type="text/javascript">
+
+function getHeight() { 
+	if (document.getElementById("main-left").offsetHeight>= document.getElementById("main-right").offsetHeight){
+		document.getElementById("main-right").style.height=document.getElementById("main-left").offsetHeight + "px";
+	}
+	else{
+		document.getElementById("main-left").style.height=document.getElementById("main-right").offsetHeight + "px";
+	}	
+}
+window.onload = function() {
+	getHeight();
+}
+</script>  
+ <style type="text/css">
+.col-xs-10{ width:99%}
+</style>
+
+</head>
+<body>
+{top}
+
+<div class="main lf">
+  <div class="mainpage" id="main-left">
+    <div class="mp-left lf">
+      <div class="group-name lf">
+        <ul>
+          <li><img src="/upds/group/logo/{g}.jpg"   onerror="this.src='/error/logo.jpg';" ></li>
+          <li class="pdlf20">{name} <br>
+            <span>{slogan}</span></li>
+        </ul>
+      </div>
+      <div class="main-body lf">
+          <div class=" ">      
+<div class="page-header"><h3>全部
+<a href="./?t=forum_send&g={g}" class="btn btn-primary pull-right glyphicon glyphicon-pencil"> 发贴 </a>
+</h3>
+</div> 
+<div class="bs-example">
+<table class="table table-hover table-condensed"> 
+<tbody>
+<!-- START list -->
+<tr>
+ <td class="col-xs-1"><img class="img-circle" src="/upd/face/{uid}.jpg" width="40" alt='' onerror="this.src='/error/face.jpg';"/></td>
+ <td class="col-xs-8"><h4><a href="./?t=topic&id={id}&g={g}" target=_blank>{title}</a> </h4>
+  <small class=""><code><script>show_TS('{timestamp}');</script></code></small>
+ </td>
+ <td class="col-xs-3"> <code>发帖人:</code>{nick}  <br/>      
+	 <code>浏览数:{see}</code>
+ </td>
+</tr>
+<!-- END list -->           
+</tbody>
+</table>
+  </div>
+<ul class="pagination pull-right">
+{page}
+</ul> 
+ 
+</div>
+
+<div class="col-xs-2" style="position:relative;">
+<!-- right -->
+<div >
+<div class="page-header">
+   <h3> </h3>
+    <div class="panel-body">
+     
+   </div>
+</div> 
+</div>
+</div>
+
+      </div>
+      <div class="cl"></div>
+    </div>
+    <div class="mp-right lf"  id="main-right">
+     <div class="right-text lf">
+    <ul>
+    
+    <li class="title lf">{name}<br>
+
+    <span> {des}</span>
+     </li>
+     <li  class="sub-tilte lf">{slogan}</li>
+     
+     <li class="detail lf">人数：{nums}<br>
+管理员：{mannums}<br>
+单位：{schools}</li>
+    {head}  
+   
+    <div class="cl"></div>
+    </div>
+    <div class="cl"></div>
+  </div>
+  <div class="cl"></div>
+  {foot} 
+</div>
+
+
+
+
+ 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () { 
+    
+  });  
+</script>

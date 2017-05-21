@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body> 
+<div class="container">   
+ 
+<div class="panel panel-info"> 
+   <div class="panel-body">
+      <textarea class="form-control" id="des" rows="3" readonly>{des}</textarea>
+   </div>
+</div>
+
+<div class="col-sm-12">   
+
+
+
+<div class="row">
+<form class="form-horizontal" role="form" id="from1">
+  <div class="form-group">      
+    <label for="firstname" class="col-sm-1 control-label">学校</label>
+    <div class="col-sm-2"><select id="sch" class="form-control"><option value="">选择学校</option></select></div>      
+    <div class="col-sm-2"><select id="idtype" class="form-control"></select></div>     
+    
+    <div class="col-sm-2"><input  type="text" class="form-control" value="" id="so" placeholder="姓名"/></div>  
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>logo</th>
+<th>用户名</th>
+<th>姓名</th>
+<th>昵称</th>
+<th>身份</th>  
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr>
+<td><img id="logo{id}" width="40" src="/upd/face/{id}.jpg" onerror="this.src='/error/face.jpg';" />                   
+</td>
+<td>{username}</td> 
+<td>{truename}</td>
+<td>{nick}</td> 
+<td><idtype v="{idtype}"></idtype></td>  
+<td>
+<a class="glyphicon glyphicon-fire" title="邀请" onclick="inviteths('{id}','{truename}')"></a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div> 
+</body>
+</html>
+<script type="text/javascript">  
+var obj_lst=null,obj_s=null;
+$(function () {
+ $.get("/data?t=sys_type&f=txt", function(d){selectAddHead("#idtype","身份");$("#idtype").append(d);
+      if(queryStr("ty")!="")$("#idtype").val(queryStr("ty"));
+   });
+   
+ // $.getJSON("/data/list.object.txt",function(d){obj_lst=d;showlabels();});
+    $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+      selectShowDataNoH("#sch",JSON.parse(d),"id","name");   
+      if(queryStr("s")!="") $("#sch").val(queryStr("s"));    
+ 
+  }); 
+  $("#btn").bind("click",function(){ 
+    if($("#sch").val()==""){alert("请选择一个学校");return;}
+    location.href="?t=active_invite&id="+queryStr("id")+"&s="+$("#sch").val()+"&ty="+$("#idtype").val()+"&so="+$("#so").val();    });  
+ });   
+
+function inviteths(v,v1){      
+  $.post("./srv/sdo.php?", {tpl:"active_inite",uid:v,id:queryStr("id")}, function (d, e) {                     
+    if(d.indexOf("ok")>-1){
+      msg("邀请成功");
+      if($("#des").val()=="")$("#des").append(v1); 
+      else $("#des").append(","+v1); 
+    }         
+    else ralert(d);       
+  });
+} 
+
+function showlabels(){  
+   $("idtype").each(function(a,b){$(b).text(obj_lst.idtype[$(b).attr("v")]);}); 
+}
+</script> 

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>     
+    <title>{gtitle}</title>     
+    {cssjs}
+     <link rel="stylesheet" type="text/css" href="/widget/easyui/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/widget/easyui/themes/icon.css">
+      <script type="text/javascript" src="/widget/easyui/jquery.easyui.min.js"></script>
+      <script type="text/javascript" src="js/tree.js"></script>
+   
+  </head>
+ 
+  <body class="">  
+{top}    
+    <div class="sidebar-nav">
+      {left}
+    </div> 
+        
+    <div class="content">         
+        <div class="header"> <h1 class="page-title">模板管理中心</h1></div>        
+         <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li><a >GII</a> <span class="divider">/</span></li>
+            <li class="active">模板管理</li>
+        </ul> 
+        
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+   <div class="btn-group">  
+    <button class="btn btn-primary" id="btn1" onclick="addTreeRootNode({tree:'#tree',dlg:'#dlg1'})">添加根</button>
+    <button class="btn btn-primary" id="btn2" onclick="addTreeNode({tree:'#tree',dlg:'#dlg1'});">添加叶子</button>
+    <a class="btn btn-primary" onclick="modTreeNode({tree:'#tree',dlg:'#dlg2'});getodx();" id="btn3">重命名</a>
+    <button class="btn btn-primary" id="btn3" onclick="delTreeNode({tree:'#tree'});">删除分类</button> 
+    <button class="btn btn-primary" id="btn3" onclick="updPidlist();">更新pidlist</button> 
+    <a class="btn btn-waring" onclick="location.reload();">刷新</a>   
+    </div> 
+     
+       
+ 
+</div>
+<div class="well">
+
+ <div id="myTabContent" class="tab-content">
+  <div class="tab-pane active in" id="home">  
+  <ul class="easyui-tree" id="tree" data-options="lines:true"	url="./srv/tree.php?tpl=ppf_tpl"></ul>         
+  </div>    
+  </div>    
+</div>  
+ <div class="btn-group">
+  <a class="btn btn-primary" onclick="openmod();">模板设置</a> 
+  <a class="btn btn-primary" onclick="openmod2();">自动化设置</a>
+    <a class="btn btn-primary" onclick="openmod5();">密码设置</a>
+   <a class="btn" href="" onclick="return openurl(this,'r.php?t=ppf_tpl_unique&id=');" target="_blank">唯一字段</a> 
+   <a class="btn" href="" onclick="return openurl(this,'r.php?t=ppf_tpl_default&id=');" target="_blank">字段默认值</a>  
+    <a class="btn" href="" onclick="return openurl(this,'r.php?t=ppf_tpl_query&id=');" target="_blank">查询字段</a> 
+   <a class="btn" href="" onclick="return openurl(this,'r.php?t=ppf_tpl_display&id=');" target="_blank">显示字段</a>
+    <a class="btn" href="" onclick="return openurl(this,'r.php?t=ppf_tpl_edit&id=');" target="_blank">可编辑字段</a> 
+  </div>
+ <hr/>
+  <div class="btn-group"> 
+   <a class="btn btn-primary" href="" onclick="return openurlgen(this,'1');" target="_blank">生成列表+编辑页面</a>      
+	 <a class="btn btn-primary" href="" onclick="return openurlgen(this,'2');" target="_blank">生成列表页面</a>      
+	 <a class="btn btn-primary" href="" onclick="return openurlgen(this,'3');" target="_blank">生成独立编辑页面</a>
+   <a class="btn btn-primary" href="" onclick="return openurlgen(this,'4');" target="_blank">生成Tree页面</a>
+   <a class="btn btn-primary" href="" onclick="return openurlgen(this,'5');" target="_blank">生成Left菜单</a>
+ </div> 
+ 
+ <hr/>
+<label>目标目录</label>
+<input type="text" id="to_dir" value="/" placeholder="移动到的目录" />   
+ <a class="btn btn-primary" onclick="mvfileto();">移动生成的文件</a>
+{foot}
+                    
+            </div>
+        </div>
+    </div>      
+  </body>
+</html> 
+<script>
+    var dotype = "m";
+    var tbl="ppf_tpl";
+    $(function () {
+       //readID({ "tpl": queryStr("t"), "do": "r", "id": "1", frmid: "#form1" });        
+    }); 
+	function openurl(obj,url){
+		  var t = $("#tree");
+      var node = t.tree('getSelected');
+      if(node==undefined){alert("请选择一个节点1");return false;}
+	    if(!node||node==null){alert("请选择一个节点2");return false;}
+      if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+		  obj.href=url+node.id;
+		  return true;     
+  }
+  function openurlgen(obj,type){
+	   var t = $("#tree");
+      var node = t.tree('getSelected');
+       if(node==undefined){alert("请选择一个节点1");return false;}
+	   if(!node||node==null){alert("请选择一个节点2");return false;}
+     if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+		 obj.href="t.php?t="+node.id+"&htm=0&gen=1&type="+type;
+		  return  true;       
+  }
+  function updPidlist(){
+      var t = $("#tree");
+      var node = t.tree('getSelected');
+       if(node==undefined){alert("请选择一个节点1");return false;}
+	   if(!node||node==null){alert("请选择一个节点2");return false;}
+     if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+		 //obj.href="t.php?t="+node.id+"&htm=0&gen=1&type="+type;
+     $.post("./srv/treedo.php", {tpl:"updpidlist",tbl:"ppf_tpl",id:node.id}, function (e,f) {
+        alert(e);
+     });
+  }
+	function getodx(){
+	   var t = $("#tree");
+     var node = t.tree('getSelected'); 	
+	   if(node==undefined){return;}
+	   if(!node||node==null){return;}	
+		 $.post("./srv/treedo.php", {tpl:"getodx",tbl:"ppf_tpl",id:node.id}, function (e,f) {
+		 $("#dlg2 #odx").val($.trim(e));}); 		 
+	}//模板设置
+    function openmod(){
+       var t = $("#tree");
+       var node = t.tree('getSelected');
+      if(node==undefined){alert("请选择一个节点1");return;}
+	    if(!node||node==null){alert("请选择一个节点2");return;}
+       if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+      readID({ "tpl":"ppf_tpl", "do": "r", "id": node.id, frmid: "#dlg3" }); 	
+      $("#dlg3").modal('show');	 	
+    }	
+    function form3do(){
+       SaveAM({tpl:"ppf_tpl","do":"m",id:$('#dlg3 #id').val(),frmid:'#dlg3',showok:'','callback':'amcallback'});
+      $("#dlg3").modal('hide');	  
+    }//自动化设置
+	function openmod2(){
+		var t = $("#tree");
+       var node = t.tree('getSelected');
+       if(node==undefined){alert("请选择一个节点1");return;}
+	    if(!node||node==null){alert("请选择一个节点2");return;}
+      if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+      readID({ "tpl":"ppf_tpl", "do": "r", "id": node.id, frmid: "#dlg4" }); 	
+      $("#dlg4").modal('show');	
+	}
+	 function form4do(){
+      SaveAM({tpl:"ppf_tpl","do":"m",id:$('#dlg4 #id').val(),frmid:'#dlg4',showok:'','callback':'amcallback'});
+      $("#dlg4").modal('hide');	  
+   }
+	//密码设置
+	function openmod5(){
+		  var t = $("#tree");
+      var node = t.tree('getSelected');
+      if(node==undefined){alert("请选择一个节点1");return;}
+	    if(!node||node==null){alert("请选择一个节点2");return;}
+      if(!node.id||node.id==null){alert("节点id为空，请刷新后再试");return;}
+      readID({ "tpl":"ppf_tpl", "do": "r", "id": node.id, frmid: "#dlg5" }); 	
+      $("#dlg5").modal('show');	
+	}
+	 function form5do(){
+       SaveAM({tpl:"ppf_tpl","do":"m",id:$('#dlg5 #id').val(),frmid:'#dlg5',showok:'','callback':'amcallback'});
+      $("#dlg5").modal('hide');	  
+  }
+  //移动文件
+  function mvfileto(){
+     if($("#to_dir").val().length<2){alert("请输入一个目录");return;}
+     $.post("./srv/treedo.php", {tpl:"mvfile",tbl:"",dir:$("#to_dir").val()}, function (e,f) {
+		    alert(e);
+     });
+  }
+</script>
+
+<div class="modal small hide" id="dlg1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">节点</h3>
+    </div>
+    <div class="modal-body">
+<form id="form1">
+<label>节点名称</label>  <input id="name" type="text" value="" maxlength="30"> 
+ <label>排序(数字从小到大排序)</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')">  
+ <input type="text" id="id" style="display:none;" value="" disabled/>
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="addTreeNodeDo('#dlg1')">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        
+    </div>
+</div>
+
+<div class="modal small hide" id="dlg2" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">修改</h3>
+    </div>
+    <div class="modal-body">
+<form id="form1">
+<label>节点名称</label>  <input id="name" type="text" value="" maxlength="30"> 
+<label>排序(数字大在前)</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')" >   
+ <input type="text" id="id" style="display:none;" value=""/>
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="modTreeNodeDo('#dlg2')">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
+        
+    </div>
+</div>
+
+<!--模板设置-->
+<div class="modal  hide " id="dlg3" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">模板设置</h3>
+    </div>
+    <div class="modal-body">
+<form id="form3">    
+<input type="text" id="id"  style="display:none;"/>   
+<label>模板(tpl)</label>
+<input type="text" id="tpl" value="" />   
+<label>对应表(table)</label>
+<input type="text" id="tblname" value="" />  
+<label>主键 primary key</label>
+<input type="text" id="tblkey" value="id" />        <br/>
+<label>主键种子数(1:自增/time：时间戳或数字) </label>
+<input type="text" id="tblseed" value="time" />     
+<label>使用前缀(主键使用数据前缀)</label>
+<input type="checkbox" id="usepre" value="0"  />      <br/> 
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="form3do()">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>
+<!--自动化模板设置-->
+<div class="modal  hide " id="dlg4" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">模板设置</h3>
+    </div>
+    <div class="modal-body">
+<form id="form3">    
+<input type="text" id="id"  style="display:none;"/>   
+<label>调用页面(没有请留空)</label>
+<input type="text" id="php" value="t.php" />     
+<label>是树形列表(使用pid,pidlist字段,如果不是请生成后修改)</label>
+<input type="checkbox" id="treeis" value="0"  />      <br/>      
+<label>排序字段</label>
+<input type="text" id="tblorder" value="id" /> 
+<label>排序方向(asc desc)</label>
+<input type="text" id="tblorderby" value="desc" />    <br/>
+<label>格式化日期字段(timestamp)</label>
+<input type="text" id="formatdates" value="," />      <br/>
+<label>不显示主菜单</label>
+<input type="checkbox" id="hidden" value="0"  />    <br/>
+<label>是静态html</label>
+<input type="checkbox" id="ishtm" value="0"  />    <br/> 
+<label>pid</label>
+<input type="text" id="pid" value="" />      <br/>
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="form4do()">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>
+<!--密码模板设置-->
+<div class="modal  hide " id="dlg5" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="label">密码设置</h3>
+    </div>
+    <div class="modal-body">
+<form id="form5">    
+<input type="text" id="id"  style="display:none;"/>    
+<label>密码字段(网页控件id) </label>
+<input type="text" id="ctrlpass" value="" />         <br/>
+<label>md5字段(没有请留空)</label>
+<input type="text" id="tblmd5" value="" />   
+<label>sha1字段(没有请留空)</label>
+<input type="text" id="tblsha1" value="" />      
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" onclick="form5do()">确认</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>

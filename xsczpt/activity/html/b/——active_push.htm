@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>发布活动-{gtitle}</title>
+{cssjs} 
+<script type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<script src="js/activec.js" type="text/javascript"></script> 
+<link href="/widget/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>  
+<script type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+
+
+<script type="text/javascript" src="http://api.map.baidu.com/api?ak=XckXd2Kf8TmdTCZDysgmuqzx&v=2.0&services=true"></script>
+</head>
+<body> 
+{top}
+<div class="container">
+{head}   
+<div class="col-sm-12">
+   <h3>发起活动<small>子标题</small></h3>
+</div>
+
+
+<div class="col-sm-9">     
+<hr/>
+<form role="form"  class="form-horizontal" id="form1">
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动名称</label>
+  <div class="col-sm-6"><input type="text" class="form-control" id="name" placeholder="请输入名字"></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动单位</label>
+  <div class="col-sm-5"><select id="school" class="form-control"><option value="0">—教育局—</option></select>
+  <p class="help-block">*活动单位为必选项</p></div> 
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">类型/级别</label>
+  <div class="col-sm-3"><select id="cid" class="form-control"></select></div>
+  <div class="col-sm-3"><select id="lvl" class="form-control"></select></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">年级/学科</label>
+  <div class="col-sm-3"><select id="grade" class="form-control"></select>
+  <p class="help-block" id="gradet"></p><a onclick="clearFX('#grade')">清空</a></div>
+  <div class="col-sm-3"><select id="subject" class="form-control"></select>
+  <p class="help-block" id="subjectt"></p><a onclick="clearFX('#subject')">清空</a></div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-2 control-label">报名时间</label>
+  <div class="col-sm-3"><input type="text" id="rstime" class="form-control" placeholder="报名开始时间"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/></div>
+  <div class="col-sm-3"><input type="text" id="retime" class="form-control" placeholder="报名结束时间"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动时间</label>
+  <div class="col-sm-3"><input type="text" id="stime" class="form-control" placeholder="活动开始时间"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/></div>
+  <div class="col-sm-3"><input type="text" id="etime" class="form-control" placeholder="活动结束时间"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动地址</label>
+  <div class="col-sm-8"><input type="text" class="form-control" id="addrs" placeholder="活动地址"></div>
+  <div class="col-sm-2"><button type="button" class="btn btn-success" id="btnmap">地图定位</button></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">联系方式</label>
+  <div class="col-sm-8"><input type="text" class="form-control" id="contacts" placeholder="电话，邮箱，微信……"></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动介绍</label>
+  <div class="col-sm-10">
+    <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>
+  <script type="text/plain" id="umdes" style="width:100%;height:250px;"></script>
+</div>
+</div>
+
+<hr/>
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动人数</label>
+  <div class="col-sm-3"><input type="text" class="form-control" id="maxnum" placeholder="活动最大人数" onkeyup="value=value.replace(/[^0-9/]/ig,'')"></div>
+</div>
+<div class="form-group">
+  <label class="col-sm-2 control-label">访问权限</label>
+  <div class="col-sm-3"><select id="visit" class="form-control"><option value="0">公开，所有可以访问</option>
+  <option value="1">登录，需要登录用户</option><option value="2">指定人，仅限指定的用户才可访问</option>
+  <option value="3">秘密活动，参与活动可见</option>  </select></div> 
+</div>         
+<div class="form-group">
+  <label class="col-sm-2 control-label">活动报名</label>
+  <div class="col-sm-3"><select id="enroll" class="form-control"><option value="0">公开报名</option>
+  <option value="1">报名需审核</option><option value="2">仅限邀请</option></select></div> 
+</div>  
+ 
+
+ 
+      <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+      <input id="period" type="text" style="display:none;"/>
+      <input id="addr" type="text" style="display:none;"/> 
+      <input id="school" type="text"  value="0" style="display:none;"/>
+      <input id="state" type="text" value="0" style="display:none;"/>
+      <input id="status" type="text" value="0" style="display:none;"/>
+      <input id="grades" type="text" style="display:none;"/>
+      <input id="subjects" type="text" style="display:none;"/>   
+       
+         <button type="button" class="btn btn-primary" id="btn">立即发布</button>
+      </div>
+   </div>
+</form>
+
+ 
+</div>
+  
+</div>
+   
+{foot}
+</body>
+</html>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" style="width:550px;height:400px;"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4 class="modal-title" id="label">地图定位<small></small></h4></div>
+<div class="modal-body">
+ <div id='bdmap'  style="width:100%;height:350px;display:none;">
+ 
+  </div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">完成</button></div></div></div></div>  
+
+<script>
+var um = UM.getEditor('umdes'); 
+var l_tpl="activity";
+$(function() { 
+ $.get("/data/active_cate.txt", function (d) {$("#cid").append(d);}); 
+  $.get("/data/active_lvl.txt", function (d) {$("#lvl").append(d);});         
+  $.get("/data/grade_n1.txt", function (data) {selectAddHead("#grade","年级");$("#grade").append(data);});
+  $.get("/data/subject.txt", function (data) {selectAddHead("#subject","学科");$("#subject").append(data);}); 
+  $.post("./srv/rdo.php", {tpl:"get_sch"}, function (d, e) {                     
+      t=JSON.parse(d);
+      for(k=0;k<t.length;k++)
+          $("#school").append("<option value="+t[k].id+">"+t[k].name+"</option>");           
+  });  
+  $("#btn").bind("click",function(){
+      SaveAM({"do":"a",id:"0",frmid:"#form1",showok:"",callback:"doendrun"});
+    });  
+  $("#grade").bind("change",function(){if($(this).val()=="")return;
+       if($("#gradet").text()!="")$("#gradet").append(",");
+       $("#gradet").append($(this).find(":selected").text());
+       if($("#grades").val()=="")$("#grades").val($(this).val());else $("#grades").val($("#grades").val()+","+$(this).val());
+    });  
+    $("#subject").bind("change",function(){if($(this).val()=="")return;
+        if($("#subjectt").text()!="")$("#subjectt").append(",");
+       $("#subjectt").append($(this).find(":selected").text());   
+       if($("#subjects").val()=="")$("#subjects").val($(this).val());
+       else $("#subjects").val($("#subjects").val()+","+$(this).val());
+    }); 
+   $("#btnmap").bind("click",function(){
+       $('#dlg1').modal('show'); 
+       $("#bdmap").css("display","block");
+    });     
+ }); 
+
+function doendrun(ed,data){ 
+   if(data.indexOf('ok')>-1){     
+      rid=data.substr(data.indexOf('ok')+2); 
+      location.href="./?t=active_push1&id="+rid;
+   }
+   else
+      alert(data);
+}
+function clearFX(ctr){
+   $(ctr+"t").html("");
+   $(ctr+"s").val("");
+}
+
+/**baidu map position */
+var map = new BMap.Map("bdmap");
+var tmp5 = new BMap.Geolocation();
+tmp5.getCurrentPosition(function(res){
+      if(this.getStatus() == BMAP_STATUS_SUCCESS){	
+          map.centerAndZoom(res.point,15);
+          //window.alert(res.point.lng + " " + res.point.lat);
+          marker = new BMap.Marker(res.point);
+          map.addOverlay(marker);
+          map.panTo(res.point);
+      }
+});
+
+map.addControl(new BMap.NavigationControl());   // 默认左上方,
+map.addControl(new BMap.OverviewMapControl());  // 默认右下方，缩略
+
+map.addEventListener("click",function(e){
+  if(marker == ""){
+  	marker = new BMap.Marker(e.point);
+  	map.addOverlay(marker);
+  }else{
+  	map.removeOverlay(marker);
+  	marker = new BMap.Marker(e.point);
+  	map.addOverlay(marker);
+  }
+});
+
+map.addEventListener("dblclick",function(e){
+    var geo = new BMap.Geocoder();
+    geo.getLocation(e.point,function(result){
+    if(result){
+        //id3.innerText = result.address;
+        $("#addrs").val(result.address);
+        $("#dlg1 .modal-title small").text(result.address);
+    }	
+    id1.style.display="none";
+    });
+});  
+ 
+</script>

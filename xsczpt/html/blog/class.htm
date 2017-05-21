@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="{cla_url}css/class/class.css" type="text/css" rel="stylesheet" />
+<link href="{cla_url}css/class/main.css" type="text/css" rel="stylesheet">
+
+<style>
+:after, :before{box-sizing:inherit;}
+</style>
+<title>同心圆父母学堂班级汇聚页</title>
+{meta}
+</head>
+
+<body>
+{top}
+
+
+{class_logo}
+{menu}
+{class_menu}
+<!--banner-->
+<div class="lubo">
+  <ul class="lubo_box">
+    <li style="opacity: 1;filter:alpha(opacity=100);"><a href="" style="background:url({cla_url}images/class/banner0_1.png) center top no-repeat"></a></li>
+    <li><a href="" style="background:url({cla_url}images/class/banner0_2.png) center top no-repeat"></a></li>
+    <li><a href="" style="background:url({cla_url}images/class/banner0_3.png) center top no-repeat"></a></li>
+  </ul>
+</div>
+
+<!--班级资讯-->
+<div class="xcl_news_box">
+	<div class="xcl_news_nav">
+        	<img src="{cla_url}images/class/icon1.png" />
+            <h1>班级资讯</h1>
+            <ul class="tt">
+            <li><a class="dong" style="background-color:#009967;color:white;">班级动态</a></li>
+            <li><a class="dirty">班级日志</a></li>
+            </ul>
+         	<a class="more2" href="">更多+</a>
+    <div class="clear"></div>   
+    </div>
+    <!--班级动态-->
+  <div class="atu_box">
+    <div class="news_content">
+    	 <div id="content">
+  <div id="main">
+    <!-----------图片切换  begin----------->
+    <div id="KinSlideshow" style="visibility:hidden;">
+        <a href="" target="_blank" title="浦口外校成立学校新闻信息宣传工作小组"><img src="{cla_url}images/class/news_pic.png"  alt="浦口外校成立学校新闻信息.." width="363" height="250" /></a>
+        <a href="" target="_blank" title="浦口外校成立学校新闻信息宣传工作小组"><img src="{cla_url}images/class/news_pic.png"  alt="浦口外校成立学校新闻信息.." width="363" height="250" /></a>
+        <a href="" target="_blank" title="浦口外校成立学校新闻信息宣传工作小组"><img src="{cla_url}images/class/news_pic.png"  alt="浦口外校成立学校新闻信息.." width="363" height="250" /></a>
+        <a href="" target="_blank" title="浦口外校成立学校新闻信息宣传工作小组"><img src="{cla_url}images/class/news_pic.png"  alt="浦口外校成立学校新闻信息.." width="363" height="250" /></a>
+        <a href="" target="_blank" title="浦口外校成立学校新闻信息宣传工作小组"><img src="{cla_url}images/class/news_pic.png"  alt="浦口外校成立学校新闻信息.." width="363" height="250" /></a>
+    </div>
+    <!-----------图片切换  end----------->
+  </div>
+  <!--------main end--------->
+</div>
+</div>
+    <div class="text">
+	<!-- START lista -->
+         <li><a href="#">{name}</a> <span>{timestamp}</span></li>
+	<!-- END lista -->
+    </div>
+    <div class="text2">
+	<!-- START listb -->
+         <li><a href="#">{name}</a> <span>{timestamp}</span></li>
+	<!-- END listb -->
+    </div>         
+ </div>     
+    <div class="clear"></div>  
+</div>
+<!--最新加入-->
+<div class="xcl_join_box">
+	<div class="jion_nav">
+    	<li>
+        	<img src="{cla_url}images/class/icon2.png">
+            <h1>最新加入</h1>
+             
+            <a href="/?t=class_search" target="_blank">更多+</a>
+            
+        </li>	
+    <div class="clear"></div>   
+    </div>
+    <div class="jion_class">
+
+	<!-- START list_newclass -->
+    	<div class="class1">
+        	<a href="/class/?c={id}" target="_blank"><img src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';"/></a>
+            <div class="class_text">
+            	<a href="/class/?c={id}" target="_blank">{name}</a>
+                <h2>口号:{slogan}</h2>
+                <span>成员：{nums}</span>
+            </div>	
+        </div>
+	<!-- END list_newclass -->
+    </div>
+  <div class="clear"></div>    
+</div>
+
+<!--推荐班级-->
+<div class="xcl_tuijian_box">
+	<div class="tuijian_nav">
+        	<img src="{cla_url}images/class/icon3.png" />
+            <h1>推荐班级</h1>
+<!--             <ul>
+            <li><a class="you">优秀班级</a></li> 
+            <li><a class="hot">热门班级</a></li>
+            <li><a class="tui">推荐班级</a></li>
+            </ul> -->
+            <a href="/?t=class_search" target="_blank">更多+</a>
+    <div class="clear"></div>   
+    </div>
+    <div class="class_pic">
+	<!-- START list_topclass -->
+   		<div class="class_pic1">
+        	<a href="/class/?c={id}" target="_blank"><img src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';"/></a>
+            <div class="one">{name}</div> <div class="number">成员：{nums}</div>
+        </div> 
+	<!-- END list_topclass -->
+    </div>
+    <div class="clear"></div>
+    <div class="class_pic2" style="display:none;">
+   		<div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic1.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div> 
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic2.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic3.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic4.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic5.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic6.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic7.png" /></a>
+            <div class="one">二年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+    </div>
+    <div class="class_pic3" style="display:none;">
+   		<div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic1.png" /></a>
+            <div class="one">三年级(5)班</div> <div class="number">成员：52</div>
+        </div> 
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic2.png" /></a>
+            <div class="one">三年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic3.png" /></a>
+            <div class="one">三年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic4.png" /></a>
+            <div class="one">三年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic5.png" /></a>
+            <div class="one">三年级(5)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic6.png" /></a>
+            <div class="one">三年级(7)班</div> <div class="number">成员：52</div>
+        </div>
+        <div class="class_pic1">
+        	<a href=""><img src="{cla_url}images/class/class_pic7.png" /></a>
+            <div class="one">三年级(4)班</div> <div class="number">成员：52</div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>    
+
+<!--今日-->
+<div class="xcl_big_box">
+	<!--班级荣誉-->
+	<div class="honor">
+    	<li><img src="{cla_url}images/class/icon4.png" /><h1>班级荣誉</h1><a class="more" href="">更多+</a></li>
+    	<div class="red"></div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="honor_content">
+        	<li><span></span><a href="">浦口外国语学校2015-2016学年第一学...</a></li>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <!--今日学生-->
+    <div  class="student">
+    	<li><img src="{cla_url}images/class/icon5.png" /><h1>今日学生</h1><a class="more" href="/?t=teacher" target="_blank">更多+</a></li>
+    	<div class="blue"></div>
+        <div class="student_content">
+		<!-- START list_student -->
+        	<div  class="stud1">
+            	<a href="/zone/?id={id}" target="_blank"><img class="no_margin" src="/upd/face/{id}.jpg" onerror="this.src='/error/logo.jpg';"/></a>
+                <div class="student_massage">
+                	<a href="/zone/?id={id}" target="_blank">{truename}</a>
+                    <p>来自{scname}</p>
+                </div>
+                <div class="foucs">
+                	<a href="/zone/?id={id}" target="_blank">+关注</a>
+                    <span>人气{integral}</span>
+                </div>
+            </div>
+		<!-- END list_student -->
+
+    	</div>
+    </div>
+     <!--今日老师-->
+    <div  class="teacher">
+    	<li><img src="{cla_url}images/class/icon6.png" /><h1>今日老师</h1><a class="more" href="/?t=teacher" target="_blank">更多+</a></li>
+    	<div class="pink"></div>
+        <div class="teacher_content">
+		<!-- START list_teacher -->
+        	<div  class="teac1">
+            	<a href="/zone/?id={id}" target="_blank"><img src="/upd/face/{id}.jpg" target="_blank" onerror="this.src='/error/logo.jpg';"/>
+                <div class="teac_massage">
+                	<a href="/zone/?id={id}" target="_blank">{truename}</a>
+                    <p>来自{scname}</p>
+                </div>
+                <div class="foucs">
+                	<a href="/zone/?id={id}" target="_blank">+关注</a>
+                    <span>人气{integral}</span>
+                </div>
+            </div>
+		<!-- END list_teacher -->
+    	</div>
+    </div>
+
+
+<div class="clear"></div>
+</div>
+
+<!--班级相册-->
+<div class="xcl_picture_box">
+	<div class="picture_nav">
+    	<li>
+        	<img src="{cla_url}images/class/icon3.png" />
+            <h1>班级相册</h1>
+            <a href="">更多+</a> 
+        </li>    
+     <div class="clear"></div>   
+    </div>       
+        	
+    
+    <div class="class_picture">
+	<!-- START list_photo -->
+   		<div class="class_picture1">
+        	<a href="./class/?t=cls_photo&c={cid}&id={id}" target="_blank"><img src="/upds/class/album/{cid}/{id}/t_{logo}" onerror="this.src='/error/logo.jpg';"></a>
+            <li><div class="one">{name}</div> <span>{nums}</span></li>
+        </div> 
+	<!-- END list_photo -->
+    </div>
+    <div class="clear"></div>
+</div>    
+
+<!--资源-->
+<div class="xcl_resources_box">
+	<!--推荐资源-->
+	<div class="resources">
+    	<li><img src="{cla_url}images/class/icon8.png" /><h1>推荐资源</h1><a class="more" href="">更多+</a></li>
+    	<div class="red"></div>
+        <div class="resources_content">
+        	<img src="{cla_url}images/class/sour_pic.png" />
+        	<li><span>1</span><a href="">人教版英语二试题</a><h4>1542个试题</h4></li>
+        	<li><span>2</span><a href="">人教版英语二试题</a><h4>1542个试题</h4></li>
+        	<li><span>3</span><a href="">人教版英语二试题</a><h4>1542个试题</h4></li>
+        	<li><span>4</span><a href="">人教版英语二试题</a><h4>1542个试题</h4></li>
+        	<li><span>5</span><a href="">人教版英语二试题</a><h4>1542个试题</h4></li>
+        <div class="clear"></div>
+        </div>
+    	
+    </div>
+    <!--视频课程-->
+    <div  class="video">
+    	<li><img src="{cla_url}images/class/icon9.png" /><h1>视频课程</h1><a class="more" href="">更多+</a></li>
+    	<div class="blue"></div>
+        <div class="video_content">
+        	<div class="vid">
+        		<div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button> 
+           	    </div>
+                <div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button>
+           	    </div>  
+                <div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button>
+           	    </div>
+                <div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button>
+           	    </div>
+                <div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button>
+           	    </div>  
+                <div  class="video1">
+            		<img src="{cla_url}images/class/video_pic.png">
+                	<button type="submit"> <a href="">点击播放</a> </button>
+           	    </div>       	
+             </div> 
+    	</div>
+     <div class="clear"></div>   
+    </div>
+     <!--学生作品-->
+    <div  class="work">
+    	<li><img src="{cla_url}images/class/icon10.png" /><h1>学生作品</h1><a class="more" href="">更多+</a></li>
+    	<div class="pink"></div>
+        <div class="work_content">
+        	<div  class="work1">
+            	 <img src="{cla_url}images/class/work_pic1.png" />  
+                <div class="work_massage">
+                	<a href="">黄奕</a>
+                    <p>素描静物写生</p>
+                    <span>人气：399</span>
+                </div>
+            </div>
+            <div  class="work1">
+            	 <img src="{cla_url}images/class/work_pic2.png"/> 
+                <div class="work_massage">
+                	<a href="">黄奕</a>
+                    <p>书法练习作品</p>
+                    <span>人气：399</span>
+                </div>
+            </div>
+            <div  class="work1">
+            	 <img src="{cla_url}images/class/work_pic3.png" /> 
+                <div class="work_massage">
+                	<a href="">黄奕</a>
+                    <p>作文：可爱的秋天</p>
+                    <span>人气：399</span>
+                </div>
+            </div> 
+    	</div>
+    </div>
+
+<div class="clear"></div>
+</div>   
+
+<!--发现班级-->
+<div class="xcl_bigfound">
+	<div class="found">
+ 	  <div class="found_box">
+    		<img src="{cla_url}images/class/icon11.png">
+       		 <li><h1>发现班级</h1><a href="/?t=class_search" target="_blank">更多></a></li>
+        	<div class="clear"></div>
+      </div>  
+    </div> 
+<!--班级列表-->  
+<div class="list">
+	<div class="add">地区：</div>
+  <div id="addr" class="lists">
+    <a addrid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="list">
+	<div class="add">街道：</div>
+  <div id="street" class="lists">
+    <a streetid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="list">
+	<div class="add">学校：</div>
+  <div id="sch" class="lists">
+    <a schid="0" class="red">全部</a>
+  </div>
+</div>
+<div class="clear"></div> 
+<div class="school" id="group_list">
+</div>
+   
+<div class="clear"></div> 
+</div>
+<!--页脚-->
+<div class="xcl_footerbox">
+	<div class="footer"></div>
+	<div class="copyrights">Copyright?2015topnt.cn All Rights Reseverd.南京冠邦，版权所有。苏ICP备08111765号-1</div>
+</div>
+
+<script type="text/javascript" src="{cla_url}js/class/class.js"></script>
+<script src="{cla_url}js/class/jquery.min.js"></script>
+<script type="text/javascript" src="{cla_url}js/class/lubotu.js"></script>
+<script type="text/javascript">
+$(".xcl_news_nav .dong").hover(
+	function(){
+		$(".xcl_news_box .text").show()
+		$(".xcl_news_box .text2").hide()
+		$(this).attr("style","background-color:#009967;color:white;");
+        $(this).parent("li").siblings().children("a").attr("style","background-color:transparent;"); 
+        
+		}
+
+)
+$(".xcl_news_nav .dirty").hover(
+	function(){
+		$(".xcl_news_box .text").hide()
+		$(".xcl_news_box .text2").show()
+        $(this).attr("style","background-color:#009967;color:white;");
+        $(this).parent("li").siblings().children("a").attr("style","background-color:transparent;");
+		}
+
+)
+$(".xcl_tuijian_box .hot").hover(
+	function(){
+		$(".xcl_tuijian_box .class_pic,.xcl_tuijian_box .class_pic3").hide();
+		$(".xcl_tuijian_box .class_pic2").show();
+         $(this).attr("style","background-color:#009967;color:white;");
+        $(this).parent("li").siblings().children("a").attr("style","background-color:transparent;");
+		}
+
+)
+$(".xcl_tuijian_box .tui").hover(
+	function(){
+		$(".xcl_tuijian_box .class_pic2,.xcl_tuijian_box .class_pic").hide()
+		$(".xcl_tuijian_box .class_pic3").show()
+		}
+
+)
+
+$(function(){
+    getgroup(0,0,0);
+    $.post("/srv/rdo.php?", {tpl:"getaddr2",id:0}, function (d) {
+      d=eval(d);
+      for(var i=0;i<d.length;i++){
+        $("#addr").append('<a addrid="'+d[i].id+'" >'+d[i].name+'</a>'); 
+      }
+      $("#addr a").click(function(){
+         $("#addr a").removeClass("red");
+         $("#addr a[addrid="+$(this).attr("addrid")+"]").addClass("red");
+         if($(this).attr("addrid")==0){
+            $("#street").empty();$("#street").append('<a streetid="0" class="red">全部</a>');
+            $("#sch").empty();$("#sch").append('<a schid="0" class="red">全部</a>');
+            getgroup(0,0,0);
+            return;
+         }
+         getsch($(this).attr("addrid"),0);
+         
+         $.post("/srv/rdo.php?", {tpl:"getaddr2",id:$(this).attr("addrid")}, function (d) {
+            d=eval(d);
+            $("#street").empty();
+            for(var i=0;i<d.length;i++){
+              $("#street").append('<a streetid="'+d[i].id+'" >'+d[i].name+'</a>');
+            }
+            $("#street a").click(function(){
+              $("#street a").removeClass("red");
+              $("#sch a").removeClass("red");
+              $("#street a[streetid="+$(this).attr("streetid")+"]").addClass("red");
+              getsch($("#addr a[class='red']").attr("addrid"),$(this).attr("streetid"));
+            })
+         });
+      });
+    });
+    
+    
+  })
+
+  function getsch(addrid,strid){
+      $.post("/srv/rdo.php?", {tpl:"get_blog_sch","addrid":addrid,"strid":strid}, function(d){
+          d = eval(d);
+          $("#sch").empty();
+          for(var i=0;i<d.length;i++){
+            $("#sch").append('<a schid="'+d[i].id+'" >'+d[i].name+'</a>')
+          }
+          $("#sch a").click(function(){
+             $("#sch a").removeClass("red");
+             $("#sch a[schid="+$(this).attr("schid")+"]").addClass("red");
+             getgroup(addrid,strid,$(this).attr("schid")); return;
+          })
+      });
+      var schid = 0;
+      if($("#sch a").hasClass("red")){
+        schid = $("#sch a[class='red']").attr("schid"); 
+      }
+      getgroup(addrid,strid,schid);
+  }
+  
+  function getgroup(addrid,strid,schid){
+      $.post("/srv/rdo.php?", {tpl:"get_class","addrid":addrid,"strid":strid,"schid":schid}, function(d){
+        d =eval(d);
+        $("#group_list").empty();
+        for(var i=0;i<d.length;i++){
+            $("#group_list").append('<div class="school1">'+
+            	'<a href="/class/?c='+d[i].id+'" target="_blank"><img src="/upds/class/logo/'+d[i].id+'.jpg" onerror="this.src=`/error/logo.jpg`" /></a>'+
+                '<div class="liang"><a href="/group/?g='+d[i].id+'" target="_blank">'+d[i].name+'</a></div>'+
+                '</div>');
+        }
+      });
+  }      
+</script>
+<script src="{cla_url}/js/class/jquery.KinSlideshow-1.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	$("#KinSlideshow").KinSlideshow({
+			moveStyle:"right",
+			titleBar:{titleBar_height:30,titleBar_bgColor:"rgb(85,191,103)",titleBar_alpha:0.8},
+			titleFont:{TitleFont_size:14,TitleFont_color:"#FFFFFF",TitleFont_weight:"normal"},
+			btn:{btn_bgColor:"#FFFFFF",btn_bgHoverColor:"rgb(0,153,103)",btn_fontColor:"#000000",btn_fontHoverColor:"#FFFFFF",btn_borderColor:"#fff",btn_borderHoverColor:"#1188c0",btn_borderWidth:1}
+	});
+})
+</script>
+<script type="text/javascript">
+$(function(){
+    $(".lubo").lubo({
+    });
+})
+</script>
+</body>
+</html>

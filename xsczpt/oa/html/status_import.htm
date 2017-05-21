@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/status_import_submit.php" method="post" onsubmit="return checkBatch();" enctype="multipart/form-data">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">批量导入学生奖惩记录</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="20%" class="tabtd2_L">说明：</td>
+						 <td class="tabtd2_R" style="color:#f00;">对于转入转出的学生，请给出转入前或转出后的学校及时间。</td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">选择文件：</td>
+						 <td class="tabtd2_R"><input type="file" name="table_file" id="table_file" value="" onchange="checkXls(this);" /></td>
+					</tr>
+					<script type="text/javascript">
+					  if({isMaster1}!=1){
+						  document.write('<tr><td width="20%" class="tabtd2_L">导入班级：</td><td class="tabtd2_R"><select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select> </td></tr> ');
+					  }else{
+							document.write('<tr style="display:none;"><td width="20%" class="tabtd2_L">导入班级：</td><td class="tabtd2_R"><select name=\"gid\" id=\"gid\" ><option value=\"{gid}\" selected>{gname}</option></select><select name=\"cid\" id=\"cid\" ><option value=\"{cid}\">{cname}</option></select> </td></tr> ');
+					  }
+					</script> 
+				<!-- <tr>
+					 <td width="20%" class="tabtd2_L">类型</td>
+					 <td width="80%" class="tabtd2_R">
+						<select name="status_name" id="status_name">
+						</select>
+					  </td>
+				</tr> -->
+				<tr>
+					 <td width="20%" class="tabtd2_L">学期</td>
+					 <td width="80%" class="tabtd2_R">
+						<select name="term_id" id="term_id">
+							
+						</select>
+					  </td>
+				</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">示例文件：</td>
+						 <td class="tabtd2_R"><a href="#" onclick="return setHref(this);" target="_blank">点击下载</a>（学籍示例文件）</td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input type="hidden" name="flag" value="17" />
+				<input id="but_update" name="but_update" type="submit" value="上传文件" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+			</div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+  if({isMaster1}!=1){
+  	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+  		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>全部</option>;");
+  	});
+  }
+	
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");
+		$('#term_id').val('{term_id}');     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"student_status",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#status_name",JSON.parse(d),"status_name","status_name");
+		$('#status_name').val('{status_name}');     
+	});
+});
+
+//密码信息提交客户端验证
+function checkBatch()
+{
+	if($.trim($("#table_file").val())==""){
+		alert("请选择要上传的文件。");	
+		return false;
+	}
+	$("#but_update").attr("disabled","disabled");
+	return true;
+}
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>所有班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+//密码信息提交客户端验证
+function checkBatch()
+{
+	if($.trim($("#table_file").val())==""){
+		alert("请选择要上传的文件。");	
+		return false;
+	}
+	if(confirm("您当前选择上传 【"+$("#flag_type").val()+"】 记录，点击 确定 继续 或 取消 操作。")){
+		$("#but_update").attr("disabled","disabled");
+		return true;
+	}
+	return false;
+}
+
+//设置下载链接
+function setHref(obj)
+{
+	var gid  = $("#gid").val();
+	var cid  = $("#cid").val();
+	if(cid==undefined){
+		cid = 0;	
+	}
+	var href = "./srv/download_example.php?flag=18&gid="+gid+"&cid="+cid;
+	$(obj).attr("href",href);
+	return true;
+}
+</script> 

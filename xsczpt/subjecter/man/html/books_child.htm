@@ -1,0 +1,72 @@
+<div id="h_menuart" title="可对章节进行拖动排序">
+	<h1 style="background-color:rgba(0,0,0,0.5);padding-left:10px;color:white;font-size:14px;">
+		《{book_title}》
+		<span class="pull-right" style="padding-right:10px;" onclick="hideMenu();">关闭</span>
+		<span class="pull-right" style="padding-right:10px;" onclick="saveSort();">保存</span>
+	</h1>
+	<ul id="chaptersListEdit">
+		<!-- START chapters_list -->
+		<li id="{id}" onclick="showMenu(this,'partsListEdit{id}')">
+			<h1><i>+ </i><span class="chapter_num">{odx}</span>. {title}</h1>
+			
+			<ul id="partsListEdit{id}" class="no">
+				<!-- START parts_list -->
+				<li style="cursor:move;">
+					<i>- </i>{odx}. {title}
+				</li>
+				<!-- END parts_list -->
+			</ul>
+		</li>
+		<!-- END chapters_list -->
+	</ul>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#chaptersListEdit>li>ul").each(function(){
+		if($.trim($(this).html()).length == 0) {
+			$(this).parent().attr("onclick", "")
+			$(this).parent().find("i").html("- ");
+		}
+	})
+	$('#chaptersListEdit').sortable().bind('sortupdate',function() {
+		changeNum();
+	});
+});
+function changeNum(){
+	$("#chaptersListEdit>li").each(function(){
+		var indexNum = $("#chaptersListEdit>li").index(this);
+		var a = indexNum + 1;
+		$(this).find(".chapter_num").text(a);
+	})
+}
+function showMenu(obj,noid){
+	var block = $("#"+noid);
+	$(obj).attr("style", "height:auto;");
+	
+	if(block.attr("class") == "no"){
+		block.attr("class", "");
+		obj.innerHTML = obj.innerHTML.replace("+","-");
+	}else{
+		block.attr("class", "no");
+		$(obj).attr("style", "height:35px;");	// 恢复样式
+		obj.innerHTML = obj.innerHTML.replace("-","+");
+	}
+}
+function saveSort() {
+	var odx = 1;
+	var data = "";
+	var len = $("#chaptersListEdit>li").length - 1;
+	
+	$("#chaptersListEdit>li").each(function(index){
+		data = data + $(this).attr("id") + ":" + odx + ";";
+		odx++;
+		if(index == len) {
+			// 取到最后一个元素
+			$.post("./srv/sdo.php?" + Math.random(), {tpl:"save_chapters_sort", data:data}, function (d, e) {
+				alert(d == "ok" ? "排序保存成功。" : "排序保存失败！");
+				hideMenu();
+			});
+		}
+	})
+}
+</script>

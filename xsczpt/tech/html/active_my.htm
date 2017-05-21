@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>我发起的活动<small></small> 
+    <div class="btn-group pull-right"> 
+   <a href="?t=active_push&d=a" class="btn btn-primary"  target=_blank><i class="fa fa-plus"></i>发起活动</a>      
+    <a onclick="location.reload();" class="btn btn-default"><i class="fa fa-repeat"></i>刷新页面</a> 
+   </div>
+   </h3>
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>  
+<tr>    
+<th>logo</th>
+<th>名称</th>
+<th>级别</th>  
+<th>类型</th>
+<th>审核</th>
+<th>状态</th>   
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr id="row{id}">
+<td><img id="logo{id}" width="72" src="/upds/activity/logo/{id}.jpg" />                   
+</td>
+<td><a href="/activity?t=active&id={id}" target=_blank>{name}</a><br/>
+<code>报名:{rstime}-{retime}<br/> 活动：{stime}-{etime}</code>
+</td> 
+<td><lvl v="{lvl}"></lvl></td>  
+<td><cid v="{cid}"></cid></td>  
+<td><st v="{state}"/></td> 
+<td><st1 v="{status}"/></td> 
+<td>
+<a class="fa fa-user" title="报名人员" href="?t=active_member&id={id}" target=_blank></a> &nbsp;
+<a class="glyphicon glyphicon-edit" title="编辑" href="?t=active_push&d=m&id={id}" target=_blank></a> &nbsp;
+<a class="" title="活动状态" onclick="moda({id:'{id}',st1:'{status}'})"><i class="fa fa-anchor"></i></a> &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({id:'{id}',do:'d'})"></a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div>  
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+var obj_lst=null,obj_s=null,obj_st1=null;
+$(function () {
+ 
+   $.get("/data?t=active_status&f=txt", function(d){$("#status").html(d); });
+  $.getJSON("/data?t=active_level&f=obj",function(d){ $("lvl").each(function(a,b){$(b).text(d[$(b).attr("v")]);});}); 
+  $.getJSON("/data?t=active_category&f=obj",function(d){ $("cid").each(function(a,b){$(b).text(d[$(b).attr("v")]);}); }); 
+  $.getJSON("/data?t=sys_state&f=obj",function(d){for(i=0;i<4;i++)$("st[v="+i+"]").html(d[i]); }); 
+  
+  $.getJSON("/data?t=active_status&f=obj",function(d){obj_st1=d;$("st1").each(function(a,b){$(b).text(d[$(b).attr("v")]);}); });
+  
+});  
+l_tpl="activity"; 
+
+function delths(v,obj){      
+  $.post("./srv/sdo.php?", {tpl:"active_del",id:v}, function (d, e) {                     
+    if(d.indexOf("ok")>-1){
+      alert("删除成功");
+       $(obj).parent().parent().remove();
+    }         
+    else alert(d);       
+  });
+} 
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $("#dlg1 #ostatus").val(d.st1);  
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+function savesome(){   
+   if($("#dlg1 #ostatus").val()>$("#dlg1 #status").val()){msg("状态不能往回更新");return;}
+   SaveAM({'do':'m',frmid:'#dlg1',showok:'','callback':'dosome'});  
+}
+function dosome(e,d){  
+  if(d.indexOf("ok")>-1){        
+     msg("修改完成");   
+  }
+   $('#dlg1').modal('hide');
+}
+/*
+function modths(v,obj){ 
+  vs=$(obj).parent().prev().find("st1").attr("v");  
+  $.post("./srv/sdo.php?", {tpl:"active_next",id:v,data:vs}, function (d, e) {                     
+      if(d.indexOf("ok")>-1){
+        alert("成功");
+        $(obj).parent().prev().find("st1").attr("v",parseInt(vs)+1);
+        $(obj).parent().prev().find("st1").text(obj_st1[parseInt(vs)+1]);
+      }         
+      else alert(d);      
+  }); 
+} */
+</script>
+
+<div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">编辑</h4>
+</div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+<label class="col-sm-2 control-label">状态</label>
+<div class="col-sm-5"><select  class="form-control" id="status"></select> </div>
+</div>
+<input type="text" id="ostatus" value="" style="display:none;"/>
+<input type="text" id="id" value="" style="display:none;"/> 
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" onclick=savesome()> 确定  </button><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+</div>
+</div></div>
+</div>

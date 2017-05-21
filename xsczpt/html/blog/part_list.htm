@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>同心圆父母学堂-文章列表</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>  
+<link href="html/blog/css/circle.css" type="text/css" rel="Stylesheet">
+{meta}	
+</head>
+<body class="bgf8">
+<!--顶部-->
+{top}
+
+{def_logo}
+{menu}
+
+
+<div class="wrap" style="margin-top:10px;">
+	<div class="clear"></div>
+	<div class="nav_in">
+		<ul class="main menu_in">
+      <!-- START part_cate -->                                                  
+			<li><a href="/?t=part_list&pc={id}" target="">{name}</a></li>
+      <!-- END part_cate --> 
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<div class="main" style="margin-top:25px;">
+		<!--<div class="k_navga">
+			<span>当前位置：<a href="#" target="">同心圆父母学堂</a>&gt; 
+			<a href="#">新闻导航</a></span>
+		</div>-->
+		<div class="clear"></div>
+		<div class="ci_left fl">
+			<div class="c_cate_list">
+				<div class="c_catitle"><a href="/?t=part_list&pc={pid}">{pname}</a></div>
+				<ul>
+					<!-- START art_cate -->
+					<li><a target="_self" href="/?t=part_list&pc={id}">{name}</a></li>
+          <!-- END art_cate -->
+				</ul>
+			</div>
+		</div>	
+		<div class="ci_right fr" style="display:{display2}">
+      <div class="c_title"><a href="/?t=part_list&pc={id}" target="">{cname}</a></div>
+			<div class="c_nav fl">&nbsp;</div>
+			<div class="clear"></div>
+			<div class="c_conlist fl">
+				<ul class="cnews_list">
+					<!-- START art_list -->
+					<li><a href="/?t=part_info&id={id}" target="_blank">{name}</a><span>{timestamp}</span></li>
+		      <!-- END art_list -->
+				</ul>
+			</div>
+			<div class="clear"></div>
+			<div class="tc" style="margin-right:10px;">
+         <ul class="pagination pull-right">
+    			{page}
+         </ul>
+    	</div>
+		</div>                     
+    
+    <div class="ci_right fr" style="display:{display1}">
+      <!-- START art_lists -->
+      <div class="fr1">
+        <div class="c_title"><a href="/?t=part_list&pc={id}" >{name}</a></div>
+  			<div class="c_nav fl">&nbsp;</div>
+  			<div class="clear"></div>
+  			<div class="c_conlist fl">
+  				<ul class="cnews_list">
+  					<!-- START rp -->
+  					<li><a href="/?t=part_info&id={id}" target="_blank">{name}</a><span><script>document.write(utctime("{timestamp}"));</script></span></li>
+  				  <!-- END rp -->
+          </ul>
+  			</div>
+  			<div class="clear"></div>
+			</div>
+      <!-- END art_lists -->
+		</div>
+    
+    
+    
+	</div>
+</div>
+<div class="clear"></div>
+{foot}
+<script src="html/blog/js/parent/jquery.js"></script>
+<script>
+function cksearch(){
+//search
+function cksearch(){
+	if (document.getElementById("keyword_s").value=='')
+	{
+		alert('关键字不能为空!');
+		return false;
+	}
+};
+</script>
+</body>
+</html>

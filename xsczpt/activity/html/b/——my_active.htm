@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我发起的活动——{gtitle}</title>
+{cssjs} 
+<script type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+</head>
+<body>
+{top}
+<div class="container">   
+{head}  
+<div class="col-sm-12"> 
+{menu}<br/>    
+<form class="form-inline" role="form" id="from1">
+  <div class="form-group"><select id="cate" class="form-control"></select></div>      
+  <div class="form-group"><select id="lvl" class="form-control"></select></div>     
+  <div class="form-group"><input  id="so"  type="text" class="form-control" value="{so}" placeholder="名称"/></div>  
+  <div class="form-group"> <input  type="button" class="btn btn-success" value="查询" id="btn"/></div>  
+  <div class="form-group"><a href="./?t=active_push" class="btn btn-primary"> + 发起活动</a></div> 
+  <div class="form-group"><a onclick="location.reload();" class="btn btn-default">刷新页面</a></div> 
+</form> 
+ 
+<table class="table  table-striped"> 
+<thead>
+<tr>    
+<th>logo</th>
+<th>名称</th>
+<th>级别</th>  
+<th>类型</th>
+<th>审核</th>
+<th>状态</th>   
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr>
+<td><img id="logo{id}" width="72" src="/activity/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" />                   
+</td>
+<td><a href="./?t=active&id={id}" target=_blank>{name}</a><br/>
+<code>报名:{rstime}-{retime}<br/> 活动：{stime}-{etime}</code>
+</td> 
+<td><lvl v="{lvl}"></lvl></td>  
+<td><cid v="{cid}"></cid></td>  
+<td><st v="{state}"/></td> 
+<td><st1 v="{status}"/></td> 
+<td>
+<a class="glyphicon glyphicon-edit" title="编辑" href="./?t=active_edit&id={id}" target=_blank></a> &nbsp;
+<a class="glyphicon glyphicon-forward" title="下一步" onclick="modths('{id}',this)"></a> &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var obj_lst=null,obj_s=null,obj_st1=null;
+$(function () {
+   $.get("/data/active_lvl.txt", function(d){selectAddHead("#lvl","级别");$("#lvl").append(d);
+      if(queryStr("lvl")!="")$("#lvl").val(queryStr("lvl"));
+   });
+  $.get("/data/active_cate.txt", function(d){selectAddHead("#cate","类别");$("#cate").append(d);
+      if(queryStr("cate")!="")$("#cate").val(queryStr("cate"));
+   }); 
+  $.getJSON("/data/active.object.txt",function(d){obj_lst=d;showlabels();}); 
+  $.get("/data/active_status.txt", function(d){$("#st").html(d); });
+  /*$.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+      selectShowDataNoH("#sch",JSON.parse(d),"id","name");  
+      if(queryStr("so")!="") $("#so").val(queryStr("so"));
+      if(queryStr("s")!="") $("#sch").val(queryStr("s"));    
+ 
+  });*/
+  $.getJSON("/data/state.json.txt",function(d){    $("st").each(function(a,b){$(b).html(d[$(b).attr("v")]);}); }); 
+  $.getJSON("/data/active_status.json.txt",function(d){obj_st1=d;    $("st1").each(function(a,b){$(b).text(d[$(b).attr("v")]);}); });
+   
+  $("#btn").bind("click",function(){ 
+    if($("#sch").val()==""){alert("请选择一个学校");return;}
+    location.href="./?t=my_active&cate="+$("#cate").val()+"&lvl="+$("#lvl").val()+"&so="+$("#so").val();});  
+  
+});   
+
+function delths(v,obj){      
+  $.post("./srv/sdo.php?", {tpl:"active_del",id:v}, function (d, e) {                     
+    if(d.indexOf("ok")>-1){
+      alert("删除成功");
+       $(obj).parent().parent().remove();
+    }         
+    else alert(d);       
+  });
+} 
+
+function showlabels(){  
+   $("lvl").each(function(a,b){$(b).text(obj_lst.lvl[$(b).attr("v")]);});
+   $("cid").each(function(a,b){$(b).text(obj_lst.cate[$(b).attr("v")]);}); 
+}
+function modths(v,obj){ 
+  vs=$(obj).parent().prev().find("st1").attr("v");  
+  $.post("./srv/sdo.php?", {tpl:"active_next",id:v,data:vs}, function (d, e) {                     
+      if(d.indexOf("ok")>-1){
+        alert("成功");
+        $(obj).parent().prev().find("st1").attr("v",parseInt(vs)+1);
+        $(obj).parent().prev().find("st1").text(obj_st1[parseInt(vs)+1]);
+      }         
+      else alert(d);      
+  });  
+  /*$('#dlg1 #id').val(v);
+  vl=$(obj).parent().prev().find("st1").attr("v");
+  $("#st").val(vl);
+  $('#dlg1').modal('show');  
+  */
+}
+ 
+</script> 
+ 

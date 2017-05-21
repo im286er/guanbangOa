@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级管理员-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>名师管理员      <small></small>     
+<div class="btn-group pull-right"> 
+<input  type="button" class="btn btn-primary" value="+添加" id="btn"/>
+</div>
+   </h3>
+</div>      
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>名称</th> 
+<th>真实姓名</th> 
+<th>时间</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr> 
+<td><a>{intro}</a></td>  
+<td>{truename}</td>      
+<td><script>document.write(utctime('{timestamp}'));</script></td> 
+<td>  
+<a class="glyphicon glyphicon-pencil" title="编辑" onclick="moda({id:'{id}',truename:'{truename}'})"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+ 
+$(function () {  
+  $("#btn").bind("click", function(){$('#dlg1').modal('show');  });             
+ });  
+function seltech() {  
+  $.post("./srv/rdo.php?", {tpl:"get_usrs",s:"{s}",u:$("#uname").val(),t:$("#tname").val()}, function (d, e) {             
+      selectShowDataNoH('#lst', JSON.parse(d), "id", "truename");    
+  });
+}
+function moda(d){
+  readID({tpl:"famous_member","do":"r","id":d.id,frmid:"#dlg2"});
+  $("#truename").val(d.truename);
+  $("#cm_id").val(d.id);
+  $('#dlg2').modal('show');
+}
+function dosome1(){            
+  if($("#intro").val()==""){alert("请输入一个备注名称");return;}    
+  $.post("./srv/sdo.php?", {tpl:"m_famman",id:$("#cm_id").val(),txt:$("#intro").val()}, function (d, e) {                  
+      if(d.indexOf("ok")>-1){
+        location.reload();
+      }            
+  });    
+}
+function dosome(){
+  if($("#lst").val()==undefined||$("#lst").val()==""){alert("请选择一个用户");return;}   
+  if($("#intro1").val()==""){alert("请输入一个备注名称");return;} 
+  $.post("./srv/sdo.php?", {tpl:"ad_famman",f:"{f}",u:$("#lst").val(),txt:$("#intro1").val()}, function (d, e) {                  
+      if(d.indexOf("ok")>-1){
+        location.reload();
+      }            
+  });    
+}
+function delths(v,obj) {
+   if (!confirm("确认删除吗？")) return;  
+   $.post("./srv/sdo.php?", {tpl:"del_famman","id":v}, function (d, e) {                  
+      //location.reload();   
+      $(obj).parent().parent().remove();       
+  });
+} 
+</script>
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加班级管理员</h4>
+         </div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group user_info">
+    <label class="col-sm-2 control-label">用户名</label>
+    <div class="col-sm-3">
+       <input id="uname" class="form-control"  placeholder="用户名">
+        <input type="text" id="id" value="" style="display:none;"/>  
+    </div>
+     <div class="col-sm-3">
+       <input id="tname" class="form-control"  placeholder="真实姓名">               
+    </div>
+     <div class="col-sm-3">
+     <button type="button" class="btn btn-primary" onclick="seltech()"> 搜索  </button>
+     </div>
+ </div>   
+  <div class="form-group select_act">
+    <label class="col-sm-2 control-label">选择用户</label>
+    <div class="col-sm-8">
+    <select id="lst" size="10" class="form-control"><option value="">--选择用户--</option></select> </div>
+  </div>
+   <div class="form-group">
+    <label class="col-sm-2 control-label">备注</label>
+    <div class="col-sm-5">
+       <input id="intro1" class="form-control"  placeholder="备注" maxlength=50 >             
+    </div>    
+ </div>   
+</form>
+</div> <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="dosome()"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="modal fade" id="dlg2" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">编辑班级管理员</h4>
+         </div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">
+  <div class="form-group user_info">
+    <label class="col-sm-2 control-label">用户名</label>
+     <div class="col-sm-3">
+       <input id="truename" class="form-control"  disabled="disabled" placeholder="真实姓名">               
+    </div>
+  </div>   
+   <div class="form-group">
+    <label class="col-sm-2 control-label">备注</label>
+    <div class="col-sm-5">
+       <input id="intro" class="form-control"  placeholder="备注" maxlength=50 >
+       <input type="text" id="cm_id" value="" style="display:none"/>            
+    </div>    
+ </div>   
+</form>
+</div> <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="dosome1()"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

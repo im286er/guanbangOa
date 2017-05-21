@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>浦口区云悦读空间-首页{aaa}</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="html/read/css/css.css" type="text/css" rel="Stylesheet">
+{meta}	   
+</head>
+<body class="bgf8">
+<div class="wrap">
+	{top}
+	<div class="clear"></div>
+	<div class="main">
+		{menu}
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="rea_left mt20" >
+			<div class="red_content" style="height:467px">
+				<div class="banner_img"> 
+					<span id="prev" class="btncion prev"></span> 
+					<span id="next" class="btncion next"></span> 
+					<span id="prevTop" class="btncion prev"></span> 
+					<span id="nextTop" class="btncion next"></span>
+					<div id="picBox" class="picBox">
+						<ul class="cf">
+            <!-- START pic_arts -->
+							<li><a href="./?t=art_info&id={id}" target=_blank><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="610" height="238" /><span>{title}</span></a></li>
+			      <!-- END pic_arts -->
+						</ul>
+					</div>
+					<div id="listBox" class="listBox">
+						<ul class="cf">
+              <!-- START pic_arts1 -->
+							  <li class="on"><i class="arr2"></i><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" /></li>
+							<!-- END pic_arts1 -->
+						</ul>
+					</div>
+				</div>
+				<div>
+				<dl class="rea_list">
+          <!-- START pic_arts2 -->
+					 <dd><i class="org_square"></i><a href="./?t=art_info&id={id}" target=_blank>{title}</a></dd>
+					<!-- END pic_arts2 -->
+				</dl>
+				</div>
+			</div>
+		</div>
+		<div class="rea_right mt20" >
+			<div class="red_content" style="height:467px">
+				<div class="act_tit">
+					<p>新闻公告 </p>
+					<a href="./?t=art_list&pc=16" target=_blank>更多+</a>
+				</div>
+				<ul class="list_box  news_noth"> 
+          <!-- START new_notice -->
+					<li><i class="">{row}</i><a href="./?t=art_info&id={id}" target=_blank>{title}</a></li>
+					<!-- END new_notice -->
+					<div class="clear"></div>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="red_content mt20 pt0">
+			<div class="act_tit yel_bb">
+				<p>图书推荐</p>
+				<a href="./?t=recommend_lists&pid=26" target=_blank>更多+</a>
+			</div>
+			<div class="content">
+				<ul class="tab-hd">
+          <!-- START recommend_cate -->                                                                          
+					<li class="current"><a href="./?t=recommend_list&pid=26&cid={id}" target=_blank>{name}</a>/</li>
+					<!-- END recommend_cate -->
+				</ul>
+				<ul class="tab-bd">
+          <!-- START recommend_list -->
+					<li class="mb15 fl">
+						<dl class="rea_bklist">
+              <!-- START rp -->
+							<dd>                                                            
+								<a href="./?t=recommend_info&id={id}" target=_blank><img src="/upds/recommend_articles/{pic}" onerror="this.src='/error/pic.jpg';" /></a>
+								<a href="./?t=recommend_info&id={id}" target=_blank class="bk_des">
+									<span>{title}</span>
+									<span>—{author}主编</span>
+								</a>
+							</dd>
+							<!-- END rp -->
+						</dl>
+					</li>
+					<!-- END recommend_list -->
+				</ul>	
+			</div>
+		</div>
+	</div>	
+	<div class="clear"></div>
+	<a class="ad" href="./?t=art_info&id=26"><img src="html/read/images/heng.png" onerror="this.src='/error/pic.jpg';" /></a>
+	<div class="main">
+		<div class="rea_left">
+			<div class="red_content">
+				<div class="act_tit cgres_bb">
+					<p>读后感</p>
+					<ul class="tit_left fl tit_gre tab1-hd">
+            <!-- START breview_cate -->                                      
+						  <li><a href="./?t=art_list&pc={pid}&c={id}" target=_blank>{name}</a></li>
+            <!-- END breview_cate -->
+					</ul>
+					<a href="./?t=art_list&pc=18" target=_blank>更多+</a>
+				</div>
+				<ul class="tab1-bd readed_h">
+					<!-- START breview_list -->
+          <li class="thisclass mb15 fl">
+            <a href="./?t=art_info&id={id}" target=_blank class="reaed_img fl"><img src="html/read/images/img1.jpg" width="298" height="222" onerror="this.src='/error/pic.jpg';"/></a>
+						<ul class="lesnews_list fr acti_right mt15">
+              <!-- START rp -->
+							<li><i class="org_square"></i><a href="./?t=art_info&id={id}" target=_blank>{title}</a></li>
+	            <!-- END rp -->
+            </ul>
+					</li>
+          <!-- END breview_list -->
+				</ul>	
+			</div>
+		</div>
+		<div class="rea_right ">
+			<div class="red_content">	
+				<div class="act_tit cgres_bb">
+					<p>读书达人</p>
+					<!--<a href="#" target="">更多+</a>-->
+				</div>
+				<ul class="reader_sup re_auph">
+					<!-- START book_user -->
+          <li>
+						<p class="icon">
+							<a href="/zone/?id={uid}" target="_blank"><img src="/upd/face/{uid}.jpg" alt="{truename}" class="fixpng"></a>
+						</p>
+						<dl>
+							<dt><a href="/zone/?id={uid}" target="_blank">{truename}</a><!--<a href="#" target="" class="add">+关注</a>--></dt>
+							<dd><a href="javascript:void(0);" target="_blank">已读：<em><!-- START rp -->{num}<!-- END rp -->本</em>&nbsp;&nbsp;&nbsp;近期推荐：<em>{title}</em></a></dd>
+						</dl>
+					</li>
+				  <!-- END book_user -->
+				</ul>
+			</div>
+		</div>	
+	</div>	
+	<div class="clear"></div>
+	<div class="main">
+		<div class="red_content mt20 pt0 re_aclh">
+			<div class="act_tit cgre_bb">
+				<p>读书活动</p>  
+				<ul class="tit_left fl tit_gre tab1-hd">
+          <!-- START active_cate -->                                      
+					<li class=""><a href="javascript:void(0);" target="">{name}</a></li>
+					<!-- END active_cate -->
+				</ul>
+				<a href="./?t=activity" target=_blank>更多+</a>
+			</div>
+			<ul class="tab1-bd" id="active_box">
+        <!-- START active_list -->
+				<li class="thisclass">
+          <dl class="bkrecom_list">
+            <!-- START rp -->
+  					  <dt width="240" height="150"><a href="/activity/?t=active&id={id}" target=_blank><img src="/activity/logo/{id}.jpg" width="240" height="150" onerror="this.src='/error/logo.jpg';"/></a>
+  						<div class="txt">
+  							<h5><a href="/activity/?t=active&id={id}" style="color:#fff;" target=_blank >{name}</a></h5>
+  							<div class="video_show mtbit">
+  								<p><a href="/activity/?t=active&id={id}" style="color:#fff;" target=_blank>{name}</a></p>
+  								<p><a href="/activity/?t=active&id={id}" style="color:#fff;" target=_blank>{pre}</a></p>
+  								<p class="vide_s">{rstime} —{retime} </p>
+  							</div>
+  						</div>
+              </dt>
+  					<!-- END rp -->
+  				</dl>
+				</li>          
+        <!-- END active_list -->
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="rea_left mt20">
+			<div class="red_content cblu_bb tab topic_h">
+				<div class="act_tit">
+					<p>专题推荐</p>
+					<ul class="tit_left fl tit_gre tab1-hd">                                      
+					  <!-- START recspecial_cate -->
+            <li class=""><a href="./?t=recommend_list&pid=32&cid={id}" target=_blank>{name}</a></li>
+						<!-- END recspecial_cate -->
+					</ul>
+					<a href="./?t=recommend_lists&pid=32" target=_blank>更多+</a>
+				</div>
+				<ul class="tab1-bd">
+					<!-- START recspecial_list -->
+          <li>
+						<dl class="topic_recom">
+              <!-- START rp -->
+							<dd>
+								<a href="./?t=recommend_info&id={id}" target=_blank class="topic_img"><img src="/upds/recommend_articles/{pic}" onerror="this.src='/error/pic.jpg';" />
+								<p>{title}<span><em>{see}</em>人阅读</span></p>
+								</a>
+								<div class="topic_des"><a href="./?t=recommend_info&id={id}" target=_blank>{des}</a></div>
+							</dd>
+							<!-- END rp -->
+						</dl>
+          </li>
+					<!-- END recspecial_list -->
+				</ul>
+			</div>	
+		</div>	
+		<div class="rea_right mt20">
+			<div class="red_content red_numh">	
+				<div class="act_tit cgres_bb">
+					<p>排行榜</p>
+					<!--<a href="./?t=recommend_lists&pid=0" target=_blank>更多+</a>-->
+				</div>
+				<div class="list_box">
+          <!-- START ranking_list -->
+					<dl class="list_boxdl">
+						<dd class="pic_nr"> 
+							<i class="">{row}</i>
+							<div class="pic_box">
+								<a target="_blank" href="./?t=recommend_info&id={id}"><img src="/upds/recommend_articles/{pic}" onerror="this.src='/error/pic.jpg';" width="84" height="100" alt="" class="pic">
+								</a>
+							</div>
+							<div class="info_box">
+								<div class="text_box">
+									<a target="_blank" href="./?t=recommend_info&id={id}" class="title S_txt1 W_autocut">{title}</a>
+									<p class="subtitle W_autocut">推荐人：{truename} </p>
+									<p class="text">观看：{see}</p>
+								</div>
+							</div>				
+						</dd>
+						<div class="clear"></div>
+						<dt class="b_name"><i class="">{row}</i><a href="./?t=recommend_info&id={id}"  target=_blank>{title}</a></dt>
+					</dl>
+					<!-- END ranking_list -->
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="red_content pt0 tab mt20 red_bklh">
+			<div class="act_tit yel_bb">
+				<p>书香视听</p>
+					<ul class="tit_left fl tab1-hd">                                      
+						<li class=""><a href="./?t=art_list&pc=20&c=38" target=_blank>读书笔记</a></li>
+            <li class=""><a href="./?t=art_list&pc=20&c=39" target=_blank>阅读研究</a></li>
+            <li class=""><a href="./?t=art_list&pc=20&c=40" target=_blank>图书评论</a></li>
+					</ul>
+				<a href="./?t=art_list&pc=20" target=_blank>更多+</a>
+			</div>
+			<ul class="tab1-bd">
+				<li>
+          <!-- START note_first -->
+					<div class="re_videotab">
+						<div class="tab_pic">
+							<dl>
+							  <dd><a href="./?t=art_info&id={id}" target=_blank><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="250" height="170" /></a></dd>
+							</dl>
+						</div>
+						<div class="tab_txt">
+							<dl>
+								<dd>
+									<h3><a href="./?t=art_info&id={id}" target=_blank>{title}</a></h3>
+									<p class="txt_des">
+										<span>作者：{truename}</span>
+										<span class="tx_desinfo">{pre}</span>
+									</p>
+									<p class="rea_sta"><i class="con_cion"></i> 阅读<em>{see}</em>次    <span>{created}</span></p>
+								</dd>
+							</dl>
+						</div>
+					</div>
+          <!-- END note_first -->
+					<dl class="video_list">
+						<!-- START note_list -->
+						<dd>
+							<i class="con_cion"></i>
+							<a <a href="./?t=art_info&id={id}" target=_blank class="ve_listmid fl">{title}<em>作者：{truename}</em></a>
+							<span>阅读<br/><b>{see}</b>次</span>
+						</dd>
+            <!-- END note_list -->
+					</dl>
+				</li>
+				<li>
+          <!-- START research_first -->
+					<div class="re_videotab">
+						<div class="tab_pic">
+							<dl>
+							  <dd><a href="./?t=art_info&id={id}" target=_blank><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="250" height="170" /></a></dd>
+							</dl>
+						</div>
+						<div class="tab_txt">
+							<dl>
+								<dd>
+									<h3><a href="./?t=art_info&id={id}" target=_blank>{title}</a></h3>
+									<p class="txt_des">
+										<span>作者：{truename}</span>
+										<span class="tx_desinfo">{pre}</span>
+									</p>
+									<p class="rea_sta"><i class="con_cion"></i> 阅读<em>{see}</em>次    <span>{created}</span></p>
+								</dd>
+							</dl>
+						</div>
+					</div>
+          <!-- END research_first -->
+					<dl class="video_list">
+						<!-- START research_list -->
+						<dd>
+							<i class="con_cion"></i>
+							<a href="./?t=art_info&id={id}" target=_blank class="ve_listmid fl">{title}<em>作者：{truename}</em></a>
+							<span>阅读<br/><b>{see}</b>次</span>
+						</dd>
+            <!-- END research_list -->
+					</dl>
+				</li>
+        <li>
+          <!-- START comment_first -->
+					<div class="re_videotab">
+						<div class="tab_pic">
+							<dl>
+							  <dd><a href="./?t=art_info&id={id}" target=_blank><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="250" height="170" /></a></dd>
+							</dl>
+						</div>
+						<div class="tab_txt">
+							<dl>
+								<dd>
+									<h3><a href="./?t=art_info&id={id}" target=_blank>{title}</a></h3>
+									<p class="txt_des">
+										<span>作者：{truename}</span>
+										<span class="tx_desinfo">{pre}</span>
+									</p>
+									<p class="rea_sta"><i class="con_cion"></i> 阅读<em>{see}</em>次    <span>{created}</span></p>
+								</dd>
+							</dl>
+						</div>
+					</div>
+          <!-- END comment_first -->
+					<dl class="video_list">
+						<!-- START comment_list -->
+						<dd>
+							<i class="con_cion"></i>
+							<a href="./?t=art_info&id={id}" target=_blank class="ve_listmid fl">{title}<em>作者：{truename}</em></a>
+							<span>阅读<br/><b>{see}</b>次</span>
+						</dd>
+            <!-- END comment_list -->
+					</dl>
+				</li>
+			</ul>	
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="rea_left mt20">
+			<div class="red_content tab">
+				<div class="act_tit cbrown_bb">
+					<p>书香学校</p>
+					<ul class="tit_left fl tit_gre tab1-hd">     
+            <!-- START school_cate -->                                 
+						  <li class=""><a href="./?t=school&per={id}" target="_blank">{name}</a></li> 
+            <!-- END school_cate -->
+					</ul>
+					<a href="./?t=school" target="_blank">更多+</a>
+				</div>
+				<ul class="tab1-bd sch_li red_sclih">
+          <!-- START school_list -->
+					<li>
+						<dl class="school_list">
+              <!-- START rp -->
+							<dd>
+								<a href="/school?s={id}" target=_blank><img src="/upds/school/logo/{id}.jpg" width="125" height="107" onerror="this.src='/error/logo.jpg';" /></a>
+								<em><a href="/school?s={id}" target=_blank>{name}</a></em>
+							</dd>
+							<!-- END rp -->
+						</dl>
+					</li>
+					<!-- END school_list -->
+				</ul>
+			</div>
+		</div>
+		<div class="rea_right mt20">
+			<div class="red_content">	
+				<div class="act_tit cbrown_bb">
+					<p>热门学校</p>
+					<a href="./?t=school" target="_blank">更多+</a>
+				</div>
+				<ul class="school_sup red_sclih">
+          <!-- START hot_school -->
+					<li>
+						<p class="icon">
+							<a href="/school?s={id}" target=_blank><img src="/upds/school/logo/{id}.jpg" width="50" height="50" onerror="this.src='/error/logo.jpg';" alt="{name}" class="fixpng"></a>
+						</p>
+						<dl>
+							<dt><a href="/school?s={id}" target=_blank>{name}</a></dt>
+							<dd><a href="#" target="_blank">已读：<em>{nums}本</em></a></dd>
+						</dl>
+					</li>
+          <!-- END hot_school -->
+				</ul>
+			</div>
+		</div>	
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="red_content mt20 pt0 mb20">
+			<div class="act_tit cblus_bb">
+				<p>活动剪影</p>
+				<a href="./?t=art_list&pc=41" target=_blank>更多+</a>
+			</div>
+			<ul class="rea_photo">
+        <!-- START active_pic -->
+				<li><a href="./?t=art_info&id={id}" target=_blank><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="320" height="225" ></a></li>
+				<!-- END active_pic -->
+			</ul>
+		</div>
+	</div>	
+</div>
+{foot}
+<script src="html/read/js/jquery.min.js"></script>
+<script src="html/read/js/srol.js"></script>
+<script type="text/javascript">
+$(function(){
+  $("#active_box li").each(function(){
+    $(this).find("dl dt:first").css({width:"466px",height:"318px",marginRight:"10px"});
+    $(this).find("dl dt:first img").css({width:"466px",height:"318px"});
+    $(this).find("dl dt:first .txt").css({width:"466px"});
+    $(this).find("dl dt:first").siblings().css("margin-left","10px");
+  })
+  
+    function tabs(tabTit,on,tabCon){
+	$(tabCon).each(function(){
+	  $(this).children().eq(0).show();
+	  });
+	$(tabTit).each(function(){
+	  $(this).children().eq(0).addClass(on);
+	  });
+     $(tabTit).children().hover(function(){
+        $(this).addClass(on).siblings().removeClass(on);
+         var index = $(tabTit).children().index(this);
+         $(tabCon).children().eq(index).show().siblings().hide();
+    });
+     }
+  tabs(".tab-hd","active",".tab-bd");
+  tabs(".tab1-hd","active",".tab1-bd");
+//列表图片划过效果
+$(".bkrecom_list dt").hover(function(){
+		$(this).find(".txt").show();
+	$(this).find(".txt").stop().animate({height:"88px"},400);
+	$(this).find(".txt h5").hide();
+	$(this).find(".video_show").stop().animate({paddingTop:"10px"},400);
+},function(){
+	$(this).find(".txt").stop().animate({height:"42px"},400);
+	$(this).find(".video_show").stop().animate({paddingTop:"0px"},400);
+	$(this).find(".txt h5").show();
+});
+//列表图片划过效果da
+$(".books_recom").hover(function(){
+	$(this).find(".txt").stop().animate({height:"88px"},400);
+	$(this).find(".txt h5").hide();
+	$(this).find(".video_show").stop().animate({paddingTop:"10px"},400);
+},function(){
+	$(this).find(".txt").stop().animate({height:"42px"},400);
+	$(this).find(".video_show").stop().animate({paddingTop:"0px"},400);
+	$(this).find(".txt h5").show();
+});
+//右侧排行列表效果
+ $(function(){
+	$('.pic_nr').hide();
+		$('.pic_nr').first().show();
+		$('.b_name').first().hide();
+	$(".list_boxdl").mouseover(function() {
+		$(".b_name").show();
+		$(this).find(".b_name").hide();
+		$(".pic_nr").hide();
+		$(this).find(".pic_nr").show();
+	});
+ });
+});
+</script>
+
+<script type="text/javascript">
+ <!--
+    //公共脚本文件 main.js
+    function addEvent(obj, evtType, func, cap) {
+        cap = cap || false;
+        if (obj.addEventListener) {
+            obj.addEventListener(evtType, func, cap);
+            return true;
+        } else if (obj.attachEvent) {
+            if (cap) {
+                obj.setCapture();
+                return true;
+            } else {
+                return obj.attachEvent("on" + evtType, func);
+            }
+        } else {
+            return false;
+        }
+    }
+    function getPageScroll() {
+        var xScroll, yScroll;
+        if (self.pageXOffset) {
+            xScroll = self.pageXOffset;
+        } else if (document.documentElement && document.documentElement.scrollLeft) {
+            xScroll = document.documentElement.scrollLeft;
+        } else if (document.body) {
+            xScroll = document.body.scrollLeft;
+        }
+        if (self.pageYOffset) {
+            yScroll = self.pageYOffset;
+        } else if (document.documentElement && document.documentElement.scrollTop) {
+            yScroll = document.documentElement.scrollTop;
+        } else if (document.body) {
+            yScroll = document.body.scrollTop;
+        }
+        arrayPageScroll = new Array(xScroll, yScroll);
+        return arrayPageScroll;
+    }
+    function GetPageSize() {
+        var xScroll, yScroll;
+        if (window.innerHeight && window.scrollMaxY) {
+            xScroll = document.body.scrollWidth;
+            yScroll = window.innerHeight + window.scrollMaxY;
+        } else if (document.body.scrollHeight > document.body.offsetHeight) {
+            xScroll = document.body.scrollWidth;
+            yScroll = document.body.scrollHeight;
+        } else {
+            xScroll = document.body.offsetWidth;
+            yScroll = document.body.offsetHeight;
+        }
+        var windowWidth, windowHeight;
+        if (self.innerHeight) {
+            windowWidth = self.innerWidth;
+            windowHeight = self.innerHeight;
+        } else if (document.documentElement && document.documentElement.clientHeight) {
+            windowWidth = document.documentElement.clientWidth;
+            windowHeight = document.documentElement.clientHeight;
+        } else if (document.body) {
+            windowWidth = document.body.clientWidth;
+            windowHeight = document.body.clientHeight;
+        }
+        if (yScroll < windowHeight) {
+            pageHeight = windowHeight;
+        } else {
+            pageHeight = yScroll;
+        }
+        if (xScroll < windowWidth) {
+            pageWidth = windowWidth;
+        } else {
+            pageWidth = xScroll;
+        }
+        arrayPageSize = new Array(pageWidth, pageHeight, windowWidth, windowHeight)
+        return arrayPageSize;
+    }
+    var AdMoveConfig = new Object();
+    AdMoveConfig.IsInitialized = false;
+    AdMoveConfig.ScrollX = 0;
+    AdMoveConfig.ScrollY = 0;
+    AdMoveConfig.MoveWidth = 0;
+    AdMoveConfig.MoveHeight = 0;
+    AdMoveConfig.Resize = function () {
+        var winsize = GetPageSize();
+        AdMoveConfig.MoveWidth = winsize[2];
+        AdMoveConfig.MoveHeight = winsize[3];
+        AdMoveConfig.Scroll();
+    }
+    AdMoveConfig.Scroll = function () {
+        var winscroll = getPageScroll();
+        AdMoveConfig.ScrollX = winscroll[0];
+        AdMoveConfig.ScrollY = winscroll[1];
+    }
+    addEvent(window, "resize", AdMoveConfig.Resize);
+    addEvent(window, "scroll", AdMoveConfig.Scroll);
+    function AdMove(id) {
+        if (!AdMoveConfig.IsInitialized) {
+            AdMoveConfig.Resize();
+            AdMoveConfig.IsInitialized = true;
+        }
+        var obj = document.getElementById(id);
+        obj.style.position = "absolute";
+        var W = AdMoveConfig.MoveWidth - obj.offsetWidth;
+        var H = AdMoveConfig.MoveHeight - obj.offsetHeight;
+        var x = W * Math.random(), y = H * Math.random();
+        var rad = (Math.random() + 1) * Math.PI / 6;
+        var kx = Math.sin(rad), ky = Math.cos(rad);
+        var dirx = (Math.random() < 0.5 ? 1 : -1), diry = (Math.random() < 0.5 ? 1 : -1);
+        var step = 1;
+        var interval;
+        this.SetLocation = function (vx, vy) { x = vx; y = vy; }
+        this.SetDirection = function (vx, vy) { dirx = vx; diry = vy; }
+        obj.CustomMethod = function () {
+            obj.style.left = (x + AdMoveConfig.ScrollX) + "px";
+            obj.style.top = (y + AdMoveConfig.ScrollY) + "px";
+            rad = (Math.random() + 1) * Math.PI / 6;
+            W = AdMoveConfig.MoveWidth - obj.offsetWidth;
+            H = AdMoveConfig.MoveHeight - obj.offsetHeight;
+            x = x + step * kx * dirx;
+            if (x < 0) { dirx = 1; x = 0; kx = Math.sin(rad); ky = Math.cos(rad); }
+            if (x > W) { dirx = -1; x = W; kx = Math.sin(rad); ky = Math.cos(rad); }
+            y = y + step * ky * diry;
+            if (y < 0) { diry = 1; y = 0; kx = Math.sin(rad); ky = Math.cos(rad); }
+            if (y > H) { diry = -1; y = H; kx = Math.sin(rad); ky = Math.cos(rad); }
+        }
+        this.Run = function () {
+            var delay = 10;
+            interval = setInterval(obj.CustomMethod, delay);
+            obj.onmouseover = function () { clearInterval(interval); }
+            obj.onmouseout = function () { interval = setInterval(obj.CustomMethod, delay); }
+        }
+    }
+ //-->
+ </script>
+ 
+
+</body>
+</html>

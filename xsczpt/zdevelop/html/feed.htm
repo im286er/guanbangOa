@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间—{name}</title>      
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+{cssjs}
+<script type="text/javascript" src="css/js/index.js"></script>
+<style type="text/css">
+p{margin:0 !important;padding:0;}
+</style>
+<script type="text/javascript">
+function getTimeLength(lastStr){
+	T_lth=getTimer(lastStr);
+	return T_lth;
+};
+</script>
+</head>
+<body>
+{top}
+{thead}
+
+<div class="main" style="position:relative;overflow:visible !important;">
+	<div class="mt15 info_off" style="position:absolute;left:0px;display:none;">
+		<div class="news_f h_con">
+			<div class="feed_cont">
+				<h5>暂无内容!</h5>
+			</div>
+		</div>
+	</div>
+	<div class="h_left" style="border-left:2px solid #dfdfdf">
+	<!-- START TechNews --> 
+		<div class="f_list f_news mt15">
+			<div class="arrpoint_list"><script>document.write(getTimeLength(utctime('{id}')));</script></div>
+			<div class="arrpoint"></div>
+			<div class="arrline_list"></div>
+			<div class="news_f">
+				<div class="feed_cont">
+					<h5><a href="./?t=info&id={id}&s={s}&uid={uid}" target="_blank" title="{title}">{title}</a></h5>
+					<h5 class="text-right"><a href="/teacher/?t=info&id={id}&s={s}">阅读全文</a></h5>
+				</div>
+				<div class="feed_en">
+					<div class="feed_time fl">
+						2015-09-09 09:03:30  <a>来自: {nick}</a>
+					</div>
+					<div class="feed_fun fl">
+						<a>浏览</a>({see})&nbsp;&nbsp;
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	<!-- END TechNews --> 
+		<div class="f_list f_news mt15">
+			<div class="arrpoint_list">出生</div>
+			<div class="arrpoint"></div>
+			<div class="arrline_list"></div>
+			<div class="news_f">
+				<div class="chlidborn">
+					<img src="imgs/chlidborn.jpg" />
+					呱呱坠地鸟~
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="h_right">
+		<div class="h_con mt15">
+			<div class="l_tit fs16 fc3"><p>个人资料</p><a class="tools l_tita" id="{id}" target="" style="display:none"></a><div class="tools_menu"><div class="titarr"></div><ul><li><a href="/teacher/?t=grow&uid={id}&s={s}">个人成长</a></li></ul></div></div>
+			<div class="per_des">
+				<p>姓名：<a href="/teacher/?t=feed&uid={id}&s={s}" class="fwb fs14">{truename}</a></p>
+				<p>科目：<script>document.write(getSub('{subject}'));</script></p>
+				<p>学校：<script>document.write(getSch('{school}'));</script></p>
+<!-- 				<p>好友：12      学员：123</p>
+				<p>博客：<a href="#" class="n_click">200</a>&nbsp;&nbsp;微博：<a href="#" class="n_click">200</a></p>
+				<p>教学满意度：<a href="#" class="n_click">95.6</a></p> -->
+			</div>
+		</div>
+		<div class="h_con mt15">
+			<div class="l_tit fs16 fc3"><p>最新文章</p></div>
+			<div class="list_box">
+				<dl class="list_boxdl">
+				<!-- START HotNews --> 
+					<dd class="b_name"><a href="/teacher/?t=info&id={id}&s={s}" tu  target="" title="{title}">{title}</a></dd>
+				<!-- END HotNews --> 
+				</dl>
+			</div>
+			<div class="clear"></div>
+			<a href="/teacher/?t=list&s={s}" class="more_b">查看更多</a>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div>
+{foot}
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+<script type="text/javascript" src="css/js/index.js"></script>
+<script type="text/javascript" src="css/js/jquery.js"></script>
+<script type="text/javascript" src="css/js/tabs.js"></script>
+<script type="text/javascript">
+//检测登录
+var uopen="{uopen}";
+var uppen="{uppen}";
+var uid="{uid}";
+if(uid!=""){
+	$("#{uid}").css("display","block");
+}else{
+	$(".tools").remove();
+}
+if(uopen=="1"){
+	$("#uopen").css("display","block");
+}else{
+	$("#uopen").remove();
+}
+if(uopen=="1"){
+	$("#uppen").css("display","block");
+}else{
+	$("#uppen").remove();
+}
+if($(".f_news").length>0){
+	$(".info_off").css("display","none");
+}
+$(".tools").click(function(){
+  $(".tools_menu").toggle();
+});
+</script>
+</body>
+</html>

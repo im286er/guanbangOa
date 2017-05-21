@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的微博-{gtitle}</title>
+{cssjs}   
+<script type="text/javascript" src="html/cat/js/weibo.js"></script>    
+
+<style>
+  .comm-box-body{width:100%;}
+  .comm-box-body .comm-con{width:93%;}
+</style>   
+</head>
+<body>
+{top}
+{head}
+<div class="container main">
+<div class="row">   
+
+<div class="col-xs-3 main-nav-left" style="padding:0;margin-left:15px;">
+   <div class="main-nav-title"><span>我的微博</span></div>
+   <ul class="nav nav-pills nav-stacked">
+      <li><a href="./?t=index&id={zid}">首页</a></li>
+   </ul>
+</div>
+
+
+<div class="col-xs-9 " style="margin-left:23px; width:800px;"> 
+        
+   <div class="row main-contain" id="list" style="border:0;">
+          <!--博客内容循环-->
+          <!-- START list -->
+          <div class="panel panel-default">
+              <div class="panel-header">
+        	   	   <img src="/upd/face/{uid}.jpg" class="content-face" alt='' onerror="this.src='/error/face.jpg';"/>
+              </div>
+              <div class="panel-body">
+                  <div class="main-con-human">
+                      <label class="human-name">{truename}</label>
+                      <label class="human-grade">{schools}</label>
+                      <label class="human-cla">{grades}</label>
+                  </div>
+                  
+                  <div class="main-con-body">
+                      <div class="content-body">{des}</div>
+                  </div>
+                                    
+                  <!--评论内容-->
+                  <div id="p{id}" class="comment-box" uid="{uid}" style="display:none;">
+                    <div id="pa{id}">
+                      <!-- START rp -->
+                        <div class="comm-box-body" id="pc{id}"> 
+                          <div class="comm-act"><img src="/upd/face/{uid}.jpg" width="30" height="30" onerror="this.src='/error/face.jpg';"></div> 
+                          <div class="comm-con">
+                            <div style="word-break:break-all; word-wrap:break-word;"><a> {nick} </a> {redo} <a>{renick} </a> ：{des} </div>
+                            <small class="mes_tit"><code style="padding:0;"><span>{created}</span> <i class="icon-message" onclick="comment('{wid}','{id}','{nick}')" ></i></code>
+                            </small>
+                          </div>
+                        </div>
+                        <!-- END rp -->
+                      
+                    </div>
+                    <p id="pm{id}"><a onclick="load_comments('{id}',this);" id="more{id}" data-page="0" style="cursor:pointer;">更多……</a></p>
+                    
+                  </div>
+                  
+                  
+                  <!--评论时间及按钮-->
+                  <div class="main-comm-time">
+                    <script>document.write(utctime("{timestamp}"));</script>
+                  </div>
+                  
+                  <div class=" main-comm-critical">
+                    <a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'weibo',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+                    <a class="glyphicon glyphicon-share-alt" onclick="share({tbl:'weibo',do:'share',id:{id}},this);" title="转发">({share})</a> &nbsp;
+                    <a class="glyphicon glyphicon-comment" onclick="comment('{id}',0,'{nick}')"></a>（{comments}）  
+                  </div>
+               </div>   
+                    
+        	</div>
+          <!-- END list -->
+        </div>   
+       
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+</div>
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var uid="{uid}";
+var nick="{nick}";
+var mynick="{mynick}";
+var isme = "{isme}";
+var limit_comment=0,limit_leave=0;
+var curpage=0;
+
+ $(function () {
+     
+      $(".comment-box").each(function(){
+        if($(this).find(".comm-box-body").length>0){$(this).show();}else{$(this).hide();}
+      });
+  
+     $("#btn").bind("click", function(){            
+        if(ue.getContent().length<10){alert("内容太短(10-300)");return;}    
+        if(ue.getContent().length>300){alert("内容太长(10-300)");return;}      
+        SaveAM({tpl:"weibo","do":"a",frmid:"#form1",showok:"",callback:"dosome"});
+     });  
+     
+     $.post("./srv/rdo.php", {tpl:"get_limit_do","id":queryStr("id")}, function (d, e) { 
+        d1=JSON.parse(d);
+        limit_comment=d1.comment;
+        limit_leave=d1.leave;
+    });
+                                              
+  });
+  
+  
+function dosome(ed,data){
+   if(data.indexOf("ok")>-1&&data.indexOf("ok")<5){
+      //$.post("./srv/sdo.php", {tpl:"weibo",data:ue.getContent()}, function (d, e) { 
+        location.reload();
+      //});       
+  }else 
+    alert(data);
+} 
+  
+
+
+</script>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+<style>
+   .form-group div{padding-left:0;padding-right:0;}
+   .form-group .control-label{text-align:center;}
+</style>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>添加管理员      <small></small>
+     <div class="btn-group pull-right">
+       <a class="btn btn-primary" href="./?t=admin">返回</a>   
+       <a onclick="location.reload();" class="btn btn-primary" >刷新</a>       
+     </div>
+   </h3>
+</div>
+
+<div class="col-sm-12" style="padding-left:0;">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">       
+    <div class="col-sm-2"><select id="idtype" class="form-control"></select></div>      
+    <div class="col-sm-1 control-label">用户名</div>
+    <div class="col-sm-2">
+       <input id="u" type="text" value="" class="form-control" placeholder="请输入用户名"/>  
+    </div> 
+    <div class="col-sm-1 control-label">姓&nbsp;名</div>
+    <div class="col-sm-2">
+       <input id="n" type="text" value="" class="form-control" placeholder="请输入姓名"/>  
+    </div>
+    <div class="col-sm-1 control-label">昵&nbsp;称</div>
+    <div class="col-sm-2">
+       <input id="k" type="text" value="" class="form-control" placeholder="请输入昵称"/>  
+    </div>       
+    <div class="col-sm-1" >
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>头像</th>
+<th>用户名</th>
+<th>姓名</th>
+<th>昵称</th>
+<th>邮箱</br>手机</th> 
+<th>身份</th> 
+<th>登录次数</br>最后登录时间</th> 
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>   
+<td><img id="logo{id}" width="40" src="/upd/face/{id}.jpg" onerror="this.src='/error/face.jpg';" />                   
+</td>
+<td><a>{username}</a></td>
+<td>{truename}</td>
+<td>{nick}</td>
+<td>{email}</br>{mobile}</td>          
+<td><c n={idtype}></c></td>
+<td>{lgnums}</br><script>document.write(utctime('{lasttime}'));</script></td>
+<td> 
+<a class="glyphicon glyphicon-user" title="设为管理员" onclick="setadm('{id}',this)"></a>
+ 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+ $(function () {
+    $.get("/data/type.txt", function (data) {
+        $("#idtype").append("<option value=''>—身份—</option>");
+        $("#idtype").append(data);
+         $("#u").val(queryStr("u"));
+        $("#n").val(queryStr("n"));
+        $("#k").val(queryStr("k"));
+        $("#idtype").val(queryStr("i"));
+      });   
+
+   $.getJSON("/data/type.json.txt", function (data) {   
+          for(i=0;i<4;i++)$("c[n='"+i+"']").text(data[i]);      
+    });
+      
+    $("#btnq").bind("click",function(){       
+       location.href="./?t=admin_plus&u="+$("#u").val()+"&n="+$("#n").val()+"&k="+$("#k").val()+"&i="+$("#idtype").val();  
+    });  
+ });   
+  
+function setadm(v) {   
+   $.post("./srv/sdo.php?", {tpl:"admin_user","id":v}, function (d, e) {             
+      alert(d);          
+  });
+}
+ 
+</script>

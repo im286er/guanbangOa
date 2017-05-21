@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<script type="text/javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="common/cgcolor.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/term_add_submit.php" method="post" onsubmit="return checkTerm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以添加学期信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="25%" class="tabtd2_L">学年：</td>
+						 <td width="75%" class="tabtd2_R"><input type="text" id="year" name="year" size="25" /></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">学期：</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="radio" name="term_type" value="1" checked="checked" /> 第一学期 
+							<input type="radio" name="term_type" value="2" /> 第二学期 
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">开始日期：</td>
+						 <td width="80%" class="tabtd2_R"><input name="start_date" id="start_date" type="text" readonly="readonly" onClick="WdatePicker({isShowClear:false,readOnly:true,skin:'whyGreen',lang:'zh-cn',dateFmt:'yyyy-MM-dd'});" class="Wdate" /></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">结束日期：</td>
+						 <td width="80%" class="tabtd2_R"><input name="end_date" id="end_date" type="text" readonly="readonly" onClick="WdatePicker({isShowClear:false,readOnly:true,skin:'whyGreen',lang:'zh-cn',dateFmt:'yyyy-MM-dd'});" class="Wdate" /></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">是否为默认学期：</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="radio" name="flag_default" value="1" /> 是 
+							<input type="radio" name="flag_default" value="0" checked="checked" /> 否 
+						 </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+			</div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+});
+
+//表单提交验证
+function checkTerm()
+{
+	if($.trim($("#year").val())==""){
+		alert("请输入学年信息。");
+		$("#year").select();
+		return false;
+	}
+	if($.trim($("#start_date").val())==""){
+		alert("请选择开始日期。");
+		return false;
+	}
+	if($.trim($("#end_date").val())==""){
+		alert("请选择结束日期");
+		return false;
+	}
+	if($.trim($("#start_date").val())>=$.trim($("#end_date").val())){
+		alert("学期开始日期和学期结束日期设置错误。");
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+</script> 

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>空间信息-{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+ 
+  
+<div class="page-header">
+   <h3>教师空间<small>基本</small>    </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">ID：</label>
+    <div class="col-sm-10"><p class="form-control-static">{id} </p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">姓名：</label>
+    <div class="col-sm-10"><p class="form-control-static">{truename} </p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">入学时间：</label>
+    <div class="col-sm-10"><p class="form-control-static">{intoyear}</p></div>
+  </div>      
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份：</label>
+    <div class="col-sm-10"><p class="form-control-static">教师</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">单位：</label>
+    <div class="col-sm-10"><p class="form-control-static"><school v={school} /></p>
+       <p class="help-block">地区：<addr v={addr} /></p>
+    </div>
+  </div>     
+    <div class="form-group">
+      <label class="col-sm-2 control-label">学段/年级：</label>
+      <div class="col-sm-10">{periods}/{grades}       </div>
+   </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">主学科：</label>
+    <div class="col-sm-10"><p class="form-control-static">{subjects}</p>
+
+    </div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">默认班级：</label>
+    <div class="col-sm-10"><p class="form-control-static">{class}</p></div>
+  </div>
+      
+</form>
+          
+</div> 
+</div>
+  
+{foot}
+</body>
+<script type="text/javascript">
+$(function(){
+  $.post("./srv/rdo.php", {tpl:"get_schs_byid",id:"{school}"}, function (d, e) {  
+      $("school").text(d);
+  });
+  $.post("./srv/rdo.php", {tpl:"get_addr",id:"{addr}"}, function (d, e) {  
+       d1=JSON.parse(d);
+       if(d1){
+          $("addr").text(d1[0].names);
+       }
+  });
+});
+	
+</script>
+</html>

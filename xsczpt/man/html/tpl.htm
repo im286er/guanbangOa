@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}      
+
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+    
+<div class="col-sm-9">
+<div class="page-header">   <h3>空间模板选择<small></small> 
+
+<div class="btn-group pull-right" >    
+  <a onclick="location.reload();" class="btn btn-primary">刷新</a>
+</div>
+</h3> 
+</div>
+ 
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th> 
+<th>状态</th>     
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}">
+<td><div class="thumbnail"><img  width="100" src="/upds/index/tpl/{tpl}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td>{name}</a><br/>{des}</td> 
+<td><st v="{tpl}"></st></td> 
+<td><a class="btn btn-primary glyphicon glyphicon-ok" onclick="joinths({id:'{id}',data:'{tpl}'})">使用</a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+</div>  
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div>
+ 
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">     
+$(function () {
+   $("st[v='{tpl}']").text("当前模板"); 
+}); 
+function joinths(d){ 
+  d.tpl="set_tpl";    
+  $.post("./srv/sdo.php?",d, function (d, e) {
+     msg(d);
+     location.reload();
+  });
+}
+</script> 
+ 

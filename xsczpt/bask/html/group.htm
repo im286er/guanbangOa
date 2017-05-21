@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+{cssjs}
+</head>
+<body>  
+<h4>群组管理</h4> 
+
+<div class="c12 centered">
+<p class="note info"> 
+<form class="hform" id="qry" onsubmit="return false">    
+
+学校ID:<input id="school" type="text" style="width:100px"/>   
+名称<input id="name" type="text" style="width:100px"/> 
+
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="desc" title="排序方向" style="display:none;"/> 
+<button class="skyblue" onclick="loadPage({l_page:1})">查询</button> 
+<button class="blue"  id="cbtn">新建</button>
+<button class="skyblue" onclick="auditPage({})">审核本页</button> 
+<button class="green" onclick="location.reload();">刷新</button>    
+跳转到：<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:50px;"/>页   
+</form>
+</p>
+</div>
+
+<table class="table">
+  <thead>  
+<tr>
+<th name="id">编号</th><th name="name">名称</th> 
+<th name="school">单位</th>
+<th name="state">状态</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr id="row{id}" data-id="{id}">
+
+<td>{id}<img id="logo{id}" src="/upds/group/logo/{id}.jpg" width="48px" /></td>   
+<td><a href="/group?g={id}" target=_blank>{name}</a></td>    
+<td><sch v="{school}" /></td>
+<td><st v="{state}"></st></td>
+<td>
+<button class="small orange" onclick="auditID({id:'{id}'})">审</button> 
+<button class="small orange" onclick="Mod({id:'{id}'})">改</button> 
+<button class="small orange" onclick="openUpd('{id}','#dlg2')">图</button> 
+<button class="small red" onclick="delRow({id:'{id}'});">删</button>
+<button class="small red" onclick="mans({id:'{id}'});">管</button>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>  
+<tr>
+<td class="page" colspan="10"> 
+<ul class="pagin text-center" id="page"></ul>
+</td>
+</tr>     
+</table>
+
+</body>
+</html>
+<div id="dlg1" title="【添加/编辑】" style="width:500px;height:400px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ SaveAM({frmid:'#dlg1'});}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+<label>名称</label><input type="text" id="name" value="" maxlength="100" /><br/>      
+<label>创建者</label><input type="text" id="uid" value="" maxlength="100" /><br/>
+<label>排序</label> <input type="text" id="odx" value="" maxlength="100" /><br/> 
+<label>学校id</label><input type="text" id="school" value="" maxlength="100" /><br/>   
+<input type="text" id="id"  value="" style="display:none;"/> 
+</form>
+</div>
+
+<div id="dlg2" title="【image】" style="width:400px;height:300px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ $('#from2').submit();}},{text:'取消',handler:function(){$('#dlg2').dialog('close');}}]"> 
+<div id="tips" class="alert succes">上传宽度120px的图片</div>  
+<form action="srv/upd_logo_grp.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<label>图标</label> <input id="file" name="file" type="file" accept="image/*" />
+<input type="text" id="id" name="id" value="" style="display:none;"/> 
+<input type="text" id="flag" name="flag"  value="0" style="display:none;"/> 
+</form>
+</form>
+</div> 
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+<script>
+ formatunixs = ",timestamp";
+formatstate=","; 
+var state=new Array('','','&radic;','');
+var period,grade,school;
+
+
+$(function () {		
+    $.getJSON("/data?t=school&f=obj",function(d){school=d;       
+     loadPage({l_page:1});	
+    }); 
+    initAddBtn({btn:"#cbtn",frmid:"#dlg1"});	
+});  
+initState=true;   
+function reinitStates(){          
+   $("#list sch").each(function(a,b){$(b).text(school[$(b).attr("v")]);}); 
+  $("#list st[v=2]").html(state[2]);
+} 
+function openUpd(id,did){        
+   $('#dlg2 #id').val(id);     
+	 $('#dlg2').dialog('open').window("resize",{top:$(document).scrollTop()+($(window).height())* 0.25});
+    
+}      
+function mans(d){
+  layer.open({
+        type: 2,
+        title: '管理员',
+        shadeClose: true,
+        shade: 0.8,
+        area: ['80%','80%'],
+        content: './?t=group_man&id='+d.id 
+    }); 
+}  
+  function ifrm_dosome(e){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);   
+       if(d.ret=="ok"){           
+         $("#logo"+ $("#dlg2 #id").val()).attr("src",'/upds/group/logo/'+d.fname+'?'+Math.random());           
+         $('#dlg2').dialog('close'); 
+       }
+       else{
+         ralert(d.des);
+       }        
+    }
+}          
+</script>

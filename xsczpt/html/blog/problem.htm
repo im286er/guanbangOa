@@ -1,0 +1,79 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{meta} 
+</head>
+<body> 
+{top}
+<div class="container">
+{head}   
+
+<div class="col-sm-12">   
+
+<h2 class="text-center">{name}</h2>
+<div class="panel panel-default">                                          
+   <div class="panel-heading">
+   <h3 class="panel-title">
+<small>【专题】 来源：{froms} 时间：<stamp v="{timestamp}"></stamp> 浏览量：{see}</small>
+<code class="pull-right" onclick="window.print();">【打印】</code>
+</h3></div>
+   <div class="panel-body">
+<img src="/upds/problem/{pic}"/>
+{des}
+</tbody>
+</table> 
+ 
+</div>
+</div>
+ <div style="float:right;">
+    <!-- JiaThis Button BEGIN -->
+    <div class="jiathis_style_24x24">
+    	<a class="jiathis_button_qzone"></a>
+    	<a class="jiathis_button_tsina"></a>
+    	<a class="jiathis_button_tqq"></a>
+    	<a class="jiathis_button_weixin"></a>
+    	<a class="jiathis_button_renren"></a>
+    	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+    	<a class="jiathis_counter_style"></a>
+    </div>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
+  </div>  
+</div>
+<div class="col-sm-12" style="margin-top:30px;margin-bottom:20px;" >
+  <blockquote style="border-bottom:1px solid #ddd;"">相关阅读</blockquote>
+  
+  <div class="col-sm-12" style="max-height:80px;overflow:hidden;">
+     <ul>
+     <!-- START list -->
+     <li id="{id}" style="width:40%;font-size:13px;float:left;" ><a style="color:#000;" href="/?t=art&id={id}" target=_blank>{name}</a></li>
+     <!-- END list -->
+     </ul>
+  </div>
+</div> 
+
+<div class="col-sm-12" style="padding-left:0;">
+   <ul style="list-style:none;font-size:13px;">
+    <!-- START listpre -->
+    <li><label>上一篇</label>&nbsp;&nbsp;<a href="/?t=art&id={id}" target=_blank>{name}</a></li>
+    <!-- END listpre -->
+    <!-- START listnext -->
+    <li><label>下一篇</label>&nbsp;&nbsp;<a href="/?t=art&id={id}" target=_blank>{name}</a></li>
+    <!-- END listnext -->
+   </ul>
+</div>
+  
+  
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() {   
+  $("stamp").text(utctime("{timestamp}")); 
+  vote({tbl:"main_problem",do:"see",showok:"",callback:"",id:"{id}"},null); 
+ });  
+</script>

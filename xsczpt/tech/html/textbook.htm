@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>课文库-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('待审核','已审核','注销中'); 
+var subject={subject_json};
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>我的课件<small></small> 
+    <div class="btn-group pull-right"> 
+   <a href="?t=textbook_add&d=a" class="btn btn-primary" >+添加课文</a>       
+   </div>
+   </h3>
+</div>
+  
+ 
+
+<table class="table  table-hover">  
+<thead>
+<tr>  
+<th>课文名称</th> 
+<th>学段</th> 
+<th>科目</th> 
+<th>册</th> 
+<th>编号</th>   
+<th>教材</th>   
+<th>时间</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td>{title}</td>  
+<td><em><label data-period="{period}"></label>/<label data-grade="{grade}"></label></em></td>   
+<td><code><label data-subject="{subject}"></label></code></td>  
+<td><em><label data-volume="{volume}"></label>/<label data-chapter="{chapter}"></label></em></td>  
+<td>{no}</td> 
+
+<td><em><label data-edition="{edition}"></label></em></td>  
+
+
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td>               
+<td> 
+<a href="?t=textbook_add&d=m&id={id}" title="编辑" class="glyphicon glyphicon-pencil" target="_blank"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a> 
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">
+var subject,period,grade,edition,volume,chapter;
+$(function(){      
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+ $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+   $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });
+  $.getJSON("/data/textbook_volume.json.txt", function (data) {  
+      volume=data;
+      $("label[data-volume]").each(function (a, b) {
+        $(this).text(volume[$(this).data("volume")]);
+      });
+  });
+  $.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+      chapter=data;
+      $("label[data-chapter]").each(function (a, b) {
+        $(this).text(chapter[$(this).data("chapter")]);
+      });
+  }); 
+});
+    
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_textbook",id:v}, function (d, e) {  
+      $(obj).parent().parent().parent().parent().remove();
+  });
+} 
+</script>

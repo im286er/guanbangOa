@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>添加联系人</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="common/jquery.js"></script>
+<script type="text/javascript" language="javascript">
+function checkForm()
+{
+	if($("#relation_name").val()==""){
+		alert("请填写关系名称。");
+		$("#relation_name").select();
+		return false;
+	}
+	if($("#truename").val()==""){
+		alert("请填写姓名。");
+		$("#truename").select();
+		return false;
+	}
+	if($("#telphone").val()==""){
+		alert("请填写联系电话。");
+		$("#telphone").select();
+		return false;
+	}
+	$("#but_add").attr("disabled",true);
+	$("#but_ret").attr("disabled",true);
+	return true;
+}
+</script>
+</head>
+
+<body>
+	<div class="main">
+		<div class="box">
+			<form action="./srv/sturelation_add_submit.php" method="post" onsubmit="return checkForm();">
+				<div class="boxtitle">在这里您可以添加联系人相关信息</div>
+				<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+                        <tr>
+							 <td width="12%" class="tabtd2_L">关系：</td>
+							 <td width="88%" class="tabtd2_R"><input type="text" id="relation_name" name="relation_name" size="15" /> 例如：父亲、母亲、哥哥等</td>
+						</tr>
+                        <tr>
+							 <td width="12%" class="tabtd2_L">姓名：</td>
+							 <td width="88%" class="tabtd2_R"><input type="text" id="truename" name="truename" size="15" /></td>
+						</tr>
+                        <tr>
+							 <td width="12%" class="tabtd2_L">工作单位 ：</td>
+							 <td width="88%" class="tabtd2_R"><input type="text" id="company" name="company" size="30" /></td>
+						</tr>
+                        <tr>
+							 <td width="12%" class="tabtd2_L">联系电话：</td>
+							 <td width="88%" class="tabtd2_R"><input type="text" id="telphone" name="telphone" size="20" /></td>
+						</tr>
+                    </table>
+				</div>
+				<div class="boxfooter2">
+					<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="but_ret" id="but_ret" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" value="返回" onclick="history.back()" /></div>
+		</form>
+		</div>
+	</div>
+</body>
+</html>

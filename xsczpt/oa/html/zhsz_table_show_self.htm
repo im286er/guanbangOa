@@ -1,0 +1,218 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box" style="background:#fff;">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<label class="current"><a href="javascript:void(0);">成长轨迹</a></label> 
+			{href}
+		</div>
+		<div class="boxtitle2">
+			{str}
+		</div>
+		<div class="tabbody">
+			<div style="width:100%;height:20px; line-height:20px; text-align:center; font-size:14px;float:left;margin-bottom:5px;">{tips}</div>
+			<div class="ha_formlist">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					  <tr>
+						<td width="8%" class="tabtd2_L">姓名</td>
+						<td width="15%" class="tabtd2_R">{truename}</td>
+						<td width="12%" class="tabtd2_L">性别</td>
+						<td width="15%" class="tabtd2_R">{gender}</td>
+						<td width="8%" class="tabtd2_L">出生年月</td>
+						<td width="15%" class="tabtd2_R">{birth_date}</td>
+						<td colspan="3" rowspan="5" class="tabtd2_R" style="text-align:center; padding-top:5px;">
+							<img src="{avatar}" width="130" height="160" border="0" align="absmiddle" />
+						&nbsp;</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">民族</td>
+						<td width="15%" class="tabtd2_R">{nation}</td>
+						<td width="12%" class="tabtd2_L">政治面貌</td>
+						<td width="15%" class="tabtd2_R">{political_status}</td>
+						<td width="8%" class="tabtd2_L">曾用名</td>
+						<td width="15%" class="tabtd2_R">{used_name}</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">生源性质</td>
+						<td width="15%" class="tabtd2_R">{from_type}</td>
+						<td width="12%" class="tabtd2_L">联系电话</td>
+						<td class="tabtd2_R">{mobile}</td>
+						<td class="tabtd2_R">Email</td>
+						<td class="tabtd2_R">{email}</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">QQ</td>
+						<td width="15%" class="tabtd2_R">{qq}</td>
+						<td width="12%" class="tabtd2_L">既往病史</td>
+						<td colspan="3" class="tabtd2_R">{medical_history}</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">原班级</td>
+						<td width="15%" class="tabtd2_R">{oClass}&nbsp;</td>
+						<td width="12%" class="tabtd2_L">原班主任</td>
+						<td width="15%" class="tabtd2_R">{oMaster}&nbsp;</td>
+						<td width="8%" class="tabtd2_L">原职务</td>
+						<td width="15%" class="tabtd2_R">{oDuty}&nbsp;</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">奖惩情况</td>
+						<td colspan="8" class="tabtd2_R">{str_reward}&nbsp;</td>
+					  </tr>
+					  <tr>
+						<td width="8%" class="tabtd2_L">家庭住址</td>
+						<td colspan="8" class="tabtd2_R">{address}</td>
+					  </tr>
+					  <tr>
+						<td colspan="10">
+						<table cellpadding="0" cellspacing="0" border="0" width="100%">
+					  <!-- START list --> 
+					  <tr>
+						<td width="8%" class="tabtd2_L">{relation}</td>
+						<td width="15%" class="tabtd2_R">{truename}</td>
+						<td width="8%" class="tabtd2_L">工作单位</td>
+						<td class="tabtd2_R">{company}</td>
+						<td width="8%" class="tabtd2_L">联系电话</td>
+						<td width="15%" class="tabtd2_R">{telphone}</td>
+					  </tr>
+					  <!-- END list --> 
+					  </table>
+						</td>
+					</tr>
+				</table>
+			</div>
+			{str_total}
+			<!--体质测试-->
+			<div class="ha_formlist">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				  <tr>
+					<td rowspan="3" class="tabtd2_L" style="width:80px; text-align:center;font-weight:bold;">体质测试记录</td>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">身高</td>
+					<td class="tabtd2_R" style="width:50px; text-align:center;">{physique_height}</td>
+					<td rowspan="2" class="tabtd2_L" style="width:50px; text-align:center;">视力</td>
+					<td class="tabtd2_L" style="width:50px; text-align:center;">左</td>
+					<td class="tabtd2_R" style="width:30px; text-align:center;">{physique_left_eye}</td>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">肝</td>
+					<td class="tabtd2_R" style="width:30px; text-align:center;">{physique_liver}</td>
+					<td rowspan="2" class="tabtd2_L" style="width:50px; text-align:center;">心肺听诊</td>
+					<td rowspan="2" class="tabtd2_R" style="width:60px; text-align:center;">{physique_xf_ting}</td>
+					<td rowspan="2" class="tabtd2_L" style="width:50px; text-align:center;">外科常规</td>
+					<td rowspan="2" class="tabtd2_R" style="width:100px; text-align:center;">{physique_wkcg}</td>
+					<td class="tabtd2_L" style="text-align:center;">审核老师</td>
+				  </tr>
+				  <tr>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">体重</td>
+					<td class="tabtd2_R" style="width:50px; text-align:center;">{physique_weight}</td>
+					<td class="tabtd2_L" style="width:50px; text-align:center;">右</td>
+					<td class="tabtd2_R" style="width:30px; text-align:center;">{physique_right_eye}</td>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">胆</td>
+					<td class="tabtd2_R" style="width:30px; text-align:center;">{physique_guts}</td>
+					<td rowspan="2" class="tabtd2_R" style="text-align:center;">{physique_teacher_name}</td>
+				  </tr>
+				  <tr>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">血压</td>
+					<td class="tabtd2_R" style="width:50px; text-align:center;">{physique_blood}</td>
+					<td class="tabtd2_L" style="width:50px; text-align:center;">肺活量</td>
+					<td class="tabtd2_R" style="width:50px; text-align:center;">{physique_vc}</td>
+					<td class="tabtd2_R">&nbsp;</td>
+					<td class="tabtd2_L" style="width:30px; text-align:center;">脾</td>
+					<td class="tabtd2_R" style="width:30px; text-align:center;">{physique_spleen}</td>
+					<td class="tabtd2_L" style="width:50px; text-align:center;">眼科</td>
+					<td class="tabtd2_R" style="width:60px; text-align:center;">{physique_yanke}</td>
+					<td class="tabtd2_L" style="width:50px; text-align:center;">口腔</td>
+					<td class="tabtd2_R" style="width:100px; text-align:center;">{physique_mouth}</td>
+				  </tr>
+				</table>
+			</div>
+			
+			<div class="ha_formlist">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				  <tr>
+					<td rowspan="2" class="tabtd2_L" style="width:80px; text-align:center;font-weight:bold;">体能测试记录</td>
+					{str_menu}
+				  </tr>
+				  <tr>
+					{str_stamina}
+				  </tr>
+				  <tr>
+					<td rowspan="3" class="tabtd2_L" style="width:80px; text-align:center;font-weight:bold;">审核老师</td>
+					{str_teacher}
+				  </tr>
+				</table>
+			</div>
+			
+			<div class="ha_formlist">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				  <tr>
+					<td class="tabtd2_R" style="font-weight:bold;" width="8%">他人评价</td>
+					<td class="tabtd2_R">
+						{str_reply}
+					</td>
+				  </tr>
+				</table>
+				<!--学期自我总结-->
+				<!--学期评语-->
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				  <tr>
+					<td class="tabtd2_R" style="font-weight:bold;" width="8%">学期评语</td>
+					<td class="tabtd2_R">
+					{content}{tech_name}
+					</td>
+				  </tr>
+				</table>
+			</div>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}  
+
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/plain" id="upload_img" name="upload_img"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.all.js"></script>
+<script src="js/layer/layer.js"></script>        
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$(".ha_forimg2 img").each(function(){
+		$(this).bind("click",function(){
+			var src=$(this).attr('src');
+			layer.open({
+			  type: 1,
+			  title: false,
+			  closeBtn: 0,
+			  offset:0,
+			  area: '500px',
+			  skin: 'layui-layer-nobg', //没有背景色
+			  shadeClose: true,
+			  content: '<a href='+src+' target="_blank"><img src="'+src+'" style="width:100%;"></a>'
+			});	
+		})
+	});	
+
+
+});
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#master_summary").val())==""){
+		alert("请填写学期评语。");	
+		return false;
+	}
+	return true;
+}
+</script> 

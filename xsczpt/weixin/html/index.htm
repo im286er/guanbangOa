@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/ionic.min.css">
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+</head>
+<body>
+<header><h1>学生成长系统</h1><a href="?t=admin_message" target="" class="glyphicon glyphicon-volume-down" style="font-size:1.8rem;line-height:55px;"><i class="num" id="num" style="font-size:.8rem;position:absolute;top:-.7rem;"></i></a></header>
+<section class="fl wout">   
+	<ul class="recom_inlist mb10">
+		<li>
+			<a class="rec_img" href="?t=report"><i class="iconfont evaluate"><img src="images/czjl.png" /></i></a>
+			<a class="name" href="?t=report">成长经历</a>
+			<!-- <i>chengzhang jingli</i> -->
+		</li>
+		<!--<li>
+			<a class="rec_img" href="?t=zhsz_table_show_self"><i class="iconfont mes_tips"><img src="images/mi_img4.jpg" /></i></a>
+			<a class="name" href="?t=zhsz_table_show_self">综合素质评价表</a>
+			<i>zonghe suzhi pingjia</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=zhsz_other"><i class="iconfont mes_tips"><img src="images/hi_img2.jpg" /></i></a>
+			<a class="name" href="?t=zhsz_other">关注他人</a>
+			<i>guanzhu taren</i>
+		</li>-->
+		<li>
+			<a class="rec_img" href="?t=stu_remarks"><i class="iconfont mes_tips"><img src="images/ypjy.png" /></i></a>
+			<a class="name" href="?t=stu_remarks">友朋寄语</a>
+			<!-- <i>youpeng jiyu</i> -->
+		</li>
+		<li>
+			<a class="rec_img" href="?t=search_physique"><i class="iconfont mes_tips"><img src="images/tntz.png" /></i></a>
+			<a class="name" href="?t=search_physique">体能体质</a>
+			<!-- <i>tineng tizhi</i> -->
+		</li>
+		<li>
+			<a class="rec_img" href="?t=zhsz_score"><i class="iconfont mes_tips"><img src="images/xycjcx.png" /></i></a>
+			<a class="name" href="?t=zhsz_score">学业成绩查询</a>
+			<!-- <i>xueye chengji chaxun</i> -->
+		</li>
+		<!-- <li>
+			<a class="rec_img" href="?t=stu_jiangcheng"><i class="iconfont mes_tips"><img src="images/mi_img17.jpg" /></i></a>
+			<a class="name" href="?t=stu_jiangcheng">奖惩管理</a>
+			<i>jiangcheng guanli</i>
+		</li> -->
+	
+		<!-- <li>
+			<a class="rec_img" href="?t=search_physique"><i class="iconfont mes_tips"><img src="images/mi_img7.jpg" /></i></a>
+			<a class="name" href="?t=search_physique">体能体质</a>
+			<i>tineng tizhi</i>
+		</li> -->
+		<!-- <li>
+			<a class="rec_img" href="?t=stu_remarks"><i class="iconfont mes_tips"><img src="images/hi_img12.jpg" /></i></a>
+			<a class="name" href="?t=stu_remarks">友朋寄语</a>
+			<i>youpeng jiyu</i>
+		</li> -->
+		<li>
+			<a class="rec_img" href="?t=operation_skill"><i class="iconfont cre_inquiry"><img src="images/jncz.png" /></i></a>
+			<a class="name" href="?t=operation_skill">技能操作</a>
+			<!-- <i>jineng caozuo</i> -->
+		</li>
+		
+	</ul>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li class="current"><a href="?t=index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li><a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script>
+var uid="{uid}";
+getmsgs();
+function getmsgs(){
+$.ajax({
+    type: 'POST',
+    url: "./srv/stu_top.php" ,
+    data: {tpl:"get_msgs",uid:uid} ,
+    success: function(d){
+	 if(d >0){
+		$("#num").css("display","inline");
+		$("#num").html(d);
+		$("#num").parent().removeClass("mes").addClass("mes_d");
+	  }else{
+		$("#num").css("display","none");
+		$("#num").parent().removeClass("mes_d").addClass("mes");
+	  }
+	} 
+});
+ setTimeout(function() {   //此处是过一定时间后自动消失
+        getmsgs();
+    }, 3000);
+}
+</script>
+</body>
+</html>

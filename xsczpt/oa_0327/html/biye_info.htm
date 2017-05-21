@@ -1,0 +1,136 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			
+			<form method="post" action="./srv/biye_info_submit.php" enctype="multipart/form-data" onsubmit="return checkEvent();">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+				<tr>
+					<td class="tabtd2_R" colspan="4" style="font-size:14px; background:#a3c0f9; color:#ffffff; font-weight:bold;"><span class="floatright" style=" margin-top:10px;"><a href="javascript:void(0);" onclick="addEvent();"><img src="images/add.gif" width="14" height="14" border="0" align="absmiddle" /></a></span></td>
+				</tr>
+				<tr>
+					<td class="tabtd2_L" style="text-align:center;" width="12%">类别</td>
+					<td class="tabtd2_L" style="text-align:center;" width="35%">时间</td>
+					<td class="tabtd2_L" style="text-align:center;" width="20%">学校</td>
+					<td class="tabtd2_L" style="text-align:center;">说明</td>
+				</tr>
+				{str_event}
+				<tr>
+					<td class="tabtd2_L" style="text-align:center;">
+						<select name="subject[]" >
+							<option value="幼儿园">幼儿园</option>
+							<option value="小学">小学</option>
+							<option value="初中">初中</option>
+							<option value="高中">高中</option>
+							<option value="大学">大学</option>
+							<option value="研究生">研究生</option>
+							<option value="博士生">博士生</option>
+						</select></td>
+						<td width="15%" class="tabtd2_R"><input name="start_date[]" type="text" readonly="readonly" onClick="WdatePicker();" class="Wdate" style="height:30px" value="" /> 至 <input name="end_date[]"  type="text" readonly="readonly" onClick="WdatePicker();" class="Wdate" style="height:30px" value="" /></td>
+					<td class="tabtd2_L" style="text-align:center;"><input type="text" name="name[]" size="30" value="" /></td>
+					<td class="tabtd2_L" colspan="2" style="text-align:center;"><textarea cols="50" rows="2" name="content[]" style="font-size:12px;"></textarea></td>
+				</tr>
+				<tr id="tr_exp">
+					<td class="tabtd2_R" colspan="4" style="text-align:center; padding:5px 0;">
+						<input type="hidden" name="term_id" value="{curTerm_id}" />
+						<input type="hidden" name="main_id" value="{mainId}" />
+						<input name="but_exp" id="but_exp" type="submit" value="保 存" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+						<span class="floatright">友情提示：点击右上角的&nbsp;<img src="images/add.gif" width="14" height="14" border="0" align="absmiddle" />&nbsp;可以批量添加哦：）</span>
+					 </td>
+				</tr>
+			</table>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+
+});
+
+//添加学习实践
+function addEvent()
+{
+	var html = '<tr>';
+	html += '<td class="tabtd2_L" style="text-align:center;"><select name="subject[]" ><option value="1">幼儿园</option><option value="2">小学</option><option value="3">初中</option><option value="4">高中</option><option value="5">大学</option><option value="6">研究生</option><option value="7">博士生</option></select></td>';
+	html += '<td width="15%" class="tabtd2_R"><input name="start_date[]" type="text" readonly="readonly" onClick="WdatePicker();" class="Wdate" style="height:30px" value="" /> 至 <input name="end_date[]"  type="text" readonly="readonly" onClick="WdatePicker();" class="Wdate" style="height:30px" value="" /></td>';
+	html += '<td class="tabtd2_L" style="text-align:center;"><input type="text" name="name[]" size="30" value="" /></td>';
+	html += '<td class="tabtd2_L" colspan="2" style="text-align:center;"><textarea cols="50" rows="2" name="content[]" style="font-size:12px;"></textarea>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" onclick="delEventTr(this);"><img src="images/delete.gif" width="14" height="14" border="0" /></a></td>';
+	html += '</tr>';
+	
+	$("#tr_exp").before(html);
+}
+
+//删除学习实践
+function delEventTr(obj)
+{
+	$(obj).parent().parent().remove();
+}
+//学习实践表单验证
+function checkEvent()
+{
+	var subject = $("select[name='subject[]']");
+	var content = $("textarea[name='content[]']");
+	var start_date = $("input[name='start_date[]']");
+	var end_date = $("input[name='end_date[]']");
+	var name = $("input[name='name[]']");
+	
+	var len = subject.size();
+
+	for(var i=0;i<len;i++){
+		if($.trim(start_date.eq(i).val())=="" || $.trim(end_date.eq(i).val())==""){
+			alert("第"+(i+1)+"行：时间不能为空。");
+			start_date.eq(i).select();
+			return false;
+		}
+		
+		var date1 = new Date(Date.parse(start_date.eq(i).val()));  
+		var date2 = new Date(Date.parse(end_date.eq(i).val()));  
+		if (date1.getTime() > date2.getTime()) {  
+			alert("结束时间不得小于开始时间。");  
+			return false;  
+		}  
+
+		if($.trim(name.eq(i).val())==""){
+			alert("第"+(i+1)+"行：学校不能为空。");
+			name.eq(i).select();
+			return false;
+		}
+	}
+	
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+
+//删除经历感悟
+function delEvent(id)
+{
+	if(confirm("你确定删除该条学习经历记录吗？")){
+		$.post("./srv/sdo.php", {tpl:"del_biye","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#exp_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

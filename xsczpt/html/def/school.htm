@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>机构-{gtitle}</title>
+{meta} 
+<script src="js/school.js" type="text/javascript"></script> 
+<style>                 
+.breadcrumb,.panel,.nav-pills>li>a,.form-control,.thumbnail{border-radius:0;}
+.thumbnail{border:none;}
+.thumbnail a>img{width:120px;height:120px;}
+.breadcrumb a{color:#545454;font-size:14px;}    
+
+.seled a{padding:4px 10px;} 
+.active{background:#ff6300;color:#fff;}
+.active:hover,.active:focus{background:#ff6300;}
+
+.bd-sed code{border:1px #ddd solid;}
+.bd-dotted{border-bottom:1px #ddd dashed;padding-bottom:5px;overflow:hidden;}  
+.bd-lst{margin:5px 0px;border-bottom:1px #ddd dashed;}      
+.page-header{border-bottom:4px solid #ff6300;}
+</style>
+</head>
+<body> 
+{top}
+<div class="container">
+{head} 
+ 
+
+<div  class="row">
+<div class="col-sm-1"><img src="/img/ico0.gif"></div>
+<div class="col-sm-11">
+  <h3 style="font-size:1.6em;">{gtitle} 
+  <div class="btn-group pull-right"> 
+  <a href="./?t=school_apply"  class="btn btn-primary"> +创建新学校</a>
+  <a href="./?t=school_waiting"  class="btn  btn-primary"> 审核中的学校</a>    
+  </div> 
+  </h3>
+  <h6 style="color:#777;">NANJIANG JIAOYU XIANXI NETWORK.     
+  </h6>
+</div>
+</div>
+ 
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">条件筛选</h3>
+   </div>
+   <div class="panel-body">
+    <div class="panel bd-sed" id="sed">已选条件：</div>
+    <div class="panel bd-dotted seled" id="orgtype"></div>
+    <div class="panel bd-dotted seled" id="period" ></div>      
+    <div class="panel bd-dotted seled" id="addr"></div>
+    <div class="panel bd-dotted seled" id="addr1"></div>
+    <div class="panel">   
+     <div class="col-sm-3"><input type="text" class="form-control" id="so" placeholder="请输入学校名称"></div>  
+      <div class="col-sm-1">    <button type="button" class="btn btn-primary"  id="btn">查询</button></div>     
+    </div>
+   </div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+   <h4>机构单位<small>列表</small></h4>
+</div>
+ <div class="panel-body">
+
+<div class="row" id="list">
+<!-- START list -->   
+<div class="col-md-3 bd-lst">
+    <div class="thumbnail"><a href="/school?s={id}" target=_blank><img src="/upds/school/logo/{id}.jpg"></a></div>
+    <div class="caption text-center">
+       <h4 class="text-nowrap">{name}</h4>
+       <p class="text-nowrap text-muted"><small>&nbsp;{motto}</small></p>     
+    </div>
+</div>
+<!-- END list -->   
+</div>
+
+<ul class="pagination pull-right">
+{page}
+</ul>   
+</div>
+</div>
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+
+$(function() { 
+  /*$.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+  $("#addr1").bind("change", function(){getaddr($(this).val());getaddrv($(this).val());}); 
+  $("#addr2").bind("change", function(){getaddrv($(this).val());});  
+  $.post("./srv/rdo.php",{"tpl":"getperiod"},function (s,e) {   
+    d=JSON.parse(s);$("#period").empty();   
+    for(i=0;i<d.length;i++){
+      $("#period").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#period a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#period1").val($(this).attr("v"));
+    });       
+  }); 
+  $.post("./srv/rdo.php",{"tpl":"getorgtype"},function (s,e) {   
+    d=JSON.parse(s);$("#orgtype").empty();   
+    for(i=0;i<d.length;i++){
+      $("#orgtype").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#orgtype a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#orgtype1").val($(this).attr("v"));
+    });       
+  }); */
+  $("#btn").click(function(){SO();});
+  
+ });
+    
+</script>

@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+   <div class="main">
+		<div class="box">
+				<div class="boxtitle">
+                  <label><a href="./?t=search_physique">体能管理</a></label><label class="current"><a href="./?t=search_stamina">体质管理</a></label>
+                </div>				    				 
+               <!--体质信息--> 
+                <div class="tabbody">
+			    <table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+				     <td width="10%" class="tabtd">检测时间</td>
+					 <td width="5%" class="tabtd">姓名</td>
+					 <td width="5%" class="tabtd">身高</td>
+					 <td width="5%" class="tabtd">体重</td>
+					 <td width="5%" class="tabtd">左眼</td>
+					 <td width="5%" class="tabtd">右眼</td>
+					 <td width="5%" class="tabtd">肝</td>
+					 <td width="5%" class="tabtd">胆</td>
+					 <td width="8%" class="tabtd">心肺听诊</td>
+					 <td width="8%" class="tabtd">外科常规</td>
+					 <td width="5%" class="tabtd">血压</td>
+					 <td width="8%" class="tabtd">肺活量</td>
+					 <td width="5%" class="tabtd">脾</td>
+					 <td width="5%" class="tabtd">眼科</td>
+					 <td width="5%" class="tabtd">口腔</td>
+					 <td class="tabtd">操作选项</td>
+				</tr>
+				<!-- START list1 --> 
+				<tr>
+				    <td class="tabtd">{year}&nbsp;({term_name})</td>
+					<td class="tabtd">{truename}</td>
+					<td class="tabtd">{height}</td>
+					<td class="tabtd">{weight}</td>
+					<td class="tabtd">{left_eye}</td>
+					<td class="tabtd">{right_eye}</td>
+					<td class="tabtd">{liver}</td>
+					<td class="tabtd">{guts}</td>
+					<td class="tabtd">{xf_ting}</td>
+					<td class="tabtd">{wkcg}</td>
+					<td class="tabtd">{blood}</td>
+					<td class="tabtd">{vc}</td>
+					<td class="tabtd">{spleen}</td>
+					<td class="tabtd">{yanke}</td>
+					<td class="tabtd">{mouth}</td>
+					<td class="tabtd" style="text-align:center;padding-left:10px;"><img src="images/see.png" style="text-align:left;width:18px;height:12px;"/>&nbsp;<a href="./?t=physique_stu_modify&id={id}">查看</a></td> 
+				</tr>
+				<!-- END list1 --> 
+				
+			</table>
+			
+		</div>		   
+		</div>
+		<!--表格中间 begin-->
+		
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+    </div>
+{footer}      
+</body>
+</html> 

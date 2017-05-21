@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head> 
+ <title></title>
+ {cssjs}
+      
+
+</head>
+<body>
+<h2>系统信息管理</h2>
+<form id="form1" class="vform" onsubmit="return false;">
+<table  class="data2" id="dlg1" width="100%" border="0" cellpadding="0" cellspacing="0">
+<thead>
+<tr> 
+<th colspan="3" class="text-left"><b>系统信息修改</b></th>
+</tr>
+</thead>
+<tbody>
+<tr><td></td><td>
+<input id="debug" type="checkbox" value=""/>  Debug
+<input id="regoff" type="checkbox" value=""/>关闭注册
+<input id="cache" type="checkbox" value=""/>打开缓存 
+<input id="ipchk" type="checkbox" value=""/>登录错误限制
+</td></tr>
+<tr><td width="100px">系统名称：</td><td><input type="text" id="name" style="width:250px"/></td></tr>
+<tr><td width="100px">系统域名：</td><td><input type="text" id="dns" style="width:250px"/></td></tr>    
+<tr><td>错误次数：</td><td><input type="text" id="ipnum" style="width:100px" onkeyup="value=value.replace(/[^0-9/]/ig,'')" />
+<em class="text-info">登录错误最大次数，超过以后限制登录</em>
+</td></tr>
+<tr><td>取回密码：</td><td><input type="text" id="reseturl" style="width:250px"/></td></tr>
+
+ 
+</tbody>
+<tr class="page"><td colspan="2">
+<input type="text" id="id" style="display:none;" value="" disabled/>  
+
+<button class="small orange" id="btn1">保存修改</button> 
+<button class="small red" onclick="gensso();">生成配置信息</button>
+<button class="small skyblue" onclick="clearF();">清空前端缓存</button>
+<button class="small skyblue" onclick="clearip();">清空IP</button>
+</td>
+</tr>
+</table>
+</form>
+<script>
+    var dotype = "m";
+    $(function () {
+        readID({ "tpl": queryStr("t"), "do": "r", "id": "1", frmid: "#form1" });   
+        $("#btn1").bind("click",function(){
+            SaveAM({ tpl: queryStr("t"), "do": "m", id: 1, frmid: "#form1", showok:'完成', callback: "amcallback" });
+        });
+    });  
+
+
+    function gensso() {
+       $.post("./srv/gen.php?", {"tpl": queryStr("t"),"do":"r","id":"1" }, function (data, state) {
+            lalert(data);
+        });
+    }     
+    function clearF() {
+       $.post("./srv/gen.php?",{"tpl":"clear"}, function (data, state) {
+            lalert(data);
+        });
+    }
+     function clearip() {
+       $.post("./srv/gen.php?",{"tpl":"clearip"}, function (data, state) {
+            lalert(data);
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>申请新学校-{gtitle}</title>
+{meta} 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+ 
+</head>
+<body> 
+{top}
+<div class="container">
+ {head} 
+
+<div  class="row">
+<div class="col-sm-1"><img src="/img/ico0.gif"></div>
+<div class="col-sm-11">
+  <h3 style="font-size:1.6em;">{gtitle} 
+  <div class="btn-group pull-right"> 
+  <a href="./?t=school_apply"  class="btn btn-primary"> +添加新学校</a>
+  <a href="./?t=school_waiting"  class="btn  btn-primary"> 审核中的学校</a>    
+  </div> 
+  </h3>
+  <h6 style="color:#777;">NANJIANG JIAOYU XIANXI NETWORK.     
+  </h6>
+</div>
+</div> 
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">【申请新学校】</h3>
+   </div>
+   <div class="panel-body"> 
+<form class="form-horizontal" role="form"  id="form1"> 
+   <div class="form-group">
+    <label class="col-sm-1 control-label">学校名称</label>
+      <div class="col-sm-4"><input type="text" class="form-control" id="name" placeholder="请输入学校名称"></div>
+    </div>
+    <div class="form-group">
+       <label class="col-sm-1 control-label">学校简称</label>
+      <div class="col-sm-4"><input type="text" class="form-control" id="mininame" ></div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-1 control-label">学校编码</label>
+      <div class="col-sm-4"><input type="text" class="form-control" id="scode" >
+       <p class="help-block">*组织机构代码证</p></div>                            
+    </div>  
+    <div class="form-group">
+       <label class="col-sm-1 control-label">学校域名</label>
+      <div class="col-sm-4"><input type="text" class="form-control" id="dns" maxlength="20" >
+      <p class="help-block">*英文和数字，中文无法解析</p></div>   
+    </div>
+    <div class="form-group">
+    <label class="col-sm-1 control-label">地址</label>
+      <div class="col-sm-3"><select id="addr" class="form-control"></select></div>    
+    </div>               
+    <div class="form-group">
+    <label class="col-sm-1 control-label">学校类型</label>
+      <div class="col-sm-2"><select id="typeid" class="form-control"></select></div>        
+    </div>
+    <div class="form-group">
+    <label class="col-sm-1 control-label">学段</label>
+      <div class="col-sm-2"><select id="period" class="form-control"></select></div>        
+    </div>      
+ 
+   <div class="form-group">
+    <label class="col-sm-1 control-label">学校校训</label>
+      <div class="col-sm-8"><input type="text" class="form-control" id="motto" ></div>
+    </div>
+   <div class="form-group">
+    <label class="col-sm-1 control-label">学校简介</label>
+      <div class="col-sm-11"><textarea class="form-control" id="des"></textarea></div>
+    </div>
+    <div class="form-group">
+    <label class="col-sm-1 control-label">联系方式</label>
+      <div class="col-sm-11"><input type="text" class="form-control" id="contacts" placeholder="请输入学校的联系电话 或者负责人电话"> </div>
+    </div>
+  <div class="form-group">
+    <label class="col-sm-1 control-label"></label> 
+       <div class="col-sm-4">  
+            <button type="button" class="btn btn-danger" style="background:#ff6300;" id="btn">立即申请</button>
+           
+            <input type="text" id="addrs" value="" style="display:none;">   
+         <input type="text" id="state" value="1" style="display:none;"> 
+         <input type="text" id="id" style="display:none;"> 
+     </div>   
+      
+    </div>
+</form>
+   </div>
+</div>
+
+ 
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() {//selectAddHead("#addr","地区"); 
+  $.get("/data/two.php?t=sys_addr&f=txt", function (data) {$("#addr").append(data);});   
+  $("#addr").bind("change", function(){getaddrs($(this).val());}); 
+ //$("#addr2").bind("change", function(){getaddrs($(this).val());});  
+  $.get("/data/orgtype.txt", function (data) {$("#typeid").html(data); }); 
+  $.get("/data/period.txt", function (data) {$("#period").html(data); }); 
+  
+  $("#btn").click(function(){
+     if($("#addr").val()==""){alert("请选择地区");return;}
+     if($("#name").val()==""){alert("请输入名称");return;}
+     if($("#mininame").val()==""){alert("请输入简称");return;}
+     if($("#motto").val()==""){alert("请输入校训");return;}
+     if($("#des").val()==""){alert("请输入简介");return;}
+     if($("#scode").val()==""){alert("请输入编码");return;}
+     if($("#contacts").val()==""){alert("请输入联系方式");return;}
+      SaveAM({tpl:"school","do":"a",frmid:"#form1",showok:'申请学校成功，我们将在1-5个工作日审核您的审核！',callback:"dosome"}); 
+   });
+ }); 
+ function dosome(ed,d){
+    if(d.indexOf("ok")>-1){
+      location.href="./?t=school_waiting";
+    }
+ }
+/*function getaddr(v){ 
+  $.post("./srv/rdo.php?", {tpl:"getaddr2","id":v}, function (d, e) {              
+    selectShowData('#addr2', eval(d), "id", "name");                
+  });
+} */
+function getaddrs(v){ 
+  if(v=="")return; 
+  $.post("./srv/rdo.php?", {tpl:"getaddrs","id":v}, function (d, e) {                  
+      $("#addrs").val($.trim(d));            
+  });
+}
+</script>

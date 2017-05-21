@@ -1,0 +1,152 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人中心-{gtitle}</title>
+{cssjs}   
+<script>
+var arr=new Array('','管理员','群主');
+var arr1=new Array('','默认班级');
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>我的群组      <small></small>   
+  <div class="btn-group pull-right">
+  <button type="button" class="btn btn-primary"  id="btn">加入群组</button>
+  <a href="./?t=group_new" class="btn btn-primary">+创建群组</a>
+  <a href="./?t=group_me" class="btn btn-primary">创建记录</a>
+</div>
+    </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+<th>口号</th>
+<th>状态</th>  
+<th>状态</th>   
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/group/logo/{gid}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/group?g={gid}" target=_blank>{name}</a></td>
+<td><label data-school="{school}"></label></td>
+<td><script>document.write(arr[{isman}]);</script></td>
+<td><label data-state="{state}"></label></td>
+<td>
+
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{gid}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+ $(function () {
+  $.getJSON("/data/state.json.txt", function (data) {          
+        for(i=0;i<4;i++)$("label[data-state='"+i+"']").text(data[i]);      
+  }); 
+  $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+       selectShowData("#school",JSON.parse(d),"id","name");    
+  });  
+   $.post("./srv/rdo.php", {tpl:"get_my_sch"}, function (d, e) {        
+       t=JSON.parse(d);  
+       for(k=0;k<t.length;k++){
+          $("label[data-school='"+t[k].id+"']").text(t[k].name);
+       }
+  });  
+  
+    $("#btn").bind("click",function(){     $('#dlg1').modal('show');    }); 
+ });   
+
+function joinths(){
+  if($("#list").val()==undefined||$("#list").val()==""){alert("请选择一个群");return;} 
+  $.post("./srv/sdo.php?", {tpl:"join_group",id:$("#list").val(),sid:$("#school").val()}, function (d, e) {                     
+   // alert(d);
+    if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d); 
+  });
+} 
+/*
+function defths(v,v1) {    
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"defedu","id":v,data:v1}, function (d, e) {                  
+     alert(d);         
+  });
+} */ 
+function delths(v) {  
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"del_grp","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+}
+function selv(){//搜索列表
+    if($("#school").val()==""){alert("请选择一个单位");return;}
+    $.post("./srv/rdo.php?", {tpl:"sel_group",sid:$("#school").val(),name:$("#name").val(),no:$("#no").val()}, function (d, e) {                     
+      selectShowData("#list",JSON.parse(d),"id","name");
+  });
+}  
+</script>
+
+
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加</h4>
+         </div>
+         <div class="modal-body">
+       <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group">      
+    <div class="col-sm-3">
+    <select id="school" class="form-control"  placeholder="单位（学校）"></select>
+    </div>
+    <div class="col-sm-3">
+<input type="text" id="name" class="form-control"   placeholder="群名称"/>
+</div>
+<div class="col-sm-3">
+<input type="text" id="no" class="form-control"  placeholder="群号码" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" />
+    </div>
+    <div class="col-sm-3">
+       <button type="button" class="btn btn-primary" id="btn" onclick="selv()">查询</button>
+     </div>
+    </div>
+ 
+
+  <div class="form-group">     
+    <div class="col-sm-10">
+ <select class="form-control" style="width:30%;" id="list" size="18" placeholder="群组列表"></select> 
+    </div>
+  </div>  
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="joinths()">申请加入</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>

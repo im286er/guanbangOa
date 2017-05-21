@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+
+<div class="col-sm-9">
+<div class="page-header">
+  <h3>相册<small></small>
+  <div class="btn-group pull-right"> 
+    <a id="btna" class="btn btn-primary">+添加</a> 
+    <a onclick="location.reload()" class="btn btn-success">刷新</a>
+</div> </h3> 
+</div>
+<div class="col-sm-12">
+
+<form class="form-inline" role="form" id="qry">
+  <div class="form-group">标题<input id="so" type="text" value="{su}" placeholder="请输入标题" class="form-control" /></div>
+  <div class="form-group"><input  type="button" class="btn btn-success" value="搜索" id="btnq"/></div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr> 
+<th></th>   
+<th>名称</th>
+<th>姓名</th>  
+<th>状态</th> 
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr id="row{id}">
+<td><a href="../?t=photo&g={gid}&id={id}" target=_blank>
+<img src="/upds/group/album/{gid}/{id}/t_{logo}" width="100" /></a></td>
+<td>{name}<br/>
+照片：{nums}   <br/> 
+<code>{des}</code></td>
+<td>{truename}</td>
+<td><script>show_TS('{id}');</script></td> 
+<td> 
+<a href="./?t=album_photo&g={gid}&id={id}" target=_blank>照片管理</a> &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}'})"></a>  
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+ 
+{foot} 
+</body> 
+</html>  
+
+<script type="text/javascript"> 
+l_tpl="grp_album";
+$(function(){     
+   $("#btnq").bind("click",function(){  
+     location.href="./?t=album&g={g}&so="+$("#so").val();  
+  });  
+  $("#btna").bind("click", function(){$('#dlg1').data("dotype","a");$('#dlg1').modal('show');  });
+}); 
+ function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;} 
+   $("#dlg1 #period").val("");       
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作完成',callback:"dosome"});  
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    location.reload(); 
+  }
+   else alert(data);
+}
+  
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">[添加/编辑]</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+<div class="form-group">  
+<label class="col-sm-2 control-label">名称</label>    
+<div class="col-sm-6"><input type="text" id="name" class="form-control" /></div>   
+</div>   
+<div class="form-group"> 
+<label class="col-sm-2 control-label">简介</label>
+<div class="col-sm-10"><textarea id="des" class="form-control"  rows="3" placeholder="请输入简介"></textarea></div>
+</div> 
+<input type="text" id="id" value="" style="display:none;"/>  
+<input type="text" id="gid" value="{g}" style="display:none;"/>    
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div>
+</div>
+</div>
+</div>

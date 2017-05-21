@@ -1,0 +1,133 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/teach_score_add_submit.php" method="post" onsubmit="return checkBatch();" enctype="multipart/form-data">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">添加任课成绩记录</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="20%" class="tabtd2_L">说明：</td>
+						 <td class="tabtd2_R" style="color:#f00;">该操作仅对当前学期有效。</td>
+					</tr>
+					<tr id="tr_stamina">
+						 <td width="25%" class="tabtd2_L">学生姓名</td>
+						 <td width="75%" class="tabtd2_R">
+							<input type="text" id="truename" name="truename" size="25" />
+							<input type="hidden" id="user_id" name="user_id" />&nbsp;&nbsp;支持即时搜索显示，什么是<a href="javascript:void(0);" style="color:#900;" title="当您在输入框架输入名字时，系统会自动帮您去匹配相关信息，并显示在输入框的下方。例如：您输入”孙“下面会显示所有孙姓人名。">即时搜索显示</a>。
+						  </td>
+					</tr>
+					<tr id="tr_height">
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+						
+							</select>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">可添加的成绩：</td>
+						 <td class="tabtd2_R">
+							<select name="course_id" id="course_id">
+							<option value="0">请选择科目</option>
+							{str}
+							</select>
+						 </td>
+					</tr>
+					
+					<tr>
+						 <td width="20%" class="tabtd2_L">成绩：</td>
+						 <td class="tabtd2_R">
+							<input type="text" name="level" id="level" maxlength=20 value="" />
+						 </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+			<input id="but_update" name="but_update" type="submit" value="添加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        //selectShowDataNoH("#exam_type",JSON.parse(d),"code_name","code_name"); $("#exam_type").prepend("<option selected value='0'>全部</option>;");
+        selectShowDataNoH("#exam_type",JSON.parse(d),"name","name"); $("#exam_type").prepend("<option selected value=''>请选择</option>;");
+    });
+});
+
+$(document).ready(function(){
+	//初始化auto complete
+	$("#truename").autocomplete("./srv/search_student_skill.php", {
+		selectFirst : false,
+		parse:function(data){//解释返回的数据，把其存在数组里 
+				var parsed = [];
+				var jsonData = eval("("+data+")");
+				for (var i=0;i<jsonData.length;i++){ 
+					parsed[parsed.length] = { 
+						data   : jsonData[i], 
+						value  : jsonData[i].truename, 
+						result : jsonData[i].truename} //返回的结果显示内容 
+				}; 
+				return parsed;
+		},
+		formatItem: function(item) {//显示下拉列表的内容 
+			return item.truename+"("+item.username+")"; 
+		}, 
+		formatMatch: function(item) { 
+			return item.truename; 
+		}, 
+		formatResult: function(item) { 
+			return item.id; 
+		} 
+	});
+	$("#truename").result(function(event,data,formatted){
+		$("#user_id").val(data.id);
+		$.post("./srv/sdo.php?", {tpl:"student_info","uid":data.id}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//显示班级信息
+				html = "<tr><td class='tabtd2_L' width='20%'>所在班级</td>";
+				html += "<td class='tabtd2_R' width='80%'>"+d.tips+"</td></tr>";
+				$("#tr_stamina").after(html);
+			}
+		});
+	});	
+});
+
+//密码信息提交客户端验证
+function checkBatch()
+{
+	if($.trim($("#course_id").val())==0){
+		alert("请选择添加的科目。");	
+		return false;
+	}
+	
+	if($("#level").val()==""){
+		alert("请输入成绩");	
+		return false;
+	}
+
+	return true;
+}
+</script> 

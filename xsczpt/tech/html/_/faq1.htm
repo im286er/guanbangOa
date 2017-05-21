@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/list.css"> 
+
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+  <div class="menu_a">
+    <h2>FAQ管理</h2>
+    <div >
+    <ul> 
+    <li><a href="./?t=faq" >学员问答</a></li>
+    <li><a href="./?t=faq1" >我的问答</a></li> 
+    </ul>
+    </div>
+  </div>
+</dt>
+<dd>  
+  <div class="banner"><label>我的问答</label> 
+  <span><a href="./?t=faq_add&d=a" target="_blank" class="btn">+发布问题</a>
+  </span>    
+  </div>
+
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+ 
+<th>问题</th> 
+<th>回答人</th>      
+<th>浏览/回答</th>  
+<th>时间</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+ 
+<td><a href="./?t=faq_info&id={id}" target="_blank">{title}</a></td> 
+<td><code>{rname}</code></td>
+<td><em>{see}/{questions}</em></td> 
+<td><cite>{timestamp}</cite></td>                     
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;"> 
+<li><a href="./?t=faq_add&d=m&id={id}" target="_blank">修改</a></li>   
+<li onclick="delths('{id}',this)">删除</li>
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+ <div class="paging">             
+{page}                    
+   </div>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+     
+});    
+function delths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"del_faq1",id:v}, function (d, e) {                 
+      //alert(d);
+      $(obj).parent().parent().parent().parent().remove();
+  });
+} 
+</script>

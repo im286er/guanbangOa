@@ -1,0 +1,642 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>学科空间</title>
+        <meta charset="gbk">
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <script src="./js/jquery-2.min.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="./easyui/themes/default/easyui.css">
+        <script type="text/javascript" src="./easyui/jquery.easyui.min.js"></script>
+        <!--dev-->
+        <link rel="stylesheet" type="text/css" href="./css/subject.css">
+        <script type="text/javascript" src="./js/banner_slider.js"></script>
+    </head>
+
+    <body>
+        <a name="_top"></a>
+        <!--top-->
+        <div style="width:100%;" class="navbar-inverse">
+            <div class="">
+                <nav class="navbar navbar-inverse fixed-top" style="width:85%;margin:0 auto;border-radius:0px;border:none;">
+                    <div class="navbar-header">
+                        <a id="logo" class="brand" href="#">
+                            <img width="40" id="logo" src="./img/logoa.png"/>
+                            <span>易教育云</span>
+                        </a>
+                    </div>
+                    <div>
+                        <ul class="nav navbar-nav navbar-left">
+                            <li><a href="/">首页</a></li>
+                            <li><a href="#">个人空间</a></li>
+                            <li><a href="#">群组主页</a></li>
+                            <li><a href="#">班级主页</a></li>
+                            <li><a href="#">应用程序</a></li>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">帮助</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="dropdown " id="top_user_login">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="/user?t=login"> 登录/注册 <b class="caret"></b> </a>
+                                <ul class="dropdown-menu"><li>
+                                <a href="/?t=login">立即登录</a></li><li><a href="/?t=reg">注册</a></li></ul></li>
+                        </ul>
+                        <div class="navbar-right">
+                            <form action="">
+                                <div class="global-search-box clearfix">
+                                    <span class="search-icon"></span>
+                                    <input type="text" class="global-search" placeholder="搜索" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!--页面主体内容-->
+        <div class="main-content mc">
+            <div class="banner-box">
+                <img src="./css/images/g-banner.png"/>
+            </div>
+            <div class="subject-nav clearfix">
+                <div class="sub-nav-left">
+                    <div class="sn-box">
+                        <div class="sn-header">精品课程导航</div>
+                        <div class="sn-body">
+                            <ul class="list">
+                                <li>
+                                    <a class="lst-lft">数学</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">英语</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">物理</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">化学</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">生物</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">政治</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">历史</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">地理</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">综合</a>
+                                    <div class="lst-rht"><a href="#">初中</a><a href="#">高中</a></div>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">原创精品</a>
+                                </li>
+                                <li>
+                                    <a class="lst-lft">精品工作室</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-nav-right">
+                    <div class="sn-box">
+                        <div class="sn-header">
+                            <ul class="list clearfix">
+                                <li class="on"><a href="#">首页</a></li>
+                                <li><a href="#">语文</a></li>
+                                <li><a href="#">数学</a></li>
+                                <li><a href="#">英语</a></li>
+                                <li><a href="#">物理</a></li>
+                                <li><a href="#">化学</a></li>
+                                <li><a href="#">生物</a></li>
+                                <li><a href="#">政治</a></li>
+                                <li><a href="#">历史</a></li>
+                                <li><a href="#">地理</a></li>
+                                <li><a href="#">文综</a></li>
+                                <li><a href="#">理综</a></li>
+                                <li><a href="#">其他</a></li>
+                            </ul>
+                        </div>
+                        <div class="sn-body clearfix">
+                            <div class="sn-banner flexslider" id="section_banner">
+                                <ul class="slides">
+                                    <li><div class="img"><img src="./css/images/s-banner-1.png" alt="" /></div></li>
+                                    <li><div class="img"><img src="./css/images/s-banner-1.png" alt="" /></div></li>
+                                    <li><div class="img"><img src="./css/images/s-banner-1.png" alt="" /></div></li>
+                                </ul>
+                            </div>
+                            <div class="sn-list">
+                                <div class="list-box">
+                                    <div class="easyui-tabs tabs-more" plain="true" border="false">
+                                        <div title="最新推荐">
+                                            <ul class="list">
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)][学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                            </ul>
+                                        </div>
+                                        <div title="热点精品">
+                                            <ul class="list">
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[学科网2015高三数学跨越一本线(文理通用)]</a></li>
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[2015高三名校物理试题解析分项汇编]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                                <li><a href="#">[学科网2015届高三数学原创试]</a></li>
+                                            </ul>
+                                        </div>
+                                        <a class="more">更多>></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="sch-header clearfix">
+                    <div class="sch-title">精品资源检索</div>
+                    <div class="sch-options">
+                        <ul class="list clearfix">
+                            <li>
+                                <label>选择年级：</label>
+                                <select>
+                                    <option value="3">高中三年级</option>
+                                    <option value="2">高中二年级</option>
+                                    <option value="1">高中一年级</option>
+                                </select>
+                            </li>
+                            <li class="on"><a class="s-option" href="#">全部</a></li>
+                            <li><a class="s-option" href="#">语文</a></li>
+                            <li><a class="s-option" href="#">数学</a></li>
+                            <li><a class="s-option" href="#">英语</a></li>
+                            <li><a class="s-option" href="#">物理</a></li>
+                            <li><a class="s-option" href="#">化学</a></li>
+                            <li><a class="s-option" href="#">生物</a></li>
+                            <li><a class="s-option" href="#">政治</a></li>
+                            <li><a class="s-option" href="#">历史</a></li>
+                            <li><a class="s-option" href="#">地理</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cols clearfix">
+                    <div class="col-double">
+                        <ul class="list">
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-double">
+                        <ul class="list">
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                            <li>
+                                <a class="main-title">【试卷】 精品解析：福建省莆田二十四中2015届高三上学期</a>
+                                <span class="note">2015-1-21</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="cols clearfix">
+                    <div class="col-triple">
+                        <div class="col-box">
+                            <div class="col-header">
+                                <label>名师工作室</label>
+                                <a href="#" class="more">更多>></a>
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-triple">
+                        <div class="col-box">
+                            <div class="col-header">
+                                <label>名师工作室</label>
+                                <a href="#" class="more">更多>></a>
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-triple">
+                        <div class="col-box">
+                            <div class="col-header">
+                                <label>名师工作室</label>
+                                <a href="#" class="more">更多>></a>
+                            </div>
+                            <ul class="list">
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                                <li>
+                                    <a class="main-title">·行舟高考时政工作室-中学学科网特约工</a>
+                                    <span class="note">2015-1-21</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="sch-header clearfix">
+                    <div class="sch-title">精品资源检索</div>
+                    <div class="sch-options">
+                        <ul class="list">
+                            <li>
+                                <label>科目：</label>
+                            </li>
+                            <li class="on"><a class="s-option" href="#">全部</a></li>
+                            <li><a class="s-option" href="#">语文</a></li>
+                            <li><a class="s-option" href="#">数学</a></li>
+                            <li><a class="s-option" href="#">英语</a></li>
+                            <li><a class="s-option" href="#">物理</a></li>
+                            <li><a class="s-option" href="#">化学</a></li>
+                            <li><a class="s-option" href="#">生物</a></li>
+                            <li><a class="s-option" href="#">政治</a></li>
+                            <li><a class="s-option" href="#">历史</a></li>
+                            <li><a class="s-option" href="#">地理</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-box">
+                    <ul class="grid clearfix">
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic"><img src="./css/images/short-pic.png"></div>
+                                <div class="grid-desc">备战2015年高考地理二 轮复习精品资料 </div>
+                                <div class="grid-footer">总浏览：<span class="em">10</span>人</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-box">
+                <div class="cols clearfix">
+                    <div class="col-fifth">
+                        <div class="col-header clearfix">
+                            <span class="icon"></span>
+                            <label>群组在成长</label>
+                        </div>
+                        <ul class="list">
+                            <li><a class="" href="#">新闻资讯（583367）</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-fifth">
+                        <div class="col-header clearfix">
+                            <span class="icon"></span>
+                            <label>手机上群</label>
+                        </div>
+                        <ul class="list">
+                            <li><a class="" href="#">新闻资讯（583367）</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-fifth">
+                        <div class="col-header clearfix">
+                            <span class="icon"></span>
+                            <label>热门微群</label>
+                        </div>
+                        <ul class="list">
+                            <li><a class="" href="#">新闻资讯（583367）</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-fifth">
+                        <div class="col-header clearfix">
+                            <span class="icon"></span>
+                            <label>热门群话题</label>
+                        </div>
+                        <ul class="list">
+                            <li><a class="" href="#">新闻资讯（583367）</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-fifth">
+                        <div class="col-header clearfix">
+                            <span class="icon"></span>
+                            <label>热门群话题</label>
+                        </div>
+                        <ul class="list">
+                            <li><a class="" href="#">新闻资讯（583367）</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                            <li><a class="" href="#">新闻资讯</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <a class="to-top" id="to_top" href="#_top">置顶</a>
+        </div>
+
+
+        <!--footer-->
+        <footer class="footer">
+            <div class="clearfix footer-body">
+                <div class="foot-left">
+                    <a href="#">联系我们</a>
+                    <span>|</span>
+                    <a href="#">意见反馈</a>
+                </div>
+                <div class="foot-right">
+                    <div>苏ICP备08111765号-1</div>
+                </div>
+            </div>
+        </footer>
+
+        <script type="text/javascript">
+            $(function(){
+                $('#section_banner').flexslider({
+                    animation: "slide",
+                    direction:"horizontal",
+                    easing:"swing"
+                });
+            })
+        </script>
+    </body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<label><a href="./?t=zhsz_table_show&uid={uid}&term_id={sid}">{truename}的综评表</a></label>
+			<label class="current"><a href="javascript:void(0);">日常表现</a></label> 
+			<script type="text/javascript">
+			  if({curTerm_id}=={sid}){
+					if({flag_type}==1){
+						//document.write('<label><a href="./?t=zhsz_other_vote&uid={uid}">我要举报</a></label>');
+					}
+					if({flag_type}==2&&{isMaster1}){
+						document.write('<label><a href="./?t=zhsz_master_vote&uid={uid}">班主任评价</a></label>');
+					}
+					document.write('<label><a href="./?t=zhsz_other_report&uid={uid}">我要举报</a></label><label><a href="./?t=zhsz_other_comment&uid={uid}">我要评论</a></label>');
+			  }
+			 </script>
+			 
+		</div>
+		<div class="boxtitle2">
+			{str}
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<div style="width:100%;height:20px; line-height:20px; text-align:center; font-size:14px;float:left;margin-bottom:5px;">{tips}</div>
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="70%" class="tabtd">日常表现</td>
+					 <td class="tabtd" width="15%">记录日期</td>
+					 <script type="text/javascript">
+						if({isMaster1}){
+							document.write('<td class="tabtd">状态</td> <td class="tabtd">操作</td>');
+						}
+					 </script>
+				</tr>
+				{str_total}	
+				</tr>
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+		</div>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+	</div>
+			<div style="width:55%;margin:10px auto;float:right;">
+				<a href="./?t={href}"  id="but_back" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;display:inline-block;text-align: center;line-height: 25px;">返回</a>
+			</div>
+<!--表格中间 end-->
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+//修改日常表现的状态
+function chPerformance(id,pertype){
+	if(confirm("你确定修改此记录吗?")){
+      $(".pertype").html("");
+      $(".pertype").html('<select id="pertype" onchange="ch_pertype('+id+');"><option value="0">公开</option><option value="1">保密</option><option value="2">全班</option></select>');
+      $("#pertype").val(pertype);
+	}
+}
+
+function ch_pertype(id){
+     var new_type = $("#pertype").val();
+	 $.post("./srv/sdo.php", {tpl:"ch_performance","id":id,"pertype":new_type}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				location.reload();
+			}else{
+				alert(l.value);
+			}
+		}); 
+}
+
+//删除未审核的评论
+function delPerformance(id){
+	if(confirm("你确定删除此记录吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_performance","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#tr_c_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

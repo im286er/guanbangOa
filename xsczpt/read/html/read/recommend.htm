@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>浦口区云悦读空间-首页</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="html/read/css/recommend/css.css" type="text/css" rel="Stylesheet">
+{meta}
+<script src="html/read/js/jquery-1.4a2.min.js" type="text/javascript"></script>
+<script src="html/read/js/jquery.KinSlideshow-1.1.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+	$("#KinSlideshow").KinSlideshow({
+			moveStyle:"right",
+			mouseEvent:"mouseover",
+			titleBar:{titleBar_height:30,titleBar_bgColor:"#000",titleBar_alpha:0.5},
+			titleFont:{TitleFont_size:12,TitleFont_color:"#FFFFFF",TitleFont_weight:"normal"},
+			btn:{btn_bgColor:"#FFFFFF",btn_bgHoverColor:"#000",btn_fontColor:"#000",btn_fontHoverColor:"#FFFFFF",btn_borderColor:"#000",btn_borderHoverColor:"#000",btn_borderWidth:1}
+	});
+})
+</script>
+</head>
+<body class="bgf8">
+<div class="wrap">
+{top}
+	<div class="clear"></div>
+	<div class="main">
+		{menu}
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<div class="acts_tit mt20 gre_bt">
+			<p>图书推荐</p>
+<!-- 			<a href="#" target="">更多+</a> -->
+		</div>
+		<div class="red_content pr">
+			<div id="KinSlideshow" style="visibility:hidden;float:left;margin: 10px 0;">
+			<!-- START list_tj -->
+				<a href="./?t=art_info&id={id}" target="_blank"><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg';" alt="{title}" width="590" height="190" /></a>
+			<!-- END list_tj -->
+			</div>
+			<div class="re_bkr fr">
+			<!-- START list_hottj -->
+				<div class="acrecinfo pr">
+					<a href="./?t=recommend_info&id={id}" target="_blank" class="fl" title="书名:{title}&#10;作者:{author}&#10;出版社:{author}&#10;"><img src="/upds/recommend_articles/{pic}" width="145" height="190"/></a>
+					<div class="acrecominfo fr pr">
+						<p class="bk_name"><a class="" href="./?t=recommend_info&id={id}" target="_blank">{title}</a></p>
+						<p>作者：<em>{author}</em></p>
+						<p>出版社：<em>{publicer}</em></p>
+					<div class="clear"></div>
+					<p class="acre_desinfo pr">读后感：<br/>{readafter}</p>
+					</div>
+				</div>
+			<!-- END list_hottj -->
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main" style="padding-bottom: 20px;">
+		<div class="rea_left">
+			<div class="mt20">
+				<div class="acts_tit yel_bb yel_bt">
+					<p>学生爱看 </p> 
+					<ul class="tit_left fl tit_gre tab1-hd">  
+					<!-- START list_xsak_type -->
+						<li href="#" target="">{name}</li>
+					<!-- END list_xsak_type -->
+					</ul>
+					<a href="./?t=recommend_lists&pid=36" target="">更多+</a>
+				</div>
+				<div class="red_content">
+					<ul class="tab1-bd">
+					<!-- START list_xsak -->
+						<li>
+							<dl class="sud_selist rea_bklist">
+							<!-- START rp -->
+								<dd>
+									<a href="./?t=recommend_info&id={id}" target="_blank" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+									<a href="./?t=recommend_info&id={id}" target="_blank" class="bk_des">
+										<span title="{title}">{title}</span>
+										<span title="{author}">{author}</span>
+									</a>
+								</dd>
+							<!-- END rp -->
+							</dl>
+						</li>
+					<!-- END list_xsak -->
+					</ul>	
+				</div>
+			</div>
+			<div class="mt20">
+				<div class="acts_tit cgre_bb gre_bt">
+					<p>老师爱看</p>
+					<ul class="tit_left fl tab1-hd">                                      
+					<!-- START list_lsak_type -->
+						<li>{name}</li>
+					<!-- END list_lsak_type -->
+					</ul>
+					<a href="./?t=recommend_lists&pid=43" target="">更多+</a>
+				</div>
+				<div class="red_content">
+					<ul class="tab1-bd">
+					<!-- START list_lsak -->
+						<li>
+							<dl class="sud_selist rea_bklist">
+							<!-- START rp -->
+								<dd>
+									<a href="./?t=recommend_info&id={id}" target="_blank" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+									<a href="./?t=recommend_info&id={id}" target="_blank" class="bk_des">
+										<span title="{title}">{title}</span>
+										<span title="{author}">{author}</span>
+									</a>
+								</dd>
+							<!-- END rp -->
+							</dl>
+						</li>
+					<!-- END list_lsak -->
+					</ul>	
+				</div>
+			</div>
+			<div class="mt20">
+				<div class="acts_tit">
+					<p>家长爱看</p> 
+					<ul class="tit_left fl tab1-hd">                                      
+					<!-- START list_jzak_type -->
+						<li href="#" target="">{name}</li>
+					<!-- END list_jzak_type -->
+					</ul>
+					<a href="./?t=recommend_lists&pid=50" target="">更多+</a>
+				</div>
+				<div class="red_content">
+					<ul class="tab1-bd">
+					<!-- START list_jzak -->
+						<li>
+							<dl class="sud_selist rea_bklist">
+							<!-- START rp -->
+								<dd>
+									<a href="./?t=recommend_info&id={id}" target="_blank" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+									<a href="./?t=recommend_info&id={id}" target="_blank" class="bk_des">
+										<span title="{title}">{title}</span>
+										<span title="{author}">{author}</span>
+									</a>
+								</dd>
+							<!-- END rp -->
+							</dl>
+						</li>
+					<!-- END list_jzak -->
+					</ul>	
+				</div>
+			</div>
+			<div class="mt20">
+				<div class="acts_tit">
+					<ul class="tit_left fl tab_recom-hd">                                      
+						<li onclick="window.location.href='./?t=recommend_lists&pid=57'">教育局推荐</li>
+						<li onclick="window.location.href='./?t=recommend_lists&pid=58'">学校推荐</li>
+					</ul>
+				</div>
+				<div class="red_content">
+					<ul class="tab_recom-bd">
+						<li class="thisclass">
+							<dl class="sud_selist rea_bklist">
+							<!-- START list_jyjak -->
+								<dd>
+									<a href="./?t=recommend_info&id={id}" target="_blank" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+									<a href="./?t=recommend_info&id={id}" target="_blank" class="bk_des">
+										<span title="{title}">{title}</span>
+										<span title="{author}">{author}</span>
+									</a>
+								</dd>
+							<!-- END list_jyjak -->
+							</dl>
+							
+						</li>
+						<li>
+							<dl class="sud_selist rea_bklist">
+							<!-- START list_xxak -->
+								<dd>
+									<a href="./?t=recommend_info&id={id}" target="" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" /></a>
+									<a href="./?t=recommend_info&id={id}" target="" class="bk_des">
+										<span title="{title}">{title}</span>
+										<span title="{author}">{author}</span>
+									</a>
+								</dd>
+							<!-- END list_xxak -->
+							</dl>
+						</li>
+					</ul>	
+				</div>
+			</div>
+		</div>
+		<div class="rea_right mt20">	
+			<div class="acts_tit">
+				<p>读书达人</p> 
+		<!-- 		<a href="#" target="">更多+</a> -->
+			</div>
+			<div class="red_content">
+				<ul class="reader_sup">
+				<!-- START book_user -->
+					<li>
+						<p class="icon">
+							<a href="/zone/?id={uid}" target="_blank"><img src="/upd/face/{uid}.jpg" alt="" class="fixpng"></a>
+						</p>
+						<dl>
+							<dt><a href="/zone/?id={uid}" target="_blank">{truename}</a><a href="#" target="" class="add" style="display:none;">+关注</a></dt>
+							<dd><a href="/zone/?id={uid}" target="_blank" title="{title}">已评：<em><!-- START rp -->{num}<!-- END rp -->本</em>近期推荐<em>《{title}》</em></a></dd>
+						</dl>
+					</li>
+				<!-- END book_user -->
+				</ul>
+			</div>
+			<div class="acts_tit mt20">
+				<p>排行榜</p> 
+		<!-- 		<a href="#" target="">更多+</a> -->
+			</div>
+			<div class="red_content">	
+				<div class="list_box">
+				<!-- START ranking_list -->
+					<dl class="list_boxdl">
+						<dd class="pic_nr" style="display: block;"> 
+							<i class="">{row}</i>
+							<div class="pic_box">
+								<a href="./?t=recommend_info&id={id}" target="_blank" title="书名:{title}&#10;作者:{author}"><img src="/upds/recommend_articles/{pic}" width="84" height="100" alt="" class="pic">
+								</a>
+							</div>
+							<div class="info_box">
+								<div class="text_box">
+									<a href="./?t=recommend_info&id={id}" target="_blank" class="title S_txt1 W_autocut">{title}</a>
+									<p class="subtitle W_autocut">作者：{author} </p>
+									<p class="text">浏览：{see}</p>
+								</div>
+							</div>				
+						</dd>
+						<div class="clear"></div>
+						<dt class="b_name"><i class="">{row}</i><a href="#" target="">{title}</a></dt>
+					</dl>
+				<!-- END ranking_list -->
+					<div class="clear"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{foot}
+
+<script src="html/read/js/recommend/read.js"></script>
+<script type="text/javascript">
+	$(function(){
+	function tabs(tabTit,on,tabCon){
+	$(tabCon).each(function(){
+	  $(this).children().eq(0).show();
+	  });
+	$(tabTit).each(function(){
+	  $(this).children().eq(0).addClass(on);
+	  });
+	 $(tabTit).children().hover(function(){
+		$(this).addClass(on).siblings().removeClass(on);
+		 var index = $(tabTit).children().index(this);
+		 $(tabCon).children().eq(index).show().siblings().hide();
+	});
+	}
+  tabs(".tab1-hd","active",".tab1-bd");
+  tabs(".tab_recom-hd","active",".tab_recom-bd");
+ $(function(){
+	$('.pic_nr').hide();
+		$('.pic_nr').first().show();
+		$('.b_name').first().hide();
+	$(".list_boxdl").mouseover(function() {
+		$(".b_name").show();
+		$(this).find(".b_name").hide();
+		$(".pic_nr").hide();
+		$(this).find(".pic_nr").show();
+	});
+ });
+});
+</script>
+</body>
+</html>

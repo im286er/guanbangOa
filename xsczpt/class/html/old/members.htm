@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级成员-{gtitle}</title>
+{cssjs}   
+</head>
+<body>
+{top}
+<div class="select">
+  <!--头部头像部分-->
+      <div class="content">
+{head}
+<div class="col-sm-3">   
+{menu_mem}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3 id="mem_list_name">老师 <small></small>      
+ 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>头像</th>
+<th>姓名</th>  
+<th>学科</th> 
+<th>身份</th> 
+<th>职务</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="../zone/?id={uid}" target=_blank><img width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /></a></td> 
+<td>姓名:{truename}<br/>昵称:{nick}</td> 
+<td><label data-subject="{subject}"></label></td> 
+<td><idtype v="{idtype}"></idtype></td> 
+<td>{dutys}</td>    
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+</div> 
+</div> 
+</div>
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+    $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+$.getJSON("/data/type_duty.json.txt", function (data) {  
+      duty=data;
+      $("label[data-duty]").each(function (a, b) {
+        $(this).text(duty[$(this).data("duty")]);
+      });
+  });  
+$.getJSON("/data/type.json.txt", function (d) {   
+      $("idtype").each(function (a, b) {
+        $(this).text(d[$(this).attr("v")]);
+      });
+  });    
+  $("#mem_list li").each(function(){
+    if($(this).find("a").attr("val")==queryStr("i")){
+      $("#mem_list_name").html($(this).find("a").html());
+    }
+  });
+});
+ 
+</script>

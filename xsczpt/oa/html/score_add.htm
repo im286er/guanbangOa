@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>  
+<meta http-equiv="X-UA-Compatible" content="IE=8"> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script language="javascript" src="common/autocomplete.js"></script>
+<script src="/ppf/js/select.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="./srv/score_add_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">添加当前学期学生成绩信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr id="tr_score">
+						 <td width="25%" class="tabtd2_L">学生姓名</td>
+						 <td width="75%" class="tabtd2_R">
+							<input type="text" id="truename" name="truename" size="35" />
+							<input type="hidden" id="user_id" name="user_id" />&nbsp;&nbsp;支持即时搜索显示，什么是<a href="javascript:void(0);" style="color:#900;" title="当您在输入框架输入名字时，系统会自动帮您去匹配相关信息，并显示在输入框的下方。例如：您输入”孙“下面会显示所有孙姓人名。">即时搜索显示</a>。
+						  </td>
+					</tr>
+					<tr id="tr_height">
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+						
+							</select>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">语文</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="yw" name="yw" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">数学</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="sx" name="sx" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">外语</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="wy" name="wy" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">物理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="wl" name="wl" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">化学</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="hx" name="hx" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">生物</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="sw" name="sw" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">政治</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="zz" name="zz" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">历史</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ls" name="ls" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">地理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="dl" name="dl" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">信息技术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xxjs" name="xxjs" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">通用技术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="tyjs" name="tyjs" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">体育</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ty" name="ty" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">音乐</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="yy" name="yy" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">美术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ms" name="ms" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">心理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xl" name="xl" size="5" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">选修</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xx" name="xx" size="5" />
+						  </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        //selectShowDataNoH("#exam_type",JSON.parse(d),"code_name","code_name"); $("#exam_type").prepend("<option selected value='0'>全部</option>;");
+        selectShowDataNoH("#exam_type",JSON.parse(d),"name","name"); $("#exam_type").prepend("<option selected value=''>请选择</option>;");
+    });
+});
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#truename").val())==""){
+		alert("请输入学生姓名");
+		$("#truename").select();
+		return false;
+	}
+	var userId = $("#user_id").val();
+	if(userId==0){
+		alert("学生不存在或你当前没有选中任何学生，请重新选择。");
+		return false;
+	}
+	if($.trim($("#exam_type").val())==""){
+		alert("请选择考试类型。");
+		return false;
+	}
+	var yw = parseInt($.trim($("#yw").val()));
+	if(isNaN(yw)||yw<0){
+		alert("语文成绩输入错误。");
+		$("#yw").select();
+		return false;
+	}
+	var sx = parseInt($.trim($("#sx").val()));
+	if(isNaN(sx)||sx<0){
+		alert("数学成绩输入错误。");
+		$("#sx").select();
+		return false;
+	}
+	var wy = parseInt($.trim($("#wy").val()));
+	if(isNaN(wy)||wy<0){
+		alert("外语成绩输入错误。");
+		$("#wy").select();
+		return false;
+	}
+	
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+$(document).ready(function(){
+	//初始化auto complete
+	$("#truename").autocomplete("./srv/search_student.php", {
+		selectFirst : false,
+		parse:function(data){//解释返回的数据，把其存在数组里 
+				var parsed = [];
+				var jsonData = eval("("+data+")");
+				for (var i=0;i<jsonData.length;i++){ 
+					parsed[parsed.length] = { 
+						data   : jsonData[i], 
+						value  : jsonData[i].truename, 
+						result : jsonData[i].truename} //返回的结果显示内容 
+				}; 
+				return parsed;
+		},
+		formatItem: function(item) {//显示下拉列表的内容 
+			return item.truename+"("+item.username+")"; 
+		}, 
+		formatMatch: function(item) { 
+			return item.truename; 
+		}, 
+		formatResult: function(item) { 
+			return item.id; 
+		} 
+	});
+	$("#truename").result(function(event,data,formatted){
+		$("#user_id").val(data.id);
+		$.post("./srv/sdo.php?", {tpl:"student_info","uid":data.id}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				if($("#tr_score").next().attr("id")!="tr_height"){
+					$("#tr_score").next().remove();
+				}
+				//显示班级信息
+				html = "<tr><td class='tabtd2_L' width='20%'>所在班级</td>";
+				html += "<td class='tabtd2_R' width='80%'>"+d.tips+"</td></tr>";
+				$("#tr_score").after(html);
+			}
+		});
+	});	
+});
+</script> 

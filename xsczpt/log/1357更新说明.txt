@@ -1,0 +1,19 @@
+目录权限/data /cfg /upd /upds
+
+
+数据库
+ppf_tpl
+
+sys_info,删除大多字段
+sys_tpl_class 
+calss:tpl
+cls_art
+cls_art_cate
+zone:tpl,created
+zone_album:lastupdate
+tech_grow_myinfo
+teacher_news_type
+blog_list tech_tid,tech_on	tinyint
+
+
+/文件更新

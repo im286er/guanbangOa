@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script src="/ppf/js/select.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>   
+</head>
+<body>
+<div class="main">
+	<div class="box">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以修改考试项目信息</a></label> 
+			</div>
+			<div class="tabbody" id="p1">
+				<form  id="form1" name="form1" action="./srv/exam_modify_submit.php" method="post" onsubmit="return checkStamina();">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="32%" class="tabtd2_L">考试项目名称：</td>
+						 <td width="68%" class="tabtd2_R"><input type="text" id="name" name="name" size="25" value="{name}" /></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">适应年级：</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="grade_id" id="grade_id">
+							</select>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">排序：</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" name="order_value" id="order_value" size="10" value="{order_value}" />(从小到大)</td>
+					</tr>
+				</table>
+				<div class="boxfooter2">
+				<input type="hidden" name="id" id="id" value="{id}" />
+				<input name="but_add" id="but_add" type="submit" value="修 改" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><a href="./?t=exam_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a></div>
+				</form>
+			</div>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#grade_id",JSON.parse(d),"id","grade_name"); $("#grade_id").prepend("<option value='0'>所有年级</option>");
+		$("#grade_id").val("{gid}");
+	});
+});
+//表单提交验证
+function checkStamina()
+{
+	if($.trim($("#name").val())==""){
+		alert("请输入体能项目名称");
+		$("#name").select();
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+</script> 

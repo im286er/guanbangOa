@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+ 
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+
+<div class="page-header">
+   <h3>博客类别管理     <small></small>  <a id="btn" class="btn btn-primary pull-right" >+添加</a>  </h3>
+</div>
+
+
+<table class="table  table-striped"> 
+<thead>
+<tr> 
+<th>名称</th>
+<th>排序</th>
+<th>文章数</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>   
+<td><a href="./?t=blogs&c={id}">{name}</a></td>  
+<td><cite>{odx}</cite></td>  
+<td><code>{nums}</code></td>     
+<td><a class="glyphicon glyphicon-edit" title="编辑" onclick="moda({id:'{id}'})"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a> </td>    </tr>
+<!-- END list --> 
+</tbody>
+</table>     
+</div>
+</div> 
+
+{foot}
+</body> 
+</html>
+<div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+       <input type="text" class="form-control" id="name"  maxlength="50" placeholder=""> 
+    </div>
+ </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">排序：</label>
+    <div class="col-sm-2"><input type="text" class="form-control" id="odx" onkeyup="value=value.replace(/[^0-9/]/ig,'')" ></div>
+    <p class="help-block">0-9数字，按大到小排列</p>
+  </div>  
+  <input type="text" id="nums" value="0" style="display:none;"/>
+  <input type="text" id="id" value="" style="display:none;"/> 
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" onclick=savesome()> 确定  </button><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+</div>
+</div></div>
+</div>
+
+<script type="text/javascript"> 
+l_tpl="blog_cate";
+$(function(){  
+   $("#btn").bind("click",function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val("");$('#dlg1').modal('show');});
+});
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   if($("#odx").val()==""){$("#odx").val("0");}            
+   SaveAM({'do':$('#dlg1').data('dotype'),frmid:'#dlg1',showok:'','callback':'dosome'});  
+}
+function dosome(e,d){  
+  if($('#dlg1').data('dotype')=="a"){
+      location.reload();
+  }
+  else{
+     alert("修改完成");
+    $('#dlg1').modal('hide');
+  }
+}  
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}    
+
+function delths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"del_schedule",id:v}, function (d, e) {                   
+      $(obj).parent().parent().remove();
+  });
+} 
+
+</script>

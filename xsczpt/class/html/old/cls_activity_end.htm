@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级动态-{name}-班级空间</title>
+{cssjs}
+</head>
+<body>
+{top}
+<div class="select">
+  <!--头部头像部分-->
+      <div class="content">  
+{head}  
+
+
+<div class="col-xs-12 ">
+<div class="page-header">
+   <h3>班级动态</h3>
+    <small> </small>
+</div>
+  
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title"> {title} <small>{truename} <script>document.write(utctime('{timestamp}'));</script> </small>  
+      </h3>
+   </div>
+   <div class="panel-body">
+      {des}
+   </div>
+</div>
+
+<div class="">
+    <div class="page-header" style="margin-bottom:0;">
+			<h3 >全部评论</h3>
+    </div>
+		<ul class="talkList1 clearfix">
+    <!-- START list -->
+    <li class="clearfix fl" id="row{id}" style="border-bottom: 1px dotted #dfdfdf;padding:13px 0 13px 0;">
+    <div class="userPic" style="float:left;"><a><img src="/upd/face/{uid}.jpg" width="48" height="48"></a></div>
+    <div class="msgBox" style="margin-left:60px;">
+    <div class="userName" style="margin-top:3px;"><strong><a class="blue">{truename}</a></strong></div>
+    <div class="msgCnt">{des}</div>
+    <div class="pubInfo clearfix" style="margin-top:10px;"> <span class="fl">{created}</span> <span class="fr" onclick="delths('{id}')" style="cursor:pointer;float:right;">删除</span></div>
+    </div>
+    </li>
+    <!-- END list -->   
+    </ul>
+    <form role="form" id="form2">
+    <div class="form-group" style="margin-top:20px;">
+    <label for="name" style="line-height:30px;height:30px;">发表评论</label>
+    <textarea id="des" class="form-control" rows="3" style="width:95%;"></textarea>
+    <input type="text" id="cid" value="{c}" style="display:none;">
+    <input type="text" id="reid" value="{id}" style="display:none;">
+    <input type="text" id="tid" value="activity" style="display:none;">
+    <button type="button" class="btn btn-primary" style="margin:10px auto 0;width:100px;" id="btn_re">发表</button>
+    </div>
+    </form>
+    </div>
+</div>
+
+</div>
+
+</div>>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+var curpage=1;   
+$(function() { 
+  // $("stamp").text(utctime("{timestamp}")); 
+    vote({tbl:"cls_activity",do:"see",showok:"",callback:"",id:"{id}"},null); 
+    $("#btn_re").bind("click", function(){       
+	    var des=$("#des").val();
+      if(des<1){alert("请勿发空内容！");return;}    
+      if(des>250){alert("内容太长！(5-250)");return;} 
+      //$("#des").val(clearQuote(des));
+      SaveAM({tpl:"cls_comments","do":"a",frmid:"#form2",showok:"评论成功",callback:"dosome"});     
+   });  
+ }); 
+  if(queryStr("goto")!="")location.hash="#row"+queryStr("goto");
+ function dosome(ed,data){ 
+  if(data.indexOf("ok")>-1){
+    id=data.substr(data.indexOf("ok")+2);
+    location.href="./?t=cls_activity_end&id={id}&c={c}&goto="+id;   
+  }
+} 
+function delths(v){
+    $.post("./srv/sdo.php?",{tpl:"del_cmts",id:v,"cid":"{c}"},function (d, e) {  
+        if(d.indexOf('ok')>-1){
+           $("#row"+v).remove();        
+			  }else alert(d);
+      });  
+}
+		
+</script>

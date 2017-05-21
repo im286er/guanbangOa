@@ -1,0 +1,145 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title> 
+{cssjs} 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<script src="js/blog.js" type="text/javascript"></script> 
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main"> 
+
+<div class="page-header">
+   <h3>{title}  <small> <span id="restype"></span>{created}</code></small>  
+   <div class="btn-group pull-right"> 
+    <a href="./?t=blogs" class="btn btn-primary">返回</a>
+   </div>  
+   </h3>
+</div> 
+
+
+<div class="panel panel-default">
+<div class="panel-heading">
+    <h3 class="panel-title"><code>浏览：{see} 回复:{comments} </code> 
+<small class=" pull-right"><a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'blog_list',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+<a class="glyphicon glyphicon-thumbs-down" onclick="vote({tbl:'blog_list',do:'bad',id:{id}},this);" title="反对">({bad})</a> &nbsp;
+<a href="#forma" >回复</a> </small></h3>
+ </div>          
+<div class="panel-body"> 
+ {des}
+</div>  
+</div>
+
+<hr id="list"/>
+<!-- START list -->  
+<div class="panel panel-default" id="row{id}">
+<div class="panel-heading">
+    <h3 class="panel-title"> {truename}  {created}  {floor}楼
+    <small class="pull-right">
+ 
+  <a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'blog_comments',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+  <a class="glyphicon glyphicon-thumbs-down" onclick="vote({tbl:'blog_comments',do:'bad',id:{id}},this);" title="反对">({bad})</a> &nbsp;  
+  <a onclick="comment('{id}',0,'{truename}')" >回复</a>{comments} &nbsp;
+  <a class="glyphicon glyphicon-remove" title="删除" onclick="rm_c('{id}',this)"></a>
+  </small></h3>
+</div>          
+<div class="panel-body"> 
+<p>{des}</p>
+<div class="col-sm-11 col-sm-offset-1 well hide">    
+<!-- START rp -->
+<p><a> {truename} </a> {redo} <a>{renick} </a> ：{des} 
+<small class="pull-right"><code>{created} <a onclick="comment('{bcid}','{id}','{truename}')" >回复</a>
+<a onclick="rm_c_c('{id}',this)">删除</a></code>
+</small></p> 
+<!-- END rp --> 
+<code class="pull-right">
+<a onclick="load_comments('{id}',this)" data-page="0">点击加载更多……</a>
+</code>      
+</div>          
+</div>  
+</div>
+<!-- END list -->  
+<div class="row">
+<ul class="pagination pull-right">{page}</ul>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+    <h3 class="panel-title">评论区<code></code></h3>
+ </div>          
+<div class="panel-body"> 
+<form class="form-horizontal" role="form" id="forma">  
+ <div class="form-group">   
+ <label class="col-sm-1 control-label">内容</label>
+ <div class="col-sm-10"><textarea id="des" name="des" class="form-control" rows="5"></textarea></div>  
+ </div>   
+ <div class="form-group">   
+ <label class="col-sm-1 control-label"></label>
+ <div class="col-sm-10"><button type="button" class="btn btn-primary" onclick=savcomment()> 立即回复  </button></div>  
+ </div> 
+ <input type="text" id="id" value="" style="display:none;"/>    
+<input type="text" id="bid" value="{id}" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/>
+<input type="text" id="floor" value="{floor}" style="display:none;"/> 
+</form>
+</div>  
+</div>
+
+</div>
+
+
+</div>
+ 
+{foot}
+ 
+</body>
+</html>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">回复</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form2"> 
+ <div class="form-group">   
+ <label class="col-sm-2 control-label">内容</label>
+    <div class="col-sm-10">
+      <textarea id="des" name="des" class="form-control" rows="5"></textarea>    
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="bcid" value="" style="display:none;"/>
+<input type="text" id="redo" value="" style="display:none;"/> 
+<input type="text" id="renick" value="" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/>
+<input type="text" id="floor" value="0" style="display:none;"/> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="savcomment2()"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>
+
+<script type="text/javascript"> 
+var nick="{nick}";  
+$(function(){
+    vote({tbl:"blog_list",do:"see",showok:"",callback:"",id:queryStr("id")},null); 
+    $(".well").each(function(a,b){
+      if($(b).find("p").length>0)
+       $(b).removeClass("hide"); 
+    }); 
+});
+  
+ 
+</script>
+

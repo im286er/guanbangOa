@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>作业详情-{gtitle}</title> 
+{cssjs} 
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>{title}  <small><script>document.write(utctime('{timestamp}'));</script></code></small>  
+   <div class="btn-group pull-right"> 
+  <a href="./?t=homework" class="btn btn-primary">返回</a></div>  </h3>
+</div> 
+
+
+<div class="panel panel-default">
+ <div class="panel-heading">
+    <h3 class="panel-title">{title}  <small>起止时间：<code>{stime} 至 {etime}</code></small></h3>
+   </div>  
+<div class="panel-heading">
+    <h3 class="panel-title">老师：{techer} 学科：{subjects}  </h3>
+   </div> 
+<div class="panel-heading">
+    <h3 class="panel-title">提交：<span>{submits}/{nums}</span> 批阅：<span>{remarks}/{nums}</span>  </h3>
+   </div>         
+<div class="panel-body"> 
+ {des}
+</div>  
+</div>
+
+<!-- START list -->  
+<div class="panel panel-default">
+ <div class="panel-heading">
+    <h3 class="panel-title">状态:<b><script>document.write('{state}'==''?'----':arr['{state}']);</script></b> 
+    分数：{score} <small>提交时间：<script>document.write(utctime('{timestamp}'));</script> </small>   </h3>
+   </div>  
+<div class="panel-heading">
+    <h3 class="panel-title">学生：{truename}</h3>
+   </div>          
+<div class="panel-body"> 
+附件：<a href="./?t=fdl&id={resmd5}" target="_blank">{resname}</a> 
+{des}
+</div>  
+</div>
+<!-- END list -->
+
+  </div>
+</div>
+
+{foot}
+</body>
+<script type="text/javascript">   
+$(function(){
+    vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"tech_homework",col:"see"}); 
+}); 
+</script>
+</html>

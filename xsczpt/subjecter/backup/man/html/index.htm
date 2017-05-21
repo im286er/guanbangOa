@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>管理-{gtitle}</title>      
+	{cssjs}
+</head>
+<body>
+{top}
+<div class="container">   
+	<div class="col-sm-3">   
+	{menu}
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+		<h3>基本信息
+			<small><!-- 子标题 --></small>
+		</h3>
+		</div>
+		<form class="form-horizontal" role="form"  id="form1">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">名 称</label>
+				<div class="col-sm-10">
+					<input id="title" value="{title}" type="text" class="form-control" style="width:50%" placeholder="请输入名称" />
+				</div>
+			</div>
+
+			<div class="form-group"> 
+				<label class="col-sm-2 control-label">简 介</label>
+				<div class="col-sm-10">
+					<textarea id="des" class="form-control" style="width:80%" rows="4" placeholder="请输入简介">{des}</textarea>
+				</div>
+			</div>
+			
+			<div class="form-group" id="upddiv">
+				<label class="col-sm-2 control-label">Banner</label>
+				<div class="col-sm-10">
+					<img src="../{pic}{template}{picname}" id="clogo" width="400" onerror="logohasError(this);" /> 
+					<button type="button" class="btn btn-warning"  id="btn_upd">上传图片</button>
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<div class="col-sm-6 col-sm-offset-2">         
+					<button type="button" class="btn btn-success" id="btn"> 保 存 </button>  
+					<button type="button" class="btn btn-success"> 取 消 </button>
+					<input type="text" id="id" value="{id}" style="display:none;"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<br><br><br><br><br>
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+$(function () { 
+	$("#btn").bind("click", function(){
+		if($("#name").val()=="")
+			{ alert("请输入空间名称！"); $("#name").focus(); return; }
+		SaveAM({tpl:"subjecter","do":"am",frmid:"#form1",showok:'保存成功！',callback:""});
+	});
+	
+	$("#btn_upd").bind("click",function(){$('#myModalupd').modal('show');});
+});
+
+function ifrm_dosome(){
+	ifrmHtml = $("#ifrm").contents().find("body").html();
+		if(ifrmHtml != ""){
+			d = JSON.parse(ifrmHtml);
+			if(d.ret == "ok"){
+			$("#clogo").attr("src","../images/" + d.fname + "?" + Math.random());
+			$('#myModalupd').modal('hide');
+		} else {
+			alert(d.des);
+		}
+	}    
+}
+
+function logohasError(obj) {
+	obj.src = '../images/init/error.jpg';
+	obj.width = 40;
+}
+</script>
+<div class="modal fade" id="myModalupd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">上传图片</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" action="../srv/upd_banner.php" enctype="multipart/form-data" method="post" id="picform" name="picform" target="ifrm">
+					<div class="form-group"> 
+						<label class="col-sm-2 control-label">首页Banner</label>
+						<div class="col-sm-10">
+							<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />
+							<span class="help-block">(上传不大于200KB的图片，支持格式.jpg .png .gif)。</span>
+							<input type="text" id="sbjtid" name="sbjtid" value="{subjecterId}" style="display:none;"/>
+							<input type="text" id="tplno" name="tplno" value="{tplno}" style="display:none;"/>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="$('#picform').submit(); ">提交Logo</button>     
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+			</div>
+		</div>
+	</div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

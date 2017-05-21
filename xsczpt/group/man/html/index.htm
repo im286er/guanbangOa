@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组管理-{gtitle}</title>
+<meta charset="gbk">   
+{cssjs}    
+         
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>基本信息
+      <small>子标题</small>
+   </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">编号：</label>
+    <div class="col-sm-10"><p class="form-control-static">{id}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所属单位：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="schools"></p></div>
+  </div>
+  
+  <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">群组名称</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name"  style="width:50%" placeholder="请输入名称">
+      </div>
+   </div>
+     <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">口号</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="slogan"  style="width:50%" placeholder="请输入口号">
+      </div>
+   </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">简介</label>
+    <div class="col-sm-10">
+    <textarea id="des" class="form-control" style="width:50%" rows="3" placeholder="请输入简介"></textarea>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">访问权限：</label>
+    <div class="col-sm-3"><select id="visit" class="form-control"></select> </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">发布权限：</label>
+    <div class="col-sm-3"><select id="send" class="form-control"></select> </div>
+  </div>
+  <div class="form-group">
+      <label for="inputfile" class="col-sm-2 control-label">班级logo</label>
+       <div class="col-sm-10">
+       <img src="/upds/group/logo/{id}.jpg" id="clogo" width="48" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd">上传logo</button>
+        <p class="help-block">*100x100的(jpg,gif,png图片)，尺寸不大于200k</p>
+       </div>
+   </div>
+ 
+     <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 保 存 </button>  
+      <button type="button" class="btn btn-primary"> 取 消 </button>
+       <input type="text" id="id" value="0" style="display:none;"/>
+        <input type="text" id="school" value="" style="display:none;"/>
+   </div>
+    </div>
+</form>
+</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+    $.get("../data/limit.txt",function(d){$('#send').html(d); });
+    $.get("../data/visit.txt",function(d){$('#visit').html(d); 
+       readID({tpl:"group","do":"r",id:"{id}",frmid:"#form1",callback:"readcall"});      
+    }); 
+    
+     
+ 
+    $("#btn").bind("click", function(){
+      $("#id").val("{id}");
+       SaveAM({tpl:"group","do":"am",frmid:"#form1",showok:'修改完成',callback:""});
+    
+    }); 
+    $("#btn_upd").bind("click",function(){updlogo("{id}");});    
+ }); 
+function readcall(){
+  $.get("/data/id.php?t=school&v="+$("#school").val(), function (d){$("#schools").html(d);});
+}	
+function updlogo(v){
+  $('#myModal').modal({keyboard: true}); 
+  $('#myModal').data('dotype',"a"); 
+  $('#myModal #id').val(v);     
+  $('#myModalLabel').text('上传logo');      
+}
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo").attr("src","/upds/group/logo/"+d.fname+"?"+Math.random());           
+         $('#myModal').modal('hide'); 
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+</script>
+
+
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" 
+aria-hidden="true">×
+</button>
+<h4 class="modal-title" id="myModalLabel">
+模态框（Modal）标题
+</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_logo_group.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">logo</label>
+<div class="col-sm-10">
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="" style="display:none;"/>
+<span class="help-block">(上传不大于200kb的.jpg图片 尺寸 100x100)。</span>
+</div>
+</div> 
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+</div>
+</div>
+</div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

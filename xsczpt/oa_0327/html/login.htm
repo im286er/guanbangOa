@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript">
+function checkLogin()
+	{
+		if($.trim($("#admin_name").val())==""){
+			alert("请输入登录账号");
+			$("#admin_name").select();
+			return false;
+		}
+		if($.trim($("#user_type").val())==""){
+			alert("请选择类型");
+			$("#user_type").select();
+			return false;
+		}
+		/*if($("#admin_pass").val()==""){
+			alert("请输入登录密码");
+			$("#admin_pass").focus();
+			return false;
+		}*/
+		return true;
+	}
+</script>
+</head>
+<body class="l_mbg">
+<div class="wrap l_bg">
+	<div class="lm_nav">
+		<div class="login_content">
+			<form action="./srv/login.php" method="post" onsubmit="return checkLogin();">
+				<div class="login_input">
+					<label>账号：</label>
+					<input type="text" placeholder="请输入用户名" id="admin_name" name="admin_name">
+				</div>
+				<div class="login_input">
+					<label>密码：</label>
+					<input type="password" placeholder="请输入登录密码" id="admin_pass" name="admin_pass">
+				</div>
+				<div class="login_input">
+					<label>类型：</label>
+					<select name="user_type" id="user_type" class="select_con">
+						<option value="1">学生</option>
+						<option value="2">老师</option>
+						<option value="3">家长</option>
+						<option value="4">管理员</option>
+					</select>
+				</div>
+				<div class="login"><input value="登&nbsp;录" type="submit" class="l_submit" id="admin_pass"><button type="reset" class="l_submit reset">重&nbsp;置</button>
+				</div>
+		</form>
+		</div>
+	</div>
+</div>
+<div class="l_foot">
+	<div class="fotnav">
+		<span><img src="images/chart.jpg" /></span>&nbsp;&nbsp;&nbsp;
+		<span>开发单位： 南京冠邦</span>&nbsp;&nbsp;&nbsp;
+		<span>技术支持电话：025-84622851</span>&nbsp;&nbsp;&nbsp;
+		<span>QQ:1514175866</span>&nbsp;&nbsp;&nbsp;
+		<span>网址：www.topnt.cn</span>
+	</div>
+</div>
+</body>
+</html>

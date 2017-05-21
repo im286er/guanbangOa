@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="./srv/xuefen_submit.php?" method="post">
+		<div class="boxtitle">
+                    <label class="current"><a href="javascript:void(0);">在这里您可以进行当前学期的学分认定</a></label> 
+                </div>
+
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="33%" class="tabtd2_L">认定说明：</td>
+						 <td width="67%" class="tabtd2_R">
+							认定分数为0时则不进行该门学科的分数认定 
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">年级</td>
+						 <td width="80%" class="tabtd2_R"> 
+							<select name="gid" id="gid">
+							</select> 
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">学期</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="term_id" id="term_id">
+								
+							</select>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">考试类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+								
+							</select>
+						  </td>
+					</tr>
+					<!-- START list -->              
+					<tr> 
+						<td width="20%" class="tabtd2_L">{course_name}</td>
+						<td width="80%" class="tabtd2_R">
+							认定分数：<input type="text" id="{course_code}" name="{course_code}" size="5" value="{score_level}" /> 
+							获得学分：<input type="text" id="{course_code}_xf" name="{course_code}_xf" size="5" value="{score}" /> 
+						</td>
+						</td>
+					</tr>
+					<!-- END list --> 
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="计算学分" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;padding-left: 9px;" /></div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+
+$(function(){  
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+        selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");     
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+        selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("");     
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        //selectShowDataNoH("#exam_type",JSON.parse(d),"code_name","code_name"); $("#exam_type").prepend("");
+		selectShowDataNoH("#exam_type",JSON.parse(d),"name","name"); $("#exam_type").prepend("<option selected value=''>请选择</option>;");
+
+    });
+});
+
+
+</script> 

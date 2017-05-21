@@ -1,0 +1,1 @@
+<option value="1">教学理念</option><option value="2">教材分析</option><option value="3">学情分析</option><option value="4">教学目标</option><option value="5">教学重点</option><option value="6">教学难点</option><option value="7">教学时数</option><option value="8">教学策略</option><option value="9">教学准备</option>

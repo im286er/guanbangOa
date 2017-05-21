@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:420px;
+}
+</style>
+<script type="text/javascript">
+$().ready(function(){	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+
+$(function(){
+	$("#truename").val("{truename}");
+});
+
+//删除寄语
+function delEvent(id)
+{
+	if(confirm("你确定删除该条寄语记录吗？")){
+		$.post("./srv/sdo.php", {tpl:"del_jiyu","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#exp_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+
+function shwtg(){
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc')
+	});
+}
+
+function checkForm()
+{
+	var content = $("textarea[name='content']").val();
+	
+	if(content==""){
+		alert("内容不能为空。");
+		return false;
+	}
+
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+
+</script>
+</head>
+<body>
+<header><a href="?t={index_back}" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>友朋寄语</h1><a href="?t=stu_remarks&jiyu=jiyu" class="glyphicon glyphicon-heart" style="font-size:1.6rem;line-height:55px;"></a><a onclick="shwtg();" class="glyphicon glyphicon-plus-sign" style="font-size:1.6rem;line-height:55px;"></a></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			  <div class="weui-cells__title" style="display:none;">选择条件</div>
+		<form action="./?t=stu_remarks" method="post" id="t_zdy" style="display:none;">
+			  <div class="weui-cells mt_5">
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">姓名：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input type="text" name="truename" id="truename" value="" class="weui-input"/>
+                </div>
+            </div>
+		 </div>
+		 
+		 <div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+        </div>
+		<input type='hidden' id='geter' name="geter" value='{master_val}'>
+        <input type="hidden" name="uid" value="{uid}"/>
+	    <input type="hidden" name="id" id="id" value="{id}"/>
+		</form>
+		<div id="frm_show" style="width:100%;text-align:center;font-size:9px;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow" id="wrapper">
+			<table width="800px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+				<tr class="tabtitle" height="26">
+					 <td width="5%" class="tb_td tb_txt_bgc"> <style="text-align:center;">序号</td>
+					 <td width="7%" class="tb_td tb_txt_bgc">姓名</td>
+					 <td width="7%" class="tb_td tb_txt_bgc">班级</td>
+					 <td width="12%" class="tb_td tb_txt_bgc">时间</td>
+					 <td class="tb_td tb_txt_bgc">留言</td>
+					 {str_show}
+				</tr>
+				{str_event}
+			</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+			<ul class="pagination wx_center">
+				{page}
+			</ul>
+		</div>
+         </div>
+        </div>
+    </div>
+</div>
+
+<form action="./srv/remarks_submit.php" method="post" onsubmit="return checkForm();">
+<div id="tc" style="display:none;padding:10px;">
+<p>接收人:</p>
+    <div><textarea id="collection" name="collection" cols=32 rows=4 style="border:1px solid #ddd;"></textarea><div style="float:right;position:relative;bottom:20px;"><p><a href="javascript:void(0);" onclick="showAccept()">添加</a></p></div></div>
+	<!-- <input id="_recid" type="text" /> -->
+	<input type="hidden" name="_recid" id="_recid" />
+<p>内容:</p>
+	<div><textarea id="content" name="content" cols=40 rows=4 style="border:1px solid #ddd;" ></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="submit" name="Submit" value="确定"  style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div>
+<input type='hidden' id='geter' name="geter" value='{master_val}'>
+<input type="hidden" name="uid" value="{uid}"/>
+<input type="hidden" name="id" id="id" value="{id}"/>
+</form>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t={index_back}"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t={user_back}"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper');
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function slide(){
+	$("#frm_show").hide();
+	$("#t_zdy").fadeIn();
+}
+
+function showAccept(){
+	//iframe层
+	layer.open({
+	  type: 2,
+	  title: '寄语接收人选择',
+	  shadeClose: true,
+	  shade: 0.8,
+	  area: ['100%', '90%'],
+	  content: './?t=accept_message' //iframe的url
+	}); 
+}
+</script>
+</body>
+</html>

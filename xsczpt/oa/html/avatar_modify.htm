@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>修改照片</title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link href="css/oa_index.css" rel="stylesheet" type="text/css" />
+<script language="javascript" src="common/jquery.js"></script>
+<script language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript">
+function checkForm()
+{
+	if($("#image").val()==""){
+		alert("请选择上传的照片。");
+		return false;
+	}
+	$("#but_update").attr("disabled",true);
+	$("#but_ret").attr("disabled",true);
+	return true;
+}
+</script>
+</head>
+<body>
+	<div class="main">
+		<div class="box">
+			<form action="./srv/avatar_modify_submit.php" method="post" onsubmit="return checkForm();" enctype="multipart/form-data">
+				<div class="boxtitle">修改照片</div>
+				<div class="tabbody">
+						<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+							<!-- START list2 -->   
+                        	<tr>
+								 <td width="15%" class="tabtd2_L">图片格式：</td>
+								 <td class="tabtd2_R">目前支持上传的图片格式：jpg,gif,png</td>
+                                 <td width="15%" rowspan="4" class="tabtd2_R" style="padding:5px; text-align:center;">&nbsp;
+                                 	<img src="{avatar}" style="width:130px; height:160px;" border="0" align="absmiddle" />
+                                 </td>
+							</tr>
+							 	<!-- END list2 -->  
+                            <tr>
+								 <td width="15%" class="tabtd2_L">上传限制：</td>
+								 <td class="tabtd2_R">图片大小请限制在1M以下</td>
+							</tr>
+							
+                            <tr>
+								 <td width="15%" class="tabtd2_L">图片比例：</td>
+								 <td class="tabtd2_R">显示图片大小为130*160，请尽量保证图片宽高比为13:16，防止生成的图片变形。</td>
+							</tr>
+							
+							<tr>
+								 <td width="15%" class="tabtd2_L">上传照片：</td>
+								 <td class="tabtd2_R"><input type="file" id="image" name="image" size="25" onchange="checkImg(this);" /> 图片格式：jpg,gif,png</td>
+							</tr>
+							
+						</table>
+				</div>
+				<div class="boxfooter2"><input id="but_update" name="but_update" type="submit" value="确认修改" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="but_ret" id="but_ret" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" value="返回" onclick="history.back()" /></div>
+			</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

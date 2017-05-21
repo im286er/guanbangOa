@@ -1,0 +1,338 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<style>
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+._ha_content{display:none;clear:both;min-height:0 !important;}
+._ha_content label{min-height:0 !important;line-height:normal !important;}
+.ha_cont{float:left;color:red;}
+.ha_cont pre{color:red;background-color:white;}
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+.ha_tacontent{width:100%;max-height:100px;overflow:hidden;text-overflow:ellipsis;padding:0;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;line-height:23px;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ha_cls">
+		<div class="ha_selectlist">
+			<form action="./?t=report_self" method="post">
+				
+				<div class="ha_selbox">
+					<span>年级：</span>
+					<select name="grade_id" id="grade_id" class="ui-select">
+						<option value="">全部</option>
+						{str_grade}
+					</select>
+				</div>
+				<div class="ha_selbox">
+					<span>分类：</span>
+					<select name="report_type" id="report_type" class="ui-select">
+						<option value="">全部</option>
+						{str_report}
+					</select>
+				</div>
+				<div class="ha_selbox"><input type="submit" id="choose" name="choose" value="查询" class="ha_selchoose"/></div>
+			</form>
+		</div>
+		<div class="ha_addbtn">
+			<a href="#" target="" id="ha_add">添加+</a>
+			<div id="LoginBox">
+				<form action="./srv/report_self_submit.php" method="POST"  onsubmit="return checkForm();">
+					<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+					<div class="ha_row">
+						<div class="has_selbox">
+							<span >分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类：</span>
+							<select name="report_type_add" id="report_type_add" class="ui-select">
+							<option value="">请选择分类</option>
+								{str_report_type}
+							</select>
+						</div>
+						{str_content}
+						<div class="ha_content ha_stext">
+							<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="content" name="content"></textarea>
+							</div>
+						</div>
+						<div class="ha_content ha_stext">
+							<label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="note" name="note"></textarea>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<input type='hidden' id='partner_id' name='partner_id' value=''>
+						<input type='hidden' id='geter' name="geter" value='{master_val}'>
+						<input type='hidden' id='menu1' name="menu1" value=''>
+						<input type='hidden' id='menu2' name="menu2" value=''>
+						<input type="hidden" name="subject" id="subject" value=""/>
+						<input type="hidden" name="uid" value="{uid}"/>
+						<input type="hidden" name="title" value=""/>
+						<input type="hidden" name="flag" id="h_flag" value=""/>
+						<div class="ha_bot">
+							<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn">返回</a>
+							<input class="ha_save" type="submit" name="Submit" value="保存" /> 
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<table class="gridtable">
+	<tr class="tit">
+		<th width="16%">类型</th>
+		<th width="7%">年级</th>
+		<th width="13%">学期</th>
+		<th width="38%">内容描述</th>
+		<th width="19%">备注</th>
+		<th width="7%">操作</th>
+		<div class="ha_edit">
+				<form action="./srv/report_self_eidt_submit.php" method="POST"  onsubmit="return checkForm_edit();">
+					<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+					<div class="ha_row">
+						<div class="has_selbox">
+							<span >分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类：</span>
+							<select name="report_type_edit" id="report_type_edit" class="ui-select" disabled>
+							<option value="">请选择分类</option>
+								{str_report_type}
+							</select>
+						</div>
+						{str_content}
+						<div class="ha_content ha_stext">
+							<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="content_edit" name="content_edit"></textarea>
+							</div>
+						</div>
+						<div class="ha_content ha_stext">
+							<label>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</label>
+							<div class="ha_text_right">
+								<textarea rows="3" cols="20" id="note_edit" name="note_edit"></textarea>
+							</div>
+						</div>
+						<div class="clear"></div>
+						<div class="ha_bot">
+							<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn">返回</a>
+							<input type="hidden" name="report_id" id="report_id" value="" /> 
+							<input class="ha_save" type="submit" name="Submit" value="保存" /> 
+						</div>
+					</div>
+				</form>
+		</div>
+	</tr>
+	{str_main}
+</table>
+<ul class="pagination pull-right">
+	{page}
+</ul>
+
+</div>
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/javascript">
+$(function(){
+	//menu
+	$('.ha_menu li').hover(function(){
+		$('span',this).stop().css('height','2px');
+		$('span',this).animate({
+			left:'0',
+			width:'100%',
+			right:'0'
+		},200);
+	},function(){
+		$('span',this).stop().animate({
+			left:'50%',
+			width:'0'
+		},200);
+	});
+	//弹出登录
+	$("#ha_add").hover(function(){
+		$(this).stop().animate({
+			opacity: '0.8'
+		});
+	}, function () {
+		$(this).stop().animate({
+			opacity: '1'
+		});
+	}).on('click', function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#LoginBox").fadeIn("slow");
+	});
+	//
+	//按钮的透明度
+	$("#loginbtn").hover(function(){
+		$(this).stop().animate({
+			opacity: '1'
+		}, 600);
+	}, function () {
+		$(this).stop().animate({
+			opacity: '0.8'
+		}, 1000);
+	});
+	//关闭
+	$(".close_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$("#LoginBox").fadeOut("fast");
+		$(".ha_edit").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//modity弹出登录
+	$(".caozuo").hover(function(){
+		$(this).stop().animate({
+			opacity: '0.8'
+		});
+	}, function () {
+		$(this).stop().animate({
+			opacity: '1'
+		});
+	}).on('click', function(){
+		var id = $(this).attr("aid");
+		$.post("./srv/rdo.php", {tpl:"report_edit",id:id}, function (d, e) {
+			l=JSON.parse(d); 
+			$("#report_type_edit").val(l[0].subject_id);
+			$("#content_edit").val(l[0].content);
+			$("#report_id").val(id);
+			$("#note_edit").val(l[0].note);
+		});
+	
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$(".ha_edit").fadeIn("slow");
+	});
+	//按钮的透明度
+	$("#loginbtn").hover(function(){
+		$(this).stop().animate({
+			opacity: '1'
+		}, 600);
+	}, function () {
+		$(this).stop().animate({
+			opacity: '0.8'
+		}, 1000);
+	});
+	//关闭
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#fff' }) }, function () { $(this).css({ color: '#fff' }) }).on('click', function () {
+		$(".ha_edit").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//close-quote
+	$(".close_t_btn").hover(function () { $(this).css({ color: '#39a7b7' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+		$("#LoginBox").fadeOut("fast");
+		$("#mask").css({ display: 'none' });
+	});
+	//
+
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function(){		
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+	$("#grade_id").val({term_id});	
+	report_index=$("#grade_id").get(0).selectedIndex;
+	$(".select-list").eq(0).children("li").removeClass("active");
+	$(".select-list").eq(0).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(0).text($("#grade_id option:selected").text());
+	
+	$("#report_type").val({report_type});
+	report_index=$("#report_type").get(0).selectedIndex;
+	$(".select-list").eq(1).children("li").removeClass("active");
+	$(".select-list").eq(1).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(1).text($("#report_type option:selected").text());
+	
+	$("#report_type_add").change(function(){
+		index=$(this).get(0).selectedIndex-1;
+		if(index!=-1){
+			cont=$("._ha_content .ha_cont pre").eq(index).html();
+			if(cont!=""){
+				$("._ha_content").hide();
+				$("._ha_content").eq(index).show();
+			}else{
+				$("._ha_content").hide();
+			}
+		}else{$("._ha_content").hide();}
+	});
+});	
+
+//检查提交表单
+function checkForm()
+{
+	if($("#report_type_add").val()==""){
+		alert("请选择分类。");
+		return false;	
+	}
+	
+	if($("#content").val()==""){
+		alert("请输入内容。");
+		return false;	
+	}
+	
+	if($("#content").val().length<10){
+		alert("输入内容请不要少于10个字。");
+		return false;	
+	}
+	return true;
+}
+
+//检查提交表单
+function checkForm_edit()
+{
+	if($("#report_type_edit").val()==""){
+		alert("请选择分类。");
+		return false;	
+	}
+	
+	if($("#content_edit").val()==""){
+		alert("请输入内容。");
+		return false;	
+	}
+	
+	if($("#content_edit").val().length<10){
+		alert("输入内容请不要少于10个字。");
+		return false;	
+	}
+	return true;
+}
+
+//获取顶部和左侧的栏目id
+var menu2="";
+function getUrlParam(name)
+{
+var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
+menu2=getUrlParam('id');
+
+//var uid="{uid}";
+var menu1=""; 
+var menu2=""; 
+menu1=self.parent.frames.lef_m.menu1;
+menu2=self.parent.frames.lef_m.menu2;
+$("#menu1").val(menu1);
+$("#menu2").val(menu2);
+
+$("#report_type_add").change(function(){
+	$("#subject").val($(this).find("option:selected").text());
+});
+</script>
+{footer}  
+</body>
+</html>

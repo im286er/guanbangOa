@@ -1,0 +1,29 @@
+<div class="wrap">
+	<div class="main">
+		<div class="logo"><img src="css/images/logo.jpg"  align="top" /></div>
+		<div class="search">
+			<form name="form1" method="post" action="/teacher/?t=lists&s={s}" onsubmit="return cksearch();"> 
+				<input id="keyword_s" type="text" name="key" placeholder="请输入关键字" class="search_text fl">
+				<input type="image" align="absmiddle" src="css/images/search_button.jpg" class="search_button" id="submit">
+			</form>
+		</div>
+	</div>
+</div>
+<div class="wrap">
+	<div class="menu_bg">                                                            
+		<div class="main menu">
+			<ul>                                     
+				<li><a href="/teacher/?s={s}" target="">首页</a></li>
+				<li><a href="/teacher/?t=list&s={s}" target="">文章</a></li>
+				<li><a href="./?t=photo&s={s}" target="">相册</a></li>
+				<li><a href="./?t=listone&type=1446001793&s={s}" target="">文摘</a></li>
+				<li><a href="./?t=listone&type=1446022223&s={s}" target="">读书</a></li>
+				<li><a href="./?t=listone&type=1446022229&s={s}" target="">随便逛逛</a></li>
+<!-- 				<li><a href="#" target="">相册</a></li> -->
+				<li id="uppen" style="display:none;"><a href="/zdevelop/?t=feed&uid={uid}&s={s}" target="">我的主页</a></li>
+				<li id="uopen" style="display:none;"><a href="/teacher/man/?s={s}" target="">后台管理</a></li>
+			</ul>
+		</div>
+	</div>
+
+</div>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>同心圆父母学堂-内容页</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/> 
+<link href="html/blog/css/circle.css" type="text/css" rel="Stylesheet">
+{meta}	
+</head>
+<body class="bgf8">
+<!--顶部-->
+{top}
+
+{def_logo}
+{menu}
+
+<div class="wrap" style="margin-top:10px;">
+	<div class="nav_in">
+		<ul class="main menu_in">                                                  
+			<!-- START part_cate -->                                                  
+			<li><a href="/?t=part_list&pc={id}" target="">{name}</a></li>
+      <!-- END part_cate -->
+		</ul>
+	</div>
+	<div class="clear"></div>
+	<div class="main">
+		<!--<div class="k_navga">
+			<span>当前位置：<a href="#" target="">同心圆父母学堂</a>&gt; 
+			<a href="#">新闻导航</a></span>
+		</div>-->
+		<div class="clear"></div>
+		<div class="ca_left fl">
+      <!-- START art -->
+			<div class="k_artinfo pt20">
+				<h3>{name}</h3>
+				<span>时间：<script>document.write(utctime("{timestamp}"));</script> 来源： 人气：{see}</span>
+				{des}
+			<div class="article_content_share" style="padding-top:12px;">
+            <div class="bshare-custom icon-medium-plus" style="_display:none;"><div class="bsPromo bsPromo2"></div>
+                <span style="float:left;padding-left:20px;padding-top:2px;">分享到：</span>
+                <a title="分享到微信" class="bshare-weixin"></a><a title="分享到QQ空间" class="bshare-qzone"></a>
+                <a title="分享到新浪微博" class="bshare-sinaminiblog"></a>
+                <a title="分享到QQ好友" class="bshare-qqim"></a>
+                <a title="分享到i贴吧" class="bshare-itieba"></a>
+                <a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a>
+            </div>
+            <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script>
+            <script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+      </div>
+			<div class="clear"></div>
+			</div>
+		  <!-- END art -->
+		</div>
+		<div class="right_01 fr">
+      <div class="act_tit cgres_bb">
+				<p>推荐阅读</p>
+				<a href="{url}" target="">更多+</a>
+			</div>
+			<ul class="jnews_list fl">
+				<!-- START art_list -->
+				<li style="width:85%;"><i class="cir_cion fl jn_01">&nbsp;</i><a href="./?t=part_info&id={id}" target="">{name}</a></li>
+				<!-- END art_list -->	
+      </ul>
+		</div>
+	
+	</div>
+</div>
+<div class="clear"></div>
+{foot}
+<script src="html/circle/js/jquery.min.js"></script>
+<script type="text/javascript">
+function cksearch(){
+//search
+function cksearch(){
+	if (document.getElementById("keyword_s").value=='')
+	{
+		alert('关键字不能为空!');
+		return false;
+	}
+};
+</script>
+</body>
+</html>

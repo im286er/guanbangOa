@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				<span class="floatright">
+					<script type="text/javascript">
+					  //if({priv1}){
+						document.write('<img src="images/add.gif" class="padding5"/><a href="./?t=term_add">添加学期</a>');
+					 // }
+					</script> 
+				</span>
+			<label class="current"><a href="javascript:void(0);">学期列表</a></label> 
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="5%" class="tabtd">学期ID</td>
+					 <td width="10%" class="tabtd">学年</td>
+					 <td width="10%" class="tabtd">学期</td>
+					 <td width="10%" class="tabtd">开始日期</td>
+					 <td width="10%" class="tabtd">结束日期</td>
+					 <td width="15%" class="tabtd">是否为默认学期</td>
+					 <td class="tabtd">操作选项</td>
+				</tr>
+				{str_term}
+			</table>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+
+});
+
+//删除体质记录
+function delTerm(id){
+	if(confirm("你确定删除此学期吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_term","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#term_"+id).fadeOut("slow");
+				$("#term_nums").text($("#term_nums").text()-1);
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

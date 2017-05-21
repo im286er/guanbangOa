@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>备课管理-{gtitle}</title>   
+{cssjs}   
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<link href="/widget/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>   
+<script src="/tree/tree.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/tree/tree.css"> 
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main"> 
+<div class="page-header">
+   <h3>备课管理 <small></small>  
+   <a href="?t=courseware" class="btn btn-primary pull-right" >返回</a>  </h3>
+</div>
+
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">[添加/编辑] </h3>
+   </div>          
+<div class="panel-body">
+<form id="form1" class="form-horizontal" >      
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">标题</label>  
+   <div class="col-sm-11"> 
+   <input type="text" id="title" class="form-control" style="width:40%;" placeholder="课件标题"  maxlength="50"/>
+  <input type="text" id="techer" value="{truename}" style="display:none;"/>
+  </div>
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">*</label>  
+   <div class="col-sm-3"> 
+   <select id="pro"  class="form-control"><option value="">选择属性</option></select>  
+   <input type="text" id="school" style="display:none;"/>  
+     <p class="help-block">*默认属性</p> 
+  </div> 
+     <div class="col-sm-8">  <a href="?t=def_property" target="_blank" class="btn btn-primary">+管理默认属性</a>
+      </div> 
+</div>    
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">属性</label>  
+   <div class="col-sm-11">
+       <select id="cid"><option value="">选择班级</option></select> 
+      <select id="grade"><option value="">选择年级</option></select> 
+          <select id="subject"><option value="">选择学科</option></select>
+          <select id="edition"><option value="">教材版本</option></select> 
+          <select id="volume"><option value="">上下册</option></select>
+          <select id="chapter"><option value="">章/节/单元</option></select>
+         
+         <input type="text" id="period" style="display:none;"/>  
+           
+      
+   </div>
+</div> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">课文</label>  
+   <div class="col-sm-2"><select id="textbook" class="form-control"><option value="">-课文-</option></select>   </div> 
+    <div class="col-sm-8">    
+     <a href="javascript:void(0);" onclick="gettextbook();" class="btn btn-success glyphicon glyphicon-repeat">重新加载课文</a>
+      <a href="?t=textbook_add&d=a" target="_blank" class="btn btn-primary">+添加课文</a>  
+    </div> 
+</div>   
+<div class="form-group">   
+  <label class="col-sm-1 control-label">内容</label>   
+   <div class="col-sm-11">
+  <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>
+  <script type="text/plain" id="umdes" style="width:80%;height:400px;"></script>
+  </div>
+</div>
+ 
+ 
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">分享</label>  
+   <div class="col-sm-3">   <select id="share"  class="form-control"><option value="">分享级别</option>
+        <option value="0">仅自己可见</option><option value="1">我的学员可见</option><option value="2">所有人</option>
+        </select> 
+  </div>
+</div> 
+<div class="form-group">  
+  <label class="col-sm-1 control-label"></label>     
+   <div class="col-sm-11">
+    <button type="button" class="btn btn-success" id="btn"> 发 布 </button>     
+    <input type="text" id="id" value="" style="display:none;"/>
+     </div>
+    </div>  
+</form> 
+</div>  
+</div> 
+</div>
+</div>
+
+{foot}
+</body>
+</html>
+
+
+<script type="text/javascript">
+var um = UM.getEditor('umdes'); 
+$(function(){
+    $.get("/data/grade_n1.txt", function(d){$("#grade").html(d);$("#grade").prepend("<option value=''>—年级—</option>");});     
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>教材版本</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});
+    $.get("/data/restype.txt", function (d) {$("#restype").html(d);$("#restype").prepend("<option value=''>资源类型</option>");});   
+    $.post("./srv/rdo.php", {tpl:"get_my_cls","id":$(this).val()}, function (d, e) {                 
+        l=JSON.parse(d);  selectShowData("#cid",l,"id","name");             
+    });  
+    $.post("./srv/rdo.php?", {tpl:"get_def_property"}, function (d, e) {                 
+       selectShowDataNoH("#pro",JSON.parse(d),"id","name"); $("#pro").prepend("<option value=''>—默认属性—</option>");     
+    }); 
+    //$("#subject").bind("change",function(){$("#subjects").val($(this).find("option:selected").text());});
+    $("#grade").bind("change",function(){
+      if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period); 
+   });
+     $("#pro").bind("change",function(){
+       if($(this).val()==""){return;}
+       $.post("./srv/rdo.php", {tpl:"get_def_info","id":$(this).val()}, function (d, e) {               
+             jsn=JSON.parse(d); 
+           $("#grade").val(jsn[0].grade);  
+           $("#period").val(jsn[0].period);  
+           $("#school").val(jsn[0].school); 
+           $("#cid").val(jsn[0].cid); 
+            $("#subject").val(jsn[0].subject);   
+            $("#edition").val(jsn[0].edition);
+            $("#volume").val(jsn[0].volume);
+            $("#chapter").val(jsn[0].chapter);
+            gettextbook();
+        });  
+   }); 
+   
+    $("#chapter").bind("change",function(){
+      if($(this).val()==""){return;}
+      gettextbook();     
+   });   
+   
+   if(queryStr("d")=="m"){
+     readID({tpl:"beike","do":"r",id:queryStr("id"),frmid:"#form1"});  
+  }    
+   $("#btn").bind("click", function(){  
+    if($("#title").val()==""){alert("请输入一个作业名称标题");return;}     
+    if($("#grade").val()==""){alert("请选择一个年级");return;}
+    if($("#subject").val()==""){alert("请选择学科");return;}
+    if($("#edition").val()==""){alert("请选择教材版本");return;}
+    if($("#volume").val()==""){alert("请选择上下册");return;}
+    if($("#textbook").val()==""){alert("请选择课文");return;}
+    if($("#resname").val()==""){alert("请选择一个资源");return;}   
+      SaveAM({tpl:"beike","do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+    
+});   
+
+function dosome(ed,data){  
+  if(data.indexOf('ok')>-1)
+    alert("操作成功"); 
+  if(queryStr("d")=="m"){
+       //location.href="?t=homework_info&id="+queryStr("id");
+  }
+  else{     
+     // location.href="?t=homework_info&id="+data.substr(data.indexOf('ok')+2);
+  }
+} 
+function gettextbook(){
+    if($("#grade").val()==""){alert("请选择一个年级");return;}
+    if($("#subject").val()==""){alert("请选择学科");return;}
+    if($("#edition").val()==""){alert("请选择教材版本");return;}
+    if($("#volume").val()==""){alert("请选择上下册");return;}   
+    $.post("./srv/rdo.php", {tpl:"get_chapter_textbook",grade:$("#grade").val(),subject:$("#subject").val(),
+      edition:$("#edition").val(),volume:$("#volume").val(),chapter:$("#chapter").val()}, function (d, e) {                 
+       selectShowDataNoH("#textbook",JSON.parse(d),"id","name");  
+       $("#textbook").prepend("<option value=''>-课文-</option>");
+    });  
+} 
+</script> 

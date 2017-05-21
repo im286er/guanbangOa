@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的成绩-{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}     
+<div class="col-sm-10 main">  
+<div class="page-header">
+   <h3>我的成绩      <small></small>   </h3>
+</div>
+  
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">  
+    <label class="col-sm-1 control-label">学科</label>    
+    <div class="col-sm-2">
+    <select id="subject" class="form-control"></select>     
+    </div>       
+    <div class="col-sm-2">
+      <a class="btn btn-primary" id="btn">查询</a>   
+    </div>  
+   </div>     
+</form>  
+
+<table class="table  table-hover"> 
+<thead>
+<tr>  
+<th>学科</th> 
+<th>成绩</th>   
+<th>时间</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr> 
+<td><label data-subject="{subject}"></label></td> 
+<td><em>{score}</em></td> 
+<td><cite><script>document.write(utctime("{timestamp}"));</script></cite></td>  
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+</div>
+</div>
+
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+    $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#dlg2 #subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");
+    if(queryStr("s")!="")$("#subject").val(queryStr("s"));});
+     $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $("#btn").bind("click",function(){ 
+     location.href="./?t=score&s="+$("#subject").val(); 
+  });
+});
+</script>

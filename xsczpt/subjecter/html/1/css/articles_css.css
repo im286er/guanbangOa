@@ -1,0 +1,38 @@
+@charset "gb2312";
+/**公共样式**/
+body{ padding:0px; margin:0px auto; color:#5b5b5b;font-family:"微软雅黑", "宋体" , "仿宋" ,Arial;width:100%;height:100%;}
+ul,li,form, dl,dt,dd, span,p,em{ padding: 0px; margin: 0px;}
+ul,li{ list-style:none;text-decoration:none;}
+h1,h2,h3,h4,h5,h6{ padding:0px; margin:0px;}
+select,input,em,textarea,address{  font-style:normal; color:#5A5A5A;}
+img{ border:none; border:0;margin:0;padding:0;}
+*{margin:0;padding:0;} 
+a{ text-decoration:none;noline: expression(this.onFocus=this.blur());color:#63606a}
+a:focus {outline:none;-moz-outline:none;}
+/**a:hover{text-decoration:none;noline: expression(this.onFocus=this.blur());}**/
+i{font-style:normal;}
+.clear{font-size:0px;clear:both;}
+/**公共样式结束**/
+
+
+.mt15{margin-top:15px;}
+.fco{color:#ef7e1e;padding:0 5px;}
+.h_main{margin:0 auto;width:1000px;}
+.h_left{float:left;width:194px;}
+.h_right{float:right;width:780px;}
+.navfl_o{background:#bacee8;position:relative;height:40px;line-height:40px;font-size:16px;font-family: 'Microsoft YaHei';border-bottom:1px solid #fff;color:#333}
+.navfl_o a{display:inline-block;width:210px;text-align:left;text-indent:20px;}
+.h_current {background:url(./images/navfl_o_sel.png) no-repeat -3px -2px;background-repeat:no-repeat;height:48px;width:210px;position:absolute;z-index:9}
+.h_con {width:760px;border:1px solid #ffffff;overflow:hidden;background:#f2f7fc;}
+.h_con h1{font-size:21px;font-family: 'Microsoft YaHei';text-align:center;padding:20px 0;}
+.h_con h1 em {margin:0 15px;}
+.list_box li{font-size:14px;line-height:42px;text-indent:20px;color:#595757;}
+.list_box li:nth-of-type(odd){background:#dae7f7;}
+.list_date {float:right;margin-right:10px;}
+.list_date p{float:left;line-height:42px;height:42px;}
+.quotes {float:right;background:#eef3f9;padding:6px;margin:30px 0;font-size:12px;}
+.quotes a {border: #ddd 1px solid;padding:2px 5px;color: #aaa;margin:2px;}
+.quotes a:active {border: #a0a0a0 1px solid;padding:2px 5px;}
+.quotes a:hover {border: #a0a0a0 1px solid;padding:2px 5px;margin:2px;}
+.quotes span.current {border: #e0e0e0 1px solid;padding:2px 5px;font-weight: bold;color: #aaa;background:#f0f0f0;margin-right:2px;}
+.quotes span.disabled {border: #ddd 1px solid;padding:2px 5px;color:#ccc;margin-right:4px;}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>     
+<title></title>     
+{cssjs}
+<link rel="stylesheet" type="text/css" href="/widget/easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="/widget/easyui/themes/icon.css"> 
+<script type="text/javascript" src="js/tree.js"></script>       
+</head>   
+<body>  
+<h4>{name} </h4>         
+  
+<div class="c12 centered">
+<p class="note info"> 
+    <button class="small blue" id="btn1" onclick="addTreeRootNode({tree:'#tree',dlg:'#dlg1'})">添加根</button>
+    <button class="small blue" id="btn2" onclick="addTreeNode({tree:'#tree',dlg:'#dlg1'});">添加叶子</button>
+    <button class="small green" onclick="modTreeNode({tree:'#tree',dlg:'#dlg2'});getodx();">重命名</button>
+    <button class="small red" id="btn3" onclick="delTreeNode({tree:'#tree'});">删除节点</button> 
+     <button class="small" onclick="location.reload();">刷新</button>   
+</p>
+</div>
+ 
+ 
+
+<ul class="easyui-tree" id="tree" data-options="lines:true"	url="./srv/tree.php?tpl={tpl}"></ul>    
+</body>
+</html> 
+<script>
+    var dotype = "m";
+    var tbl="{tpl}";
+    $(function () {
+       //readID({ "tpl": queryStr("t"), "do": "r", "id": "1", frmid: "#form1" });          
+    });  
+</script> 
+
+<div id="dlg1" title="【添加/编辑】" style="width:500px;height:400px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ addTreeNodeDo('#dlg1');}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+<label>节点名称</label>  <input id="name" type="text" value="" maxlength="30"><br/>  
+<label>排序</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')" > 
+(数字0-9)   
+<input type="text" id="id" style="display:none;" value="" disabled/>
+</form> 
+</div>
+
+<div id="dlg2" title="【添加/编辑】" style="width:500px;height:400px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ modTreeNodeDo('#dlg2');}},{text:'取消',handler:function(){$('#dlg2').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+<label>节点名称</label>  <input id="name" type="text" value="" maxlength="30"><br/> 
+<label>排序</label>  <input id="odx" type="text" value="0"  onkeyup="value=value.replace(/[^0-9]/ig,'')" > 
+(数字0-9)    
+<input type="text" id="id" style="display:none;" value="" disabled/>
+</form> 
+</div>
+ 

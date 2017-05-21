@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>等待审核的学校-{gtitle}</title>
+{meta} 
+</head>
+<body> 
+{top}
+<div class="container">
+{head} 
+
+ 
+<div  class="row">
+<div class="col-sm-1"><img src="/img/ico0.gif"></div>
+<div class="col-sm-11">
+  <h3 style="font-size:1.6em;">{gtitle} 
+  <div class="btn-group pull-right"> 
+  <a href="./?t=school_apply"  class="btn btn-primary"> +添加新学校</a>
+  <a href="./?t=school_waiting"  class="btn  btn-primary"> 审核中的学校</a>    
+  </div> 
+  </h3>
+  <h6 style="color:#777;">NANJIANG JIAOYU XIANXI NETWORK.     
+  </h6>
+</div>
+</div>
+
+<div class="panel panel-default" id="form1">
+   <div class="panel-heading">
+      <h3 class="panel-title">【审核中的学校】</h3>
+   </div>
+   <div class="panel-body">    
+     
+  <div class="panel">
+    
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>   
+<th>简称</th> 
+<th>编码</th> 
+<th>地址</th>  
+<th>时间</th>  
+<th>状态</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td>{name}</td>
+<td>{mininame}</td>
+<td>{scode}</td>
+<td>{names}</td>             
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><em>审核中……</em></td>   
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+ 
+  
+    </div>
+   </div>
+</div>
+
+ 
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() { 
+  $.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+  $("#addr1").bind("change", function(){getaddr($(this).val());getaddrs($(this).val());}); 
+  $("#addr2").bind("change", function(){getaddrs($(this).val());});  
+  $.get("/data/orgtype.txt", function (data) {$("#typeid").html(data); }); 
+  $.get("/data/period.txt", function (data) {$("#period").html(data); }); 
+  
+  $("#btn").click(function(){
+     if($("#addr").val()==""){alert("请选择地区");return;}
+     if($("#name").val()==""){alert("请输入名称");return;}
+     if($("#mininame").val()==""){alert("请输入简称");return;}
+     if($("#motto").val()==""){alert("请输入校训");return;}
+     if($("#des").val()==""){alert("请输入简介");return;}
+     if($("#scode").val()==""){alert("请输入编码");return;}
+     if($("#contacts").val()==""){alert("请输入联系方式");return;}
+      SaveAM({tpl:"school","do":"a",frmid:"#form1",showok:'申请学校成功，我们将在1-5个工作日审核您的审核！',callback:""}); 
+   });
+ }); 
+function getaddr(v){ 
+  $.post("./srv/rdo.php?", {tpl:"getaddr","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");                
+  });
+}
+function getaddrs(v){ 
+  $("#addr").val(v);
+  $.post("./srv/rdo.php?", {tpl:"getaddrs","id":v}, function (d, e) {                  
+      $("#addrs").val($.trim(d));            
+  });
+}
+</script>

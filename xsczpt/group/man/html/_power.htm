@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>权限管理{gtitle}</title>
+{cssjs} 
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<script>
+var arr=new Array('','管理员','群主');
+var arr1=new Array('','默认班级');
+</script>      
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>权限管理
+      <small></small>
+   </h3>
+</div>
+
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1">
+群组公开&nbsp;&nbsp;<kbd>非本群组成员可以访问但无法发表内容。</kbd>
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" >
+群组私有&nbsp;&nbsp;<kbd>非本群组成员无法访问。</kbd>
+  </label>
+</div>
+<input type="hidden" value="{power}" id="power"/>
+<button type="button" class="btn btn-primary" onclick="savepower({g});">保存</button>
+</div>
+ 
+
+</div>
+<script type="text/javascript">
+	$(function(){ 
+		ischeck();
+	}); 
+	function ischeck(){
+		if($("#power").val()==1){
+			$("input[id='optionsRadios1']").attr("checked",true); 
+		}else{
+			$("input[id='optionsRadios2']").attr("checked",true); 
+		}
+	}
+</script>
+{foot} 
+</body>
+</html>
+

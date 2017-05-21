@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>课件查询/添加-{gtitle}</title>
+{cssjs}     
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script>
+var arr=new Array('--','未完成','已交','批阅');     
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}     
+<div class="col-sm-10 main">  
+
+<div class="page-header">
+   <h3>课件查询/添加<small></small> <a href="./?t=courseware" class="btn btn-primary pull-right" >返回</a>  </h3>
+</div>
+
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">  
+     <div class="col-sm-2"><select id="cid" class="form-control"><option value="">选择班级</option></select></div>     
+    <div class="col-sm-1"><select id="subject" class="form-control"><option value="">学科</option></select></div>  
+<div class="col-sm-1"><select id="edition"  class="form-control"><option value="">教材版本</option></select> </div>
+<div class="col-sm-1"><select id="volume" class="form-control"><option value="">上下册</option></select></div>
+<div class="col-sm-1"><select id="chapter" class="form-control"><option value="">章/节/单元</option></select></div>
+<div class="col-sm-1"><select id="restype" class="form-control"><option value="">资源类型</option></select>  </div> 
+    <div class="col-sm-2">
+  <input id="tle" type="text"  class="form-control" placeholder="请输入关键字" />  
+    </div>     
+    <div class="col-sm-2">
+      <a class="btn btn-primary" id="btn">查询</a>   
+      <input type="text" id="grade" value="" style="display:none;"/>  
+<input type="text" id="school" value="" style="display:none;"/> 
+    </div>  
+   </div>
+   <a class="red">*查询只显示前50条数据，如果不存在请输入更精确条件查询</a>     
+</form>  
+   
+ 
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>科目</th> 
+<th>标题</th>    
+<th>学段</th>   
+<th>册/章节</th> 
+<th>发布时间</th>  
+<th>教材</th>
+<th>资源类别</th>
+<th>浏览</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody id="list">
+<!-- START list -->     
+<!-- END list --> 
+</tbody>
+</table>
+ 
+</div>
+
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">
+var subject,period,grade,edition,volume,chapter,restype;  
+$(function(){        
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>教材版本</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});
+    $.get("/data/restype.txt", function (d) {$("#restype").html(d);$("#restype").prepend("<option value=''>资源类型</option>");});   
+    
+    $.post("./srv/rdo.php?", {tpl:"get_my_cls"}, function (d, e) {                 
+       selectShowDataNoH("#cid",JSON.parse(d),"id","name"); 
+       $("#cid").prepend("<option value=''>—班级—</option>");     
+    }); 
+   
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $("#btn").bind("click",function(){
+      if($("#cid").val()==""){alert("请选择一个班级");return;}
+     $.post("./srv/rdo.php", {tpl:"courseware_qry","sch":$("#school").val(),"cid":$("#cid").val(),"grade":$("#grade").val(),subject:$("#subject").val(),
+      "edition":$("#edition").val(),"volume":$("#volume").val(),"chapter":$("#chapter").val(),"restype":$("#restype").val(),"tle":$("#tle").val()}, function (d, e) {               
+         t=JSON.parse(d);
+         $("#list").empty();
+          for (i = 0; i < t.length; i++) {
+                  rows = $("#listnon").html();                         
+                  for (var _n in t[i]) {
+                      try { 
+                          if (t[i][_n] == null || t[i][_n] == "")
+                              val = "";
+                          else
+                              val = t[i][_n];
+                      } catch (e1) {
+                          alert(e1);                            
+                      }
+                      if(_n=="timestamp")val = utctime(val);   
+                      if(_n=="period")val = period[val];
+                      if(_n=="grade")val = grade[val];
+                      if(_n=="subject")val = subject[val];
+                      if(_n=="edition")val = edition[val];   
+                      if(_n=="volume")val = volume[val];
+                      if(_n=="chapter")val = chapter[val];
+                      if(_n=="restype")val = restype[val];                
+                      reg = new RegExp("@" + _n + "#", "g");                      
+                      rows = rows.replace(reg, val);                                        
+                  }                    
+                  $("#list").append(rows);
+              }
+            
+      });           
+  });
+  
+  $("#cid").bind("change",function(){
+       if($(this).val()==""){return;}
+      $.post("./srv/rdo.php", {tpl:"get_class_info","id":$(this).val()}, function (d, e) {               
+         jsn=JSON.parse(d); 
+         $("#grade").val(jsn[0].grade);  
+         $("#period").val(jsn[0].period);  
+         $("#school").val(jsn[0].school); 
+      });
+       
+   });
+   $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data; 
+  });
+  $.getJSON("/data/period.json.txt", function (data) {  
+      period=data; 
+  });
+  $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data; 
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+  });
+  $.getJSON("/data/textbook_volume.json.txt", function (data) {  
+      volume=data;
+  });
+  $.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+      chapter=data;
+  });
+  $.getJSON("/data/restype.json.txt", function (data) {  
+      restype=data;        
+  }); 
+});
+
+function subsths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"subscribe_courseware",id:v}, function (d, e) { 
+      if(d.indexOf("ok")>-1)
+        alert("订阅成功");
+      else 
+        alert(d);
+  });
+}   
+</script>
+
+<table style="display:none;">
+<tbody id="listnon" >
+<tr>
+<td><code>@subject#</code></td>   
+<td><a>@title#</a></td>
+<td><em>@period#/@grade#</em></td>  
+<td><em>@volume#/@chapter#</em></td>  
+<td><cite>@timestamp#</cite></td> 
+<td><em>@edition#</em></td> 
+<td>@restype#</td> 
+<td><em>@see#/@subs#</em></td>                 
+<td><a onclick="subsths('@id#',this)" class="glyphicon glyphicon-shopping-cart" title="订阅"></a></td>
+</tr></tbody>          
+</table>

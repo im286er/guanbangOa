@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>老师的话-{gtitle}</title>
+{cssjs}   
+</head>
+<body>
+{top}
+<div class="select">
+  <!--头部头像部分-->
+      <div class="content">
+{head}  
+ 
+  
+<div class="col-sm-12">
+<div class="page-header">
+   <h3>老师的话   <small></small>     
+
+  <button type="button" class="btn btn-primary pull-right"  id="btn">+添加</button>
+ 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th></th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><h4>{title}<small>——{truename} </small></h4><script>show_TS("{timestamp}");</script></td>      
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+ 
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div> 
+</div>
+</div> 
+{foot}
+ 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+idtype="{idtype}" 
+  $("#btn").bind("click",function(){
+    if(idtype!=2){alert("你没有权限");return;}
+     $('#dlg1').modal('show');        
+   });  
+});
+function joinths(){
+  if($("#des").val()==""){alert("请输入语录");return;}
+  if($("#des").val().length>250){alert("内容太长，限制250个字");return;}
+  $.post("./srv/sdo.php?", {tpl:"add_saying",cid:"{c}",data:$("#des").val()}, function (d, e) {                     
+      if(d.indexOf("ok")>-1)
+        location.reload();
+      else
+        alert($.trim(d).substr(3));     
+  });          
+}  
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">   
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="form1" name="form1" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">我说</label>
+   <div class="col-sm-10">
+      <textarea id="des" class="form-control" rows="5"></textarea>
+      <p class="help-block">(5-150)</p>
+    </div>
+  </div> 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="joinths(1)">提交</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>

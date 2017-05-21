@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}</title>
+<meta charset="gbk">   
+{cssjs}
+</head>
+<body>
+{top}
+<!-- 公共头部结束-->
+
+<!--页面主体内容-->    
+<div class="container f_index_main">
+{head}
+	<div class="f_main">
+		<div class="fl_list" style="margin-top:6px;">
+			<div class="f_title">
+				<span class="f_title_left">团队风采</span>
+				
+			</div><!--title-->
+			
+			<div>
+				<!-- START list -->
+				<div  style="float:left;margin:10px;">
+					<div >
+						<ul style="list-style:none;">
+						  <li style="height:130px;"><a href="/upds/famous/mien/{pic}" target="_blank">
+              <img src="/upds/famous/mien/t_{pic}" class="img-thumbnail img-responsive" onerror="this.src='/error/logo.jpg';" style="width:180px;height:120px" /></a></li>
+						 	  <li style="margin:2px 0;"><small>标题:{name}</small></li>
+						  <li style="margin:2px 0;width:180px;height:20px;overflow:hidden;"><small><script>show_TS("{id}");</script></small></li>
+						</ul>
+					</div>
+				</div>
+				<!-- END list -->	
+			</div>
+		</div>	
+		<center style="width:800px;textalign:center;">{page}</center>
+	</div>  
+	
+		<div class="f_sidebar">
+		<div class="f_member">
+			<div class="f_title">
+				<span class="f_title_left">工作室成员</span>
+				<span class="f_title_right"></span>
+			</div><!--title-->
+
+			<div class="f_m_container">
+<!-- START member -->
+<div class="f_mem_pic"><a href="/zone/?id={uid}" target=_blank>
+<img src="/upd/face/{uid}.jpg" onerror="this.src='/error/logo.jpg';" width="80px" height="80px"/>
+</a>
+<p>{truename}</p>
+</div>
+<!-- END member -->
+			</div> 
+		</div>
+	</div><!--sidebar-->
+</div>
+
+{foot}
+</body>
+</html>

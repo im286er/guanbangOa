@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班干部-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+<div class="select">
+  <!--头部头像部分-->
+      <div class="content">
+{head}  
+<div class="col-sm-3">   
+{menu_mem}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>班干部   <small></small></h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>头像</th>
+<th>姓名</th> 
+<th>职务</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="../zone/?id={uid}" target=_blank><img width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /></a></td> 
+<td>姓名:{truename}<br/>昵称:{nick}</td> 
+<td>{dutys}</td>    
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+</div> 
+</div>
+</div> 
+{foot}  
+  
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+   
+$.getJSON("/data/type_duty.json.txt", function (data) {  
+      duty=data;
+      $("label[data-duty]").each(function (a, b) {
+        $(this).text(duty[$(this).data("duty")]);
+      });
+  }); 
+});
+ 
+</script>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+{cssjs}
+</head>
+<body>  
+<h4>服务器</h4> 
+
+<div class="c12 centered">
+<p class="note info"> 
+<form class="hform" id="qry" onsubmit="return false">    
+
+
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="asc" title="排序方向" style="display:none;"/> 
+<button class="skyblue" onclick="loadPage({l_page:1})">查询</button> 
+<button class="blue"  id="cbtn">新建</button>
+<button class="green" onclick="location.reload();">刷新</button>    
+跳转到：<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:50px;"/>页   
+</form>
+</p>
+</div>
+
+<table class="table">
+  <thead>  
+<tr>
+<th name="sid">标识编号</th>
+<th name="name">名称</th>
+<th name="url">网址</th>
+<th name="ip">ip</th>
+<th name="skey">通信key</th>
+<th name="pre">数据前缀</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr id="row{id}">
+<td>{sid}</td>
+<td>{name}</td>
+<td>{url}</td>
+<td>{ip}</td>
+<td>{skey}</td>
+<td>{pre}</td>
+ 
+<td>
+<button class="small orange" onclick="Mod({id:'{id}'})">改</button> 
+<button class="small red" onclick="delRow({id:'{id}'});">删</button>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>  
+<tr>
+<td class="page" colspan="10"> 
+<ul class="pagin text-center" id="page"></ul>
+</td>
+</tr>     
+</table>
+
+</body>
+</html>
+<div id="dlg1" title="【添加/编辑】" style="width:500px;height:400px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ SaveAM({frmid:'#dlg1'});}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+ <label>标识编号</label><input type="text" id="sid" /> <br/>
+<label>服务器名称</label><input type="text" id="name" /> <br/>
+<label>网址</label><input type="text" id="url" /> <br/>
+<label>ip地址</label><input type="text" id="ip" /> <br/>
+<label>通信key</label><input type="text" id="skey" /> <br/>
+<label>数据前缀(字符1-5)</label><input type="text" id="pre" value="a"/> <br/>
+   
+<input type="text" id="id"  value="" style="display:none;"/> 
+</form>
+</div>
+<script>
+formatunixs = "{formatdates}";
+  formattrue = ",enabled,";
+  formatstate=" mini_server,";
+  mini_server=Array("","是")  
+$(function () {		
+    loadPage({l_page:1});  
+    initAddBtn({btn:"#cbtn",frmid:"#dlg1"});	
+}); 
+initState=true;
+function reinitStates(){
+      $("#list l").each(function(a,b){
+          $(b).text(formatSize($(b).attr("v")));          
+       });
+ 
+        
+ }          
+</script>

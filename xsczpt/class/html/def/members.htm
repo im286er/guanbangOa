@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级成员-{gtitle}</title>
+{cssjs}   
+</head>
+<body>
+{top}
+<div class="select">
+  <!--头部头像部分-->
+      <div class="content">
+      <link rel="stylesheet" type="text/css" href="./img_tpl/common.css">
+<div class="select-header" style="background:url(/upds/class/logo/{id}_1000.jpg);">
+<li>
+<img src="/upds/class/logo/{id}.jpg"  onerror="this.src='/error/logo.jpg';" alt="{name}" width="100" height="100"/>
+</li>
+<li>
+<div class="biaoji">
+<h3>{name} <small>口号：{slogan}</small></h3>
+<p><small>寄语：{wishes}</small></p>
+</div>
+<div class="menu" style="width:600px;float:left;">
+<span class="menu_a"><i></i><a href="./?c={c}">首页</a></span> 
+<span class="menu_d"><a href="./?t=cls_album&c={c}">相册</a></span>
+<!-- START cate -->
+<span class="menu_d"><a href="./?t=arts&cc={id}&c={c}">{name}</a></span>     
+<!-- END cate -->
+<span class="menu_c"><a href="./?t=members&c={c}">成员</a></span>
+<span class="menu_d"><a href="./man/?c={c}" target=_blank>【管理】</a></span>
+</div>
+<div class="" style="float:right;margin-top:6px;">
+<ul class="class_index_nav_right">         
+<li><a href="/school?s={s}"  class="">学校</a></li>
+<li><a href="/subject?s={s}"  class="">学科</a></li> 
+</ul>
+</div>
+</li>
+</div>
+<div class="col-sm-3">   
+{menu_mem} 
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3 id="mem_list_name">老师 <small></small>      
+ 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>头像</th>
+<th>姓名</th>  
+<th>学科</th> 
+<th>身份</th> 
+<th>职务</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list --> 
+<tr>  
+<td><a href="../zone/?id={uid}" target=_blank><img width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /></a></td> 
+<td>姓名:{truename}<br/>昵称:{nick}</td> 
+<td><label data-subject="{subject}"></label></td> 
+<td><idtype v="{idtype}"></idtype></td> 
+<td>{dutys}</td>    
+</tr> 
+<!-- END list -->   
+</tbody>
+</table> 
+</div> 
+</div> 
+</div>
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+    $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+$.getJSON("/data/type_duty.json.txt", function (data) {  
+      duty=data;
+      $("label[data-duty]").each(function (a, b) {
+        $(this).text(duty[$(this).data("duty")]);
+      });
+  });  
+$.getJSON("/data/type.json.txt", function (d) {   
+      $("idtype").each(function (a, b) {
+        $(this).text(d[$(this).attr("v")]);
+      });
+  });
+  $("#mem_list li").each(function(){
+    if($(this).find("a").attr("val")==queryStr("i")){
+      $("#mem_list_name").html($(this).find("a").html());
+    }
+  });
+});
+ 
+</script>

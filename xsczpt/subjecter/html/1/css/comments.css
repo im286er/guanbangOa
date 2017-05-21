@@ -1,0 +1,22 @@
+﻿.comment-item{margin:0 0 12px 0;padding-bottom:10px;border-bottom:1px dashed #ddd;overflow:hidden;*zoom:1}
+.comment-item .avatar{float:left;margin-right:12px;width:48px}
+.comment-item h3{background:0;font-size:14px;height:auto;margin:0;padding:0;overflow:hidden;*zoom:1}
+.comment-item .rating{margin-left:8px}.comment-item .comment{overflow:hidden;*zoom:1;word-wrap:break-word}
+.comment-item .comment p{margin:0}
+.comment-item .comment-vote{float:right;}
+.comment-item .comment-vote a{color:#fe8c1a}
+.comment-item .comment-vote a:hover{text-decoration:underline;}
+.comment-item .comment-info a{color:#fe8c1a}
+.comment-item .comment-info a:hover{text-decoration:underline;}
+.comment-item .comment-info .comment-del a { color:#337ab7;}
+.comment-item .comment-info .comment-del a:hover {text-decoration:underline;}
+#comments .comment-report{margin:-6px 0 -2px}
+#comments-section{margin-bottom:30px}
+#comments-section .mod-hd{margin-top:16px;overflow:hidden;*zoom:1}
+#comments-section .mod-hd h2{margin-top:0}
+#comments-section .comment-item{margin-bottom:8px;padding-bottom:8px}
+#comments-section .comment-item .rating{margin-left:0}
+.tab-hd{margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed #ddd}
+.tab-hd .on:link,.tab-hd .on:visited,.tab-hd .on:hover,.tab-hd 
+.on:active{background:0;color:#111}
+#new-comments,#following-comments{display:none}

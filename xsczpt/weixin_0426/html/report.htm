@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">	
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:420px;
+}
+</style>
+<script type="text/javascript">
+$().ready(function(){
+	$("#grade_id").val({term_id});	
+	$("#report_type").val({report_type});
+	
+	if("{report_type}"){
+		selectType($("#report_type"));
+	}
+	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+
+function selectType(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_report","id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			var len = d.value.length;
+			
+			$("#report_id").nextAll("div[id='report_son_id']").remove();
+				
+			if(len>0){
+				html = ' <div class="weui-cell weui-cell_select weui-cell_select-after" id="report_son_id"><div class="weui-cell__hd"><label for="" class="weui-label">子类：</label> </div><div class="weui-cell__bd"><select name="rid" id="rid" class="weui-select">';
+				html += "<option value='0'>全部</option>";
+				for(var i=0;i<len;i++){
+					html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["code_name"]+"</option>"
+				}
+				html += "</select> </div></div>";
+				$("#report_id").after(html);
+				
+			}
+			$("#rid").val({rid});
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$("#report_id").nextAll("div[id='report_son_id']").remove();
+	}	
+}
+</script>
+</head>
+<body>
+<header><a href="?t=index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>成长经历</h1><!--<a href="?t=report_custom_add" target="" class="iconfont icon-xiaoxi" style="font-size:1rem;">添加</a>--><a href="?t=report_custom_add" target="" class="glyphicon glyphicon-plus-sign" style="font-size:1.6rem;line-height:55px;"></a></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			
+			  <div class="weui-cells__title" style="display:none;">选择条件</div>
+			  <form action="./?t=report" method="post" id="t_zdy" style="display:none;">
+				 <div class="weui-cells mt_5">
+			   <div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">学期：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select name="grade_id" id="grade_id" class="weui-select">
+							<option value="">全部</option>
+							{str_grade}
+						</select> 
+					</div>
+				</div>
+				<div class="weui-cell weui-cell_select weui-cell_select-after" id="report_id">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">分类：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select name="report_type" id="report_type" class="weui-select" onchange="selectType(this);">
+							<option value="">全部</option>
+							{str_report}
+						</select>
+					</div>
+				</div>
+			 </div>
+				 <div class="weui-btn-area">
+					<a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+				</div>
+			</form>
+			<div id="frm_show" style="width:100%;text-align:center;font-size:9px;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow" id="wrapper">
+			<table width="800" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+				<tr class="tabtitle" height="30">
+					 <th width="100" class="tb_td tb_txt_center tb_txt_bgc">类型</th>
+					<th width="100" class="tb_td tb_txt_center tb_txt_bgc">子类</th>
+					<th width="100" class="tb_td tb_txt_center tb_txt_bgc">年级</th>
+					<th width="500" class="tb_td tb_txt_center tb_txt_bgc">内容描述</th>
+					<!--<th width="8%" class="tb_td tb_txt_center">操作</th>-->
+				</tr>
+				{str_main}
+			</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+			<ul class="pagination wx_center">
+				{page}
+			</ul>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	$("#wrapper").height($(document.body).height()-220);
+	myScroll = new iScroll('wrapper',{
+		momentum:false,
+		onScrollMove:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		},
+		onScrollEnd:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		}
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function slide(){
+	$("#frm_show").hide();
+	$("#t_zdy").fadeIn();
+}
+</script>
+</body>
+</html>

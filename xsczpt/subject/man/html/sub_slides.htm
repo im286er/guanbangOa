@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>幻灯片样式-{gtitle}</title>
+{cssjs}
+<script type="text/javascript" src="js/func.js"></script>
+<style>
+		a {cursor:pointer;}
+</style>
+</head>
+<body>
+{top}     
+<div class="container">
+	<div class="col-sm-3">
+	{menu}    
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>幻灯片样式<small></small>
+				<div class="btn-group pull-right">
+					<a onclick="location.reload();" class="btn btn-primary" >刷新</a>
+					<a class="btn btn-primary" id="btn">+ 添加</a>
+				</div>
+			</h3>
+		</div>
+		<table class="table  table-hover"> 
+			<thead>
+				<tr>    
+					<th>图片</th>
+					<th>描述</th>
+					<th>链接</th>
+					<th>排序</th>
+					<th>操作</th>
+				</tr>
+			</thead>
+			<tbody>      
+			<!-- START list --> 
+			<tr>  
+				<td><img class="img-thumbnail" src="../{pic}" width="200px" height="100px" /></td>
+				<td>{des}</td>
+				<td>{url}</td>
+				<td>{odx}</td>
+				<td>
+					<a class="glyphicon glyphicon-pencil" title="编辑" onclick="edit('{id}');"></a>
+					<a class='glyphicon glyphicon-remove' title='删除' onclick='delths({id},this)'></a>
+				</td>
+			</tr> 
+			<!-- END list -->   
+			</tbody>
+		</table>   
+	</div> 
+</div> 
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+	$("#btn").bind("click",function(){
+		$('#myModalupd #des').val("");
+		$('#myModalupd #url').val("");
+		$('#myModalupd #odx').val("");
+		$('#myModalupd #id').val("");
+		resetInputFile("file");
+		$('#myModalupd').modal('show');
+	});
+});
+function resetInputFile(id) {
+	var obj = document.getElementById(id);
+	obj.outerHTML = obj.outerHTML;
+}
+function delths(v,obj){
+	if (confirm("确定删除该图片？")) {
+		$.post("./srv/sdo.php", {tpl:"del_sub_slide",id:v}, function (d, e) { 
+			if(d.indexOf("ok")>-1)
+				$(obj).parent().parent().remove();
+			else 
+				alert(d);
+		});
+	}
+}
+function edit(id){
+	readID({tpl:"sub_slides","do":"r","id":id,frmid:"#myModalupd"});
+	resetInputFile("file");
+	$('#myModalupd #id').val(id);
+	$('#myModalupd').modal('show');
+}
+function savePic() {
+	$('#divform').submit();
+}
+function ifrm_dosome(){
+	v = $("#ifrm").contents().find("body").html();
+	if (v != "") {
+		d = JSON.parse(v);
+		if(d.ret=="ok"){
+			$('#myModalupd').modal('hide');
+			location.href = location.href;
+		} else {
+			alert(d.des);
+		} 
+	}    
+}
+</script>
+<div class="modal fade" id="myModalupd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">添加/编辑</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" action="./srv/pic_upload.php" enctype="multipart/form-data" method="post" id="divform" name="divform" target="ifrm">
+					<div class="form-group">  
+						<label class="col-sm-2 control-label">描述</label>    
+						<div class="col-sm-6">
+							<input type="text" id="des" name="des" class="form-control" />
+						</div>   
+					</div>
+					<div class="form-group">  
+						<label class="col-sm-2 control-label">链接</label>    
+						<div class="col-sm-8">
+							<input type="text" id="url" name="url" class="form-control" />
+						</div>   
+					</div>
+					<div class="form-group"> 
+						<label class="col-sm-2 control-label">排序</label>
+						<div class="col-sm-3">
+							<input type="text" id="odx" name="odx" class="form-control" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="数字">
+						</div>
+					</div>
+					<div class="form-group"> 
+						<label class="col-sm-2 control-label">图片</label>
+						<div class="col-sm-8">
+							<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />
+							<input type="text" id="id" name="id" value="{id}" style="display:none;"/>
+							<input type="text" id="sid" name="sid" value="{subid}" style="display:none;"/>
+							<input type="text" id="school" name="school" value="{s}" style="display:none;"/>
+							<span class="help-block">(上传尺寸相同，500KB内的图片，支持格式.jpg .png .gif。)</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="savePic();">保存</button>     
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+			</div>
+		</div>
+	</div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

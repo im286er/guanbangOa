@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人帐号中心-{gtitle}</title>
+{cssjs}     
+
+ 
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>联系名片 <small></small>  
+  
+     <div class="btn-group pull-right" >
+    <a class="btn btn-primary" id="btnr">修改 </a>
+  <a href="./" class="btn btn-default pull-right"><i class="fa fa-reply"></i> 返回 </a> 
+</div> 
+    </h3>
+</div>
+<div class="panel panel-default">
+   <div class="panel-body">
+  <div class="col-sm-2"> 
+      <img src="/upd/face/{id}.jpg" style="width:100px;">
+</div>
+   <div class="col-sm-5"><h4> {truename} <small> {duty}<br/>
+      
+      {units}<br/>
+      {tels} {url}<br/> 
+      {address}<br/> </small> </h4> 
+   </div>     
+   </div>
+</div> 
+
+     
+ 
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+l_tpl="contact";
+ $(function () {
+  $("#btnr").bind("click", function(){  
+      readID({"do":"r",id:"{id}",frmid:"#form1"});
+      $('#dlg1').modal('show');   
+    }); 
+    
+      
+    $("#btn").bind("click", function(){        
+     SaveAM({tpl:"contact","do":"am",id:$("#id").val(),frmid:"#form1",showok:"",callback:"doover"});
+    }); 
+     
+ });
+function doover(ed,o){
+   location.reload(); 
+    //$('#dlg1').modal('hide');
+      
+} 	
+  
+ 	
+</script>    
+
+<div class="modal " id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">修改</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">   
+<div class="form-group">
+<label class="col-sm-3 control-label">职务：</label>
+<div class="col-sm-9"><input type="text" class="form-control" id="duty" placeholder=""></div>
+</div>
+<div class="form-group">
+<label class="col-sm-3 control-label">单位：</label>
+<div class="col-sm-9"><input type="text" class="form-control" id="units"  ></div>
+</div>
+<div class="form-group">
+<label class="col-sm-3 control-label">联系方式：</label>
+<div class="col-sm-9"><input type="text" class="form-control" id="tels"  ></div>
+</div>    
+<div class="form-group">
+<label class="col-sm-3 control-label">地址：</label>
+<div class="col-sm-9"><input type="text" class="form-control" id="address" ></div>
+</div>  
+<div class="form-group">
+<label class="col-sm-3 control-label">网站：</label>
+<div class="col-sm-9"><input type="text" class="form-control" id="url"></div>
+</div>   
+<input type="text" id="id" value="{id}" style="display:none;"/>
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" id="btn">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div>
+</div>
+</div>
+</div>

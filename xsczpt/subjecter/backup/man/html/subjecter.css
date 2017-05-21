@@ -1,0 +1,16 @@
+a {cursor:pointer;}
+
+.navbar{max-width:1216px;min-width:1080px;height:50px; margin:0 auto;}
+.navbar-left{margin-left:30px;font-family: Microsoft YaHei;font-size: 16px;}
+.brand img{margin: 6px 5px 6px 0;vertical-align: top;}
+.brand span{font-size:24px;line-height: 50px;height: 50px;display: inline-block;color:#fff;font-family: Microsoft YaHei;letter-spacing: 3px;}
+.global-search-box{background: #5c5f68;margin: 9px 0;}
+.global-search-box .search-icon{background: url("images/search_24.png") no-repeat center center transparent; float:left;height:32px;width: 30px;}
+.global-search-box .global-search{background: transparent;border: none;height:32px;float:left;width:200px;}
+.global-search-box .global-search:active{border: none;outline: none;}
+
+.footer{background: #e4e4e4;}
+.footer .footer-body{width: 85%;margin:0 auto;max-width:1216px;min-width: 1080px;font-family: Microsoft YaHei;padding:30px 0;}
+.footer .footer-body .foot-left{float: left;}
+.footer .footer-body .foot-left a, .footer .footer-body .foot-left span{margin-right:20px;color:#999;}
+.footer .footer-body .foot-right{float:right;color:#999;}

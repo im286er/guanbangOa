@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>   
+<style>
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+			<label><a href="./?t=zhsz_table_show&uid={uid}">{truename}的综评表</a></label>
+			<label><a href="./?t=zhsz_performance&uid={uid}">日常表现</a></label>
+			<script type="text/javascript">
+				if({curTerm_id}=={sid}){
+					if({flag_type}==2&&{isMaster1}){
+						document.write('<label><a href="./?t=zhsz_master_vote&uid={uid}">班主任评价</a></label><label class="current"><a href="javascript:void(0);">班主任评语</a></label>');
+					}
+					document.write('<label><a href="./?t=zhsz_other_comment&uid={uid}">我要评论</a></label>');
+				}
+			</script>
+		</div>
+		<div class="boxtitle2" style="background:#f2f2f2;">
+			<script type="text/javascript">
+				if({isMaster1}){
+					document.write('<div style="width:91%;height:33px; line-height:33px; text-align:center; font-size:14px;float:left;">{tips}</div><a href="#" style="color:#990000;" id="ha_add_py">添加学期评语</a>');
+				}
+			</script>
+		</div>
+	<div class="clear"></div>
+			
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+	<div class="clear"></div>
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr class="tabtitle" height="26">
+						 <td width="15%" class="tabtd">学期</td>
+						 <td width="10%" class="tabtd">班级</td>
+						 <td width="10%" class="tabtd">班主任</td>
+						 <td class="tabtd">学期评语</td>
+						 <td width="10%" class="tabtd">操作</td>
+					</tr>
+					{str}
+			</table>
+		</div>
+		<ul class="pagination pull-right">
+			{page}
+		</ul>
+		<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+		</div>
+	</div>
+			<div style="width:55%;margin:10px auto;float:right;">
+				<a href="./?t={href}"  id="but_back" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;display:inline-block;text-align: center;line-height: 25px;">返回</a>
+			</div>
+<!--表格中间 end-->
+</div>
+
+<div id="LoginBox">
+	<form action="./srv/commemt_add_submit.php" method="POST"  onsubmit="return checkForm();">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<div class="ha_row">
+			<div class="ha_content ha_stext">
+				<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+				<div class="ha_text_right">
+					<textarea rows="3" cols="20" id="content" name="content"></textarea>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="ha_bot">
+				<input type="hidden" id="uid" value="{uid}" name="uid" size="15" />
+				<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn" style="height:28px;line-height:28px;">返回</a>
+				<input class="ha_save" type="submit" name="Submit" value="保存"  style="height:28px;line-height:28px;"/> 
+			</div>
+		</div>
+	</form>
+</div>
+<div id="LoginBox_edit">
+	<form action="./srv/commemt_edit_submit.php" method="POST"  onsubmit="return checkForm1();">
+		<a href="javascript:void(0)" title="" class="close_t_btn" id="closeBtn">×</a>
+		<div class="ha_row">
+				<label>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</label>
+			<div class="ha_content ha_stext">
+				<div class="ha_text_right">
+					<textarea rows="3" cols="20" id="content_edit" name="content_edit"></textarea>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="ha_bot">
+				<input type="hidden" id="c_id" value="" name="c_id" size="15" />
+				<input type="hidden" id="uid_edit" value="{uid}" name="uid_edit" size="15" />
+				<a href="javascript:void(0)" title="返回" class="close_btn" id="closeBtn" style="height:28px;line-height:28px;">返回</a>
+				<input class="ha_save" type="submit" name="Submit" value="保存"  style="height:28px;line-height:28px;"/> 
+			</div>
+		</div>
+	</form>
+</div>
+{footer} 
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript">
+//弹出登录
+$("#ha_add_py").hover(function(){
+	$(this).stop().animate({
+		opacity: '0.8'
+	});
+}, function () {
+	$(this).stop().animate({
+		opacity: '1'
+	});
+}).on('click', function(){
+	$("body").append("<div id='mask'></div>");
+	$("#mask").addClass("mask").fadeIn("slow");
+	$("#LoginBox").fadeIn("slow");
+});
+//
+//按钮的透明度
+$("#loginbtn").hover(function(){
+	$(this).stop().animate({
+		opacity: '1'
+	}, 600);
+}, function () {
+	$(this).stop().animate({
+		opacity: '0.8'
+	}, 1000);
+});
+//关闭
+$(".close_t_btn,.close_btn").hover(function () { $(this).css({ color: '#333' }) }, function () { $(this).css({ color: '#666' }) }).on('click', function () {
+	$("#LoginBox").fadeOut("fast");
+	$("#LoginBox_edit").fadeOut("fast");
+	$(".ha_edit").fadeOut("fast");
+	$("#mask").css({ display: 'none' });
+});
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#content").val())==""){
+		alert("请填写学期评语。");	
+		return false;
+	}
+	return true;
+}
+
+//表单提交验证
+function checkForm1()
+{
+	if($.trim($("#content_edit").val())==""){
+		alert("请填写学期评语。");	
+		return false;
+	}
+	return true;
+}
+
+function edit(id)
+{
+	$(".ha_maedit").click(function(){
+		$("body").append("<div id='mask'></div>");
+		$("#mask").addClass("mask").fadeIn("slow");
+		$("#LoginBox_edit").fadeIn("slow");
+	});
+	
+	$.post("./srv/sdo.php", {tpl:"content_edit",id:id}, function (d, e) {
+		l=JSON.parse(d); 
+		
+		if(l.flag=="true"){
+			$("#content_edit").val(l.value[0].content);
+			$("#c_id").val(l.value[0].id);
+		}else{
+			alert(l.value);
+			return false;
+		}
+		
+	});
+}
+</script>      
+</body>
+</html> 

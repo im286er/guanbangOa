@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>发布作业-{gtitle}</title>   
+{cssjs}   
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<link href="/widget/umeditor/themes/default/css/umeditor.css" type="text/css" rel="stylesheet"> 
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk" src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>  
+<script type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+<div class="page-header">
+   <h3>发布作业 <small></small>  
+   <a href="?t=homework" class="btn btn-primary pull-right" >返回</a>  </h3>
+</div>
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">[添加/编辑] </h3>
+   </div>          
+<div class="panel-body">
+<form id="form1" class="form-horizontal" >      
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">名称</label>  
+   <div class="col-sm-11"> 
+   <input type="text" id="title" class="form-control" style="width:40%;" placeholder="作业名称"  maxlength="50"/>
+  <input type="text" id="techer" value="{truename}" style="display:none;"/>
+  </div>
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">班级</label>  
+   <div class="col-sm-3"> 
+   <select id="cid"  class="form-control"><option>选择班级</option></select> 
+        <input type="text" id="nums" value="0" style="display:none;"/>
+        <input type="text" id="submits" value="0" style="display:none;"/>
+        <input type="text" id="remarks" value="0" style="display:none;"/> 
+  </div>
+   <div class="col-sm-3">  
+        <input type="checkbox" id="alone" value=""> 布置给独立学生 <input type="text" id="alones" style="display:none;"/> 
+  </div>
+</div>    
+<div class="form-group"  id="tr1" style="display:none;"> 
+  <label class="col-sm-1 control-label">学生</label>  
+   <div class="col-sm-2"><select id="student" size="8" class="form-control"></select></div>
+  <div class="col-sm-1">
+  <input type="button" onclick="rightto()" value=">>"  class="btn btn-success" /> <hr/>
+  <input type="button"   onclick="leftto()" value="<<"  class="btn btn-success" /> </div>
+  <div class="col-sm-2"><select id="student1" size="8" class="form-control"></select></div>
+</div> 
+<div class="form-group" > 
+  <label class="col-sm-1 control-label">属性</label>  
+   <div class="col-sm-11"> 
+   <select id="subject"><option>选择学科</option></select>    
+      <select id="edition"></select>        
+         <input type="text" id="edition" value="0" style="display:none;"/> 
+         <select id="volume"><option>上下册</option></select>
+         <select id="chapter"><option>章/节/单元</option></select>
+         <select id="textbook"><option value="">课文</option></select>
+  </div>
+</div>
+<div class="form-group">
+  <label class="col-sm-1 control-label">时间</label>      
+   <div class="col-sm-2"> <input type="text" id="stime" class="form-control" placeholder="作业起始时间"  onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/> 
+    </div>
+   <div class="col-sm-1"> 结束时间</div>
+  <div class="col-sm-2"><input type="text" id="etime" class="form-control" placeholder="作业结束时间" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',isShowClear:false,readOnly:true})" readonly/>
+    </div>
+  <p class="help-block">只有在时间段内才可以提交作业</p>  
+</div> 
+<div class="form-group">   
+  <label class="col-sm-1 control-label">内容</label>   
+   <div class="col-sm-11">
+  <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>
+  <script type="text/plain" id="umdes" style="width:60%;height:250px;"></script>
+  </div>
+</div>   
+<div class="form-group">  
+  <label class="col-sm-1 control-label"></label>     
+   <div class="col-sm-11">
+    <button type="button" class="btn btn-success" id="btn"> 发 布 </button>     
+    <input type="text" id="id" value="" style="display:none;"/>
+     </div>
+    </div>  
+</form> 
+</div>  
+</div> 
+
+</div></div>
+{foot}      
+</body>
+</html> 
+<script type="text/javascript">
+var um = UM.getEditor('umdes'); 
+$(function(){   
+    if(queryStr("d")=="m"){
+     readID({tpl:"tech_homework","do":"r",id:queryStr("id"),frmid:"#form1"});  
+   }   
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>—教材版本—</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});   
+    //$("#btnc").bind("click", function(){ $('#dlg1').dialog('open'); }); 
+    $.post("./srv/rdo.php?", {tpl:"get_class"}, function (d, e) {                 
+       selectShowDataNoH("#cid",JSON.parse(d),"id","name"); $("#cid").prepend("<option value=''>—班级—</option>");     
+    });    
+    $("#cid").bind("change",function(){
+       if($(this).val()==""){return;}
+       $.post("./srv/rdo.php", {tpl:"get_class_stu","id":$(this).val()}, function (d, e) {                 
+         selectShowDataNoH("#student",JSON.parse(d),"id","name");  
+         $("#nums").val($("#student").children().length);   
+      }); 
+       $.post("./srv/rdo.php", {tpl:"get_cls_tech_info","id":$(this).val()}, function (d, e) {          
+          l=JSON.parse(d);
+         $("#subject").val(l[0].subject);   
+         $("#edition").val(l[0].edition);   
+      }); 
+   });  
+       
+   $("#alone").bind("change",function(){
+     if($(this).is(':checked')){
+        $("#tr1").css("display","");
+     }
+     else
+        $("#tr1").css("display","none");
+   });    
+    
+   $("#btn").bind("click", function(){  
+      if($("#title").val()==""){alert("请输入一个作业名称标题");return;}
+      if($("#subject").val()==""){alert("请选择学科");return;}
+      if($("#stime").val()==""){alert("请选择一个起始时间");return;}
+      if($("#etime").val()==""){alert("请选择一个结束时间");return;}
+      if($("#cid").val()==""){alert("请选择一个班级");return;}
+      if($("#alone").is(":checked")&&$("#nums").val()=="0"){alert("请选择至少一个学生");return;}                
+      SaveAM({tpl:"tech_homework","do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+});
+function dosome(ed,data){
+  if(queryStr("d")=="m"){
+       location.href="?t=homework_info&id="+queryStr("id");
+  }
+  else{    
+      location.href="?t=homework_info&id="+data.substr(data.indexOf('ok')+2);
+  }
+}
+//add student to right list
+function rightto(){
+  if($("#student").val()!=undefined&&$("#student").val()!=""){
+    if($("#student1").find("option[value='"+$("#student").val()+"']").length==0){
+      $("#student1").append("<option value='"+$("#student").val()+"'>"+$("#student").find("option:selected").text()+"</option>");
+      $("#alones").val($("#alones").val()+$("#student").val());
+      $("#nums").val($("#student1").children().length);
+    }
+  }    
+}
+//remove student from list
+function leftto(){
+   if($("#student1").val()!=undefined&&$("#student1").val()!=""){
+      $("#alones").val($("#alones").val().replace($("#student1").val(),""));
+      $("#student1").find("option:selected").remove();  
+      $("#nums").val($("#student1").children().length);            
+   }
+}
+function seltech(){
+     if($("#tech").val()==undefined||$("#tech").val()==""){alert("请选择一个教师");return;}
+     $("#rname").val($("#tech").find("option:selected").text());
+     $("#rid").val($("#tech").val());   
+     $('#dlg1').dialog('close');  
+}	
+</script> 

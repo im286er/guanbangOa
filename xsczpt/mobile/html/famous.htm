@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>名师工作室-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>名师工作室      <small></small>     
+<div class="btn-group pull-right">
+   <a class="btn btn-primary" id="btn">+添加</a>   
+   <a onclick="location.reload();" class="btn btn-primary" >刷新</a>       
+    </div> 
+   </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">      
+    <div class="col-sm-1">名称</div>
+ 
+  <div class="col-sm-2">
+       <input id="so" type="text" value="" class="form-control" placeholder="请输入关键字"/>  
+    </div>        
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+
+<th>创建者</th> 
+<th>时间</th> 
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/famous?f={id}" target=_blank>{name}</a></td>
+<td>{truename}</td>          
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><em data-state="{state}"></em></td>
+<td>
+<a class="glyphicon glyphicon-ok" title="审核" onclick="audit('{id}')"></a>
+<a class="glyphicon glyphicon-pencil" title="编辑" onclick="moda({id:'{id}'})"></a>
+<a class="glyphicon glyphicon-user" title="管理员" href="./?t=famous_admin&s={s}&f={id}"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var idtype='{idtype_1}';
+ $(function () {
+    $("#btn").bind("click",function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val("");$('#dlg1 #school').val("{s}");$('#dlg1').modal('show');});
+   $.getJSON("/data/state.json.txt", function (data) {   
+        for(i=0;i<5;i++)$("em[data-state='"+i+"']").html(data[i]);      
+  }); 
+   $("#btnq").bind("click",function(){ 
+      if($("#so").val()=="")return;   
+     location.href="./?t=famous&s={s}&so="+$("#so").val();  
+    });  
+ });  
+function audit(v) {   
+   $.post("./srv/sdo.php?", {tpl:"aud_fam","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+}
+function delths(v) {
+   if (!confirm("确认删除吗？")) return;  
+   $.post("./srv/sdo.php?", {tpl:"del_fam","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+} 
+function moda(d){
+  readID({tpl:"famous","do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   if($("#odx").val()==""){$("#odx").val("0");}          
+   SaveAM({tpl:"famous","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作完成',callback:"dosome"});  
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    location.reload();
+  }
+}
+</script>
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">  
+    <label class="col-sm-2 control-label">名称</label>    
+    <div class="col-sm-10">
+    <input type="text" id="name" class="form-control" />
+    </div>   
+   </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">排序</label>
+    <div class="col-sm-3">
+<input type="text" id="odx" class="form-control" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="数字">
+ <input type="text" id="id" value="" style="display:none;"/>
+ <input type="text" id="nums" value="0" style="display:none;"/> 
+<input type="text" id="school" value="{s}" style="display:none;"/> 
+    </div>
+  </div>     
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>     

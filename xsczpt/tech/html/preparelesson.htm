@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的备课-{gtitle}</title>
+{cssjs}   
+<script>
+var arr=new Array('创建备课','定稿','注销中'); 
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>我的备课<small></small>    
+    <div class="btn-group pull-right"> 
+   <a href="?t=preparelesson_add&d=a" class="btn btn-primary" target=_blank>+添加备课</a>       
+   </div> 
+   </h3>
+</div>
+  
+
+<table class="table table-hover"> 
+<thead>
+<tr>  
+<th>编号</th> 
+<th>名称</th>     
+<th>发布时间</th>   
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td>{id}</td>   
+<td><a target="_blank" href="?t=preparelesson_detail&id={id}">{title}</a><br/>
+<code>学科：<label data-subject="{subject}"></label></code>  </td>
+<td><script>document.write(utctime('{timestamp}'));</script></td>    
+<td> 
+<a href="?t=preparelesson_add&d=m&id={id}" title="修改" class="glyphicon glyphicon-pencil" target="_blank"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div>  
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+var subject,period,grade,edition,volume,chapter,restype;
+$(function(){  
+   $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });    
+       
+}); 
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_beike",id:v}, function (d, e) {  
+      $(obj).parent().parent().parent().parent().remove();
+  });
+}  
+</script> 

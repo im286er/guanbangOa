@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>海安中学成长平台--学生界面</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="renderer" content="webkit"> 
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+<meta http-equiv="Pragma" content="no-cache">  
+<meta http-equiv="Cache-Control" content="no-cache">  
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />  
+<meta http-equiv="Expires" content="0"> 
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<meta http-equivmetahttp-equiv="x-ua-compatible"content="IE=7"/> 
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+
+</head>
+<body>
+<div class="wrap">
+	<div class="ha_header">
+		<div class="main12">
+			<div class="ha_logo fl"><a class="logo_fs">{name}</a></div>
+			<!--<div class="ha_search fl">
+				<form name="searchform" method="post" action="">
+					<input name='ecmsfrom' type='hidden' value='9'>
+					<input class="inp_srh" id="keyword_s" name="keyboard"  placeholder="请输入您要搜索的关键词" >
+					<input type="image" align="absmiddle" src="images/search_bg.jpg" class="btn_srh">
+				</form>
+			</div>-->
+			<div class="message_nav fr">
+				<a href="./?t=admin" target="_parent" class="ha_icon bak_home" title="返回首页">&nbsp;</a>
+				<a href="./?t=user_modify" target="main" class="ha_icon user"  title="个人信息">&nbsp;</a>
+				<!--<a href="#" target="" class="ha_icon comment" title="消息">&nbsp;<div class="num" style="display:none;">&nbsp;</div></a> -->
+				<a href="./?t=message_admin" target="main" class="ha_icon mes" title="通知">&nbsp;<div class="num" id="num" style="text-align:center;width:18px;height:18px;line-height:18px;color:#fff;top:-10px;right:-5px;">&nbsp;</div></a>
+				<!--<a href="#" target="" class="ha_icon dres" title="皮肤">&nbsp;</a> -->
+				<a href="./srv/logout.php" target="_parent" class="ha_icon quit" title="退出">&nbsp;</a>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="ha_content bde6 fl" style="border:1px solid #e6e6e6;">
+		<div class="main12">
+			<ul class="ha_menu">                                                   
+				{str_menu}
+			</ul>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="main12">
+
+	</div>
+	<div class="blank30">&nbsp;</div>
+</div>
+<script>
+$(".ha_menu li a").click(function(){
+	$(".ha_menu li a").removeClass("current");
+	$(this).addClass("current");
+	
+});
+var uid="{uid}";
+getmsgs();
+function getmsgs(){
+$.ajax({
+    type: 'POST',
+    url: "./srv/top_admin.php" ,
+    data: {tpl:"get_msgs",uid:uid} ,
+    success: function(d){
+	//alert(d);
+	 if(d >0){
+		$("#num").css("display","inline");
+		$("#num").html(d);
+		$("#num").parent().removeClass("mes").addClass("mes_d");
+	  }else{
+		$("#num").css("display","none");
+		$("#num").parent().removeClass("mes_d").addClass("mes");
+	  }
+	} 
+});
+ setTimeout(function() {   //此处是过一定时间后自动消失
+        getmsgs();
+    }, 3000);
+}
+</script>
+</body>
+</html>

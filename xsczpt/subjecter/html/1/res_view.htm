@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<title>学科资源-{gtitle}</title>
+{cssjs}
+<link type="text/css" rel="Stylesheet" href="html/{tplno}/css/sub_list.css">
+</head>
+<body>
+{top}
+{head}
+<div class="clear"></div>
+<div class="main">
+	<div class="z_right bor_d">
+		<div class="res_ainfo">
+			<h1>{title}</h1>
+			<div class="xq_goo">
+                <ul>
+                  <li><span class="xz_hui">上传时间：</span>{postdate}</li>
+                  <li><span class="xz_hui">版本版别：</span>
+                    <span class="xz_lan">
+						<a class="a1" href="#" target="_blank" title="{edition_name}">{edition_name}</a>&nbsp;|&nbsp;<a class="a1" href="#" target="_blank" title="{book_name}">{book_name}</a>
+                    </span>
+                  </li>
+                  <li><span class="xz_hui">类别主题：</span>
+                    <span class="xz_lan">
+						<a class="a1" href="#" target="_black" title="{restype_name}">{restype_name}</a>&nbsp;|&nbsp;<a class="a1" href="#" target="_black" title="{volume_name}">{volume_name}</a>	
+                    </span>
+                  </li>
+                  <li><span class="xz_hui">年级科目：</span>
+                    <span class="xz_lan">
+						<a class="a1" href="#" target="_black" title="{grade_name}">{grade_name}</a>&nbsp;|&nbsp;<a class="a1" href="#" target="_black" title="{sub_name}">{sub_name}</a>
+                    </span>
+                  </li>
+<!--                   <li><span class="xz_hui">资料属性：</span>124.5 KB</li> -->
+                </ul>
+            </div>
+			<div class="showri">
+				<a id="goDownload" target="_blank" href="/subjecter/?t=down&id={resmd5}">
+					<div class="showdn"><span data="Hits"></span></div>
+				</a>
+				<div class="showot">
+					<span class="v"><a href="http://qa.xy.zxxk.com/Question/KnowledgeQuestionList.aspx" target="_blank"></a></span><span class="x"><a href="http://user.zxxk.com/?myinform.aspx?action=add&amp;infoid=4635809" target="_blank"></a>
+					</span><span class="z"><a href="javascript:;" onclick="ShowFavoriteBoxList(oInfoID,'2015-2016学年七年级上册2.7有理数的乘方（第二课时）（教案+课件+练习，3份）');"></a></span>
+					<span class="y"><a href="http://user.zxxk.com/default.aspx?getpoint.aspx?SoftID=4635809" target="_blank"></a>
+					</span>
+				</div>
+				<div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare" style="margin-left: 10px">
+					<a class="bds_qzone" title="分享到QQ空间" href="#"></a><a class="bds_tsina" title="分享到新浪微博" href="#"></a><a class="bds_tqq" title="分享到腾讯微博" href="#"></a><a class="bds_renren" title="分享到人人网" href="#">
+					</a><a class="bds_t163" title="分享到网易微博" href="#"></a><span class="bds_more">更多</span> <a class="shareCount" href="#" title="累计分享0次">0</a>
+				</div>
+				<script type="text/javascript" id="bdshare_js" data="type=tools&amp;uid=6706664" src="http://bdimg.share.baidu.com/static/js/bds_s_v2.js?cdnversion=401311"></script>
+				<script type="text/javascript">
+					var bds_config = { "snsKey": { 'tsina': '867074850', 'tqq': '801217267', 't163': '', 'tsohu': ''} }
+					document.getElementById("bdshell_js").src = "http://bdimg.share.baidu.com/static/js/shell_v2.js?cdnversion=" + Math.ceil(new Date() / 3600000)
+				</script>
+			</div>							
+		</div>
+		<div class="clear"></div>
+		<div class="res_des">
+			<div class="res_artit"><p>资源简介</p></div>
+			<div class="res_des_info">
+			<p>
+			{des}
+			</p>
+			
+			</div>
+		
+		
+		
+		
+		</div>
+
+		<div class="res_des">
+			<div class="res_artit"><p>详细信息</p></div>
+			<div class="res_des_info">
+			<p>
+			{content}
+			</p>
+			
+			</div>
+		
+		
+		
+		
+		</div>
+<!-- 		<div class="res_des">
+			<div class="res_artit"><p>推荐资源</p></div>
+			<div class="res_des_info">
+				<div class="ullili_li fl">
+					<ul>
+						<li><span class="libiao"> 2015-10-09</span><a href="p-3449784.html" title="" target="_black">湖南省醴陵市第二中学高中语文 1.1沁园春长沙教案 新人教版必修1</a></li>
+						<li><span class="libiao"> 2015-10-09</span><a href="p-3449782.html" title="" target="_black">湖南省醴陵市第二中学高中语文 1.2雨巷教案 新人教版必修1</a></li>
+						<li><span class="libiao"> 2015-10-09</span><a href="p-3449781.html" title="" target="_black">湖南省醴陵市第二中学高中语文 1.3大堰河教案 新人教版必修1</a></li>
+						<li><span class="libiao"> 2015-10-09</span><a href="p-3448982.html" title="" target="_black">【多彩课堂】2015年秋高中语文 第1课 沁园春 长沙 第1课时课件 新人教版必</a></li>
+					</ul>
+				</div>
+			</div>
+		</div> -->
+	</div>
+</div>	
+<div class="clear"></div>
+{footer}
+<script language="JavaScript">
+function ShowMenu(obj,noid){
+	var block =	document.getElementById(noid);
+	var n = noid.substr(noid.length-1);
+	if(noid.length==4){
+		var ul = document.getElementById(noid.substring(0,3)).getElementsByTagName("ul");
+		var h2 = document.getElementById(noid.substring(0,3)).getElementsByTagName("h2");
+		for(var i=0; i<h2.length;i++){
+			h2[i].innerHTML = h2[i].innerHTML.replace("-","+");
+			h2[i].style.color = "";
+		}
+		obj.style.color = "#333";
+		for(var i=0; i<ul.length; i++){if(i!=n){ul[i].className = "no";}}
+	}else{
+		var span = document.getElementById("h_menuart").getElementsByTagName("span");
+		var h1 = document.getElementById("h_menuart").getElementsByTagName("h1");
+		for(var i=0; i<h1.length;i++){
+			h1[i].innerHTML = h1[i].innerHTML.replace("-","+");
+			h1[i].style.color = "";
+		}
+		obj.style.color = "#fff";
+		for(var i=0; i<span.length; i++){if(i!=n){span[i].className = "no";}}
+	}
+	if(block.className == "no"){
+		block.className = "";
+		obj.innerHTML = obj.innerHTML.replace("+","-");
+	}else{
+		block.className = "no";
+		obj.style.color = "";
+	}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="GBK">
+<title>空间信息-{gtitle}</title>
+
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+<style>
+	.list-group-item ul{list-style:none;padding-left:22px;line-height:36px;}
+	.list-group-item ul a{color:#888;}
+</style>
+{cssjs}    
+</head>
+<body>
+{top}
+
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+    
+<div class="col-sm-9">
+<div class="page-header">   <h3>工作室模板设置<small></small> 
+
+<div class="btn-group pull-right" >  
+  <a class="btn btn-success" href="./?t=zone_set">返回 </a> 
+  <a onclick="location.reload();" class="btn btn-primary">刷新</a>
+</div>
+</h3> 
+</div>
+ 
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th> 
+<th>状态</th>     
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}">
+<td><div class="thumbnail"><img  width="100" src="/upds/famous/tpl/{tpl}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td>{name}</a><br/>{des}</td> 
+<td><st v="{tpl}"></st></td> 
+<td><a class="btn btn-primary glyphicon glyphicon-ok" onclick="joinths({data:'{tpl}',f:'{f}'})">使用</a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+</div>  
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+</body> 
+</html>
+
+<script type="text/javascript">  
+            //tpl="{mould}";
+$(function () {
+   $("st[v='{tpl}']").text("当前模板"); 
+}); 
+function joinths(d){ 
+  d.tpl="famousZone";     
+  $.post("./srv/sdo.php?",d, function (d, e) {
+	lalert(d);
+    location.reload();
+  });
+}
+</script> 

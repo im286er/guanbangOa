@@ -1,0 +1,60 @@
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+</head>
+<body style="border:1px solid #e6e6e6;border-top:none;border-bottom:none;">
+	<div class="ha_content">
+		<div class="ha_user_mes">
+			<a href="{urlpic}" target="{target}" class="user_logo"><img src="{avatar}" /></a>
+			<div class="ha_user_box">
+				<p><a href="{userurl}" target="main">{truename}</a></p>
+				<p class="user_cnum">{show_name}</p>
+			</div>
+		</div>
+		<div class="clear"></div>
+				<div class="list">
+					<ul class="yiji">
+						<!-- START menu_left -->
+						<li>
+						<a href="./?t={fea_url}" class="inactive" target="main">{fea_menuname}</a>
+						</li>
+						<!-- END menu_left -->	
+					</ul>
+				</div>	
+	</div>
+	<div class="clear mt15"></div>
+<script type="text/javascript">
+$(function(){
+
+	$('body').find('.inactive').each(function(){
+		if($(this).siblings('ul').children('li').length==0){
+		$(this).css('background-image','none')}
+		else {$(this).removeAttr('href');}
+	});
+	$('.inactive').click(function(){
+		if($(this).hasClass('inactives')){
+			$(this).removeClass('inactives');
+			$(this).siblings('ul').css('display','none');
+		}else{
+			$('.inactive').siblings('ul').css('display','none');
+			$(".yiji li ul li a").css("color","#333");
+			$(this).siblings('ul').css('display','block');
+			$('.inactive').removeClass('inactives');
+			$(this).addClass('inactives');
+		}
+	});
+
+	
+	$(".yiji li ul li a").click(function(){
+		$(".yiji li ul li a").css("color","#333");
+		$(this).css("color","#277fc2");
+	});
+});
+</script>
+</body>
+</html>

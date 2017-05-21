@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>退出系统-{gtitle}</title>
+    {cssjs}
+  </head>
+
+  <!--[if lt IE 7 ]> <body class="ie ie6"> <![endif]-->
+  <!--[if IE 7 ]> <body class="ie ie7 http-error"> <![endif]-->
+  <!--[if IE 8 ]> <body class="ie ie8 http-error"> <![endif]-->
+  <!--[if IE 9 ]> <body class="ie ie9 http-error"> <![endif]-->
+  <!--[if (gt IE 9)|!(IE)]><!--> 
+  <body class="http-error"> 
+  <!--<![endif]-->   
+        <div class="row-fluid">
+    <div class="http-error">
+        <h1>退出系统!</h1>
+        <p class="info">退出{gtitle} GII管理系统成功.
+        <br><a href='./?t=login' target='_top'>重新登录</a> <a href='javascript:window.close();'>关闭浏览器</a>.</p>
+        <p><i class="icon-home"></i></p>
+        <p><a href="/">返回首页</a></p>
+    </div>
+</div>   
+<script src="lib/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript">
+$("[rel=tooltip]").tooltip();
+$(function() {
+  $('.demo-cancel-click').click(function(){return false;});
+});
+</script>
+    
+  </body>
+</html>
+
+

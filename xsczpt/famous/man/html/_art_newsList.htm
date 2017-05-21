@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="GBK">
+<title>空间信息-{gtitle}</title>
+
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+<style>
+	.list-group-item ul{list-style:none;padding-left:22px;line-height:36px;}
+	.list-group-item ul a{color:#888;}
+</style> 
+{cssjs}
+</head>
+<body>
+{top}
+
+<div class="container">   
+	<div class="col-sm-3">	
+	
+	{nav}       
+	</div>
+<div class="col-sm-9">
+<div class="page-header">
+
+   <h3>新闻动态(名师)<small></small> 
+   <div class="btn-group pull-right">
+	   <a href="./?t=art_news_mod&d=a&f={id}" class="btn btn-primary"  id="btn">加入新闻</a>
+	  <!-- a href="./?t=school_new" class="btn btn-primary">+创建单位</a> -->
+  
+   </div>
+   </h3>
+
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+
+<th width="300px">标题</th>
+
+<th>发布时间</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+  
+<!-- START list -->        
+<tr>
+<td><script>document.write("{title}".substr(0,30));</script></td>
+
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td> 
+
+<td>
+<a class="glyphicon glyphicon-edit" title="修改" href="./?t=art_news_mod&d=m&id={id}&f={fid}"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+</td>
+</tr>
+<!-- END list -->     
+ 
+</tbody>
+</table>
+<div class="pagination pull-right">
+	{page}
+</div>
+</div>
+
+</div>
+
+
+</body>
+<script type="text/javascript">     
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_article",id:v}, function (d, e) {  
+      $(obj).parent().parent().remove();
+  });
+} 
+</script>
+</html>

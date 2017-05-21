@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+<script src="/ppf/js/select.js" type="text/javascript"></script>  
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>        
+</head>
+<body>
+{top}
+<div class="container">     
+{head1} 
+                        
+<div class="col-sm-10">
+<div class="page-header">
+   <h3>群组创建 <small></small> </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1"> 
+ 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所属单位：</label>
+    <div class="col-sm-3"><select id="school" class="form-control"></select></div>
+  </div>
+  
+  <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">群组名称</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name"  style="width:50%" placeholder="请输入名称" maxlength="50">
+      </div>
+   </div>
+     <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">口号</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="slogan"  style="width:50%" placeholder="请输入口号"  maxlength="50">
+      </div>
+   </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">简介</label>
+    <div class="col-sm-10">
+    <textarea id="des" class="form-control" style="width:50%" rows="3" placeholder="请输入简介"></textarea>
+    </div>
+  </div>   
+     <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 创建 </button>  
+      <button type="button" class="btn btn-primary"> 取 消 </button>
+       <input type="text" id="id" value="" style="display:none;"/>
+       <input type="text" id="state" value="0" style="display:none;"/>
+       <input type="text" id="del" value="0" style="display:none;"/>
+       <input type="text" id="audit" value="0" style="display:none;"/>
+       <input type="text" id="nums" value="0" style="display:none;"/>
+   </div>
+    </div>
+   
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+     $.post("./srv/rdo.php?", {tpl:"get_my_sch"}, function (d, e) {                 
+        selectShowData("#school",JSON.parse(d),"id","name");    
+    }); 
+    //readID({tpl:"contact","do":"r",id:"auto",frmid:"#form1"});   
+    $("#btn").bind("click", function(){        
+      if($("#name").val()==""){alert("请输入名称");return;}
+     if($("#school").val()==""){alert("请选择单位");return;}       
+       SaveAM({tpl:"group","do":"a",frmid:"#form1",showok:'',callback:"dosome"});   
+    }); 
+     
+ });
+function dosome(ed,data){
+  if(data.indexOf('ok')>-1){
+    id=data.substr(data.indexOf('ok')+2); 
+    $.post("./srv/sdo.php?", {tpl:"join_group","id":id,"isman":2}, function (d, e) {                     
+        location.href="./?t=group";
+    });
+ }
+ else
+  alert(data);
+}	 	
+ 	
+</script>    

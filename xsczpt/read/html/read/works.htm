@@ -1,0 +1,151 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<link href="html/read/css/works/studentwork.css" type="text/css" rel="stylesheet" />
+{meta}
+<title>学生作品-{gtitle}</title>
+</head>
+
+<body>
+<!--作品推荐-->
+{top}
+<div class="clear"></div>
+<div class="main">
+	{menu}
+</div>
+<div class="clear"></div>
+<div class="xtwork_box">
+	<li class="title">
+    	<h1>作品推荐</h1>
+        <!--<a href="">换一换</a>--><div class="clearfix"></div>
+    </li>
+    
+    <div class="xtwork_content">
+    	    <ul style="height:196px;">
+          <!-- START rec_works -->
+            	  <a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+          <!-- END rec_works -->
+          </ul>
+        
+        <div class="work_img">
+          <!-- START rec_rand -->
+        	 <div class="work1">
+            	<a href="./?t=art_info&id={id}" target=_blank ><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" /></a>
+                <li class="first">
+                	<a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+               		<span>人气：{see}</span>
+                </li>
+                <li class="two">
+                	<a href="/zone/?id={uid}" target=_blank >{truename}</a>
+                   <!-- <span>来自{froms}</span>-->
+                </li>
+            </div>
+            <!-- END rec_rand -->
+        </div>
+    </div>
+    
+</div>
+<!--中间部分-->
+<div class="xtwork_mid" style="padding-bottom:20px;">
+<!--left-->
+	<div class="left">
+<!--读后感-->
+		<div class="reading">
+    		<li>
+    		<h1>读后感</h1>
+        	<a href="./?t=art_list&pc=18" target=_blank >更多+</a><div class="clearfix"></div>
+    		</li>
+            <div class="reading_box">
+            	<a href=""><img src="html/read/images/works/du_img.png" /></a>
+              <ul>
+                <!-- START breview_list -->
+            	   <a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+                <!-- END breview_list -->
+              </ul>
+            </div>
+    	</div>
+        
+        <!--摄影作品-->
+        <div class="photo">
+    		<li class="tit">
+    		  <h1>摄影作品</h1>
+        	<a href="./?t=art_list&pc=43" target=_blank >更多+</a><div class="clearfix"></div>
+    		</li>
+         <!-- START photo_list --> 
+          <div class="photo_box">
+            	<div class="photo1">
+            	<a href="./?t=art_info&id={id}" target=_blank ><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="186" height="147" /></a>
+              <a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+              <a href="/zone/?id={uid}" target=_blank style="float:right;">{truename}</a>
+              </div>
+           </div>
+          <!-- END photo_list -->
+    	</div>
+        
+        <!--绘画作品-->
+        <div class="drawing">
+    		<li class="tit">
+    		<h1>绘画作品</h1>
+        	<a href="./?t=art_list&pc=44" target=_blank >更多+</a><div class="clearfix"></div>
+    		</li>
+            <div class="drawing_box">
+              <!-- START picture_list -->
+            	<div class="drawing1">
+              	<a href="./?t=art_info&id={id}" target=_blank ><img src="/upds/article/{pic}" onerror="this.src='/error/pic.jpg'" width="186" height="147" /></a>
+                <a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+                <a href="/zone/?id={uid}" target=_blank style="float:right;">{truename}</a>
+              </div>
+              <!-- END picture_list -->
+            </div>
+    	
+    	</div>
+
+
+	</div>
+<!--右边-->  
+  	<div class="right">
+    	<div class="newwork">
+        <li class="title">
+    	<h1>最新作品</h1>
+        <a href="./?t=art_list&pc=22" target=_blank >更多+</a><div class="clearfix"></div>
+   		</li>	
+       
+        <div class="newwork_box">
+          <!-- START new_work -->
+        	  <ul>                      
+            	<a class="ren" href="/zone/?id={uid}" target=_blank ><img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" width="30" height="30" /></a>
+                <li class="name">
+                <a href="/zone/?id={uid}" target=_blank>{truename}</a>
+                <!--<div class="foucs">+关注</div>-->
+                </li> 
+                <li class="re">
+                	<a href="./?t=art_info&id={id}" target=_blank >{title}</a>
+                    <span>热度：{see}</span>
+                </li>
+            </ul>
+          <!-- END new_work -->  
+        </div>
+
+    	</div>
+
+    	<div class="newwork" style="margin-top:20px;">
+        <li class="title">
+    	<h1>作品排行</h1>
+        <a href="./?t=art_list&pc=22" target=_blank >更多+</a><div class="clearfix"></div>
+   		</li>	
+       <div class="newwork_box">
+        <ul class="list_box">
+          <!-- START hot_work -->
+					<li><i class="">{row}</i><a href="./?t=art_info&id={id}" target=_blank>{title}</a></li>
+					<div class="clear"></div>
+          <!-- END hot_work -->
+				</ul>
+        </div>
+    	</div>
+    </div>
+  
+</div>
+{foot} 
+</body>
+</html>

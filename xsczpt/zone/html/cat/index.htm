@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>                              
+<head> 
+<title>{nick}-个人空间-{gtitle}</title>
+{cssjs}   
+<script type="text/javascript" src="html/cat/js/weibo.js"></script>       
+    
+</head>
+<body>
+{top}
+{head}
+<div class="container main">
+  <div class="row">
+    <!--左侧导航-->
+       <div class="col-xs-2" style="width:187px;">
+          <div class="main-nav-1 main-nav-left">
+            <div class="main-nav-title"><span>个人统计</span></div>
+              <p>姓名：<label class="truename">{truename}</label></p>
+              <p>昵称：{nick}</p>
+              <p>好友：{friends}</p>
+              <p>微博：{weibo}</p>
+              <p>积分：{integral}</P>
+              <p>威望：{credit}</P>
+              <p>{goldname}：{gold}</P>
+              <p>来自：{lastip}</P>
+          </div>
+       
+          <div class="main-nav-2 main-nav-left">
+            <div class="main-nav-title"><span>个人档</span></div>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="./?t=index&id={zid}">首页</a></li>
+              <li><a href="./?t=weibo&id={zid}">微博</a></li>
+			        <li><a href="./?t=bloga&id={zid}">博客</a></li>
+              <li><a href="./?t=album&id={zid}">相册</a></li>
+              <li><a href="./?t=board&id={zid}">留言板</a></li>
+            </ul>
+            <div class="main-nav-down nav-down">
+              <center><img src="./img/nav-down.png"></center>
+            </div>
+          </div>
+          
+       </div>
+       
+    <!--主体部分-->
+     <div class="col-xs-6" style="margin-left:23px; width:542px; ">
+       
+       <div class="row main-contain" id="list" style="border:0;">
+          <!--博客内容循环-->
+          <!-- START list -->
+          <div class="panel panel-default">
+              <div class="panel-header">
+        	   	   <img src="/upd/face/{uid}.jpg" class="content-face" alt='' onerror="this.src='/error/face.jpg';"/>
+              </div>
+              <div class="panel-body">
+                  <div class="main-con-human">
+                      <label class="human-name">{truename}</label>
+                      <label class="human-grade">{schools}</label>
+                      <label class="human-cla">{grades}</label>
+                  </div>
+                  
+                  <div class="main-con-body">
+                      <div class="content-body">{des}</div>
+                  </div>
+                  
+                  <!--评论内容-->
+                  <div id="p{id}" class="comment-box" uid="{uid}" style="display:none;">
+                    <div id="pa{id}">
+                      <!-- START rp -->
+                        <div class="comm-box-body" id="pc{id}"> 
+                          <div class="comm-act"><img src="/upd/face/{uid}.jpg" width="30" height="30" onerror="this.src='/error/face.jpg';"></div> 
+                          <div class="comm-con">
+                            <div style="word-break:break-all; word-wrap:break-word;"><a> {nick} </a> {redo} <a>{renick} </a> ：{des} </div>
+                            <small class="mes_tit"><code style="padding:0;"><span>{created}</span> <i class="icon-message" onclick="comment('{wid}','{id}','{nick}')" ></i></code>
+                            </small>
+                          </div>
+                        </div>
+                        <!-- END rp -->
+                      
+                    </div>
+                    <p id="pm{id}"><a onclick="load_comments('{id}',this);" id="more{id}" data-page="0" style="cursor:pointer;">更多……</a></p>
+                    
+                  </div>
+                  
+                  <!--评论时间及按钮-->
+                  <div class="main-comm-time">
+                    <script>document.write(utctime("{timestamp}"));</script>
+                  </div>
+                  
+                  <div class=" main-comm-critical">
+                    <a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'weibo',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+                    <a class="glyphicon glyphicon-share-alt" onclick="share({tbl:'weibo',do:'share',id:{id}},this);" title="转发">({share})</a> &nbsp;
+                    <a class="glyphicon glyphicon-comment" onclick="comment('{id}',0,'{nick}')"></a>（{comments}）  
+                  </div>
+                  
+              </div>      
+        	</div>
+          <!-- END list -->
+        </div>
+      
+        <div class="row">
+            <a href="./?t=weibo&id={zid}&p=2" type="button" class="btn btn-primary btn-lg btn-block" id="more">点击更多…… </a>
+        </div>
+      </div>
+      
+      <!--右侧导航-->
+	   <div class="col-xs-2" style="width:230px;padding-left:23px;">
+          <div class="main-nav-1 main-nav-right" style="padding-bottom:35px;">
+            <div class="main-nav-title"><span>推荐博文</span></div>
+            <div class="row">
+            <ul class="main-art-ul">
+              <!-- START b_list -->
+              <li><a href="./?t=blog&bid={id}&id={uid}">{title}</a></li>
+              <!-- END b_list -->
+            </ul>
+            </div>
+            <a href="./?t=bloga&id={zid}" class="a-more">MORE</a>
+          </div>
+          
+          <div class="main-nav-2 main-nav-right" style="padding-bottom:10px;">
+            <div class="main-nav-title"><span>他的好友</span></div>
+            <div class="row">
+			      <!-- START f_list -->
+            <div class="col-xs-1 nav-friend">
+      				<a href="./?t=index&id={fid}"><img src="/upd/face/{fid}.jpg" onerror="this.src='/error/face.jpg';"></a>
+      				<div class="fri-name"><a href="./?t=index&id={fid}">{truename}</a></div>
+      			</div>
+            <!-- END f_list -->
+            </div>
+          </div>
+    </div>  
+
+  </div>
+</div>
+
+{foot}
+ 
+</body>
+</html>
+<script type="text/javascript">
+var uid="{uid}";
+var nick="{nick}";
+var mynick="{mynick}";
+var isme = "{isme}";
+var limit_comment=0,limit_leave=0;    
+$(function(){
+   $(".nav-down").click(function(){
+      var height=(parseInt($(this).parent().find("li").css("height"))+2)*($(this).parent().find("li").length);
+      $(this).parent().find("ul").css("height",height+"px");
+      $(this).hide();
+   });
+   
+   $.post("./srv/rdo.php", {tpl:"get_limit_do","id":queryStr("id")}, function (d, e) { 
+      d1=JSON.parse(d);
+      limit_comment=d1.comment;
+      limit_leave=d1.leave;
+  }); 
+  
+  $(".comment-box").each(function(){
+    if($(this).find(".comm-box-body").length>0){$(this).show();}else{$(this).hide();}
+  });
+}) 
+         
+
+</script>

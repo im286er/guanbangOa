@@ -1,0 +1,265 @@
+<?php
+/* 个人空间*/
+header("Content-type: text/html; charset=gbk;");
+require('../ppf/fun.php');
+require('../ppf/pdo_mysql.php');
+require("../ppf/pdo_template.php"); 
+  
+if (!session_id()) session_start();
+chkLogin("uid","/?t=login");
+$qname=isset($_GET["t"])?$_GET["t"]:"index";       
+$uid=$_SESSION["uid"];
+$id =isset($_GET['id'])?$_GET['id']:"";
+if(empty($id)) header("location: /?t=error&no=101&name=传入参数错误&msg=传入参数错误");
+#$T->Set("frid",$frid);    
+$frid = (!isset($_GET['frid']) || $_GET['frid']== '')?$_SESSION["uid"]:$_GET['frid']; #waitdel
+
+  /*查询模板 */
+  $pd=new pdo_mysql();
+  $mould = $pd->query("select mould from zone where id = '".$frid."'")->fetchColumn(0); 
+  $mould = ($mould == '') ? 'html': $mould;
+  $limit = ($mould == 'mould_cat') ? 6 : 9 ;
+  $pd->exec("SET NAMES gbk");
+  $unick = $pd->query("select nick from act_member where id = '".$frid."'")->fetchColumn(0);
+
+  $hidrow='';
+  $leave="";
+  $comment="";
+  
+  /*权限设置*/
+  if($uid != $frid){
+    $limitrs=$pd->query("select visit,comment,z.leave from zone as z where id = '".$frid."'")->fetch(PDO::FETCH_ASSOC);
+    /*访问权限*/
+    switch($limitrs['visit']){
+      case "0":
+        break;
+  	  case "1":
+    		$frs = $pd->query("select count(*) from act_friend where id = '".$frid."' and fid = '".$uid."'")->fetchColumn(0);
+        if($frs == 0){
+          $qname = "apply";
+        }
+    		break;
+  	  case "2":
+  		  $qname = "forbidden";      
+  		  break;
+  	  case "3":
+  		  $qname = "forbidden";
+  		  break;
+    }
+    
+    /*评论权限*/
+    switch($limitrs['comment']){
+      case "0":
+        $comment = "";
+        break;
+  	  case "1":
+    		$frs = $pd->query("select count(*) from act_friend where id = '".$frid."' and fid = '".$uid."'")->fetchColumn(0);
+        if($frs == 0){
+          $comment = '<div style="font-size:18px;margin-top:20px; padding:0 0 20px 10px;">发布者设置仅好友可以评论，您可以<button class="btn btn-default btn-submit" onclick="addu('+$frid+');" style="position: absolute;top: -13px;left: 190px;">添加他为好友</button></div>';
+          $hidrow.=".blog-comment,";
+        }
+    		break;
+  	  case "2":
+  		  $comment = '<div style="font-size:18px;margin-top:20px; padding:0 0 20px 10px;">主人设置仅自己可评论</div>';
+        $hidrow.=".blog-comment,";
+  		  break;
+  	  case "3":
+  		  $comment = '<div style="font-size:18px;margin-top:20px; padding:0 0 20px 10px;">主人设置禁止评论</div>';
+        $hidrow.=".blog-comment,";
+  		  break;
+    }
+    
+    /*留言权限*/
+    switch($limitrs['leave']){
+      case "0":
+        $leave = "";
+        break;
+  	  case "1":
+    		$frs = $pd->query("select count(*) from act_friend where id = '".$frid."' and fid = '".$uid."'")->fetchColumn(0);
+        if($frs == 0){
+          $leave = '<div style="font-size:18px;margin-top:20px;">发布者设置仅好友可以留言，您可以<button class="btn btn-default btn-submit" onclick="addu('+$frid+');" style="position: absolute;top: -13px;left: 190px;">添加他为好友</button></div>';
+          $hidrow.=".leaveinput,";
+        }
+    		break;
+  	  case "2":
+  		  $leave = '<div style="font-size:18px;margin-top:20px;">主人设置仅自己可留言</div>';
+        $hidrow.=".leaveinput,";
+  		  break;
+  	  case "3":
+  		  $leave = '<div style="font-size:18px;margin-top:20px;">主人设置禁止留言</div>';
+        $hidrow.=".leaveinput,";
+  		  break;
+    }
+    
+    $mould = $mould."_v";
+    $hidrow.= "";
+  } 
+  
+  $T=new pdo_template('./'.$mould.'/'.$qname.'.htm');
+  $T->SetTpl('cssjs','cssjs_bt.inc'); 
+  $T->SetTpl('top','../inc/top.htm');      
+  $T->SetTpl('foot','../inc/foot.htm');       
+  $T->SetTpl('head','head_bt.htm');       
+  $T->Set_Assign("face",$_SESSION["face"]);
+  $T->Set_Assign("nick",$_SESSION["nick"]);
+  $T->Set_Assign("mould",$mould);
+  $T->Set("uid",$uid);
+  $T->Set("frid",$frid);
+  $T->Set("hidrow",$hidrow);
+  
+  
+  switch($qname){
+      case "apply":
+        $sex = $pd->query("select sex from act_member where id = '".$frid."'")->fetchColumn(0);
+        $sex = ($sex == 1) ? "男" : "女" ;
+        $T->Set("sex",$sex);
+        break;
+      case "forbidden":
+        $sex = $pd->query("select sex from act_member where id = '".$frid."'")->fetchColumn(0);
+        $sex = ($sex == 1) ? "男" : "女" ;
+        $T->Set("sex",$sex);
+        break;
+      case "push":
+        $T->ReadDB("select * from blog_list where id=".$_GET["id"]);
+        break;
+      case "photo_last":
+        $T->ReadDB("select * from zone_album where id=".$_GET["a"]);
+        break;
+      case "photo":
+        $T->ReadDB("select * from zone_album where id=".$_GET["id"]); 
+        $p=isset($_GET["p"])?$_GET["p"]:"1"; 
+        $rc= $T->db->query("select count(1) from zone_album_pic where aid=".$_GET["id"])->fetchColumn(0);
+        $page=getPageHtml_bt($rc,20,$p,"&t=photo&id=".$_GET["id"]);
+        $T->Set("page",$page); 
+        $T->SetBlock("list","select * from zone_album_pic where aid=".$_GET["id"]." order by id desc limit ".(($p-1)*20).",20");
+        break; 
+      case "album":
+        $p=isset($_GET["p"])?$_GET["p"]:"1"; 
+        $rc= $T->db->query("select count(1) from zone_album where uid='".$frid."'")->fetchColumn(0);
+        $page=getPageHtml_bt($rc,20,$p,"&t=album&frid=".$frid);
+        $T->Set("page",$page); 
+        $T->SetBlock("list","select * from zone_album where uid='".$frid."' order by timestamp desc limit ".(($p-1)*20).",20",array('timestamp'),array('%Y-%m-%d') );
+        break;
+      case "fav_cate":
+        $T->SetBlock("list","SELECT * from zone_fav_type where uid='".$frid."' order by odx desc");
+        break;
+      case "fav":
+         $T->SetBlock("cate","select * from zone_fav_type where uid='".$frid."' order by odx desc");
+        $p=isset($_GET["p"])?$_GET["p"]:"1"; 
+        $c=isset($_GET["c"])?$_GET["c"]:"0"; 
+        $wh="";
+        if(!empty($c))$wh=" and cid=".$c;                     
+        $rc=$T->db->query("select count(1) from zone_fav where uid='".$frid."'".$wh)->fetchColumn(0);
+        $page=getPageHtml_bt($rc,15,$p,"&t=fav&frid=".$frid);
+        $T->Set("page",$page); 
+        $T->SetBlock("list","select * from zone_fav where uid='".$frid."'".$wh." order by id desc limit ".(($p-1)*15).",15",array('timestamp'),array('%Y-%m-%d %H:%M'));     
+        break;
+      case "board":
+        $p=isset($_GET["p"])?$_GET["p"]:"1";
+        $rc= $T->db->query("select count(1) from `zone_leave` where touid='".$frid."'")->fetchColumn(0);
+        $page=getPageHtml_bt($rc,10,$p,"&t=board&frid=".$frid);
+        $T->Set_Assign("leave",$leave);
+        $T->Set_Assign("page",$page); 
+        $T->SetBlock2("list","select * from `zone_leave` where touid='".$frid."' order by id desc limit ".(($p-1)*10).",10"
+            	,array(array("block"=>"rp","pid"=>"id","sql"=>"select T.*,M.truename from zone_leave_comments T left join act_member M on M.id=T.uid where T.mid=? order by id desc"))
+            	);
+        break;
+      case "frd_book":
+        $p=isset($_GET["p"])?$_GET["p"]:"1";                      
+        $rc=$T->db->query("select count(1) from act_friend where id='".$uid."'")->fetchColumn(0);
+        $page=getPageHtml_bt($rc,15,$p,"&t=frd_book");
+        $T->Set("page",$page); 
+        $T->SetBlock("list","select * from v_act_friend_contacts where id='".$uid."' order by timestamp desc limit ".(($p-1)*15).",15");        
+        break;
+      case "frd_apply":
+        $T->SetBlock("list","select M.*,T.timestamp timestamp1 from act_friend_apply T left join act_member M on M.id=T.uid where T.uid='".$uid."' order by timestamp desc",
+        array('timestamp1'),array('%Y-%m-%d %H:%M'));
+        break; 
+      case "frd_cate":
+        $T->SetBlock("list","SELECT * from act_friend_group where uid='".$uid."' order by odx desc");
+        break;
+      case "frd":#好友中心
+        $T->SetBlock("cate","select * from act_friend_group where uid='".$frid."' order by odx desc");
+        $p=isset($_GET["p"])?$_GET["p"]:"1"; 
+        $g=isset($_GET["g"])?$_GET["g"]:"0"; 
+        $wh="";
+        if(!empty($g))$wh=" and gid=".$g;                     
+        $rc=$T->db->query("select count(1) from act_friend where uid='".$frid."'".$wh)->fetchColumn(0);
+        $page=getPageHtml_bt($rc,15,$p,"&t=frd&frid=".$frid);
+        $T->Set("page",$page); 
+        $T->SetBlock("list","select T.*,M.truename,M.nick from act_friend T left join act_member M on M.id=T.fid where T.uid='".$frid."'".$wh." order by fid desc limit ".(($p-1)*15).",15"); 
+        break; 
+      case "weibo":
+         $p=isset($_GET["p"])?$_GET["p"]:"1";                         
+          $rc= $T->db->query("select count(1) from weibo where uid='".$frid."'")->fetchColumn(0);
+          $page=getPageHtml_bt($rc,15,$p,"&t=weibo&frid=".$frid);
+          $T->Set("page",$page); 
+          $T->SetBlock("list","select * from weibo where uid='".$frid."' order by id desc limit ".(($p-1)*15).",15");            
+        break;       
+    
+      case "blog_cate":
+        $T->SetBlock("list","SELECT * from blog_cate where uid='".$uid."' order by odx desc");
+        break;
+      case "bloga":#博客           
+          $T->SetBlock("cate","select * from blog_cate where uid='".$frid."' order by odx desc");
+          $p=isset($_GET["p"])?$_GET["p"]:"1";	
+          $t1=isset($_GET["t1"])?$_GET["t1"]:"1";	
+          $c=isset($_GET["c"])?$_GET["c"]:"0";	
+    			if($p<1)$p=1;
+    			$wh="uid='".$frid."' and tid=".$t1;
+          if(!empty($c))$wh.=" and cid=".$c; 
+    			$T->tblname = "blog_list";
+    			$T->columns="*";
+    			$T->orderby = "order by id desc";
+    			$T->where = $wh;
+    			$T->qwhere ="&t=".$qname."&t1=".$t1."&c=".$c;//uri条件
+    			$T->psize = 15;
+    			$T->pindex = ($p == "" ? 1 : $p);	    
+    			$T->Mual_ByPage('list');
+    			if($T->m_rs){          
+    				while ($r = $T->m_rs->fetch(PDO::FETCH_ASSOC)) { 
+              $T->Mual_Assign('timestamp',strftime('%Y-%m-%d %H:%M',$r['timestamp']));                
+    					$T->Mual_Full($r);
+    					$T->Mual_OneBlock();
+    				}
+    				$T->Mual_EndBlock();
+    			}	
+          #$T->gen_PageLink();#自带分页修改 
+          $page=getPageHtml_bt($T->rowcount,15,$p,"&t=".$qname."&t1=".$t1."&c=".$c."&frid=".$frid);
+          $T->Set("page",$page); 
+          break;
+        case "blog":
+          $T->ReadDB("select * from blog_list where id=".$_GET['id']);
+          $pre=$T->db->query("select id from blog_list where id<".$_GET['id']." and uid='".$uid."' order by id desc limit 1")->fetchColumn(0);
+          $next=$T->db->query("select id from blog_list where id>".$_GET['id']." and uid='".$uid."' order by id asc limit 1")->fetchColumn(0);
+          if(empty($pre))$pre= $_GET['id'];
+          if(empty($next))$next= $_GET['id'];
+          $T->Set_Assign("comment",$comment);
+          $T->Set_Assign("previd",$pre); 
+          $T->Set_Assign("nextid",$next);            
+           $T->SetBlock("list","select * from blog_comments where bid=".$_GET["id"]." order by id desc limit 50");
+          break;
+        case "index":
+          if(!$T->db->query("select count(1) from zone where id='".$frid."'")->fetchColumn(0)){
+              # echo "insert into zone(id,name,explain,visit,comment,blacklist,msg_open,msg_limit,timestamp) values('".
+              # $_SESSION['uid']."','".$_SESSION['nick']."','空间说明',0,0,'',0,0,UNIX_TIMESTAMP())";
+               $T->db->exec("insert into zone(id,name,`explain`,visit,comment,timestamp) values('".
+               $frid."','".$_SESSION['nick']."','空间说明',0,0,UNIX_TIMESTAMP())");
+            }                                                                                       #left join act_member_info I on T.uid=I.id 
+            $T->SetBlock("list","SELECT T.*,M.truename from weibo T left join act_member M on M.id=T.uid where uid in(SELECT fid from act_friend WHERE id='".$frid."') or uid='".$frid."'  order by id desc limit 20");  
+            $T->SetBlock("b_list","SELECT id,title,uid from blog_list where uid = '".$frid."' order by id desc limit 3");  
+            $T->SetBlock("f_list","select T.fid,M.truename,M.nick from act_friend T left join act_member M on M.id=T.fid where T.id='".$frid."' order by fid desc limit ".$limit."");
+            $T->Set_Assign("unick",$unick);
+            $T->Set("PAN_URL",PAN_URL); 
+            $T->Set("goldname",GOLD_NAME);          
+        break;     
+  } 
+$T->ReadDB("select * from zone where id='".$frid."'");
+$T->ReadDB("select * from v_act_member where id='".$frid."'");    
+$T->Set("gtitle",LR_NAME);   
+$T->clearNaN();                  
+$T->clearNoN();     
+$T->display();
+$T->close();	
+unset($T);   
+exit;    

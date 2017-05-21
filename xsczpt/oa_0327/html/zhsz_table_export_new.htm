@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box" style="background:#fff;">
+	
+		<form action="./srv/zhsz_table_export_submit_new.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label><a href="./?t=zhsz_table_show_self">成长轨迹</a></label> 
+				{href}
+			</div>
+			<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+						
+						
+					</table>
+			</div>
+			<div class="boxfooter2" style="background:#eff5fa;width:100%;float:left;padding:10% 0;">
+			<input id="but_update" name="but_update" type="submit" value="导出" style="background: #277fc2;width: 112px;height: 32px;border: 0;border-radius: 5px;color: #fff;font-size: 14px;line-height: 32px;" />
+			<a href="./?t=zhsz_table_show_self" id="but_back" style="background: #277fc2;width: 112px;height: 32px;border: 0;border-radius: 5px;color: #fff;font-size: 14px;line-height: 32px;display:inline-block;margin-left:10%;">返回</a>
+			
+			</div>
+			<input type="hidden" name="is_all" value="1" />
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option  selected value=\"0\">请选择</option><option value=\"10000\">全部</option>");
+	});
+});
+
+//检查提交表单
+function checkForm()
+{
+	/*if($("#term_id").val()==0){
+		alert("请选择学期。");
+		return false;	
+	}*/
+	return true;
+}
+
+</script> 

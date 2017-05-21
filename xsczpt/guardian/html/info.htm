@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>空间信息-{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+ 
+<div class="col-sm-10 main">  
+<div class="page-header">
+   <h3>空间信息<small>基本</small>    </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">ID：</label>
+    <div class="col-sm-10"><p class="form-control-static">{id} </p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">姓名：</label>
+    <div class="col-sm-10"><p class="form-control-static">{truename} </p></div>
+  </div>     
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="idtypes">{idtypes}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">单位：</label>
+    <div class="col-sm-3"><p class="form-control-static" id="schools">{schools}</p>
+    <p class="help-block" id="addrs">地区：{addr}</p>      
+        <p class="help-block">入学（年）：{intoyear}</p>
+    </div>
+  </div>     
+    <div class="form-group">
+      <label class="col-sm-2 control-label">学段/年级：</label>
+      <div class="col-sm-10"><p class="form-control-static"><c id="periods" ></c>/<c id="grades" class="form-control-static"></c></p></div>
+   </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">主学科：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="subjects">{subjects}</p>
+
+    </div>
+  </div> 
+  <div class="form-group" style="display:none;">
+    <label class="col-sm-2 control-label">默认班级：</label>
+    <div class="col-sm-10"><p class="form-control-static">{classs}</p></div>
+  </div>
+      
+</form>
+          
+</div> 
+</div>
+  
+{foot}
+</body>
+<script type="text/javascript">
+  $(function(){
+	  $.post("./srv/rdo.php", {tpl:"get_sch_byid",id:"{school}"}, function (d, e) {        
+      l=JSON.parse(d); 
+      $("#schools").text(l[0].name);        
+    }); 
+    $.post("./srv/rdo.php", {tpl:"get_addr",id:"{addr}"}, function (d, e) {        
+      l=JSON.parse(d); 
+      $("#addrs").text("地区："+l[0].names);        
+    }); 
+    $.getJSON("/data/period.json.txt", function (d,e) {$("#periods").text(d[{period}]); });
+    $.getJSON("/data/grade.json.txt",  function (d,e) {$("#grades").text(d[{grade}]); });
+    $.getJSON("/data/type.json.txt",  function (d,e) {$("#idtypes").text(d[{idtype}]); });
+    $.getJSON("/data/subject.json.txt",  function (d,e) {$("#subjects").text(d[{subject}]); });   
+ 	});
+	
+</script>
+</html>

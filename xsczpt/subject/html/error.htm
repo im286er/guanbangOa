@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>出错了！-学科空间</title>
+		<link rel="stylesheet" type="text/css" href="./css/subject.css">
+{cssjs}
+    </head>
+    <body>
+{top}
+{head}
+		<br><br><br>
+        <div class="container" style="padding-left:100px;">
+			<table>
+				<tr>
+					<td>
+						<img src="./css/images/goerror.jpg" />
+					</td>
+					<td style="width:100%; text-align:left; vertical-align:top; padding-left:50px;">
+						<h3>出错了：</h3>
+						<br>
+						<p><h4>{error_info}</h4></p>
+						<br><br>
+						<p>
+							<a class="btn-lg btn-success" onclick="gourl('back');">返回之前页面</a>
+							&nbsp;&nbsp;
+							<a class="btn-lg btn-success" onclick="gourl('index');">返回首页</a>
+						</p>
+					</td>
+				</tr>
+			</table>
+        <div>
+    </body>
+</html>
+
+<script>
+	$(".menu_left div a").each(function (index) {
+		$(this).removeAttr("href");
+		$(this).css("color","#CCC");
+	});
+	$(".menu_right div a").each(function (index) {
+		$(this).removeAttr("href");
+		$(this).css("color","#CCC");
+	});
+	function gourl(add) {
+		switch(add) {
+			case "index":
+				location.href = "/";
+				break;
+			case "back":
+				history.go(-1);
+				break;
+		}
+	}
+</script>

@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery.min.js"></script>
+<script src="js/echarts.min.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main bgf7" style="float:left;">
+	<div class="ha_content fl" style="padding-top:20px;">
+		<ul class="tit_left fr chart_tit">                                                                           
+			<li><a href="./?t=charts_height" target="">身高</a></li>
+			<li><a href="./?t=charts_weight" target="">体重</a></li>
+			<li><a href="./?t=charts_bmi" target="">BMI</a></li>
+			<li class="active"><a href="./?t=charts_sight" target="">视力</a></li>
+			<li><a href="./?t=charts_lung" target="">肺活量</a></li>
+			<li><a href="./?t=charts_liver" target="">肝</a></li>
+			<li><a href="./?t=charts_bravery" target="">胆</a></li>
+			<li><a href="./?t=charts_xf" target="">心肺听诊</a></li>
+			<li><a href="./?t=charts_surgical" target="">外科常规</a></li>
+			<li><a href="./?t=charts_blood" target="">血压</a></li>
+			<li><a href="./?t=charts_spleen" target="">脾</a></li>
+			<li><a href="./?t=charts_eyes" target="">眼科</a></li>
+			<li><a href="./?t=charts_oral" target="">口腔</a></li>
+		</ul>
+		<form action="form_action.asp" method="get">
+			<div class="fl ha_content">
+				<ul class="tab-hd_c claname">
+					{str_grade}
+				</ul>
+				<ul class="tab-bd_c pr">
+					<li class="thisclass fl">
+						<div class="cha_clist">
+							{str_class}
+						</div>
+						<div class="per_list pa">
+							<div class="c_yearlist" style="float:left;width:150px;">{str_year}</div>
+							<div class="distri_but"><a href="./?t=charts_sight_class&eye_type={eye_type}&tyear={tyear}&classid={classid}&grade={gid}" target="main">视力人数分布图</a></div>
+						</div>
+						
+						<div class="pr" id="echart" style="width:861px;height:460px;margin:15px 0 15px;"></div>
+						
+						<script type="text/javascript">
+							var myChart = echarts.init(document.getElementById('echart'));
+							
+							myChart.on('click', function (classname){ 
+								var name=classname.data[3]; 
+								window.location.href="./?t=charts_sight_classper&userid="+name+"&eye_type={eye_type}";                  
+							});
+							
+							option = {
+									title : {
+										text: '{name}视力表现图',
+										subtext: '',
+										x:'center'
+									},
+									tooltip : {
+										trigger: 'axis',
+										showDelay : 0,
+										formatter : function (params) {
+											return "ID："+params.data[3]+"</br>"+"姓名："+params.data[2]+"</br>"+"视力："+params.data[1];
+										},
+										axisPointer:{
+											show: true,
+											type : 'cross',
+											lineStyle: {
+												type : 'dashed',
+												width : 1
+											}
+										}
+									},
+
+									xAxis : [
+										{
+											type : 'value',
+											scale:true,
+											axisLabel : {
+												formatter: '{value} '
+											},
+											splitLine: {
+												show: false
+											}
+										}
+									],
+									yAxis : [
+										{
+											type : 'value',
+											scale:true,
+											axisLabel : {
+												formatter: '{value}'
+											},
+											splitLine: {
+												show: false
+											}
+										}
+									],
+									series : [
+										{
+											name:'姓名-视力',
+											type:'scatter',
+											data: [
+												{str_sight}
+											],
+											markArea: {
+												silent: true,
+												itemStyle: {
+													normal: {
+														color: 'transparent',
+														borderWidth: 1,
+														borderType: 'dashed'
+													}
+												}
+											},
+											markLine : {
+												lineStyle: {
+													normal: {
+														type: 'solid'
+													}
+												},
+												data : [
+													{type : 'average', name: '平均值',valueIndex:'1'},
+													//{ xAxis: 170 }
+												]
+											}
+										}
+
+									]
+								};
+						// 使用刚指定的配置项和数据显示图表。
+						myChart.setOption(option);
+						</script>
+						<div class="clear"></div>
+						<div class="distri_but" style="margin:0 30px;text-align:center;"><a href="./?t=charts_sight&tyear={tyear}&grade={gid}" target="main">返回</a></div>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>  
+</body>
+
+</html> 

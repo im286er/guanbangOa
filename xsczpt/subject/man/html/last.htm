@@ -1,0 +1,76 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{title}-{gtitle}</title>
+{cssjs}
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>  
+    
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="col-xs-10 ">
+<div class="page-header">
+   <h3>{title}  
+   <div class="btn-group pull-right"> 
+    </div> 
+    
+    </h3> <small>{truename}  阅读({see}) 评论（{comments}）</small>
+</div>
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+        <script>document.write(utctime('{timestamp}'));</script>   
+      </h3>
+   </div>
+   <div class="panel-body">
+      {des}
+      
+<p><a class="glyphicon glyphicon-hand-up" onclick="vot(5,'{id}');">赞</a>({up}) 
+</p>
+   </div>
+</div>
+ 
+
+</div>
+
+<div class="col-xs-4">
+<!-- right -->
+<div class="page-header">
+   <h3> </h3>
+    <div class="panel-body">
+    
+   </div>
+</div>
+ 
+ 
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">           
+
+ $(function () { 
+     
+   vot(0,"{id}");
+  });   
+function vot(ty,v){
+  switch(ty){
+    case 0:vote({tpl:"vote",do:"see",showok:"",callback:"",id:v,tb:"sub_list",col:"see"});break;
+    case 1:vote({tpl:"vote",do:"vod",showok:"投票成功",callback:"",id:v,tb:"blog_comments",col:"up"});break;
+    case 2:vote({tpl:"vote",do:"vod",showok:"投票成功",callback:"",id:v,tb:"blog_comments",col:"bad"});break;
+    case 3:vote({tpl:"vote",do:"vod",showok:"投票成功",callback:"",id:v,tb:"blog_comments",col:"report"});break;
+    case 5:vote({tpl:"vote",do:"blog",showok:"投票成功",callback:"",id:v,tb:"sub_list",col:"up"});break;
+    case 6:vote({tpl:"vote",do:"blog",showok:"投票成功",callback:"",id:v,tb:"sch_art",col:"bad"});break;
+   
+  }  
+}
+	
+</script>

@@ -1,0 +1,181 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>基本信息-{gtitle}</title>   
+{cssjs_edit}  
+{cssjs_dialog}
+<link rel="stylesheet" href="css/forms.css"> 
+
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+{menu}
+</dt>
+<dd>
+<form id="form1">
+      <h1>班级基本信息</h1>
+      <hr/>
+      <table class="table1">
+        <tr>
+          <td>班级编号：</td>
+          <td>{id}</td>
+        </tr>
+        <tr>
+          <td>所属学校：</td>
+          <td>【{schools}】 {periods}/{grades} </td>
+        </tr>
+        <tr>
+          <td>班级名称：</td>
+          <td><input id="name" type="text" style="width:300px;" maxlength="20"/></td>
+        </tr>
+        <tr>
+          <td>班级Logo：</td>
+          <td><img src="../logo/{id}.jpg" id="clogo" width="48" onerror="this.src='/error/logo.jpg';" />
+           <a href="javascript:void(0);" class="blue0" id="btn_upd">上传logo</a>   
+           （100x100）              
+          </td>
+        </tr>
+         <tr>
+          <td>班级Logo(大)：</td>
+          <td><img src="../logo/{id}_240.jpg" id="clogo1" width="240" onerror="this.src='/error/logo.jpg';" />
+           <a href="javascript:void(0);" class="blue0" id="btn_upd1">上传logo</a>     
+           （240x130）            
+          </td>
+        </tr> 
+       <tr>
+        <td>班级口号</td>
+        <td>
+        <input type="text" id="slogan" style="width:400px;"/>
+        </td>
+    </tr>
+      <tr>
+        <td>班主导寄语</td>
+        <td>
+       <input type="text" id="wishes" style="width:400px;"/>
+        </td>
+    </tr>   
+    <tr>
+        <td class="f_top"><span>班级简介：</span></td>
+        <td><textarea id="des"></textarea></td>
+    </tr>
+        <tr>
+          <td></td>
+          <td>
+           <input type="text" id="id" value="0" style="display:none;"/>
+          <input type="button" id="btn"  value="保存信息"/>
+          <input type="reset" class="but1" value="取消"/>
+          </td>
+        </tr>
+      </table> 
+</form>       
+</dd>
+</dl>
+</div>
+{footer}
+</body>
+</html>
+<script type="text/javascript">
+
+$(function () {
+    readID({tpl:"class","do":"r",id:"{id}",frmid:"#form1"});  
+    $("#btn").bind("click", function(){
+      $("#id").val("{id}");
+       SaveAM({tpl:"class","do":"am",frmid:"#form1",showok:'修改完成',callback:"desome"});
+    
+    }); 
+    $("#btn_upd").bind("click",function(){updlogo("{id}");});  
+    $("#btn_upd1").bind("click",function(){updlogo1("{id}");});    
+ }); 
+ function desome(e,data){
+   if(data.indexOf('ok')>-1){   
+      //SaveAM({tpl:"user_reg1","do":"m","id":$("#id").val(),frmid:"#form1",showok:false});
+      //alert("保存成功");          
+   }
+   else
+      alert(data);
+}  	
+function updlogo(v){
+   ifrmid="#dlg2";
+   $(ifrmid).dialog('setTitle','上传logo');     
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");    
+}
+function updlogo1(v){
+   ifrmid="#dlg3";     
+   $(ifrmid+' #id').val(v);    
+   $(ifrmid).dialog("open");    
+}
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo").attr("src","/class/logo/"+d.fname+"?"+Math.random());           
+         $("#dlg2").dialog("close");   
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+function ifrm_dosome1(){    
+    v=$("#ifrm1").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo1").attr("src","/class/logo/"+d.fname+"?"+Math.random());           
+         $("#dlg3").dialog("close");   
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+</script>
+
+<div id="dlg2" title="创建" class="easyui-dialog dialoga" style="width:400px;height:150px;padding:10px;" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',          
+    handler:function(){  
+       $('#from2').submit(); 
+    }
+},{
+   text:'取消',        
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]"> 
+<form action="/tech/srv/upd_logo_class.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<label>上传logo</label> 
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="" style="display:none;"/><br/> 
+<label>(上传不大于200kb的.jpg图片 尺寸 100x100)</label> 
+</form>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+<div id="dlg3" title="上传Logo大" class="easyui-dialog dialoga" style="width:400px;height:150px;padding:10px;" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',          
+    handler:function(){  
+       $('#from3').submit(); 
+    }
+},{
+   text:'取消',        
+    handler:function(){
+        $('#dlg3').dialog('close');
+    }
+}]"> 
+<form action="./srv/upd_logo_big.php" enctype="multipart/form-data" method="post" id="from3" target="ifrm1">
+<label>上传logo</label> 
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="" style="display:none;"/><br/> 
+<label>(尺寸240x130,大小200kb以内 .jpg图片)</label> 
+</form>
+</div>
+<iframe src="" name="ifrm1" id="ifrm1" style="display:none" onload="ifrm_dosome1()"></iframe>

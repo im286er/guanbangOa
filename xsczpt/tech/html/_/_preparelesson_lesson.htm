@@ -1,0 +1,268 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>备课编辑-我的备课-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/list.css">    
+<script>
+var arr=new Array('文档','课件','作业','资源'); 
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+  <div class="menu_c">
+       <h2>备课编辑</h2>     
+    <ul>  
+    <li><a href="./?t=preparelesson_detail&id={id}" >基本信息</a></li> 
+    <li><a href="./?t=preparelesson_lesson&id={id}&tid=0">课前</a></li>
+    <li><a href="./?t=preparelesson_lesson&id={id}&tid=1" >课堂</a></li>
+    <li><a href="./?t=preparelesson_lesson&id={id}&tid=2" >课后</a></li>        
+    </ul> 
+  </div>
+</dt>
+<dt style="width:120px;margin-left:10px;">
+ <div class="menu_d" style="">
+    <h2>步骤</h2>
+    <ul id="ul">
+<!-- START step -->
+<li><a href="./?t=preparelesson_lesson&id={bid}&tid={tid}&step={id}" >{name}</a> </li>
+<!-- END step -->     
+    </ul>
+    <ul>  
+    <li><a href="javascript:void(0);" onclick="addstep()">+添加步骤 </a></li>
+    </ul>
+  </div>
+</dt>
+
+<dd  style="width:65%;">  
+  <div class="banner"><label>{title}</label> 
+  <span>
+    <a href="javascript:void(0);" id="btna" class="btn">+课件</a>
+    <a href="javascript:void(0);" id="btnb" class="btn">+作业</a> 
+    <a href="#" onclick="this.href='./?t=preparelesson_lesson_word&d=a&id={id}&tid='+queryStr('tid')+'&step='+queryStr('step');" class="btn" target="_blank">+WORD</a>
+  </span>    
+  </div>
+
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>   
+<th>名称</th>     
+<th>发布时间</th>  
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr> 
+<td><a target="_blank" href="./?t=preparelesson_detail&id={id}">{title}</a><br/>
+<code>类别：<script>document.write(arr[{ftype}]);</script></code>  </td>　
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td> 　
+<td><em></em></td>                 
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;">  
+<li><a href="#">预览</a></li>   
+<li onclick="delths('{id}',this)">删除</li>
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<div class="paging">             
+{page}                    
+</div>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>    
+<script type="text/javascript">  
+var subject,period,grade,edition,volume,chapter,restype;
+
+$(function(){  
+  $.get("/data/beike_step_"+queryStr("tid")+".txt", function (d) {$("#step").html(d);});
+   $.get("/data/grade_n1.txt", function(d){$("#grade").html(d);$("#grade").prepend("<option value=''>—年级—</option>");});     
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>教材版本</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});
+  
+   
+   $("#btna").bind("click",function(){
+   if(queryStr("step")==""){alert("请先选择一个步骤");return;} 
+   ifrmid="#dlg1";  
+   $(ifrmid).dialog('setTitle','添加课件');  
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");       
+   }); 
+   $("#btnb").bind("click",function(){ 
+    if(queryStr("step")==""){alert("请先选择一个步骤");return;} 
+   ifrmid="#dlgwork";  
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");       
+   });     
+});    
+function addstep(){  
+   ifrmid="#dlgstep"; 
+   reinitInput(ifrmid);
+   $(ifrmid).dialog('setTitle','添加');   
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");       
+}
+function addstep2(){
+  $.post("./srv/sdo.php", {tpl:"beike_step_add",bid:queryStr("id"),tid:queryStr("tid"),id:$("#step").val(),name:$("#step").find("option:selected").text()}, function (d, e) {  
+    if(d.indexOf('ok')>-1){
+      $("#ul").append('<li><a href="./?t=preparelesson_lesson&id='+queryStr("id")+'&tid='+queryStr("tid")+'&step='+$("#step").val()+'" >'+$("#step").find("option:selected").text()+'</a> </li>');
+      $("#dlgstep").dialog("close");
+    }
+    else
+      alert(d); 
+  });
+}
+function getlately(){
+  $.post("./srv/rdo.php", {tpl:"sel_ware_late"}, function (d, e) {   
+     selectShowDataNoH("#ware",JSON.parse(d),"id","title");
+  });
+}
+function getware(){
+   $.post("./srv/rdo.php", {tpl:"sel_ware",grade:$('#grade').val(),subject:$('#subject').val(),edition:$('#edition').val()
+   ,volume:$('#volume').val(),chapter:$('#chapter').val(),title:$('#dlg1 #title').val()}, function (d, e) {  
+      selectShowDataNoH("#ware",JSON.parse(d),"id","title");
+  });
+}  
+function getwork(){
+   $.post("./srv/rdo.php", {tpl:"sel_work",title:$('#dlgwork #title').val()}, function (d, e) {  
+      selectShowDataNoH("#work",JSON.parse(d),"id","title");
+  });
+}
+function getworkl(){
+  $.post("./srv/rdo.php", {tpl:"sel_workl"}, function (d, e) {   
+     selectShowDataNoH("#work",JSON.parse(d),"id","title");
+  });
+}
+/*
+function modths(v,obj){
+   readID({tpl:"beike","do":"r",id:v,frmid:"#dlg1"});
+   ifrmid="#dlg1"; 
+   $(ifrmid).dialog('setTitle','修改');  
+   $(ifrmid+' .tips').text('修改'); 
+   $(ifrmid).data('dotype',"m");  
+   $(ifrmid).dialog("open"); 
+} */
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_beike_list",id:v}, function (d, e) {  
+      $(obj).parent().parent().parent().parent().remove();
+  });
+}  
+</script>
+<div id="dlg1" class="easyui-dialog dialoga" style="width:550px;height:500px;padding:10px;" title="添加" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确定',      
+    handler:function(){
+    if($('#ware').val()==undefined||$('#ware').val()==''){alert('请选择一个课件');return;}  
+     $.post('./srv/sdo.php', {tpl:'beike_list_add',bid:queryStr('id'),tid:queryStr('tid'),sid:queryStr('step'),ftype:1,fid:$('#ware').val(),
+      name:$('#ware').find('option:selected').text()}, function (d, e) {    
+        if(d.indexOf('ok')>-1)location.reload();
+        else alert(d);
+      });  
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<table class="">
+    <tr>        
+        <td>条件          
+        <select id="grade"><option value="">选择年级</option></select> 
+        <select id="subject"><option value="">选择学科</option></select>
+        <select id="edition"><option value="">教材版本</option></select> 
+        <select id="volume"><option value="">上下册</option></select>
+        <select id="chapter"><option value="">章/节/单元</option></select> 
+         <input type="text" id="title"  placeholder="课件标题"  value="" maxlength="50" style="width:100px;" /> 
+         <input type="button" value="查询" onclick="getware()" />  
+         <input type="button" value="最近课件" onclick="getlately()"  />  
+        <hr/>
+        </td>
+    </tr>      
+     <tr>  
+        <td>
+         <select id="ware" size="20"><option value="">--课件--</option></select>   
+        </td>
+    </tr>       
+</table>
+</div>
+
+<div id="dlgwork" class="easyui-dialog dialoga" style="width:550px;height:500px;padding:10px;" title="作业" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确定',      
+    handler:function(){
+    if($('#work').val()==undefined||$('#work').val()==''){alert('请选择一个作业');return;}  
+     $.post('./srv/sdo.php', {tpl:'beike_list_add',bid:queryStr('id'),tid:queryStr('tid'),sid:queryStr('step'),ftype:2,fid:$('#work').val(),
+      name:$('#work').find('option:selected').text()}, function (d, e) {    
+        if(d.indexOf('ok')>-1)location.reload();
+        else alert(d);
+      });  
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlgwork').dialog('close');
+    }
+}]">
+<table class="">
+    <tr>        
+        <td>        
+         <input type="text" id="title"  placeholder="作业标题"  value="" maxlength="50" style="width:100px;" /> 
+         <input type="button" value="查询" onclick="getwork()" />  
+         <input type="button" value="最近作业" onclick="getworkl()"  />  
+        <hr/>
+        </td>
+    </tr>      
+     <tr>  
+        <td>
+         <select id="work" size="20"><option value="">--作业--</option></select>   
+        </td>
+    </tr>       
+</table>
+</div>
+ 
+
+
+<div id="dlgstep" class="easyui-dialog dialoga" style="width:350px;height:150px;padding:10px;" title="添加" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'加入',      
+    handler:function(){
+      if($('#step').val()==undefined||$('#step').val()==''){alert('请选择一个步骤');return;}         
+      addstep2(); 
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlgstep').dialog('close');
+    }
+}]">
+<table class="">
+    <tr>
+        <td style="width:60px;">选择步骤</td>
+        <td><select id="step"></select>           
+        </td>
+    </tr>       
+</table>
+</div> 

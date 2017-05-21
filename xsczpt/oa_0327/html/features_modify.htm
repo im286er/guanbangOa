@@ -1,0 +1,112 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/features_modify.php" id="ttts" method="post">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">添加功能</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="28%" class="tabtd2_L">根目录</td>
+						 <td width="72%" class="tabtd2_R"><select  type="text" id="pid" name="pid" class="stu-cnt-pd-input ha_stuinputf"></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">权限名称</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_name" name="fea_name" class="stu-cnt-pd-input ha_stuinputf"  value="{fea_name}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">权限注释</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_des" name="fea_des" class="stu-cnt-pd-input ha_stuinputf" value="{fea_des}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">菜单名称</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_menuname" name="fea_menuname" class="stu-cnt-pd-input ha_stuinputf" value="{fea_menuname}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">菜单地址</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_url" name="fea_url" class="stu-cnt-pd-input ha_stuinputf" value="{fea_url}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">icon</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_icon" name="fea_icon" class="stu-cnt-pd-input ha_stuinputf" value="{fea_icon}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">排序</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" id="fea_sort" name="fea_sort" class="stu-cnt-pd-input ha_stuinputf"  value="{fea_sort}"/></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select  type="text" id="fea_type" name="fea_type" class="stu-cnt-pd-input ha_stuinputf">
+								<option value ="0">菜单</option>
+								<option value ="1">按钮</option>
+								<option value ="2">其他</option>
+							</select></td>
+					</tr>
+						 <td width="20%" class="tabtd2_L">状态</td>
+						 <td width="80%" class="tabtd2_R">
+							<select  type="text" id="fea_states" name="fea_states" class="stu-cnt-pd-input ha_stuinputf">
+								<option value ="0">启用</option>
+								<option value ="1">禁用</option>
+						</select></td>
+					</tr>
+						 <td width="20%" class="tabtd2_L">级别</td>
+						 <td width="80%" class="tabtd2_R">
+							<select  type="text" id="fea_level" name="fea_level" class="stu-cnt-pd-input ha_stuinputf">
+								<option value ="0">一级标题</option>
+								<option value ="1">二级标题</option>
+								<option value ="2">三级标题</option>
+								<option value ="3">四级标题</option>
+							</select></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">父菜单</td>
+						 <td width="80%" class="tabtd2_R"> 
+							<select  type="text" id="m_id" name="m_id" class="stu-cnt-pd-input ha_stuinputf">
+			
+							</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input type="text" id="id" name="id" style="display:none;" value="{id}"/>
+				<input name="but_add" id="but_add" type="submit" value="修改" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><a href="./?t=features_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a>
+			</div>
+		</form>
+	</div>
+</div>
+	
+<script type="text/javascript">
+$(function () {	
+	$.post("./srv/rdo.php", {"tpl":"zhsz_features"}, function (d, e) { 
+        selectShowDataNoH("#pid",JSON.parse(d),"id","fea_name"); $("#pid").prepend("<option value='0'>—根目录—</option>");  
+		selectShowDataNoH("#m_id",JSON.parse(d),"id","fea_name"); $("#m_id").prepend("<option value='0'>—根目录—</option>");
+		$("#pid").val({pid});
+		$("#m_id").val({m_id});		
+    });	
+	$("#fea_states").val({fea_states});
+	$("#fea_type").val({fea_type});
+	$("#fea_level").val({fea_level});
+	});
+</script>
+</body>
+</html>

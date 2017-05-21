@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="/ppf/js/select.js"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>     
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/exam_add_submit.php" method="post" onsubmit="return checkStamina();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以添加考试项目信息</a></label> 
+			</div>
+			<div class="tabbody" id="p1">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="32%" class="tabtd2_L">考试项目名称：</td>
+						 <td width="68%" class="tabtd2_R"><input type="text" id="stamina_name" name="stamina_name" size="25" /></td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">适应年级：</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="grade_id" id="grade_id">
+							</select>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">排序：</td>
+						 <td width="80%" class="tabtd2_R"><input type="text" name="order_value" id="order_value" size="10" value="{maxValue}" />(从小到大)</td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#grade_id",JSON.parse(d),"id","grade_name"); $("#grade_id").prepend("<option selected value='0'>所有年级</option>;");
+	});
+});
+//表单提交验证
+function checkStamina()
+{
+	if($.trim($("#stamina_name").val())==""){
+		alert("请输入考试项目名称");
+		$("#stamina_name").select();
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+</script> 

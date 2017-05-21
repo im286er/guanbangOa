@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>同心圆父母学堂-博客页面</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/> 
+<link href="/html/blog/css/school/circle.css" type="text/css" rel="Stylesheet">
+{meta}	
+</head>
+<body>
+{top}
+<div class="wrap">
+	{school_logo}
+	{menu}
+	{school_menu}
+	<div class="main">
+		<div class="act_left mt15">
+			<div class="act_content">
+				<!--发现班级-->
+				<div class="xcl_bigfound">
+					<div class="found">
+					<div class="act_tit">
+						<p>热门机构 </p>
+						<a href="/?t=school_search" target="_blank">更多+</a>
+					</div>
+					</div> 
+				<!--班级列表-->  
+				<div class="list">
+					<div class="add">地区：</div>
+				  <div id="addr" class="lists">
+					<a addrid="0" class="red hs_on">全部</a>
+				  </div>
+				</div>
+				<div class="list">
+					<div class="add">街道：</div>
+				  <div id="street" class="lists">
+					<a streetid="0" class="red hs_on">全部</a>
+				  </div>
+				</div>
+<!-- 				<div class="list">
+					<div class="add">学段：</div>
+				  <div id="sch" class="lists">
+					<a schid="0" class="red">全部</a>
+				  </div>
+				</div> -->
+				<div class="clear"></div> 
+				<div class="school" id="group_list">
+				</div>
+				   
+				<div class="clear"></div> 
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="act_content  mt15">
+				<div class="act_tit">
+					<p>教育新闻</p>
+					<a href="/?t=school_news" target="">更多+</a>
+				</div>
+				<div class="act_lessons">
+					<a  href="#" target="" class="les_img"><img src="/html/blog/images/school/gaga.png" width="305" height="230"/></a>
+					<ul class="lesnews_list fr">
+					<!-- START list_news -->
+						<li><i class="org_square"></i><a href="/?t=school_info&id={id}" target="" title="{title}">{title}</a></li>
+					<!-- END list_news -->
+					</ul>
+				</div>
+			</div>	
+			<div class="clear"></div>
+			<div class="act_content mt15">
+				<div class="act_tit">
+					<p>周边学校</p>
+					<a href="/?t=school_search" target="_blank">更多+</a>
+				</div>
+				<ul class="org_pic_box">
+				<!-- START list_schs -->
+					<li>
+						<a href="/school/?s={id}" title="{name}" target="_blank"><img src="/upds/school/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" width="102" height="102" title="{name}">{name}</a>
+					</li>
+				<!-- END list_schs -->
+				</ul>
+				<dl class="org_list">
+				<!-- START list_schs2 -->
+					<dd><i class="org_square"></i><a href="/school/?s={id}" target="_blank" title="{name}">{name}</a></dd>
+				<!-- END list_schs2 -->
+				</dl>
+			</div>	
+			<div class=""></div>
+			<div class="act_content mt15">
+				<div class="act_tit">
+					<p>活跃班级</p>
+					<a href="/?t=class_search" target="_blank">更多+</a>
+				</div>
+				<ul class="org_hotclass">   
+				<!-- START list_class -->　　　　                 
+					<li>
+						<div class="tea_img">
+							<a href="/class/?c={id}" target="_blank">
+								<img src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';"/>
+							</a>
+						</div>
+						<div class="tea_des">
+							<p class="tea_tit"><a href="/class/?c={id}" target="_blank">{name}</a></p>
+							<p>成员：<a href="/class/?t=members&c={id}" target="_blank">{count}</a></p>
+							<p>{schools}</p>
+						</div>
+					</li>    
+				<!-- END list_class -->　　　　                          　
+				</ul>
+			</div>	
+			<div class="clear"></div>
+			<div class="act_content">
+				<div class="act_tit">
+					<p>工作室推荐</p>
+					<a href="/?t=famous_search" target="_blank">更多+</a>
+				</div>
+				<div class="act_fm_list">
+				<!-- START list_famous -->
+					<div class="act_fm_cont">
+						<a href="/famous/?f={id}" target="_blank"><img src="/upds/famous/logo/{id}.jpg" width="146" height="146" onerror="this.src='/error/logo.jpg';"/>
+						<p class="org_name">{name}</p></a>
+					</div>
+				<!-- END list_famous -->
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="act_content">
+				<div class="act_tit">
+					<p>群组推荐</p>
+					<a href="/?t=group_search" target="_blank">更多+</a>
+				</div>
+				<ul class="org_hotgroup">     
+				<!-- START list_group -->　　　　                 
+					<li>
+						<div class="tea_img">
+							<a href="/group/?g={id}" target="_blank">
+								<img src="/upds/group/logo/{id}.jpg" />
+							</a>
+						</div>
+						<div class="tea_des">
+							<p class="tea_tit"><a href="/group/?g={id}" target="_blank">{name}</a></p>
+							<p>口号：<em>{slogan}</em></p>
+							<p>成员：<a href="/group/?g={id}" target="_blank">{nums}</a></p>
+						</div>
+					</li>    
+				<!-- END list_group -->　　　　                  　          　
+				</ul>
+			</div>	
+		</div>
+		<div class="act_right mt15">
+			<div class="act_content">
+				<div class="act_tit">
+					<p>近期活动 </p>
+					<a href="/?t=actives" target="_blank">更多+</a>
+				</div>
+				<div class="act_news">
+					<!-- START list_actives -->
+					<p><i class="org_square"></i><a href="activity/?t=active&id={id}" target="_blank" title="{name}">{name}</a></p>
+					<!-- END list_actives -->
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="act_content">
+				<div class="act_tit">
+					<p>机构排行 </p>
+					<a href="/?t=school_search" target="_blank">更多+</a>
+				</div>
+				<div class="act_schs">
+					<!-- START list_hot_schs -->
+					<p><i class="org_square"></i><a href="/school/?s={id}" target="_blank" title="{name}">{name}</a><em>{count}人</em></p>
+					<!-- END list_hot_schs -->
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="act_content">
+				<div class="act_tit">
+					<p>最新博文 </p>
+					<a href="/?t=school_blog" target="">更多+</a>
+				</div>
+				<ul class="lesnews_list fr acti_right">
+				<!-- START list_new_blog -->
+					<li><i class="org_square" style="background-color:#09C7F7;"></i><a href="/zone/?t=blog&id={uid}&bid={id}" target="_blank" title="{title}">{title}</a></li>
+				<!-- END list_new_blog -->
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="blank30"></div>
+	{foot}
+</div>
+
+<script src="http://www.lanrenzhijia.com/ajaxjs/jquery.min.js"></script>
+<script src="html/circle/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+    getgroup(0,0);
+    $.post("/srv/rdo.php?", {tpl:"getaddr2",id:0}, function (d) {
+      d=eval(d);
+      for(var i=0;i<d.length;i++){
+        $("#addr").append('<a addrid="'+d[i].id+'" >'+d[i].name+'</a>'); 
+      }
+      $("#addr a").click(function(){
+         $("#addr a").removeClass("red hs_on");
+         $("#addr a[addrid="+$(this).attr("addrid")+"]").addClass("red hs_on");
+		 getgroup($(this).attr("addrid"),0);
+         if($(this).attr("addrid")==0){
+            $("#street").empty();$("#street").append('<a streetid="0" class="red">全部</a>');
+         }
+         $.post("/srv/rdo.php?", {tpl:"getaddr2",id:$(this).attr("addrid")}, function (d) {
+            d=eval(d);
+            $("#street").empty();
+            for(var i=0;i<d.length;i++){
+              $("#street").append('<a streetid="'+d[i].id+'" >'+d[i].name+'</a>');
+            }
+            $("#street a").click(function(){
+              $("#street a").removeClass("red hs_on");
+              $("#sch a").removeClass("red hs_on");
+              $("#street a[streetid="+$(this).attr("streetid")+"]").addClass("red hs_on");
+			  getgroup($("#addr a[class='red']").attr("addrid"),$(this).attr("streetid"));
+            })
+         });
+      });
+    });
+  })
+
+  
+  function getgroup(addrid,strid){
+      $.post("/srv/rdo.php?", {tpl:"get_schools","addrid":addrid,"strid":strid}, function(d){
+        d =eval(d);
+        $("#group_list").empty();
+        for(var i=0;i<d.length;i++){
+            $("#group_list").append('<div class="school1">'+
+            	'<a href="/school/?s='+d[i].id+'" target="_blank"><img src="/upds/school/logo/'+d[i].id+'.jpg" onerror="this.src=`/error/logo.jpg`" /></a>'+
+                '<div class="liang"><a href="/school/?s='+d[i].id+'" target="_blank">'+d[i].name+'</a></div>'+
+                '</div>');
+        }
+      });
+  }      
+function tabs(tabTit,on,tabCon){
+	$(tabTit).children().hover(function(){
+		$(this).addClass(on).siblings().removeClass(on);
+		var index = $(tabTit).children().index(this);
+		$(tabCon).children().eq(index).show().siblings().hide();
+	});
+};
+</script>
+</body>
+</html>

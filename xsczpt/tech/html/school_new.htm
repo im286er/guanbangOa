@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}      
+
+</head>
+<body>
+{top}
+<div class="container">    
+{head1}
+
+<div class="col-sm-10">
+
+
+<div class="col-sm-12">
+<div class="page-header">
+   <h3>创建学校申请 <small></small> 
+<div class="btn-group pull-right">  
+  <a href="?t=school" class="btn btn-default"><i class="fa fa-arrow-left"></i>返回</a>
+</div>
+ </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1"> 
+  <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">名称</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name"  style="width:50%" placeholder="请输入名称" maxlength="50">
+      </div>
+   </div>
+<div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">组织机构代码</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="scode"  style="width:50%" placeholder="" maxlength="50">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">短名</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="mininame"  style="width:50%" placeholder="请输入名称">
+      </div>
+   </div>
+    <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">域名</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="dns"  style="width:50%" placeholder="" maxlength="50">
+      </div>
+   </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">所在区域：</label>
+    <div class="col-sm-4"><select id="addr" class="form-control"></select></div>   
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学校类型：</label>
+    <div class="col-sm-3"><select id="typeid" class="form-control"></select></div>   
+  </div>
+   <div class="form-group">
+    <label class="col-sm-2 control-label">学段：</label>
+    <div class="col-sm-3">
+        <select id="period" class="form-control"></select>      
+    </div>   
+  </div>
+ 
+   <div class="form-group"> 
+    <label class="col-sm-2 control-label">创建日期</label>
+    <div class="col-sm-10">
+<input type="text" id="creation" class="form-control" style="width:50%;" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
+readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+    </div>
+  </div> 
+  
+     <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">箴言</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="motto"  style="width:50%" placeholder=""  maxlength="250">
+      </div>
+   </div> 
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">简介</label>
+    <div class="col-sm-10">
+    <textarea id="des" class="form-control" style="width:80%" rows="4" placeholder="请输入简介"></textarea>
+    </div>
+  </div>   
+     <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 保 存 </button>  
+      <button type="button" class="btn btn-primary"> 取 消 </button>
+       <input type="text" id="id" value="" style="display:none;"/>
+       <input type="text" id="state" value="0" style="display:none;"/>  
+       <input type="text" id="addrs" value="" style="display:none;"/>
+   </div>
+    </div>
+   
+</form>
+          
+</div>  
+</div>
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+  //$.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});  
+  //$.get("/data/orgtype.txt", function (data) {$("#typeid").html(data);$("#typeid").prepend("<option value=''>—单位类型—</option>");});
+  //$.get("/data/period.txt", function (data) {$("#period").html(data);$("#period").prepend("<option value=''>—学段—</option>");});   
+  //$("#addr1").bind("change", function(){getaddr2($(this).val());}); 
+  //$("#addr2").bind("change", function(){getunits($(this).val());});     
+     
+$.get("/data?t=sys_period&f=txt", function (d) {$("#period").html(d);});   
+$.get("/data?t=sys_org_type&f=txt", function (d) {$("#typeid").html(d);});  
+$.get("/data/two.php?t=sys_addr&f=txt",function (d) {$("#addr").append(d);}); 
+ 
+    $("#btn").bind("click", function(){        
+      if($("#name").val()==""){alert("请输入名称");return;}
+     if($("#addr2").val()==""){alert("请选择地区");return;}     
+     if($("#typeid").val()==""){alert("请选择类型");return;}  
+     if($("#period").val()==""){alert("请选择学段");return;}  
+      if($("#creation").val()==""){alert("请选择创建日期");return;}  
+      if($("#scode").val()==""){alert("请输入编号");return;}
+       SaveAM({tpl:"school","do":"a",frmid:"#form1",showok:'',callback:"dosome"});   
+    }); 
+     
+ });
+ /*
+function getaddr2(v){ 
+  $.post("./srv/rdo.php?", {tpl:"getaddr2","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");            
+  });
+} */
+function getunits(v){  
+  //$("#addrs").val($.trim($("#addr1").find('option:selected').text()+"/"+$("#addr2").find('option:selected').text()));
+  $("#addr").val(v);
+  $.post("./srv/rdo.php?", {tpl:"get_addrs","id":v}, function (d, e) {                  
+    $("#addrs").val($.trim(d));//selectShowData('#school', eval(d), "id", "name");            
+  });
+}  
+function dosome(ed,data){
+  if(data.indexOf('ok')>-1){
+    id=data.substr(data.indexOf('ok')+2); 
+    $.post("./srv/sdo.php?", {tpl:"addedu","id":id,"y":"0"}, function (d, e) {                     
+        location.href="?t=school_me";
+    });
+ }
+ else
+  alert(data);
+}	 	
+ 	
+</script>    

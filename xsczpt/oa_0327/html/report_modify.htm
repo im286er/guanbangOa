@@ -1,0 +1,172 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title></title>
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main">
+		<div class="box">
+			<form action="./srv/report_modify_submit.php" method="post" onsubmit="return checkForm();">
+				<div class="boxtitle">
+					<label class="current"><a href="javascript:void(0);">在这里您可以修改报表信息</a></label> 
+				</div>
+				<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+                        <tr>
+							 <td width="20%" class="tabtd2_L">名称</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="text" id="code_name" name="code_name" size="15" value="{code_name}" />
+                              </td>
+						</tr>
+                       
+						<tr>
+							 <td width="20%" class="tabtd2_L">是否有合作人</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_partner" value="1" {rk1} /> 是
+                                <input type="radio" name="is_partner" value="0" {rk2} /> 否
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">是否有图片</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_pic" value="1" {rp1} /> 是
+                                <input type="radio" name="is_pic" value="0" {rp2} /> 否
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">是否有附件</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_att" value="1" {ra1} /> 是
+                                <input type="radio" name="is_att" value="0" {ra2} /> 否
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">是否有审核教师</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_teacher" value="1" {rt1} /> 是
+                                <input type="radio" name="is_teacher" value="0" {rt2} /> 否
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">是否提交审核</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_submit" value="1" {rs1} /> 是
+                                <input type="radio" name="is_submit" value="0" {rs2} /> 否
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">公开权限</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="is_open" id="is_open1" value="1"/> 全体学生公开
+                                <input type="radio" name="is_open" id="is_open2" value="2"/> 对本班公开
+                                <input type="radio" name="is_open" id="is_open3" value="3"/> 只对这个学生公开
+                                <input type="radio" name="is_open" id="is_open0" value="0"/> 不公开
+                              </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">所属于层级</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<select name="parent_no" id="parent_no" disabled>
+									{str}
+								</select>
+                              </td>
+						</tr>
+						 <tr id="tr_reported">
+							 <td width="20%" class="tabtd2_L">排序值</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="text" id="order_value" name="order_value" size="15" value="{order_value}" /> 从小到大 &nbsp;&nbsp;<a style="color: rgb(255, 0, 0); font-weight: bold;" onclick="addItem();" href="javascript:void(0);">点击添加内容项</a>
+                              </td>
+						</tr>
+						{str_item}
+                       <!-- <tr>
+							 <td width="20%" class="tabtd2_L">是否启用</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="flag_status" value="1" {ck1} /> 启用
+                                <input type="radio" name="flag_status" value="0" {ck2} /> 停用
+                              </td>
+						</tr>-->
+						<tr>
+							 <td width="20%" class="tabtd2_L">说明</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<textarea rows="4" cols="60" id="content" name="content">{content}</textarea>
+                              </td>
+						</tr>
+					</table>
+				</div>
+				<div class="boxfooter2">
+                	<input type="hidden" name="id" value="{id}" />
+                	<input type="hidden" name="item_all" id="item_all" value="" />
+					<input name="but_add" id="but_add" type="submit" value="更 新" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<a href="./?t=report_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a>
+					</div>
+		</form>
+		</div>
+	</div>
+<script type="text/javascript" language="javascript">
+	
+$(function(){  
+	$("#parent_no").val("{parent_no}");
+	$("#is_open"+{is_open}).attr("checked",true);
+});
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#code_name").val())==""){
+		alert("名称不能为空。");
+		$("#code_name").select();
+		return false;
+	}
+	var items = $("input[name^='item_name']");
+	var len   = items.size();
+	var itemall = "";
+	
+	for(var i=0;i<len;i++){
+		id= items.eq(i).attr("aid");
+		value = items.eq(i).val()
+		itemall += id + "," + value + ";";
+	}
+	$("#item_all").val(itemall);
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+//添加内容项
+function addItem()
+{
+	var html;
+	html = "<tr><td nowrap class='tabtd2_L'>内容项：</td>";
+	html += "<td nowrap class='tabtd2_R'>";
+	html += "<input type='text' name='item_name[]' aid='new' class='item_name' class='BigInput' size='15' maxlength='100' value='' />";
+	html += "&nbsp;&nbsp;<a href='javascript:void(0);' onclick='delItem(this,\"none\");'>删除</a></td></tr>";
+	$("#tr_reported").after(html);
+}
+
+//删除内容项
+function delItem(obj,id)
+{
+	if(id=="none"){
+		$(obj).parent().parent().remove();
+	}else{
+		if(confirm("你确定删除此项吗?")){
+			$.post("./srv/rdo.php", {tpl:"del_item","id":id}, function (d, e) {
+				l=JSON.parse(d);
+				if(l.flag=="true"){
+					$(obj).parent().parent().remove();
+				}else{
+					alert(l.value);
+				}
+			});
+		}
+	}
+	
+}
+
+</script>
+</body>
+</html>

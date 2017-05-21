@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>出错了！-学科空间</title>
+		<link rel="stylesheet" type="text/css" href="./css/subject.css">
+{cssjs}
+    </head>
+    <body>
+{top}
+{head}
+		<br><br>
+        <div class="container">
+			<table>
+				<tr>
+					<td>
+						<img src="./css/images/goerror.jpg" />
+					</td>
+					<td style="width:100%; text-align:left; vertical-align:top; padding-left:50px;">
+						<h3>出错了：</h3>
+						<br>
+						<p><h4>{error_info}</h4></p>
+					</td>
+				</tr>
+			</table>
+        <div>
+    </body>
+</html>
+
+<script>
+	$(".menu_left div a").each(function (index) {
+		$(this).removeAttr("href");
+		$(this).css("color","#CCC");
+	});
+	$(".menu_right div a").each(function (index) {
+		$(this).removeAttr("href");
+		$(this).css("color","#CCC");
+	});
+</script>

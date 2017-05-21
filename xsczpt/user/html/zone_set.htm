@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人帐号中心-{gtitle}</title>
+{cssjs}      
+ 
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>Zone <small>【管理】</small>  <a href="./" class="btn btn-primary glyphicon glyphicon-arrow-left pull-right"> 返回 </a>  </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1"> 
+ <div class="form-group">
+    <label class="col-sm-2 control-label">空间名称：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="name"  style="width:50%" placeholder="空间名称"  maxlength="30"></div>
+  </div>  
+  <div class="form-group">
+    <label class="col-sm-2 control-label">签名：</label>
+    <div class="col-sm-10"><input type="text" class="form-control" id="signature"  style="width:70%" maxlength="100"></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">空间简介：</label>
+    <div class="col-sm-7"><textarea class="form-control" id="explain"  rows="3" ></textarea></div>
+  </div>     
+  <div class="form-group">
+    <label class="col-sm-2 control-label">访问权限：</label>
+    <div class="col-sm-3"><select id="visit" class="form-control"></select> </div>
+  </div>
+  <div class="form-group hide" id="pwd">
+    <label class="col-sm-2 control-label">密码</label>
+    <div class="col-sm-4"><input type="text" class="form-control" id="visitpwd"  maxlength="30"></div>
+    <div class="col-sm-4 help-block">*英文或数字，不支持中文</div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">评论权限：</label>
+    <div class="col-sm-3"><select id="comment" class="form-control"></select> </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">留言权限：</label>
+    <div class="col-sm-3"><select id="leave" class="form-control"></select> </div>
+  </div> 
+<div class="form-group">
+    <label class="col-sm-2 control-label">模板：</label>
+    <div class="col-sm-3"><img id="photo" width="100" src="" onerror="this.src='/error/logo.jpg'" /></div>
+    <div class="col-sm-2"><a href="./?t=zone_module" class="btn btn-warning"  >选择模板</a></div>  
+  </div>    
+  <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+     <button type="button" class="btn btn-primary" id="btn"> 确 定 </button>  
+     <button type="button" class="btn btn-primary"> 取 消 </button>
+     <input type="text" id="id" value="{uid}" style="display:none;"/>
+     <input type="text" id="tpl" value="" style="display:none;"/> 
+   </div>
+    </div>     
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">
+  l_tpl="zone";
+ $(function () {
+    $.get("/zone/data/limit.txt",function(d){
+        $('#comment').html(d);
+        $('#leave').html(d);          
+    });
+    $.get("/zone/data/visit.txt",function(d){$('#visit').html(d);
+         readID({"do":"r",id:"{uid}",frmid:"#form1",callback:"rdcb"});  
+    });   
+    $("#btn").bind("click", function(){        
+      SaveAM({"do":"am",id:"{uid}",frmid:"#form1",showok:"",callback:"regendrun"});
+    }); 
+     $("#visit").bind("change", function(){        
+       if($(this).val()=="2")
+        $("#pwd").removeClass("hide");
+       else 
+        $("#pwd").addClass("hide");
+    });  
+ });
+ function regendrun(e,data){
+   if(data.indexOf('ok')>-1){         
+      lalert("保存成功");          
+   }
+   else
+      lalert(data);
+} 	
+ function rdcb(e,d){
+   if($("#visit").val()=="2"){         
+      $("#pwd").removeClass("hide");
+   }
+   if($("#tpl").val()!="")
+      $("#photo").attr("src","/upds/zone/tpl/"+$("#tpl").val()+".jpg?");
+   else
+      $("#photo").attr("src","/upds/zone/tpl/def.jpg?");
+  } 	
+ 	
+</script>    

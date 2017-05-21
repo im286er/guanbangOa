@@ -1,0 +1,45 @@
+1.用户表  bhost_users
+2.博客表 bhost_entries 
+
+
+导用户
+=====================================================
+一.【php导出指定格式数据】o1.php?t=user
+用户名，邮箱，姓名，性别，显示名（昵称），班级名，
+附带字段：学校，学段，年级,学科（0），状态2，身份2
+
+1.旧id 导入到heart字段临时使用
+ 
+ 更新act_member,act_school, class,cls_member
+
+
+导博客
+=====================================================
+1.转存临时表 
+  ouid,标题内容，时间TS，时间(ouid=>转为uid,时间=>created)  
+  建表 (id,ouid,title,des,timestamp,created,uid)
+  CREATE TABLE `temp_blog` (
+  `id` int(11) NOT NULL,
+  `ouid` int(11), 
+  `title` varchar(200),
+  `des` text,
+  `timestamp` int(11),
+  `created` datetime,
+  `uid` varchar(30), 
+`cid` int(11),
+`sid` int(11),	
+  PRIMARY KEY (`id`)
+) DEFAULT CHARSET=utf8;	
+
+  
+2.临时表复制到目标数据库
+  更新ouid 从act_member
+
+
+3.运行php导入到blog_list
+
+4.运行php导入到cls_activity
+
+
+
+ 

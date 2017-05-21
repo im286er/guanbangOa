@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>添加账号-{gtitle}</title>
+{cssjs}     
+                  
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>添加用户 <small></small>  <a href="./?t=membership&c={c}" class="btn btn-primary glyphicon glyphicon-arrow-left pull-right"> 返回 </a>  </h3>
+</div>
+<form class="form-horizontal" role="form" method="post" id="form1">
+  
+    <div class="form-group">
+      <label class="col-sm-2 control-label">用户名：</label>
+      <div class="col-sm-5"><input type="text" class="form-control" id="username"  placeholder="用户名(字母或者数字,长度6-30)"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">邮箱：</label>
+      <div class="col-sm-5"><input type="text" class="form-control" id="email"  placeholder="邮箱"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">手机：</label>
+      <div class="col-sm-5"><input type="text" class="form-control" id="mobile" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="手机号"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">昵称：</label>
+      <div class="col-sm-5"><input type="text" class="form-control" id="nick" placeholder="昵称"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">姓名：</label>
+      <div class="col-sm-5"><input type="text" class="form-control" id="truename" placeholder="真实姓名"></div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label">密码：</label>
+      <div class="col-sm-5"><input type="password" class="form-control" id="pwd" ></div>
+    </div> 
+    <div class="form-group">
+      <label class="col-sm-2 control-label">确认密码：</label>
+      <div class="col-sm-5"><input type="password" class="form-control" id="pwd1" ></div>
+    </div>
+       
+
+    <div class="form-group">
+      <label class="col-sm-2 control-label">身份：</label>
+      <div class="col-sm-4"><select id="idtype" class="form-control"></select></div>
+    </div>
+    <div class="form-group hide">
+      <label class="col-sm-2 control-label">主学科：</label>
+      <div class="col-sm-4"><select id="subject" class="form-control"></select><input id="subjects" type="text" style="display:none;"/></div>
+      <p class="help-block">学生和家长主科可以为空</p>
+    </div>
+    <div class="form-group">
+     <div class="col-sm-8 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn2"> 确定 </button>
+      <button type="resert" class="btn btn-success" > 重填 </button>    
+      <input id="id" type="text" style="display:none;" value="">   
+      <input id="period" type="text" value="{period}" style="display:none;"/>
+      <input id="grade" type="text"  value="{grade}" style="display:none;"/> 
+      <input id="grade" type="text"  value="{school}" style="display:none;"/>
+      <input id="addr" type="text" value="{addr}" style="display:none;"/>
+      <input id="school" class="form-control" value="{s}" type="text" style="display:none;">
+      </div>
+    </div>       
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+    $("#btn2").bind("click", {type:"save"}, regdosome);
+    $.get("/data/type.txt", function (data) {$("#idtype").append(data);$("#idtype").find("option[value='2']").attr("disabled","true");});   
+    //$.get("/data/grade_n1.txt", function (data) {$("#grade").append("<option value=''>—学段/年级—</option>");$("#grade").append(data);});
+    $.get("/data/subject.txt", function (data) {$("#subject").append(data);}); 
+    
+ });
+l_tpl="user_reg"; 	
+function regdosome(e) {  
+  SaveAM({"do":"a",id:"0",frmid:"#form1",showok:"添加成功",callback:"regendrun"});        
+  return false;
+}
+
+function regendrun(e,data){
+   if(data.indexOf('ok')>-1){       
+     nid=data.substr(data.indexOf("ok")+2);
+     $.post("./srv/sdo.php", {tpl:"add_nuser_2_cls","id":nid,cid:"{c}"}, function (d, e) {                  
+      // alert(d);     
+    });
+   }
+   else
+      alert($.trim(data).substr(3));
+}
+
+</script>    

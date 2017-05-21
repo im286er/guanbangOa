@@ -1,0 +1,224 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<title></title>
+<style>
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+._ha_content{display:none;clear:both;min-height:0 !important;}
+._ha_content label{min-height:0 !important;line-height:normal !important;}
+.ha_cont{float:left;color:red;}
+.ha_cont pre{color:red;background-color:white;}
+.ha_edit{position:absolute;left:28%;top:10%;background:white;width:48%;border-radius:7px;z-index:10000;display:none;padding-top:20px;}
+.ha_tacontent{width:100%;max-height:100px;overflow:hidden;text-overflow:ellipsis;padding:0;display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;line-height:23px;}
+.select-main{float: right !important;}
+.fjw{width:40%;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ha_cls">
+		<div class="ha_selectlist">
+			<form action="./?t=report" method="post">
+				<div class="ha_selbox">
+					<span>年级：</span>
+					<select name="grade_id" id="grade_id" class="ui-select">
+						<option value="">全部</option>
+						{str_grade}
+					</select>
+				</div>
+				<div class="ha_selbox">
+					<span>分类：</span>
+					<select name="report_type" id="report_type" >
+						<option value="">全部</option>
+						{str_report}
+					</select>
+				</div>
+				<div class="ha_selbox"><input type="submit" id="choose" name="choose" value="查询" class="ha_selchoose"/></div>
+				<input type="hidden" name="menu1" id="menu1" value=""/>
+		        <input type="hidden" name="menu2" id="menu2" value=""/>
+				<input type="hidden" name="geter" id="geter"  value="{master_val}"/>
+			</form>
+		</div>
+		<div class="ha_addbtn">
+		   <script type="text/javascript">
+					if({stu_type}>0)
+						document.write('<a href="./?t=report_custom_add" target="" id="ha_add">添加+</a>');
+		   </script>
+		</div>
+	</div>	
+</div>
+<div class="tabbody">
+	<form action="./?t=report" method="post"  onsubmit="return checkSubmit();">
+		<div class="clear"></div>
+		<ul class="ha_formlist ha_rep_tablist" style="margin-top:15px;background:#fff;">
+		{str_main}
+		</ul>
+		<ul class="pagination pull-right">
+			{page}
+		</ul>
+		<input type="hidden" name="menu1" id="menu1" value=""/>
+		<input type="hidden" name="menu2" id="menu2" value=""/>
+	</form>
+</div>
+
+<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+<input type="hidden" name="h_id" id="h_id"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="mop" id="h_mop" value=""/>
+<input type="hidden" name="flag2" id="flag2" value=""/>
+<input type="hidden" name="title" id="title" value=""/>
+<input type="hidden" name="subject" id="subject" value=""/>
+<div id="tc" style="display:none;padding:10px;">
+<p>申请修改原因:</p>
+	<div><textarea id="reason_content" cols=40 rows=4 ></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="button" onclick="reason();" value="确定" style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){		
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	$("#report_type").selectWidget({
+		change       : function (changes) {
+			selectType($("#report_type"));
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+	$("#grade_id").val({term_id});	
+	report_index=$("#grade_id").get(0).selectedIndex;
+	$(".select-list").eq(0).children("li").removeClass("active");
+	$(".select-list").eq(0).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(0).text($("#grade_id option:selected").text());
+	
+	$("#report_type").val({report_type});
+	report_index=$("#report_type").get(0).selectedIndex;
+	$(".select-list").eq(1).children("li").removeClass("active");
+	$(".select-list").eq(1).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(1).text($("#report_type option:selected").text());
+	
+	selectType($("#report_type"));
+});	
+
+//选择报表子类
+function selectType(obj)
+{
+	var val = $(obj).val();
+	//if($(obj).nextAll(".select-main").length>1){return false;};
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_report","id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			var len = d.value.length;
+			
+			if($(obj).nextAll(".select-main").length>1){
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select").remove();
+				$(obj).next(".select-main").remove();
+			};
+				
+			if(len>0){
+				//动态生成下拉框
+				var html = "<select name='rid' id='rid' class='ui-select'>";
+				html += "<option value=''>全部</option>";
+				
+				for(var i=0;i<len;i++){
+					html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["code_name"]+"</option>"
+				}
+				html += "</select>";
+				$(obj).after(html);
+				$("#rid").selectWidget({
+					change       : function (changes) {
+						return changes;
+					},
+					effect       : "slide",
+					keyControl   : true,
+					speed        : 200,
+					scrollHeight : 250
+				});
+				
+				var rid = "{rid}";
+				if(rid){
+					$("#rid").val({rid});
+					report_index=$("#rid").get(0).selectedIndex;
+					$(".select-list").eq(1).children("li").removeClass("active");
+					$(".select-list").eq(1).children("li").eq(report_index).addClass("active");
+					$(".select-set").eq(1).text($("#rid option:selected").text());
+				}
+			}
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select").remove();
+		if($(obj).nextAll(".select-main").length>1){
+			$(obj).next(".select-main").remove();
+		}
+	}	
+}
+
+var uid="{uid}";
+function apply(id,geter,flag,subject_son){
+  if(confirm('确定要申请修改吗?'))
+  {
+    $("#h_but_op").val("确定");
+    $("#h_flag").val("申请审核中");
+    $("#h_mop").val("1");
+    $("#h_id").val(id);
+    $("#subject").val(subject_son);
+	layer.open({
+	  type: 1,
+	  title: false,
+	  offset: 't',
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc')
+	});
+  } else{
+    location.reload();
+  }
+}
+function reason(){
+    var geter=$("#geter").val();
+	var content=$("#reason_content").val();
+	var id=$("#h_id").val();
+	var flag=$("#flag2").val();
+	var subject_son=$("#subject").val();
+	$.ajax({
+		type: 'POST',
+		url: "./srv/report_apply.php" ,
+		data: {tpl:"set_apply",uid:uid,geter:geter,content:content,id:id,flag:flag,menu1:0,menu2:26,subject:subject_son} ,
+		success: function(d){
+		 if(d=="ok"){
+			layer.closeAll();
+			layer.msg('提交成功！');
+			location.reload();
+		  }else{
+			layer.msg('提交失败！');
+		  }
+		} 
+	});
+}
+</script>
+{footer}  
+</body>
+</html>
+<input id="geter" style="display:none;" value=""></div>

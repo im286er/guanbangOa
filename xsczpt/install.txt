@@ -1,0 +1,40 @@
+1.数据库编码utf8
+2.数据库连接需要同时配置 /cfg/config.inc /cfg/config.txt 2个文件
+3.以下目录设为可写
+/cfg
+/data
+/upd
+/upds
+注：linux下需要给这些目录 apache的rw权限　或者o+w 777
+chmod -R o+rw /***/cfg 
+
+
+
+
+4.确保php打开了下面的模块  
+==============================================
+php_fileinfo.dll 文件信息
+php_gd2.dll 生成缩略图使用
+php-pdo-mysql 必须
+php-mbstring 必须 字符串处理 mb_convert_encoding 
+php_pdo_mysql 连接mysql 
+
+linux下需打开********************************
+php-mysql 必须安装
+mbstring 
+mbstring.encoding_translation = On
+
+
+
+
+5.管理后台
+/bask
+管理员：super 密码：topnt
+管理员：admin 密码: topnt
+登录后请修改超级管理员密码 
+
+前端测试用户名 test-test 0……n 
+学生stu-stu 0……n
+教师tech-tech 0……n
+家长par-par 0……
+ 

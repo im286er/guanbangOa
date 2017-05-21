@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>海安中学学生成长系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="dns-prefetch" href="#" id="static"/>
+	<link rel="stylesheet" href="css/lib/weui.min.css">
+	<link rel="stylesheet" href="css/ionic.min.css">
+	<link rel="stylesheet" href="css/css.css">
+	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+	<script src="/ppf/js/jquery-2.min.js"></script> 
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+	<style>
+	
+	</style>
+</head>
+<body>
+<header><h1>海安中学学生成长系统</h1><a href="#" target=""></a></header>
+<section class="block_home_slider">
+	<div id="home_slider" class="flexslider">
+		<ul class="slides">
+			<!-- START wx_top_pic -->
+				<li>
+				<div class="slide">
+					<img src="{pic}" alt="" />
+					<div class="caption">
+						<p class="title">{title}</p>
+					</div>
+				</div>
+			</li>
+			<!-- END wx_top_pic -->
+		</ul>
+	</div>
+</section>
+<div class="clearfix"></div>
+
+<div class="clearfix"></div>
+<section class="fl wout mt10">
+	<div class="hots">	
+		<div class="pad5">
+		<div class="weui-cells__title">消息列表</div>
+		<div class="row">
+		  <div class="col col20 bd_l">标题</div>
+		  <div class="col col20 bd_l">内容描述</div>
+		  <div class="col col20 bd_l">记录时间</div>
+		  <div class="col col20 bd_l">审核状态</div>
+		  <div class="col col20 bd_r">消息状态</div>
+		</div>
+		<!-- START list -->
+		<div class="row">
+		  <div class="col col20 bd_l_ntp">{menuname1}-{menuname2}</div>
+		  <div class="col col20 bd_l_ntp">模块：{menuname1}-{menuname2}<br/>类型：{subject}<br/>内容：{content}</div>
+		  <div class="col col20 bd_l_ntp">{stime}</div>
+		  <div class="col col20 bd_l_ntp" id="flag_checked">{flag}</div>
+		  <div class="col col20 bd_r_ntp"><f_red v1="{is_read}"></f_red></div>
+		</div>
+		<!-- END list -->
+		<div>
+		<ul class="pagination wx_center">
+					{page}
+		</ul>
+		</div>
+		</div>
+	</div>
+	<script>
+$().ready(function(){
+	$("f_red").each(function(a,b){
+     if($(b).attr("v1")=="1")
+	 {
+		$(b).text("已读");
+	 }else{
+		$(b).text("未读");
+	 }
+    });
+		
+});
+</script>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<a href="?t=index" class="on"><i class="iconfont">&#xe606;</i>首页</a>
+	<!--<a href="?t=group_list"><i class="iconfont">&#xe601;</i>成长</a>-->
+	<a href="?t=u_user"><i class="iconfont">&#xe60a;</i>我的</a>
+</nav>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#home_slider').flexslider({
+		animation : 'slide',
+		controlNav : true,
+		directionNav : true,
+		animationLoop : true,
+		slideshow : false,
+		useCSS : false
+	});
+});
+</script>
+</body>
+</html>

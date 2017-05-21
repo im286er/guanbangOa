@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+  <h3>照片管理<small></small>
+  <div class="btn-group pull-right"> 
+    <a href="../?t=cls_photo_add&c={c}&id={id}" class="btn btn-primary"  target="_blank">+上传照片</a> 
+</div> </h3> 
+</div>
+ 
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr> 
+<th></th>   
+<th>名称</th>
+<th>姓名</th>  
+<th>状态</th> 
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr id="row{id}">
+<td><a href="/upds/class/album/{cid}/{aid}/{pic}" target=_blank>
+<img src="/upds/class/album/{cid}/{aid}/t_{pic}" width="100" /></a></td>
+<td>{ofname}<br/> 
+<code>大小：<script>show_SZ('{size}');</script></code></td>
+<td>{truename}</td>
+<td><script>show_TS('{timestamp}');</script></td> 
+<td>    
+
+<a onclick="setcover({tpl:'setcover',aid:'{aid}',v:'{pic}'})">设为封面</a> 
+
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}',callback:'delcall'})"></a>  
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+ 
+{foot} 
+</body> 
+</html>  
+
+<script type="text/javascript"> 
+l_tpl="cls_photo";  
+function setcover(jd){
+$.post("./srv/sdo.php",jd,function (d) { 
+    alert(d);          
+}); 
+} 
+</script>

@@ -1,0 +1,44 @@
+<?php
+define('LR_DEBUG', {debug});
+define('LR_NAME', '{name}');    
+define('LR_VER', 'ver2.5_1427版');
+define('LR_MAIL', 'webabc@topnt.cn');
+define('LR_TEL', '4000-025-085');      
+define('BASE_DNS', '{basedns}');
+define('GOTO_URL', '{gotourl}');
+
+#local define   
+define('INTEGRAL_NUM',5);//积分基数
+define('GOLD_NAME','财富豆');//金币名称  
+
+#sync
+define('LR_SID', '{sid}');
+define('LR_SNAME', '{sname}'); 
+define('BASE_URL', '{baseurl}');
+define('BASE_KEY', '{basekey}'); 
+
+#global
+define('DIR_ROOT', $_SERVER['DOCUMENT_ROOT']); 
+define('REG_OFF', '{regoff}');    
+define('IP_ERR_CHK',{ipchk}); 
+define('IP_ERR_NUM','{ipnum}');
+define('RESET_PASS_URI','{reseturl}');
+define('CACHE_PAGE',{cache});
+define('CACHE_TIME',3600); 
+                                                           
+#database
+define('DB_DATABASE', 'mysql'); 
+define('DB_HOST', '');   
+define('DB_PORT', 3306);  
+define('DB_USER', 'root');	
+define('DB_PWD', '');	
+define('DB_NAME', 'topnt2016');	
+define('DB_CHARSET', 'utf8');
+define('DATA_PRE', 'a');	
+  
+#pan
+define('PAN_URL', '{panurl}');    
+#update dir
+define('UP_FACE', '/upd/face/');
+define('UP_PIC_DIR', '/upds/pic/');  
+define('UP_FILE_DIR', '/upds/');  

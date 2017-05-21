@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>我的备课-{gtitle}</title> 
+{cssjs} 
+<script src="js/local.js" type="text/javascript"></script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+
+<div class="page-header">
+   <h3>{title}  <small><script>document.write(utctime('{timestamp}'));</script></code></small>  
+   <div class="btn-group pull-right">     
+  <a href="?t=preparelesson" class="btn btn-primary">返回</a></div>  </h3>
+</div> 
+
+
+<div class="panel panel-default">
+ <div class="panel-heading">
+    <h3 class="panel-title"> 教材：<label data-edition="{edition}"></label><small></small></h3>
+   </div>  
+<div class="panel-heading">
+    <h3 class="panel-title">学科：<label data-subject="{subject}"></label> 学段：<label data-period="{period}"></label> 年级：<label data-grade="{grade}"></label> </h3>
+   </div> 
+<div class="panel-heading">
+    <h3 class="panel-title">上下册：<label data-volume="{volume}"></label> 第<label data-chapter="{chapter}"></label>(章/节) </h3>
+   </div>         
+<div class="panel-body"> 
+ {des}
+</div>  
+</div>
+{foot}
+</body>
+<script type="text/javascript">   
+$(function(){ 
+  vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"beike",col:"see"}); 
+});
+$(function () {  
+     
+ }); 
+  
+</script>
+</html>
+          
+<script type="text/javascript">   
+var subject,period,grade,edition,volume,chapter;
+$(function(){      
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+ $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+   $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });
+  $.getJSON("/data/textbook_volume.json.txt", function (data) {  
+      volume=data;
+      $("label[data-volume]").each(function (a, b) {
+        $(this).text(volume[$(this).data("volume")]);
+      });
+  });
+  $.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+      chapter=data;
+      $("label[data-chapter]").each(function (a, b) {
+        $(this).text(chapter[$(this).data("chapter")]);
+      });
+  }); 
+});
+</script> 

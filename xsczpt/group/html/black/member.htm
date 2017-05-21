@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组成员-{gtitle}</title>
+
+{cssjs}    
+<script type="text/javascript">
+
+function getHeight() { 
+	if (document.getElementById("main-left").offsetHeight>= document.getElementById("main-right").offsetHeight){
+		document.getElementById("main-right").style.height=document.getElementById("main-left").offsetHeight + "px";
+	}
+	else{
+		document.getElementById("main-left").style.height=document.getElementById("main-right").offsetHeight + "px";
+	}	
+}
+window.onload = function() {
+	getHeight();
+}
+
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>    
+ <style type="text/css">
+.col-sm-3{ width:49%}
+ .btn-primary{color:#fff;background-color:#fbbf2e;border-color:#fbbf2e}
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary{color:#fff;background-color:#df9e04;border-color:#df9e04}
+</style>
+</head>
+<body>
+{top}
+
+<div class="main lf">
+  <div class="mainpage" id="main-left">
+    <div class="mp-left lf">
+      <div class="group-name lf">
+        <ul>
+          <li><img src="/upds/group/logo/{g}.jpg"   onerror="this.src='/error/logo.jpg';" ></li>
+          <li class="pdlf20">{name} <br>
+            <span>{slogan}</span></li>
+        </ul>
+      </div>
+      <div class="main-body lf">
+           <div class="page-header"><h3>
+群成员：<b>{nums}</b> 
+ 
+</h3>
+    
+</div>
+ 
+ 
+<div class="row">
+<!-- START list -->     
+<div class="col-sm-3" style="">
+<div class="col-sm-4"><div class="thumbnail">
+<a href="/zone?id={uid}" target="_blank"><img src="/upd/face/{uid}.jpg" style="width:48px;height:48px;" onerror="this.src='/error/face.jpg';" /></a></div></div>
+<div class="caption col-sm-8">
+<h5><a href="/zone?id={uid}" target="_blank">{nick}</a> <small><script>document.write(arr[{isman}]);</script></small></h5>
+<p>{truename}</p>
+<p> </p>    
+</div>
+</div> 
+<!-- END list -->     
+</div>
+
+      </div>
+      <div class="cl"></div>
+    </div>
+    <div class="mp-right lf"  id="main-right">
+     <div class="right-text lf">
+    <ul>
+    
+    <li class="title lf">{name}<br>
+
+    <span> {des}</span>
+     </li>
+     <li  class="sub-tilte lf">{slogan}</li>
+     
+     <li class="detail lf">人数：{nums}<br>
+管理员：{mannums}<br>
+单位：{schools}</li>
+    {head}  
+   
+    <div class="cl"></div>
+    </div>
+    <div class="cl"></div>
+  </div>
+  <div class="cl"></div>
+  {foot} 
+</div>
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">    
+ $(function () {  
+  }); 
+</script>

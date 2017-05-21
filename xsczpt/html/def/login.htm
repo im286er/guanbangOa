@@ -1,0 +1,104 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>登录-{gtitle}</title>
+{meta} 
+</head>
+<body>
+{top}
+<div class="container">  
+
+<div class="panel panel-default" style="margin-top:20px;">
+   <div class="panel-heading">
+      <h3 class="panel-title"><b>登录</b> </h3>
+   </div>
+   <div class="panel-body">   
+
+   <div class="col-sm-8" >
+   <div id="cr" class="carousel slide" style="width:700px;height:400px;">
+   <!-- 轮播（Carousel）指标 -->
+   <ol class="carousel-indicators" id="cr1">
+<li data-target="#cr"  class="active" data-slide-to="1"></li><li data-target="#cr" data-slide-to="1"></li><li data-target="#cr" data-slide-to="2"></li><li data-target="#cr" data-slide-to="3"></li>     
+   </ol>   
+   <!-- 轮播（Carousel）项目 active-->
+   <div class="carousel-inner" id="cr2">     
+<div class="item active"><img src="/img/t/lg1.jpg"></div><div class="item"><img src="img/t/lg2.jpg"></div>
+<div class="item"><img src="img/t/lg3.jpg"></div><div class="item"><img src="img/t/lg4.jpg"></div>
+   </div>
+   <!-- 轮播（Carousel）导航 -->
+   <a class="carousel-control left" href="#cr" data-slide="prev">&lsaquo;&lsaquo;</a>
+   <a class="carousel-control right" href="#cr" data-slide="next">&rsaquo;&rsaquo;</a>
+</div>
+
+   </div>
+  <div class="col-sm-4" style="border-left:1px solid #ccc;">
+  <h2>用户登录</h2>
+  <form role="form">    
+   <div class="form-group">
+      <label for="name"></label>
+      <input type="text" class="form-control" id="usr"  placeholder="用户名/邮箱/手机号" style="width:80%;">
+   </div>
+   <div class="form-group">     
+      <input type="password" class="form-control" id="pwd"   placeholder="登录密码"  style="width:80%;" onkeydown="if(event.keyCode==13) {dosome();}">
+   </div> 
+
+   <div class="form-group">
+     <div class="col-sm-10">         
+      <button type="button" class="btn btn-success" id="btn"> 立即登录 </button>   
+      <button type="reset" class="btn btn-primary" > 重置 </button>      
+     </div>
+    </div>
+       <div class="form-group">
+   <p class="help-block col-sm-10"><a class="" href="./?t=reg">注册帐号</a>
+   <a href="./?t=forget" style="float:right;">忘记密码？</a>  </p> 
+   </div> 
+    <div class="form-group">         
+      <p class="help-block col-sm-10"></p>
+   </div> 
+</form>
+  
+  </div>
+   
+   </div>
+</div>
+
+  
+</div>
+{foot}
+</body>
+</html>
+<script>  
+var tourl="{tourl}";
+
+$(function () {
+    $("#cr").carousel('cycle');
+    $("#btn").bind("click",function(){dosome()});
+ });  
+function dosome(){
+   if($("#usr").val()=="帐号/手机/邮箱"){alert("帐号不能为空");return false;}
+    if($("#pwd").val()==""){alert("密码不能为空");return false;} 
+    $.post("./srv/plg.php?", { u: $("#usr").val(), p: $("#pwd").val(),s:($("#sav").is(":checked")?"1" :"0") }, function (d, e) {
+      d1=JSON.parse(d);
+       if (d1.ret=="ok") {             
+          if(tourl==""){
+            switch(d1.idtype){
+              case "1":location.href = "/stu";break;
+              case "2":case "4":location.href = "/tech";break;
+              case "3":location.href = "/guardian";break;
+            }            
+          }
+          else
+            location.href = tourl;
+        }
+        else if(d1.ret=="err"){
+           alert(d1.msg);
+        }
+    	/*	else if(d.indexOf("goto")>-1){ 			
+    			location.href = "http://"+d.substr(d.indexOf("goto")+4);
+    		} */
+        else{
+            alert(d);
+        }      
+    });
+}
+</script>

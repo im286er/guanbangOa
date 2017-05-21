@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:460px;
+}
+</style>
+
+</head>
+<body>
+<header><a href="?t=admin_index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>技能素质统计</h1></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			  <div class="weui-cells__title" style="display:none;">选择</div>
+			     <form action="./?t=course_all_statistics" method="post" id="frm_szkz" style="display:none;">
+			  <div class="weui-cells">
+			 <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">学期：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select name="tyear" id="tyear" class="weui-select">
+					</select>
+                </div>
+            </div>
+		 </div>
+		 <div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+        </div>
+		</form>
+		<div id="frm_show" style="width:100%;text-align:center;font-size:9px;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow"> 
+		<table width="2000px" border="0" class="tb_tp" cellpadding="0" cellspacing="0">
+				<tbody id="class_show"></tbody>
+		</table>
+		
+		<div class="tb_flow" id="wrapper">
+				<table width="800px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+				<tr class="tabtitle" height="26">
+					 <td width="5%" class="tb_td tb_txt_bgc">序号</td>
+					 <td width="9%" class="tb_td tb_txt_bgc">班级</td>
+					<td width="4%" class="tb_td tb_txt_bgc">人数</td>
+					 <!-- START list -->  
+					<td width="8%" class="tb_td tb_txt_bgc">{course_name}</td>
+					<!-- END list --> 
+				</tr>
+				{str_total}
+			</table>
+		</div>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+		<ul class="pagination wx_center">
+					{page}
+		</ul>
+		</div>
+		
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=admin_index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=admin_user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	$("#wrapper").height($(document.body).height()-220);
+	myScroll = new iScroll('wrapper',{
+		momentum:false,
+		onScrollMove:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		},
+		onScrollEnd:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		}
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function slide(){
+	$("#frm_show").hide();
+	$("#frm_szkz").fadeIn();
+}
+
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#tyear",JSON.parse(d),"id","term_name","year"); $("#tyear").prepend("<option selected value='0'>请选择学期</option>");
+		$('#tyear').val('{tyear}');     
+	});
+	
+	$("#showTooltips").click(function(){
+		$("#frm_szkz").submit();
+	});
+});
+</script>
+</body>
+</html>

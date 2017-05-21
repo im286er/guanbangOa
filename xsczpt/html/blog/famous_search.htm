@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">   
+<link rel="stylesheet" type="text/css" href="css/vircom.css">
+<title>工作室-{gtitle}</title>
+{meta}
+<script type="text/javascript" src="/html/blog/js/plat_common.js"></script>
+</head>
+<body>
+<!--顶部-->
+{top}
+<!--logo-->
+{famous_logo}
+<!--icon-->
+{menu}
+<!--li-->
+{icon_list}
+
+
+<div class="wrap">
+	<div class="main">
+		<div class="sear_tit mt40">
+			<h2 style="font-size:1.5em;">热门工作室</h2>
+      <select id="addr" name="addr" class="select-wrapper sea_show">
+        <option value=0>地区</option>
+			</select>
+			<select id="sch" name="school" class="select-wrapper sea_show">
+        <option value=0 >学校</option>
+			</select>
+			<div class="search_r" style="width: 615px;">
+					<input class="keyword_s search_text fl" id="so" type="text" name="keyword" placeholder="请输入名称" style="padding-right:65px;">
+					<input type="button" align="absmiddle" value="搜索" class="search_button" id="btn">
+		  </div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<div id="list"> 
+			<ul class="qjf_teachlist clearfix">
+        <!-- START list -->
+				<li class="">
+					<div class="pic">
+						<a href="/famous/?f={id}" target="_blank">
+							<img src="/upds/famous/logo/{id}.jpg" width="97" height="97" onerror="this.src='/error/logo.jpg';">
+						</a>
+					</div>
+					<div class="text">
+						<a class="tit" href="/famous/?f={id}" target="_blank" style="margin-right: 21px;line-height: 25px;font-size: 14px;">{name}</a>
+						<p>口号：{slogan}</p>
+            <p class="intro">时间：{timestamp}</p>
+					</div>
+				</li>
+        <!-- END list -->
+			</ul>
+ </div>
+	</div>
+  <div class="tc">
+     <ul class="pagination ">
+			{page}
+     </ul>
+	</div>
+</div>
+{foot}
+<script type="text/javascript">
+(function(){
+  if(queryStr("sc")) var sc=queryStr("sc");else var sc=0;
+  if(queryStr("a")) var a=queryStr("a");else var a=0;
+    
+  $.get("/data/two.php?t=sys_addr&f=txt",function (d) {$("#addr").html("<option value=0 >地区</option>");$("#addr").append(d);$("#addr").val(a);getsch();});//txt类型/json类型
+  $("#addr").change(function(){
+    $.get("/data?t=school&f=txt&pn=addr&pv="+$("#addr").val(), function(d){$("#sch").html("<option value=0 >学校</option>");$("#sch").append(d);});
+  });
+  
+  function getsch(){
+      $.get("/data?t=school&f=txt&pn=addr&pv="+$("#addr").val(), function(d){$("#sch").html("<option value=0 >学校</option>");$("#sch").append(d);$("#sch").val(sc);}); 
+  }
+
+  if(queryStr("so")!="") $("#so").val("{so}"); 
+  $("#btn").bind("click",function(){ 
+    var sc = $("#sch").val();
+    var a = $("#addr").val();
+    //if($("#so").val()==""){alert("请输入一个名称");return;}
+    location.href="./?t=famous_search&sc="+sc+"&a="+a+"&so="+$("#so").val();    
+  });      
+})();
+//搜索下拉框
+$(function(){
+	/*$('select').selectlist({
+		zIndex: 10,
+		width: 120,
+		height: 25
+	});*/		
+});
+</script> 
+</body>
+</html>

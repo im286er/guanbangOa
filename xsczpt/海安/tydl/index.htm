@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="zh_CN">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" /><!--禁止兼容性视图-->
+
+<title>{name} - {gtitle}</title> 
+{cssjs} 
+<link rel="stylesheet" href="./html/ktsx/css/class.css" />
+<script src="./html/ktsx/js/jquery1.42.min.js" type="text/javascript"></script>
+<script src="./html/ktsx/js/jquery-1.4a2.min.js" type="text/javascript"></script>
+<script src="./html/ktsx/js/jquery.KinSlideshow-1.1.js" type="text/javascript"></script>
+<script type="text/javascript" src="./html/ktsx/js/change.js" ></script>
+<script type="text/javascript" src="./html/ktsx/js/jquery.SuperSlide.2.1.1.js"></script>
+<!--[if lte IE 8]> 
+<script type="text/javascript" src="./html/def/js/DOMAssistantCompressed-2.7.4.js"></script> 
+<script type="text/javascript" src="./html/def/js/ie-css3.js" ></script>
+<![endif]--> 
+<style type="text/css">
+.KinSlideshow_titleBar h2{
+line-height:23px;
+}
+</style>
+<script type="text/javascript">
+$(function(){
+	$("#KinSlideshow").KinSlideshow({
+			moveStyle:"left",
+			titleBar:{titleBar_height:30,titleBar_bgColor:"#a7070d",titleBar_alpha:0.7},
+			titleFont:{TitleFont_size:14,TitleFont_color:"#FFFFFF",TitleFont_weight:"normal"},
+			btn:{btn_bgColor:"#FFFFFF",btn_bgHoverColor:"#450104",btn_fontColor:"#000000",btn_fontHoverColor:"#FFFFFF",btn_borderColor:"#450104",btn_borderHoverColor:"#1188c0",btn_borderWidth:1}
+	});
+})
+</script>
+<script>
+	$(function(){
+		$(".num li:last").css("border","none");
+	});
+</script>
+<SCRIPT LANGUAGE="JavaScript">
+//屏蔽可忽略的js脚本错误
+function killErr(){
+	return true;
+}
+window.onerror=killErr;
+</SCRIPT>
+</head>   
+	<body ondblclick="">
+	{top}
+	{head}
+		<div class="contain">
+			<div class="con_one">
+				<div class="con_one_lf">
+					<div class="num">
+						<ul>
+						<!-- START jxrs -->
+							<li><span>{class}</span><p>班级</p></li>
+							<li><span>{tech}</span><p>教师</p></li>
+							<li><span>{stu}</span><p>学生</p></li>
+							<div class="clear"></div>
+						<!-- END jxrs -->
+						</ul>	
+					</div>
+					<div class="home_news">
+						<div class="modHead">
+							<h4>最新更新</h4>
+							<a href="./?t=lists&s={s}" class="MORE">more></a>
+						</div>	
+						<ul class="xw_list">
+						<!-- START list --> 
+							<li ><a href="/school/?s={s}&t=info&id={id}" limit="15">{title}</a></li>
+						<!-- END list -->
+						</ul>
+					</div>
+				</div>
+				<div class="con_one_cen" id="KinSlideshow" style="visibility:hidden;">
+				<!-- START slide -->
+					<a><img src="/upds/school/slide/{pic}" onerror="this.src='/error/logo.jpg';" alt="{name}" width="640" height="375" /></a>
+				<!-- END slide -->	
+				</div>
+				<div class="con_one_ri">
+					<div class="visitor">
+						<div class="modHead">
+							<h4>最近加入</h4>
+							<!-- <a href="#" class="MORE">more></a> -->
+						</div>
+						<div class="visitor_list">
+							<ul>
+							<!-- START zjjr --> 
+								<li><a href="/zone/?id={id}" target="_blank"><div><img onerror="this.src='/error/logo.jpg';" src="/upd/face/{id}.jpg"></div><p limit="6">{truename}</p></a></li>
+							<!-- END zjjr --> 
+								<div class="clear"></div>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="con_two">
+				<div class="con_two_lf">
+					<div class="aodHead">
+						<ul>
+							<li id="a1" class="b1" onmouseover="document.getElementById('aodmore').href='/?t=teacher_search&sc={s}';show(1);"><span>教师空间</span></li>
+							<li id="a2" class="b2" onmouseover="document.getElementById('aodmore').href='/?t=student_search&sc={s}';show(2);"><span>学生空间</span></li>
+							<div class="clear"></div>
+						</ul>	
+							<a href="/?t=teacher_search&sc={s}" class="MORE" target="_blank" id="aodmore">more></a>
+					</div>
+						<div class="con_two_lf_Bt" id="1" style="display:block;">
+						  <ul>
+						  <!-- START jskj --> 
+							<li><a href="/zone/?id={id}" target="_blank"><div><img onerror="this.src='/error/logo.jpg';" src="/upd/face/{id}.jpg"></div><p limit="6">{truename}</p></a></li>
+						  <!-- END jskj --> 
+							<div class="clear"></div>
+						  </ul>
+					</div>	
+					<div class="con_two_lf_Bt" id="2" style="display: none;">
+						  <ul>
+						  <!-- START xskj --> 
+							<li><a href="/zone/?id={id}" target="_blank"><div><img onerror="this.src='/error/logo.jpg';" src="/upd/face/{id}.jpg"></div><p limit="6">{truename}</p></a></li>
+						  <!-- END xskj --> 
+							<div class="clear"></div>
+						  </ul>
+					</div>	
+				</div>
+				<div class="con_two_ri">
+					<div class="tj">
+						<div class="modHead">
+							<h4>班级推荐</h4>
+							<a href="/?t=class_search" class="MORE" target="_blank">more></a>
+						</div>
+						<div class="any">
+						<!-- START bjtj --> 
+							<div class="P2_all">
+								<div class="P2_pic"><a href="/class/?c={id}" target="_blank"><img src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';"></a></div>
+								<div class="P2_write">
+									<ul>
+										<li><a href="/class/?c={id}" limit="14" target="_blank">{name}</a></li>
+										<li class="gray" limit="10">{slogan}</li>
+									</ul>
+									
+								</div>
+								<div class="clear"></div>
+							</div>
+						<!-- END bjtj --> 
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="con_three">
+			<!-- START cate -->
+				<div class="con_three_li">
+					<div class="log">
+						<div class="eodHead">
+							<h4>{name}</h4>
+							<a href="/school/?t=list&s={s}&cid={id}" class="MORE">more></a>
+						</div>	
+						<div class="log_a">
+						<ul>
+						<!-- START rp -->
+							<li><span><script>document.write(utctime('{timestamp}'));</script></span><a href="/school/?t=info&s={s}&id={id}" limit="14">{title}</a></li>
+						<!-- END rp -->
+						</ul>
+						</div>
+					</div>
+				</div>
+			<!-- END cate -->
+				<div class="clear"></div>
+			</div>
+			<div class="con_four">
+				<div class="podHead">
+								<h4>校园一角</h4>
+								<!--<a href="#" class="MORE">more></a>-->		
+						</div>
+						<div class="con_four_Bt">
+						  <ul>
+						  <!-- START topic -->
+							<li><a href="javascript:void(0)"><img src="/upds/school/topic/{pic}"></a></li>
+						  <!-- END topic -->
+						  </ul> 
+						  <div class="clear"></div>
+						</div>	
+						<script type="text/javascript">
+		                jQuery(".con_four").slide({mainCell:".con_four_Bt ul",autoPlay:true,effect:"leftMarquee",vis:6,interTime:30});
+						</script>
+			</div>
+		</div>	
+		{foot}
+	</body>
+	<script>
+	$(function(){
+	    var isbid="{isbid}";
+        if(isbid=='0'){
+			$.getJSON("http://uc.jssns.cn/api/jsonp/?callback=?",function (data){
+
+				if (data["ret"] == '1') {
+				  $.post("/srv/plg_tl.php?t=ologin", data, function (d, e) {
+					   if (d.indexOf("ok") > -1) {
+						   location.reload();
+					   }
+					});          
+				}
+			
+			})
+		}
+	})
+	</script>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>学科文章-{gtitle}</title>
+{cssjs}
+<link type="text/css" rel="Stylesheet" href="html/{tplno}/css/sub_list.css">
+</head>
+<body>
+{top}
+{head}
+<div class="main-content su"> <!-- class="container" -->
+	<div class="news">
+		<div class="col-sm-3">
+			<ul class="list-group">
+			<li class="list-group-item" style="background-color:#4ec0c5;"><a href="?t=articles" style="color:white;"><h4>全部分类</h4></a></li>
+			<!-- START cate -->
+			<li class="list-group-item"  {chs_typeid{id}}><a href="./?t=articles&typeid={id}&per={pid}&s={sid}" {chs_typeid{id}}><h5>{name}</a></h5></li>
+			<!-- END cate --> 
+			</ul>   
+		</div>
+		<div class="col-xs-9">
+			<div class="typename">{typename}</div>
+			<table class="table table-striped"> 
+				<tbody>
+					<!-- START list -->
+					<tr>
+						<td>
+							<h4>
+								<a href="./?t=article&id={id}&per={period}&s={subject}" target="_blank" style="font-size:14px;">
+									<script>document.write("{original}" == "0" ? "[转载]" : "[原创]");</script>
+									{title}
+								</a>
+							</h4>
+						</td>
+						<td align="right">
+							<h5>
+								<span style="font-size:13px;">
+								浏览：{visit} | 评论：{comms} | <script>document.write("{postdate}".substr(5,5));</script> | <a href="/zone?id={uid}" target="_blank" style="color:#1db177;">{nickname}</a> | <a href="/school?s={schoolid}" target="_blank" style="color:#1db177;">{schoolname}</a>
+								</span>
+							</h5>
+						</td>
+					</tr>
+					<!-- END list -->           
+				</tbody>
+			</table>
+			<ul class="pagination pull-right">
+			{page}
+			</ul> 
+		</div>
+	</div>
+</div>
+<div style="clear:both;"></div>
+{footer} 
+</body>
+</html>

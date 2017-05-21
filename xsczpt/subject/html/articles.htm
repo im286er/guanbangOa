@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>学科文章-{gtitle}</title>
+{cssjs}
+<link rel="stylesheet" type="text/css" href="./css/subject.css">
+</head>
+<body>
+{top}
+<div class="container">
+{head}         
+	<div class="col-sm-2">
+		<ul class="list-group" style="margin-top:20px;">
+		<li class="list-group-item active"><h4>全部分类</h4> </li>
+		<!-- START cate -->
+		<li class="list-group-item"><a href="./?t=articles&s={s}&sid={subid}&typeid={id}" style="font-size:16px;">{name}</a></li>
+		<!-- END cate --> 
+		</ul>   
+	</div>
+	<div class="col-xs-10 ">      
+		<h3>{typename}</h3>
+		<table class="table table-striped"> 
+			<tbody>
+				<!-- START list -->
+				<tr>
+					<td></td>
+					<td>
+						<h4>
+							<script>document.write("{original}" == "0" ? "[转载]" : "[原创]");</script>
+							<a href="./?t=article&s={s}&sid={subid}&id={id}" target="_blank">{title}</a>
+						</h4>
+						<small class=""></small>
+					</td>
+					<td align="right" style="font-size:13px;">
+						浏览：{visit} | 评论：{comms} | {shortdate} | <a href="/zone?id={uid}" target="_blank" style="color:#1db177;">{nickname}</a>
+					</td>
+				</tr>
+				<!-- END list -->           
+			</tbody>
+		</table>
+		<ul class="pagination pull-right">
+		{page}
+		</ul> 
+	</div>
+</div>
+
+{foot} 
+</body>
+</html>

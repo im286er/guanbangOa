@@ -1,0 +1,36 @@
+
+ a{
+	color:#555;
+	cursor:pointer;
+ }
+.panel-body{
+	padding:10px 15px 0px 10px;
+}
+.container .navbar a:hover{
+	background-color: #333333 !important;
+	border-color: #204d74 !important;
+}
+.img-circle{
+	margin-right:10px;
+}
+.img-circle:hover{
+	-webkit-animation: imgRotate 2s alternate 1; 
+}
+.rep{
+font-size: 90%;
+color: #c7254e;
+background-color: #f9f2f4;
+border-radius: 4px;
+}
+.affix{
+top:0 !important;
+width:350px;
+}
+@-webkit-keyframes imgRotate { 
+0% { 
+-moz-transform:rotate(0deg); -webkit-transform:rotate(0deg); -o-transform:rotate(0deg); transform:rotate(0deg);
+    } 
+100% { 
+-moz-transform:rotate(360deg); -webkit-transform:rotate(360deg); -o-transform:rotate(360deg); transform:rotate(360deg);
+    } 
+} 

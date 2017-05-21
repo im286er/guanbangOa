@@ -1,0 +1,171 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人帐号中心-{gtitle}</title>
+{cssjs}     
+<script>
+var arr=new Array('保密','男','女'); 
+</script>           
+</head>
+<body>
+{top}
+<div class="container">    
+
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>个人中心 <small>基本信息</small>  
+  <div class="btn-group pull-right" >   
+    <a href="./?t=info_mod" class="btn btn-primary" id="btn"> 修改 </a>   
+                    
+</div> 
+   </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">UID：</label>
+    <div class="col-sm-10"><p class="form-control-static">{id} </p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">用户名：</label>
+    <div class="col-sm-10"><p class="form-control-static">{username} </p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">邮箱：</label>
+    <div class="col-sm-10"><p class="form-control-static">{email}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">手机：</label>
+    <div class="col-sm-10"><p class="form-control-static">{mobile}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">昵称：</label>
+    <div class="col-sm-10"><p class="form-control-static">{nick}</p>
+    <p class="help-block">签名：{pre}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">姓名：</label>
+    <div class="col-sm-10"><p class="form-control-static">{truename}</p>
+    <p class="help-block">英文名：{ename}</p>
+    <p class="help-block">性别：<script>document.write(arr['{sex}']);</script> </p>
+    <p class="help-block">生日：{birthday}</p>
+    <p class="help-block">身份证号：{cardno}</p>
+    </div>
+  </div>   
+    <div class="form-group">
+      <label class="col-sm-2 control-label">头像：</label>
+      <div class="col-sm-10">
+      <div class="col-sm-2">
+       <div class="thumbnail"><img src="{face}" id="clogo" width="72" onerror="this.src='/error/face.jpg';" /></div>
+       </div>  
+        <button type="button" class="btn btn-warning"  id="btn_upd">上传头像</button>
+        
+       </div>
+   </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">单位：</label>
+    <div class="col-sm-3"><p class="form-control-static" id="schools">{schools}</p>
+    <p class="help-block" id="addrs">地区：{addrs}</p>      
+        <p class="help-block">入学（年）：{intoyear}</p>
+    </div>
+     <div class="col-sm-2">          
+        <a href="{zone_url}/work.php?t=school" class="btn btn-warning">修改</a>               
+       </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学段年级：</label>
+    <div class="col-sm-10"><p class="form-control-static"><c id="periods"></c>/<c id="grades"></c></p></div>
+  </div> 
+  <div class="form-group">
+    <label class="col-sm-2 control-label">身份：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="idtypes">{idtypes}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学科：</label>
+    <div class="col-sm-10"><p class="form-control-static" id="subjects">{subjects}</p></div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">最后登录：</label>
+    <div class="col-sm-10"><p class="form-control-static"><script>document.write(utctime('{lasttime}'));</script> </p>
+    <p class="help-block">最后ip:{lastip} </p>
+    <p class="help-block">登录次数：{lgnums} </p>
+    <p class="help-block">地区：{addrs}</p>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">财富</label>
+    <div class="col-sm-10">
+    <p class="form-control-static">级别:{lvl} </p>      
+    <p class="help-block">积分：{integral}</p>
+    <p class="help-block">威望：{credit} </p>
+    <p class="help-block">{gold_name}：{gold}</p>
+    
+    </div>
+  </div>       
+</form>
+          
+</div>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+    $("#btn_upd").bind("click",function(){ $('#dlg1').modal('show'); }); 
+    $.get("/data/id.php?t=school&v={school}", function(d){$("#schools").text(d);});
+    $.get("/data/id.php?t=sys_addr&v={addr}&col=names", function(d){$("#addrs").text(d);});
+    //"地区："+
+     $.get("/data/id.php?t=sys_period&v={period}", function(d){$("#periods").text(d);});
+    $.get("/data/id.php?t=sys_grade&v={grade}", function(d){$("#grades").text(d);});
+     $.get("/data/id.php?t=sys_type&v={idtype}", function(d){$("#idtypes").text(d);});
+    $.get("/data/id.php?t=sys_subject&v={subject}", function(d){$("#subjects").text(d);});   
+ }); 	
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo").attr("src","/upd/face/{id}.jpg?"+Math.random());           
+         $('#dlg1').modal('hide'); 
+       }
+       else{
+         alert(d.des);
+       }        
+    }      
+}   	
+</script>    
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">上传头像</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/updp.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="{id}" style="display:none;"/>
+    <span class="help-block">(上传不大于200kb的.jpg图片 尺寸 120x120)</span>
+    </div>
+  </div> 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="$('#from2').submit(); ">提交更改</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>             
+         </div>
+      </div>
+   </div>
+</div>
+
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

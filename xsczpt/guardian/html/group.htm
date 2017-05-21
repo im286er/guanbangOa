@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组-{gtitle}</title>
+{cssjs}                                       
+<script>
+var arr1=new Array('','默认班级');
+var isman=new Array('','管理员','群主');
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>群组      <small></small> 
+      <div class="btn-group pull-right"> 
+        <a href="./?t=group_apply" class="btn btn-primary">加入群组</a>
+        <a href="./?t=group_new" class="btn btn-primary">+创建群组</a>
+        <a href="./?t=group_me" class="btn btn-primary">创建记录</a>
+      </div>
+   </h3>
+</div>
+
+ 
+
+<table  class="table  table-hover">
+<thead>
+<tr>
+<th>logo</th>
+<th>名称</th>
+<th>口号</th>
+<th>身份</th>
+<th>状态</th>
+<th>操作</th> 
+</tr>
+</thead> 
+<tbody>
+<!-- START list -->             
+<tr>
+<td><img id="logo{id}" width="40" src="/group/logo/{gid}.jpg" onerror="this.src='/error/logo.jpg';" />                   
+</td>
+<td><a href="/group?g={id}" target="_blank">{name}</a></td>
+<td>{slogan}</td>
+<td><script>document.write(isman[{isman}]);</script></td> 
+<td><state v="{gstate}"></state></td>
+<td>
+
+<a class="glyphicon glyphicon-minus" title="退出" onclick="delths('{id}')"></a>
+</td>   
+</tr>
+<!-- END list --> 
+</tbody>
+</table> 
+</div>
+</div>
+{foot}
+</body> 
+</html>
+
+
+
+<script type="text/javascript">  
+$(function(){
+  var arr=new Array("申请中","审核中","<i class='glyphicon glyphicon-ok-circle text-success'/>","申请注销","等待删除");
+  
+  $.getJSON("/data/state.json.txt", function (data) {   
+        for(i=0;i<5;i++)$("state[v='"+i+"']").html(arr[i]);      
+  });
+  
+  $.post("./srv/rdo.php", {tpl:"get_child_sch"}, function (d, e) {        
+       t=JSON.parse(d);
+       for(k=0;k<t.length;k++){
+          $("label[data-school='"+t[k].id+"']").text(t[k].name);
+       }
+  });
+}); 	
+function delths(v) {  
+   $.post("./srv/sdo.php?", {tpl:"cel_grp","id":v}, function (d, e) {                
+      
+      location.reload();          
+  }); 
+}  
+</script>

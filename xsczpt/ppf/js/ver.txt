@@ -1,0 +1,67 @@
+2.25
+fun添加isnulls
+
+2.24
+frtdo.js 添加callback
+
+2.2.3
+bskdo.js/frtdo.js 添加 kindEditor编辑器
+
+2.2.2
+添加bskdo的 readID callback功能
+
+2.2.1===============================
+修改fixbug
+
+
+cookies.min.js 独立使用的cook
+// Setting a cookie value
+Cookies.set('key', 'value'); 
+// Chaining sets together
+Cookies.set('key', 'value').set('hello', 'world'); 
+// Setting cookies with additional options
+Cookies.set('key', 'value', { domain: 'www.example.com', secure: true }); 
+// Setting cookies with expiration values
+Cookies.set('key', 'value', { expires: 600 }); // Expires in 10 minutes
+Cookies.set('key', 'value', { expires: '01/01/2012' });
+Cookies.set('key', 'value', { expires: new Date(2012, 0, 1) }); 
+// Using the alias
+Cookies('key', 'value', { secure: true });
+
+2.2====================
+引入md5……和html5 html5shiv
+JSON.parse
+JSON.stringify()
+
+日期时间操作
+var dt = new Date();
+//dt.setFullYear(2014); 
+//dt.setMonth(8);
+//dt.setDate(1);
+// var tomo= new Date((dt/1000+86400*1)*1000);        
+//dt.getFullYear(), dt.getMonth(), d.getDate(), dt.getHours()      dt.getDay()
+
+
+
+====2.1=============
+改变位置 /ppf/js
+jquery引用 1.x 改为1 2.x改为2
+
+
+--------2.0.4----------
+加入cookie
+
+--------2.0.3----------
+树形菜单改用ztree
+runtree函数不用
+select 添加select 为空时清值功能
+
+--------2.0.2----------
+1.添加runtree.js 为树形菜单三级
+2.rundo.js和runpage.js改为支持快速开发
+3.
+
+
+#############2.0.1
+1.rundo添加select 0为空的判断
+2.

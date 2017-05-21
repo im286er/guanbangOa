@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}</title>
+<meta charset="gbk">   
+{cssjs}
+</head>
+<body>
+{top}  
+<div class="container f_index_main">
+{head}
+	
+	<div class="fl_main">
+	
+<div class="fl_list">
+<div class="f_title">
+<span class="f_title_left">工作室动态</span>
+
+</div><!--title-->
+
+<div class="fl_news_list">
+<ul>
+<!-- START list --> 
+<li>  
+<a href="./?t=new&id={id}&f={fid}">{title}</a>
+<span><code><script>show_TS('{timestamp}');</script></code></span>
+</li>
+<!-- END list -->  
+</ul>
+<center>{page}</center>
+</div>
+</div>
+ 
+
+</div>
+<div class="f_sidebar">
+<div class="f_member">
+<div class="f_title">
+<span class="f_title_left">分类</span>
+<span class="f_title_right"></span>
+</div>
+
+<div class="f_m_container f_news_list">
+<ul>
+<!-- START cate -->
+<li> 
+<a href="./?t=news&f={fid}&c={id}">{name}</a>
+</li>
+<!-- END cate -->
+</ul>
+</div>
+
+
+</div>
+</div>
+</div>
+
+{foot}
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+{cssjs}
+<link href="/html/blog/css/home.css" rel="stylesheet" type="text/css">
+<link href="/html/blog/css/plat.css" rel="stylesheet" type="text/css">
+<link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon" />
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<link rel="stylesheet" href="/widget/font-awesome/css/font-awesome.min.css">   
+<script src="/ppf/js/jquery-1.min.js"></script>                    
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>   
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/cookies.min.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+<script src="/js/comm_login_bt.js" type="text/javascript"></script>
+<script src="/js/local.js" type="text/javascript"></script>
+<style>
+.form-control{
+    *padding:0
+}
+.login_input{
+    *margin-bottom:15px;
+}
+</style>
+</head>
+<body class="l_mbg" scroll="no">
+<div class="wrap l_bg" style="position:relative">
+	<div class="lm_nav">
+		<div class="login_content">
+			<form  role="form">
+				<div class="login_input">
+					<label>账号：</label>
+					<input type="text" class="form-control" id="usr"  placeholder="用户名/邮箱/手机号" style="width:74%;">
+				</div>
+				<div class="login_input">
+					<label>密码：</label>
+					<input type="password" class="form-control" id="pwd"   placeholder="登录密码"  style="width:74%;" onkeydown="if(event.keyCode==13) {dosome();}">
+				</div>
+				<div class="login_input">
+					<label>类型：</label>
+					<select name="user_type" id="user_type" class="select_con" style="width:74%;">
+						<option value="1">学生</option>
+						<option value="2">老师</option>
+						<option value="3">家长</option>
+						<option value="4">管理员</option>
+					</select>
+				</div>
+				<div class="login"><input value="登&nbsp;录" type="button" class="l_submit" id="btn"><button type="reset" class="l_submit reset">重&nbsp;置</button>
+				</div>
+				<div class="clear"></div>
+				<!-- <p class="help-block col-sm-10" style="width:91%;margin-top:15px;"><a style="float:left;" class="" href="./?t=reg">注册帐号</a> -->
+				<a href="./?t=forget" style="float:right;">忘记密码？</a>  </p>
+		</form>
+		</div>
+	</div>
+</div>
+<div class="l_foot" style="position:absolute">
+	<div class="fotnav">
+		<p style="line-height:66px;display:inline-block;"><img src="/html/blog/images/chart_log.jpg" style="float:left;"/>&nbsp;&nbsp;&nbsp;<span style="line-height:66px;display:inline-block;">Copyright 2015 topnt.cn All Rights Reserved. 南京冠邦, 版权所有。 苏ICP备08111765号-1. </span></p>
+		</div>
+</div>
+</body>
+</html>
+<script>
+change_p();
+$(window).resize(function(){
+    change_p();
+})  
+function change_p(){
+    var h1=$(".l_bg").height()+$(".l_foot").height();
+	var h2=$(window).height();
+	if(h1<=h2){
+		$(".l_foot").css("position","absolute");
+	}else{
+	    if(h1>h2+10){
+		    $(".l_mbg").attr("scroll","");
+		}else{
+		    $(".l_mbg").attr("scroll","no");
+		}
+		$(".l_foot").css("position","relative");
+	}
+}
+
+
+var tourl="{tourl}";
+
+$(function () {
+    $("#cr").carousel('cycle');
+    $("#btn").bind("click",function(){dosome()});
+ });  
+
+var logout_from_tl="{logout_from_tl}";
+if(logout_from_tl=='1'){
+    $.getJSON("{APP_API_URL}/exit/?cb=?");
+}
+$(function(){
+	var isbid="{isbid}";
+	if(isbid==''){
+		$.getJSON("{APP_API_URL}/?callback=?",function (data){
+			if (data["ret"] == '1') {
+			  $.post("/srv/plg_tl.php?t=ologin", data, function (d, e) {
+				   if (d.indexOf("ok") > -1) {
+					   location.href = tourl;
+				   }
+				});          
+			}
+		
+		})
+	}
+})
+
+ 
+
+function dosome(){
+   if($("#usr").val()=="帐号/手机/邮箱"){alert("帐号不能为空");return false;}
+    if($("#pwd").val()==""){alert("密码不能为空");return false;} 
+    $.post("./srv/plg.php?", { u: $("#usr").val(), p: $("#pwd").val(), t: $("#user_type").val(),s:($("#sav").is(":checked")?"1" :"0") }, function (d, e) {
+      //d1=JSON.parse(d);
+	 d1=eval("("+d+")");
+       if (d1.ret=="ok") {             
+          if(tourl==""){
+            switch(d1.idtype){
+              case "1":location.href = "/stu";break;
+              case "2":case "4":case "11":location.href = "/tech";break;
+              case "3":location.href = "/guardian";break;
+            }            
+          }
+          else
+            location.href = tourl;
+        }
+        else if(d1.ret=="err"){
+           alert(d1.msg);
+        }
+    	/*	else if(d.indexOf("goto")>-1){ 			
+    			location.href = "http://"+d.substr(d.indexOf("goto")+4);
+    		} */
+        else{
+            alert(d);
+        }      
+    });
+}
+</script>

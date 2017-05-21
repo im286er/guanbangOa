@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<div class="boxtitle2" style="text-align:center; margin-bottom:10px;">当前学期评价</div>
+			<div class="boxtitle" style="background:none; height:20px; line-height:20px; padding-left:0;">
+				<label><a href="./?t=zhsz_vote">自我评价</a></label> 
+				<label><a href="./?t=zhsz_vote_other">他人评价</a></label> 
+				<label><a href="./?t=zhsz_vote_master">班主任评价</a></label> 
+				<label class="current"><a href="./?t=zhsz_vote_parent">父母评价</a></label> 
+				<label><a href="./?t=zhsz_vote_history">评价历史</a></label> 
+			</div>
+			<div class="boxfooter">
+				&nbsp;&nbsp;
+			</div>
+			{str_votes}
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+
+});
+
+//评价表单提交验证
+function checkVote()
+{
+	var ids = $("#ids").val();
+	var idA = ids.split(',');
+	var len = idA.length
+	var iLen;
+	for(var i=0;i<len;i++){
+		iLen = $("input[name='item_"+idA[i]+"']:checked").size();
+		if(iLen==0){
+			alert("第"+(i+1)+"个评价项没有选择。");
+			return false;
+		}
+	}
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+</script> 

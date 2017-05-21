@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}</title>
+<meta charset="gbk">   
+{cssjs}
+</head>
+<body>
+{top} 
+<div class="container f_index_main">
+{head}	
+	<div class="f_main">
+		<div class="fl_list" style="margin-top:6px;">
+			<div class="f_title">
+				<span class="f_title_left">{nTitle}</span>
+				
+			</div><!--title-->
+			
+			<div>
+				<!-- START list -->
+				<div  style="float:left;margin:10px;">
+					<div >	
+						<ul style="list-style:none;">
+						  <li style="height:130px;"><a href="/zone?id={uid}" target="_blank">
+              <img src="/upd/face/{uid}.jpg" class="img-thumbnail img-responsive" onerror="this.src='/error/logo.jpg';" style="width:100px;height:100px" />
+              </a></li>
+						   <li style="margin:2px 0;"><small>{truename}</small></li>
+						  <li style="margin:2px 0;width:180px;height:20px;overflow:hidden;"><small>{nick}</small></li>
+						</ul>
+					</div>
+				</div>
+				<!-- END list -->	
+			</div>
+		</div>	
+		<center style="width:800px;textalign:center;">{page}</center>
+	</div><!--main-->	
+	
+	
+		<div class="f_sidebar">
+		<div class="f_member">
+			<div class="f_title">
+				<span class="f_title_left">工作室成员</span>
+				<span class="f_title_right"><a href="./?t=member&f={id}">更多&gt;&gt;</a></span>
+			</div> 
+<div class="f_m_container f_news_list">
+<ul>
+<!-- START new -->
+<li> 
+<a href="./?t=new&f={f}&id={id}">{title}</a>
+</li>
+<!-- END new -->
+</ul>
+			</div> 
+		</div>
+	</div><!--sidebar-->
+</div><!--contain结束-->
+
+{foot}
+<!--公共尾部结束-->
+</body>
+</html>

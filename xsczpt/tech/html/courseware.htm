@@ -1,0 +1,119 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的课件-{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>我的课件<small></small> 
+    <div class="btn-group pull-right"> 
+   <a href="?t=courseware_add&d=a" class="btn btn-primary" >+发布课件</a>       
+   </div>
+   </h3>
+</div>
+
+
+<table class="table table-striped">
+<thead>
+<tr>  
+<th>科目</th> 
+<th>标题</th>    
+<th>学段</th>   
+<th>册/章节</th> 
+<th>发布时间</th>  
+<th>教材</th>
+<th>资源类别</th>
+<th>浏览</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr id="row{id}">
+<td><code><label data-subject="{subject}"></label></code></td>   
+<td><a href="?t=courseware_info&id={id}">{title}</a></td>
+<td><em><label data-period="{period}"></label>/<label data-grade="{grade}"></label></em></td>  
+<td><em><label data-volume="{volume}"></label>/<label data-chapter="{chapter}"></label></em></td>  
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td> 
+<td><em><label data-edition="{edition}"></label></em></td> 
+<td><label data-restype="{restype}"></label></td> 
+<td><em>{see}/{nums}</em></td>                 
+<td> 
+<a href="?t=courseware_add&d=m&id={id}" title="编辑" class="glyphicon glyphicon-pencil" target="_blank"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({id:'{id}',do:'d'})"></a>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+var subject,period,grade,edition,volume,chapter,restype;
+l_tpl="res_courseware";
+$(function(){
+ $.getJSON("/data?t=sys_subject&f=obj", function (d) {  
+      subject=d;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+   
+  $.getJSON("/data?t=sys_period&f=obj", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+   $.getJSON("/data?t=sys_grade&f=obj", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+  $.getJSON("/data?t=sys_textbook_ver&f=obj", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });
+  $.getJSON("/data?t=sys_textbook_volume&f=obj", function (data) {  
+      volume=data;
+      $("label[data-volume]").each(function (a, b) {
+        $(this).text(volume[$(this).data("volume")]);
+      });
+  });
+  $.getJSON("/data?t=sys_textbook_chapter&f=obj", function (data) {  
+      chapter=data;
+      $("label[data-chapter]").each(function (a, b) {
+        $(this).text(chapter[$(this).data("chapter")]);
+      });
+  });
+  $.getJSON("/data?t=res_type&f=obj", function (data) {  
+      restype=data;
+      $("label[data-restype]").each(function (a, b) {
+        $(this).text(restype[$(this).data("restype")]);
+      });
+  });  
+});    
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_homework",id:v}, function (d, e) {  
+      $(obj).parent().parent().parent().parent().remove();
+  });
+} 
+</script>

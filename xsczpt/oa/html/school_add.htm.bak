@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />  
+<script type="text/javascript" language="javascript" src="common/ajaxfileupload.js"></script> 
+<script type="text/javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<!-- 样式插件 -->
+    <link rel="stylesheet" type="text/css" href="css/carrer/common.min.css">
+    <link rel="stylesheet" type="text/css" href="css/carrer/colleges.min.css">
+<!-- 地区插件 -->
+<script src="http://www.jq22.com/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/career/distpicker.data.js"></script>
+<script type="text/javascript" src="js/career/distpicker.js"></script>
+<script type="text/javascript" src="js/career/main.js"></script>
+
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/school_add_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);" onclick="showDiv(this,'p1');">基本信息</a></label> 
+				<label><a href="javascript:void(0);" onclick="showDiv(this,'p3');">招生计划</a></label> 
+				<label><a href="javascript:void(0);" onclick="showDiv(this,'p2');">历年分数线</a></label> 
+			</div>
+			<div class="tabbody" id="p1">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="20%" class="tabtd2_L">学校名称</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="schoolname" name="school_name" size="25" /> 
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">隶属</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="belong" id="belong">
+								<option value="教育部">教育部</option>
+								<option value="江苏省教育厅">江苏省教育厅</option>	
+							</select>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">院校层次</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="aid" id="aid" onchange="selectClass(this);">
+
+							</select>
+
+							<select name="hid" id="hid">
+								
+							</select>
+						  </td>	  
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">院校类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="school_type" id="sub_id">
+
+							</select> 
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">办学性质</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="school_nature" id="sub_id">
+								<option value="公办">公办</option>
+								<option value="民营">民营</option>
+							</select> 
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">学校简介</td>
+						 <td width="80%" class="tabtd2_R">
+							<textarea name="summary" id="summary" cols="60" rows="4"></textarea>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">特色专业</td>
+						 <td width="80%" class="tabtd2_R" id="special">
+							<!-- <textarea name="major" id="major" cols="60" rows="2"></textarea> -->
+							<div id="major">
+								<input type="text" name="major[]" size="25">
+								<input type="button" value="新增" onclick="addmajor(this);">   
+								<input type="button" value="删除" onclick="delmajor(this);">
+							</div>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">学费说明</td>
+						 <td width="80%" class="tabtd2_R">
+							<textarea name="fee" id="fee" cols="60" rows="5"></textarea>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">所附地</td>
+						 <td width="80%" class="tabtd2_R">
+<!-- 							<select name="addr" id="addr">
+								
+							</select>  -->
+
+      <div id="distpicker5" >
+        <div class="form-group" style="width:100px; display:inline-block;float:left;">
+          <label class="sr-only" for="province10">Province</label>
+          <select class="form-control" id="province10" name="province"></select>
+        </div>
+
+        <div class="form-group" style="width:100px; display:inline-block;float:left;">
+          <label class="sr-only" for="city10">City</label>
+          <select class="form-control" id="city10" name="city"></select>
+        </div>
+<!--         <div class="form-group">
+          <label class="sr-only" for="district10">District</label>
+          <select class="form-control" id="district10"></select>
+        </div> -->
+      </div>
+      </div>
+
+						  </td>
+					</tr>
+				</table>
+			</div>
+
+			<div class="tabbody" id="p2" style="display:none;">
+				<table class="applyTableData">
+				<tr>
+				    <th width="12%">年份</th>
+				    <th width="12%">批次</th>
+				    <th width="10%">科类</th>
+				    <th width="12%">最低分</th>
+                            <th width="12%">选测科目等级</th>
+				    <th width="">操作</th>
+				    <th width=""><input type="button" value="新增行" onclick="add()"></th>
+	              </tr>
+				</table>
+
+			    <table class="" id="scores">
+				    <tr>
+					    <td width="12%"><input type="text" id="" name="s_年份[]" size="25" /></td>
+					    <td width="12%"><input type="text" id="" name="s_批次[]" size="25" /></td>
+					    <td width="10%"><input type="text" id="" name="s_科类[]" size="25" /></td>
+					    <td width="12%"><input type="text" id="" name="s_最低分[]" size="25" /></td>
+                        <td width="12%"><input type="text" id="" name="s_选测科目等级[]" size="25" /></td>
+						<td width="">
+							<input type="button" value="新增行" onclick="add(this)">   
+							<input type="button" value="删除行" onclick="del(this)">
+						</td>
+				    </tr>
+			    </table>
+			</div>
+				
+			<div class="tabbody" id="p3" style="display:none;">			
+				<table class="applyTableData">
+					<tr>
+						<th width="12%">专业名称</th>
+						<th width="12%">计划名称</th>
+						<th width="10%">科类</th>
+						<th width="12%">计划数</th>
+						<th width="12%">学制</th>
+						<th width="">操作</th>
+						<th width=""><input type="button" value="新增行" onclick="addplan()"></th>
+					 </tr>
+				</table>
+
+				<table class="" id = "plan">
+					 <tr >
+						<td widtd="12%"><input type="text"  name="专业名称[]" size="25" /> </td>
+						<td widtd="12%"><input type="text"  name="计划名称[]" size="25" /> </td>
+						<td widtd="10%"><input type="text"  name="科类[]" size="25" /> </td>
+						<td widtd="12%"><input type="text"  name="计划数[]" size="25" /> </td>
+						<td widtd="12%"><input type="text"  name="学制[]" size="25" /> </td>
+						<td widtd="">
+								<input type="button" value="新增行" onclick="addplan(this)">   
+								<input type="button" value="删除行" onclick="del(this)">
+						</td>
+					 </tr>
+				</table>
+			</div>
+
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+				<input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+			</div>
+	</form>
+	</div>
+</div>
+<div id="form_submit" style="display:none;">
+	<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+		
+	</table>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"acade",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#aid",JSON.parse(d),"id","name"); $("#aid").prepend("<option selected value='0'>请选择</option>");
+		//$('#aid').val('{aid}');
+		
+		var aid = "{aid}";
+		if(aid){
+			selectClass($("#aid"));
+		}
+	});
+	// $.post("./srv/rdo.php?", {tpl:"aca_addr",push_type:"4"}, function (d, e) {
+	// 	selectShowDataNoH("#addr",JSON.parse(d),"id","name"); $("#addr").prepend("");
+	// });
+	$.post("./srv/rdo.php?", {tpl:"aca_sub",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#sub_id",JSON.parse(d),"name","name");// $("#sub_id").prepend("");
+	});
+	
+	// $.post("./srv/rdo.php?", {tpl:"user_status",push_type:"4"}, function (d, e) {
+	// 	selectShowDataNoH("#user_status",JSON.parse(d),"code_name","code_name"); $("#from_type").prepend("");
+	// });
+	
+	// $.post("./srv/rdo.php?", {tpl:"nature",push_type:"4"}, function (d, e) {
+	// 	selectShowDataNoH("#nature",JSON.parse(d),"id","name"); $("#nature").prepend("");
+	// });
+	
+});
+
+//表单提交验证
+// function checkForm()
+// {
+// 	if($.trim($("#schoolname").val())==""){
+// 		alert("学校名不能为空。");
+// 		$("#schoolname").select();
+// 		return false;
+// 	}
+// 	if($("#hid").val()==undefined||$("#hid").val()==0){
+// 		alert("请选择院校特色。");
+// 		return false;
+// 	}
+
+// 	//查询登录名是否已经存在
+// 	$.post("./srv/sdo.php", {tpl:"check_vuser","schoolname":$("#schoolname").val().toUpperCase()}, function (d, e) {
+// 		l=JSON.parse(d);
+// 		if(l.flag=="true"){
+// 			$("#but_add").attr("disabled","disabled");
+// 			return l.flag;
+// 		}else{
+// 			alert(l.value);
+// 			$("#schoolname").select();
+// 			$("#but_add").attr("disabled","disabled");
+// 			return false;
+// 		}
+// 	});
+// }
+
+//选择院校特色
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	html = "<select name='hid' id='hid'>";
+
+
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_acade","aid":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='hid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='hid' id='hid'>";
+						html += "<option value='0'>请选择院校特色</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#hid").val("{hid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='hid']").remove();
+	}	
+}
+
+// //增加联系人
+// function addRelation()
+// {
+// 	var html = $("#form_submit").html();
+// 	$("#p3").append(html);	
+// }
+// //删除联系人
+// function delRelation(obj)
+// {
+// 	$(obj).parent().parent().parent().parent().remove();
+// }
+// 添加一行
+    function add(obj) {  
+		var html = `
+				    <tr class="">
+					    <td width="12%"><input type="text" id="" name="s_年份[]" size="25" /></td>
+					    <td width="12%"><input type="text" id="" name="s_批次[]" size="25" /></td>
+					    <td width="10%"><input type="text" id="" name="s_科类[]" size="25" /></td>
+					    <td width="12%"><input type="text" id="" name="s_最低分[]" size="25" /></td>
+                        <td width="12%"><input type="text" id="" name="s_选测科目等级[]" size="25" /></td>
+						<td width="">
+							<input type="button" value="新增行" onclick="add(this)">   
+							<input type="button" value="删除行" onclick="del(this)">
+						</td>
+				    </tr>
+			      `;
+		//var html = $(obj).html();
+		//$(obj).parent().parent().parent().after(html); 
+		$("#scores").append(html);
+    }  
+// 添加一行招生计划
+	function addplan(){
+		var html = `
+				<tr class = "">
+				    <td widtd="12%"><input type="text" id="majorname" name="专业名称[]" size="25" /> </td>
+	                <td widtd="12%"><input type="text" id="planname" name="计划名称[]" size="25" /> </td>
+	                <td widtd="10%"><input type="text" id="schoolname" name="科类[]" size="25" /> </td>
+	                <td widtd="12%"><input type="text" id="number" name="计划数[]" size="25" /> </td>
+	                <td widtd="12%"><input type="text" id="years" name="学制[]" size="25" /> </td>
+					<td widtd="">
+							<input type="button" value="新增行" onclick="addplan(this)">   
+							<input type="button" value="删除行" onclick="del(this)">
+					</td>
+	            </tr>	
+		          `;
+		$("#plan").append(html);
+	}
+// 删除一行
+	function del(obj){
+		var tr = $(obj).parent().parent();
+		tr.remove();
+		//num = $("#scores").children().length;
+		// num = $(obj).parent().siblings().length;
+		// if(num>1){
+		// 	tr.remove();
+		// }else{
+		// 	alert(num);
+		// 	alert("最后一行不能删除");
+		// }		
+	}
+
+// function change1(obj){
+// 	//var val = $(obj).html("");
+// 	//alert($(obj).find("option:selected").text());
+// 	var val = $(obj).val();
+// 	alert(val);
+// }
+	function addmajor(obj){
+		var html=`
+							<div id="major">
+								<input type="text" name="major[]" size="25">
+								<input type="button" value="新增" onclick="addmajor(this)">   
+								<input type="button" value="删除" onclick="delmajor(this)">
+							</div>
+				`;
+		$("#special").append(html);
+
+	}
+
+	function delmajor(major){
+		var tr = $(major).parent();
+		tr.remove();
+	}
+</script> 

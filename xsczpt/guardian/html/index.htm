@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>家长空间-{gtitle}</title>
+{cssjs}       
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="js/weibo.js" type="text/javascript"></script> 
+<style>
+.panel-body img{max-width:180px;}
+fieldset {padding:2px 10px;border:#ccc solid 1px; } 
+legend {	width:auto;margin-bottom:0px;font:normal 14px/20px "";border:none; } 
+.well p{border-bottom:#aaa dotted 1px; }
+</style>
+</head>
+<body>
+{top}   
+<div class="container"> 
+{head1}   
+
+<div class="col-sm-10 main">           
+<div class="page-header"><h3>家长空间首页</h3></div>
+
+<div class="row col-sm-12">  
+<form class="form-horizontal" role="form" id="form">
+  <div class="form-group">     
+   <div class="col-sm-10"> <input id="des" type="text" class="form-control" placeholder="我的说说" maxlength="200" style="display:n one;"></input> </div> 
+   <div class="col-sm-1"><button type="button" class="btn btn-success" id="btn"> 立即发布 </button>   </div> 
+  </div>  
+          <input type="text" id="id" value="" style="display:none;"/> 
+          <input type="text" id="see" value="0" style="display:none;"/>
+          <input type="text" id="up" value="0" style="display:none;"/>
+          <input type="text" id="share" value="0" style="display:none;"/>
+          <input type="text" id="comments" value="0" style="display:none;"/>
+          <input type="text" id="fav" value="0" style="display:none;"/> 
+<div class="form-group"> 
+    </div>            
+</form>    
+</div>
+<div class="clearfix"></div>  
+<hr id="weibolist"/>
+
+<!-- START list -->   
+<div class="panel panel-default">
+<div class="panel-heading"><h3 class="panel-title"><img src="/upd/face/{uid}.jpg" width="26px" alt='' onerror="this.src='/error/face.jpg';"/>     
+{truename} <code><script>document.write(utctime('{timestamp}'));</script> </code> 
+
+<small class=" pull-right">
+<a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'weibo',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+<a class="glyphicon glyphicon-share-alt" onclick="vote({tbl:'weibo',do:'share',id:{id}},this);" title="转发">({share})</a> &nbsp;  
+<a class="glyphicon glyphicon-comment" onclick="comment('{id}',0,'{truename}')" title="评论">({comments})</a> &nbsp;  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="del_blog('{id}',this)"></a> &nbsp;
+ </small>  
+ </h3>
+ </div>          
+<div class="panel-body" id="pb{id}"> 
+<p>{des}</p>
+<div class="col-sm-11 well">    
+<!-- START rp -->
+<p> 
+<a> {truename} </a> {redo} <a>{renick} </a> ：   
+{des} 
+<small class="pull-right"><code>
+ <script>document.write(utctime('{timestamp}'));</script>  
+  <a onclick="comment('{wid}','{id}','{truename}')" >回复</a>
+   <a onclick="del_blog_comment('{id}',this)">删除</a>
+  </code>
+</small>  
+</p> 
+<!-- END rp --> 
+<code class="pull-right">
+<a onclick="load_comments('{id}',this)" id="more{id}" data-page="0">点击加载更多……</a>
+</code>      
+</div>            
+</div>
+</div> 
+<!-- END list --> 
+
+
+<ul class="pagination pull-right">
+<li><a href="./?t=weibo&p=2">加载更多……</a></li>
+</ul>
+ 
+</div> 
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function(){
+    $("#btn").bind("click", function(){sendWbI(); 
+   });
+});
+var nick="{nick}";
+var truename="{truename}";
+	
+</script>
+<div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">回复</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1"> 
+ <div class="form-group">    
+    <div class="col-sm-12">
+      <textarea id="des" name="des" class="form-control" rows="4"  placeholder="请输入评论内容0-250字" ></textarea>    
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="wid" value="0" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/>    
+<input type="text" id="redo" value="" style="display:none;"/>
+<input type="text" id="renick" value="" style="display:none;"/>
+<input type="text" id="floor" value="0" style="display:none;"/>  
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick=savcomment()> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

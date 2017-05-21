@@ -1,0 +1,1 @@
+{"0":"申请中","1":"审核中","2":"<i class='glyphicon glyphicon-ok-circle text-success'/>","3":"申请注销","4":"等待删除"}

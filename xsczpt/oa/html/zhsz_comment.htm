@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>海安中学成长平台--消息提示</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script>
+<style>
+
+.gridtable_stu li{position:relative;float:left;display:block;width:100px;height:40px;border:1px solid #e6e6e6;line-height:40px;text-align:center;}
+.gridtable_stu li a{display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+			<div id="table_content">
+				<div id="">
+					<form action="" method="POST">
+						<div class="ha_row">
+							<span style="margin-left:10px;"></span>
+							<select name="term_id" id="term_id" class="ui-select">
+									<option value="">请选择学期</option>
+									{str_term}
+							</select> 
+							<span>
+								<span>姓名：</span>
+								<input name="truename" id="truename" value="{truename}" size="12" type="text" style="height:21px;padding:0px">
+							</span>	
+							<input type="submit" id="choose" name="choose" value="查询" />
+							<br/><br/><br/>&nbsp;&nbsp;说明：<font>黑色</font>&nbsp;为已填数量&nbsp;&nbsp;&nbsp;&nbsp;<font color="blue">蓝色</font>&nbsp;为已审核数量&nbsp;&nbsp;&nbsp;&nbsp;<font color="green">绿色</font>&nbsp;为未审核数量
+							<div class="clear"></div>
+							<div style="width;100%;line-height:30px; text-align:center; font-size:14px;margin-top: 0px;">{tips}</div>
+							<div id="table_content">
+								<ul class="gridtable_stu">
+								    {str}
+								</ul>
+							</div>
+							<div class="clear"></div>
+							<div class="boxfooter" style="width:200px; ">
+				              <a href="./?t=oa_main_teacher" target="" style="width:100px;background:#277fc2;color:#fff;border-radius:10px;">返回</a>
+			                </div>
+							<p style="text-align:right;padding-right:30px;">共有学生：{user_num}人</p>
+						</div>
+					</form>
+				</div>
+			</div>
+	<div class="blank30">&nbsp;</div>
+</div>
+
+<script type="text/javascript">
+
+$(".user_list2").each(function(a,b){
+  if($(b).attr("num1")!=0){
+	$(b).css("background","#edcdcd");
+    $(b).find("a").css("display","block");
+  }
+})
+</script>
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");
+		$('#term_id').val('{term_id}');     
+	});
+	
+	$("#report_id").val("{report_id}");
+});
+</script> 
+</html>

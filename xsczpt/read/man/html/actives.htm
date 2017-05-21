@@ -1,0 +1,107 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>活动管理-{gtitle}</title>
+{cssjs}      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header"><h3>活动管理      <small></small> </h3></div>
+
+<div class="row">
+<form class="form-inline" role="form" method="post" id="from1">
+  <div class="form-group"> <select id="cid"  class="form-control" ></select></div>  
+  <div class="form-group"><select id="lvl"  class="form-control" ></select></div> 
+  <div class="form-group"><input id="so" type="text" value="" class="form-control" placeholder="请输入关键字"/></div>        
+  <div class="form-group"><input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+  <input  type="button" class="btn btn-success" value="刷新" onclick="location.reload();"/>
+    </div>  
+    
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>logo</th>
+<th>名称</th>
+<th>创建者</th> 
+<th>时间</th> 
+<th>类别</th> 
+<th>级别</th>
+<th>来源</th>
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}"> 
+<td><img src="/activity/logo/{id}.jpg" width="80"/></td>
+<td><a href="/activity?t=active&id={id}" target=_blank>{name}</a></td>
+<td>{truename}</td>          
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><c v="{cid}"></c></td>
+<td><l v="{lvl}"></l></td>
+<td>{froms}</td> 
+<td><em v="{state}"></em></td>
+<td>
+<a class="glyphicon glyphicon-ok" title="审核" onclick="audit('{id}',this)"></a> &nbsp;
+<a class="glyphicon glyphicon-edit" title="编辑" href="./?t=active_edit&d=m&id={id}"  target=_blank></a>  &nbsp; 
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}',callback:'delcall'})"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+jsnState=null;
+obj_l=null
+l_tpl="activity";
+$(function () {
+$.getJSON("/data/state.json.txt", function (data) {  jsnState=data;
+   for(i=0;i<5;i++)$("em[v='"+i+"']").html(data[i]);      
+});   
+$.get("/data/active_cate.txt", function (d) {selectAddHead("#cid","类型");$("#cid").append(d);if(queryStr("c")!="")$("#cid").val(queryStr("c"));}); 
+$.get("/data/active_lvl.txt", function (d) {selectAddHead("#lvl","级别");$("#lvl").append(d);if(queryStr("l")!="")$("#lvl").val(queryStr("l"));}); 
+$.getJSON("/data/active.object.txt", function (d) {obj_l=d;
+  $("c").each(function(a,b){$(this).text(obj_l.cate[$(this).attr("v")]);});
+  $("l").each(function(a,b){$(this).text(obj_l.lvl[$(this).attr("v")]);});
+});  
+    
+    $("#btnq").bind("click",function(){ 
+      location.href="./?t=actives&c="+$("#cid").val()+"&l="+$("#lvl").val()+"&so="+$("#so").val();  
+    });  
+    
+ });  
+function audit(v,obj) {   
+   $.post("./srv/sdo.php?", {tpl:"aud_active","id":v}, function (d, e) {             
+      $(obj).parent().prev().html(jsnState[2]);             
+  });
+}
+ 
+function delcall(e,d){
+  if(d.indexOf("ok")>-1){
+    $("#row"+e.id).remove();
+  }
+}
+</script>

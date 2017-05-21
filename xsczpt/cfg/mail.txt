@@ -1,0 +1,42 @@
+﻿<?php
+//邮件配置信息　
+define('MAIL_HOST','{resetsmtp}'); 
+define('MAIL_PORT','{resetport}'); 
+define('MAIL_USERNAME','{resetuser}'); 
+define('MAIL_PASSWORD','{resetpass}'); 
+
+/**发送邮件  sendname发送人名称 toname收件人名称**/
+function sendEmail($sendname,$toemail,$toname,$title,$body){	
+
+	$mail=new PHPMailer();	
+	$mail->IsSMTP(); // telling the class to use SMTP　启用SMTP
+	$mail->SMTPAuth      = true;    // enable SMTP authentication　开启SMTP认证
+	#$mail->SMTPKeepAlive = false;   // SMTP connection will not close after each email sent 保持连接
+	$mail->Host= MAIL_HOST; 		// sets the SMTP server
+	$mail->Port= MAIL_PORT;       // set the SMTP port for the GMAIL server
+	$mail->Username= MAIL_USERNAME;   // SMTP account username
+	$mail->Password= MAIL_PASSWORD;        // SMTP account password
+	$mail->SetFrom(MAIL_USERNAME, $sendname);#发件人地址
+	$mail->AddReplyTo($toemail,$toname);#回复地址
+	$mail->AddAddress($toemail,$toname);
+	#$mail->AddAddress("josh@example.net", "Josh Adams"); //添加收件人
+	#$mail->WordWrap = 50;                    //设置每行字符长度
+	#$mail->CharSet = "utf-8";                // 这里指定字符集！ 
+	#$mail->Encoding = "base64"; 		#编码
+	/** 附件设置　
+	$mail->AddAttachment("/var/tmp/file.tar.gz");        // 添加附件　
+	$mail->AddAttachment("/tmp/image.jpg", "new.jpg");   // 添加附件,并指定名称　
+	*/
+	$mail->IsHTML(true); // 是否HTML格式邮件
+	$mail->Subject = $title;		//标题		
+	$mail->AltBody    = "text/html 查看信息,请使用一个HTML兼容的电子邮件查看器!"; // optional, comment out and test
+	$mail->MsgHTML($body);
+	
+	#$mail->AddStringAttachment($row["photo"], "YourPhoto.jpg");	
+	return $mail->Send();
+	#$mail->ErrorInfo;	
+	// Clear all addresses and attachments for next loop
+	#$mail->ClearAddresses();
+	#$mail->ClearAttachments();	
+}
+?>

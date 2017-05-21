@@ -1,0 +1,122 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" /> 
+</head>
+<body>
+
+<div class="main">
+		<div class="box">
+			<form action="./srv/zhsz_table_export_submit_biye.php" method="post" onsubmit="return checkForm();">
+				<div class="boxtitle">
+                    <label class="current"><a href="javascript:void(0);">批量导出毕业学生综评表记录</a></label> 
+                </div>
+				<div class="tabbody">
+						<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+							<tr>
+								 <td width="28%" class="tabtd2_L">说明：</td>
+								 <td class="tabtd2_R" style="color:#f00;">如果数据量大，请进行条件筛选进行分批导出。&nbsp;&nbsp;</td>
+							</tr>
+							<tr>
+								 <td width="20%" class="tabtd2_L">选择学期：</td>
+								 <td class="tabtd2_R">
+                                 	<select name="term_id" id="term_id">
+                                    </select>
+                                 </td>
+							</tr>
+                            
+                            <tr>
+								 <td width="20%" class="tabtd2_L">导出毕业届班级：</td>
+								 <td class="tabtd2_R">
+                                 	<select name="gid" id="gid" onchange="selectClass(this);">
+                                    
+									</select> 
+                                 </td>
+							</tr>
+                            
+                            <tr>
+								 <td width="20%" class="tabtd2_L">学生姓名：</td>
+								 <td class="tabtd2_R">
+                                 	<input type="text" id="truename" name="truename" value="" size="15" />
+                                 </td>
+							</tr>
+						</table>
+				</div>
+				<div class="boxfooter2">
+                <input id="but_update" name="but_update" type="submit" value="导出" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+			</form>
+			</div>
+		</div>
+	</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript"> 
+
+$(function(){  
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+        selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option value='0' selected>—请选择—</option>");     
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"get_biye",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"class_end","class_end"); $("#gid").prepend("<option value='0' selected>—请选择—</option>");
+	});
+    
+});
+
+function checkForm(){
+  if($("#term_id").val()==0){alert("请选择学期！");return false;} 
+   if($("#gid").val()==0){alert("请选择毕业届！");return false;} 
+}
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val!=0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_biye_class","class_end":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+				$("#passpwd").select();	
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						//html += "<option value='0'>所有班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select").remove();
+	}	
+}
+
+</script> 

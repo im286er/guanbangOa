@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				<label><a href="./?t=zhsz_table_show&uid={uid}">{truename}的综评表</a></label>
+				<label><a href="./?t=zhsz_performance&uid={uid}">日常表现</a></label> 
+				<label class="current"><a href="javascript:void(0);">我要举报</a></label>
+				<label><a href="./?t=zhsz_other_comment&uid={uid}">我要评论</a></label>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div style="width:100%;height:20px; line-height:20px;font-size:14px;float:left;margin-bottom:5px;">&nbsp;&nbsp;&nbsp;&nbsp;您正在对【{truename}同学】进行举报：<font color="#f00"><b>请务必本着客观、公正、实事求的态度进行互评。</b></font></div>
+		<div class="tabbody">
+			{str}
+		</div>
+	<!--表格中间 end-->
+	
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+//评价表单提交验证
+function checkVote()
+{
+	var ids = $("#ids").val();
+	var idA = ids.split(',');
+	var len = idA.length
+	var iLen;
+	for(var i=0;i<len;i++){
+		iLen = $("input[name='item_"+idA[i]+"']:checked").size();
+		if(iLen==0){
+			alert("第"+(i+1)+"个评价项没有选择。");
+			return false;
+		}
+	}
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+</script> 

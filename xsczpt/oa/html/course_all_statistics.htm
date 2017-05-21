@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>  
+<script src="/ppf/js/select.js"></script> 
+
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<div class="boxtitle">
+			<label class="current"><a href="javascript:void(0)">技能素质统计总表</a></label> 
+		</div>
+			<div class="boxtitle2">
+			<form action="./?t=course_all_statistics" method="post">
+				<span>
+					<select name="tyear" id="tyear">
+					
+					</select>
+					
+				</span> 
+				<input type="submit" id="choose" name="choose" value="技能素质统计筛选" />	
+			</form>
+		</div>
+
+	<!--表格中间 begin-->
+		<div class="tabbody">
+		  
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0" counts="20" nums="20">
+					<tr class="tabtitle" height="26">
+						 <td width="5%" class="tabtd">序号</td>
+						 <td width="10%" class="tabtd">班级</td>
+									   <td width="8%" class="tabtd">人数</td>
+						 <!-- START list -->  
+							   <td width="8%" class="tabtd">{course_name}</td>
+						<!-- END list --> 
+					</tr>
+					{str_total}
+				</table>
+				<ul class="pagination pull-right">
+					{page}
+				</ul>
+			</div>
+			<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+			</div>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+        selectShowDataNoH1("#tyear",JSON.parse(d),"id","term_name","year"); $("#tyear").prepend("<option value='0' selected>请选择学期</option>");     
+		$('#tyear').val('{tyear}');
+    });
+
+	if($(".tabbody table").attr("counts")*1<$(".tabbody table").attr("nums")*1  || $(".tabbody table").attr("counts")*1==($(".tabbody table").attr("nums")*1-1)){
+		var counts = $(".tabbody table").attr("counts");
+		$('.tabbody table tr:eq('+counts+')').css("display","none");
+		var tdid = $('.tabbody table tr:eq('+(counts*1+1)+') td:eq(0)').html();
+		$('.tabbody table tr:eq('+(counts*1+1)+') td:eq(0)').html(tdid*1-1);
+    }
+  });
+</script> 

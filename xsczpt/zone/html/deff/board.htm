@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>留言板-{gtitle}</title>
+{cssjs}   
+<script type="text/javascript" src="js/leave.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>      
+</head>
+<body>
+{top}
+<div class="container">  
+{head}   
+
+<div class="col-xs-12 " style="margin-top:20px;">    
+<div class="row leaveinput">
+    <form class="form-horizontal" role="form" method="post" id="form1">
+        <textarea id="des" name="des" data-edit="ue" style="display:none;"></textarea>
+        <script type="text/plain" id="uedes" style="width:100%;height:100px;"></script>
+        <input type="text" id="id" value="" style="display:none;"/> 
+        <input type="text" id="see" value="0" style="display:none;"/>
+        <input type="text" id="up" value="0" style="display:none;"/>
+        <input type="text" id="touid" value="{id}" style="display:none;"/>
+        <input type="text" id="comments" value="0" style="display:none;"/>
+        <input type="text" id="fav" value="0" style="display:none;"/>
+        <button type="button" class="btn btn-success" id="btn" style="float:right; margin-top:10px; margin-bottom:10px;">发表</button>
+    </form>
+</div> 
+
+
+<div class="row" id="list">
+<!-- START list -->
+<div class="panel panel-default">
+<div class="panel-heading"> <img src="/upd/face/{uid}.jpg" width="40" alt='' onerror="this.src='/error/face.jpg';"/>     
+{truename}   <small> {created}</small>  </div>
+<div class="panel-body">
+{des}<hr/>
+<div id="p{id}">
+<div id="pa{id}">
+<!-- START rp -->
+<p> <img src="/upd/face/{uid}.jpg" width="30" onerror=this.src="/error/face.jpg" />{truename}：{des}  {created}</p>
+<!-- END rp -->
+</div>   
+ 
+</div> 
+</div>
+</div>  
+<!-- END list --> 
+</div>          
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+</div>  
+{foot} 
+</body>
+</html>
+<script type="text/javascript">
+var uid="{uid}";
+var ue = UE.getEditor('uedes',{    
+    toolbars: [
+    ['emotion', 'simpleupload','insertimage','insertvideo','|', 'removeformat', 'cleardoc']
+],
+    elementPathEnabled:false,
+    autoHeightEnabled: false,
+    autoFloatEnabled: false,
+    enableContextMenu:false,
+    maximumWords:300,
+    wordCountMsg:"还可以输入{#leave} 个字符"
+});
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {            
+    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+        return '/zone/updb/imageUp.php';
+    }else if (action == 'uploadvideo') {
+        return '/zone/updb/videoUp.php';
+    }else {
+        return this._bkGetActionUrl.call(this, action);
+    } 
+} 
+var limit_comment=0,limit_leave=0;
+$(function(){
+	$("#btn").click(function(){
+       if(uid==""){
+          var url = location.pathname+location.search;
+          window.location.href="/?t=login&url="+$.base64.encode(url);
+          return false;
+      }
+       if(limit_leave!=0){alert("您没有留言权限");return;} 
+       if(ue.getContent().length<10){alert("内容太短(10-300)");return;}            
+       SaveAM({tpl:'zone_leave','do':'a',frmid:'#form1',showok:'','callback':'docomment'}); 
+    });
+    $.post("./srv/rdo.php", {tpl:"get_limit_do","id":queryStr("id")}, function (d, e) { 
+      d1=JSON.parse(d);
+      limit_comment=d1.comment;
+      limit_leave=d1.leave;
+  }); 
+});
+function docomment(e,d){  
+ if(d.indexOf("ok")>-1){
+  msg("留言成功");      
+  $.post("./srv/sdo.php", {tpl:"upd_leave","id":queryStr("id")}, function (d, e) {        
+      //msg(d);
+      location.reload();     
+  });   
+}
+  else lalert(d);   
+}  
+
+/* 
+
+var curpage=0;
+
+function resend(d){
+    var turename = $(".top-name").attr("alt");
+    data=$("#re"+d.id).val(); 
+    if(data.length<2){alert("评论内容太短");return;}
+    $.post("./srv/sdo.php?",{tpl:"msg_resend",id:d.id,"data":data},function (da, e) {
+        if(da.indexOf("ok")>-1){
+            id=da.substr(da.indexOf("ok")+2);
+            $("#pa"+d.id).prepend('<p> <img src="/F/'+uid+'/face.jpg" width="30" onerror=this.src="/error/face.jpg" /> '+turename+'：'+data+'&nbsp;<a class="glyphicon glyphicon-remove" title="删除" onclick="delthsc('+id+',this)"></a></p>');
+        }
+        else 
+          alert(da);
+      });
+}
+function delths(v,obj) {  
+   $.post("./srv/sdo.php", {tpl:"msg_del","id":v}, function (d, e) { if(d.indexOf("ok")>-1){$(obj).parent().parent().remove();}});
+}
+  
+function delthsc(v,obj){
+	 $.post("./srv/sdo.php", {tpl:"msg_del1","id":v}, function (d, e) { if(d.indexOf("ok")>-1){$(obj).parent().remove();}});
+}
+*/ 
+</script>

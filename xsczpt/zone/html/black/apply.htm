@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="GBK" />
+    <title>访问受限--请求好友</title>
+    {cssjs}
+    <style>
+      .btn-submit, .btn-submit:hover, .btn-submit:focus, .btn-submit:link {
+        color: #fff;
+        background-color: #02a487;
+        position:absolute;
+        top:320px;
+        left:15px;
+      }
+    </style>
+  </head>
+  <body> 
+      {top}
+        
+        <div class="container">
+          <div class="row">
+              <div style="margin:0 auto; width:350px; padding:150px 0 500px 0; position:relative;"> 
+                <div class="people">
+                    <img src="/F/{uid}/face.jpg" width="105" height="105" style="position:absolute; left:15px;">
+                    <div class="xinxi" style="position:absolute; left:160px; color: #8f8f8f;">
+                      <p class="name" style="font-size: 20px;margin-bottom: 10px;color: #1f9d83;font-weight: bold;">{truename}</p>
+                      <p>
+                        <font class="sex">{sex}</font>&nbsp;&nbsp;
+                        <font class="addr">{address}</font>&nbsp;&nbsp;
+                        <font class="addrs">{addrs}</font>&nbsp;&nbsp;
+                      </p>
+                    </div>
+                </div>
+      
+                <p style="font-family: '微软雅黑';color: #636363;font-size: 15px; position:absolute; top:280px; left:15px;">
+                    主人设置仅好友访问
+                </p>
+      
+                <button type="button" class="btn btn-default btn-submit" id="btn" onclick="appa('{frid}')">+ 申请好友</button>
+              </div>
+          </div>
+        
+        </div>  
+      {foot}   
+  </body>
+</html>
+
+<script type="text/javascript">
+function appa(id){             
+   $.post("./srv/sdo.php", {tpl:"frd_add",data:id}, function (d, e) { 
+      alert(d);
+      self.location='./?t=index';
+   }); 
+}
+</script>

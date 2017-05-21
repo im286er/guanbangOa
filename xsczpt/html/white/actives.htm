@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0058)http://www.wuhaneduyun.cn/index.php?r=portal/discovery/org -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+<title>活动-{gtitle}</title>
+{meta}
+</head>
+<body>
+{top}
+<div class="wrap">
+	<div class="main">
+		{head}
+		<div class="sear_tit mt40">
+			<h2 style="width:60px;font-size:1.5em;">活动</h2>
+			<div class="s_tabtit">
+				<ul class="tab-hd">
+					<li class="active"><a href="/?t=actives" target="">最新活动</a></li>
+					<li><a href="/?t=actived" >活动回顾</a></li>
+					<li class="add_act"><a href="/tech/work.php?t=active_push" target="">+发起活动</a></li>
+          <li class="active"><a href="/tech/work.php?t=active_my" >我发起的活动</a></li>
+				</ul>
+			</div>
+			<div class="search"  style="width:219px;">
+				  <input class="keyword_s search_text fl" id="so" type="text" name="keyword" placeholder="请输入名称" >
+					<input type="button" align="absmiddle" value="搜索" class="search_button" id="btn">
+			</div>
+		</div>
+	</div>
+	<div class="main mt20">
+		<div class="clear"></div>
+		<div class="ac_left">
+			<div class="find_act">
+            	<h3 class="h3">发现活动</h3>
+                <ul class="ul clear">
+                	<li class="item" id="period"></li>
+                  <li class="item" id="subject"></li>
+                  <li class="item" id="addr"></li>
+				  <li class="item" id="addr1"></li>
+                  <li class="item" id="times">
+                    	<label>时间</label>
+                        <div class="nmlist">
+                       		<a>最新</a>
+                        	<a>报名中</a>
+                          <a>活动中</a>
+                          <a>总结中</a>
+                          <a>已结束</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+		</div>
+		<div class="ac_right">
+			<ul class="actlist">
+        <!-- START list -->
+				<li class="item">
+					<div class="photo">
+						<i class="pub-lab-lg" v="{status}"></i>
+						<a href="/activity?t=active&id={id}">
+								<img src="/activity/logo/{id}.jpg" width="200" height="200" onerror="this.src='/error/logo.jpg';"/>
+						</a>
+						<div class="detail">
+							<a href="/activity?t=active&id={id}">        	
+								<i class="ic"></i>
+								<p class="p">
+									<span class="span ell">
+										{name}
+									</span>
+								</p>
+								<p class="time">{rstime}——{retime}</p>
+								<div class="nm" style="display: none;">
+									<p class="fq">发起：{aname}&nbsp;&nbsp;<l v="{lvl}"></l>|<c v="{cid}"></c></p>
+									<p style="overflow:hidden;height:20px;" title="{addrs}">地点：{addrs}</p>
+									<p>人数：{amnums}人</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="optbar">
+						<a href="javascript:void(0);" applymode="1" teachactivityid="8a0081fa50fba36601511b10ef901188" class="state attend">我要报名</a>
+					</div>
+				</li>
+        <!-- END list -->
+			</ul>
+			<div class="tc">
+			 <ul class="pagination ">
+				{page}
+			 </ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+{foot}
+<script src="/html/white/js/active.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function(){
+  //列表图片划过效果
+  var adTimer;
+  $(".actlist .detail").hover(function(){
+  	var _this=$(this);
+  	_this.find(".span").removeClass("ell");
+  	adTimer=setTimeout(function(){
+  		_this.find(".nm").slideDown(100);
+  	},100)
+  },function(){
+  	var _this=$(this);
+  		_this.find(".span").addClass("ell");
+  		_this.find(".nm").slideUp(100);
+  		clearTimeout(adTimer)		
+  });
+  
+  $.getJSON("/data/active.object.txt", function (d) {obj_l=d;
+      $("c").each(function(a,b){$(this).text(d.cate[$(this).attr("v")]);});
+      $("l").each(function(a,b){$(this).text(d.lvl[$(this).attr("v")]);});
+      $("e").each(function(a,b){$(this).text(d.enroll[$(this).attr("v")]);});
+      $("v").each(function(a,b){$(this).text(d.visit[$(this).attr("v")]);});
+  }); 
+   $.getJSON("/data/active_status.json.txt", function (d) {obj_l=d;
+      $("i").each(function(a,b){$(this).text(d[$(this).attr("v")]);}); 
+  }); 
+  
+  if(queryStr("so")!="") $("#so").val("{so}");
+    $("#btn").bind("click",function(){
+      var a = queryStr("a");
+	  var a1= queryStr("a1");
+      var per = queryStr("per");
+      var sub = queryStr("sub");
+      //if($("#so").val()==""){alert("请输入一个名称");return;}
+      location.href="./?t=actives&per="+per+"&sub="+sub+"&a="+a+"&a1="+a1+"&so="+$("#so").val();    
+    });
+});
+
+</script> 
+</body>
+</html>

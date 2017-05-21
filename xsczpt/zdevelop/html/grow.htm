@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间—{name}</title>      
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+{cssjs}
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<style type="text/css">
+p{margin:0 !important;padding:0;}
+a{cursor:pointer;}
+</style>
+
+</head>
+<body>
+{top}
+{thead}
+<div class="main" style="position:relative;overflow:visible !important;">
+	<div class="growedit tools" id="{id}" style="display:none;"><a onclick="addlayopen();" title="编辑模式"><img src="imgs/growedit.jpg" /></a></div>
+	<div class="growindex"><a href="./?t=grow_fram&uid={uid2}&s={s}" target="iframe1" title="回到目录"><img src="imgs/growindex.jpg" /></a></div>
+	<div class="growbg">
+		<!-- <a href="/teacher/?t=grow2&uid={uid}"><img src="imgs/a.jpg" /></a> -->
+		<iframe scrolling="auto" allowtransparency="true" id="iframe1" name="iframe1"  scrolling="no" class="" frameborder="0" src="./?t=grow_fram&uid={uid2}&s={s}" style="height: 692px;width:973px;"></iframe>
+	</div>
+</div>
+<div class="clear"></div>
+<div>
+{foot}
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+<script type="text/javascript" src="css/js/index.js"></script>
+<script type="text/javascript" src="css/js/jquery.js"></script>
+<script type="text/javascript" src="css/js/tabs.js"></script>
+<script type="text/javascript">
+//检测登录
+var uopen="{uopen}";
+var uppen="{uppen}";
+var uid="{uid}";
+if(uid!=""){
+	$("#{uid}").css("display","block");
+}else{
+	$(".tools").remove();
+}
+if(uopen=="1"){
+	$("#uopen").css("display","block");
+}else{
+	$("#uopen").remove();
+}
+if(uopen=="1"){
+	$("#uppen").css("display","block");
+}else{
+	$("#uppen").remove();
+}
+$(".tools").click(function(){
+  $(".tools_menu").toggle();
+});
+function addlayopen(){
+	layer.open({
+		type: 2,
+		title: '编辑模式',
+		shadeClose: true,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['1000px', '650px'],
+		content: './?t=grow_news&s='+{s}+'&uid={uid}',
+		end : function(){
+		window.frames["iframe1"].location.reload(); 
+		}
+	});
+}
+</script>
+</body>
+</html>

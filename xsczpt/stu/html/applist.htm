@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}          
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+<div class="page-header">
+<h3>应用中心 <small></small>
+</h3>
+</div>
+
+<table class="table table-striped"> 
+<thead>
+<tr>  
+<th>名称</th>
+<th>url</th> 
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr> 
+<td><a href="{url}" target=_blank>{name}</a></td>  
+<td><code>{url}</code></td>      
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+
+{foot}
+</body> 
+</html> 
+<script type="text/javascript">      
+$(function(){    
+  $.post("./srv/rdo.php", {tpl:"get_blog_cate"}, function (d, e) {             
+      selectShowData("#cid",JSON.parse(d),"id","name");  
+      if(queryStr("so")!="") $("#so").val(queryStr("so"));
+      if(queryStr("c")!="") $("#cid").val(queryStr("c"));    
+  }); 
+    $("#btn").bind("click",function(){                           
+    location.href="./?t=blogs&c="+$("#cid").val()+"&so="+$("#so").val();          
+   });  
+  
+});          
+function delths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"del_blog",id:v}, function (d, e) {                   
+      $(obj).parent().parent().remove();
+  });
+}   
+function pushsome(v){
+  $('#dlg1').modal('show');
+  $('#dlg1 a').val(v);
+}  
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">推送到</h4>
+         </div>
+<div class="modal-body"> 
+<div class="row center">
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_cls&id='+this.value;" target=_blank class="btn btn-primary glyphicon glyphicon-tower">
+<br/> 班级空间
+</a>       
+</div>
+<div class="col-sm-2"> 
+ <a href="#" onclick="href='./?t=push_grp&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-th-large">
+ <br/>群组空间 </a>    
+</div> 
+<div class="col-sm-2"> 
+ <a href="#" onclick="href='./?t=push_sch&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-flag">
+ <br/> 学校主页</a> 
+</div> 
+<div class="col-sm-2"> 
+    <a href="#" onclick="href='./?t=push_sub&id='+this.value;" target=_blank class="btn btn-warning glyphicon glyphicon-book">
+<br/> 学科空间  </a>   
+</div>
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_fmos&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-star">
+<br/>名师工作室</a> 
+</div>
+</div>      
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div></div></div></div>

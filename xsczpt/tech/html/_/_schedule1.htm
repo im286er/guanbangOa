@@ -1,0 +1,246 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>日历显示-日程安排-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/schedule.css"> 
+
+</head>
+<body>
+{top}
+{head}
+<div class="main">
+  <dl>
+    <dt>
+      <div class="menu_a">
+    <h2>日程安排</h2> 
+    <ul> 
+    <li><a href="./?t=schedule" >我的日程</a></li>
+    <li><a href="./?t=schedule1" >日历显示</a></li> 
+    </ul>
+      </div>
+    </dt>
+
+  <dd>
+    <div class="banner">
+          <label>日程安排</label>
+          <span>  
+          <a href="javascript:;" class="btn" onclick="getpre();getsch();">上个月</a>
+          <a href="javascript:;" class="btn" onclick="getnxt();getsch();">下个月</a>
+       </span>
+     </div>
+
+    <div class="main_content">
+         <div class="calendar">
+             <table class="cal_table" cellpadding="6" cellspacing="6">
+                 <thead>
+                     <tr>
+                         <th>星期日</th>
+                         <th>星期一</th>
+                         <th>星期二</th>
+                         <th>星期三</th>
+                         <th>星期四</th>
+                         <th>星期五</th>
+                         <th>星期六</th>
+                     </tr>
+                 </thead>
+                 <tbody>
+                     <tr>
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>
+                     <tr>
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>
+                    <tr>
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>
+                     <tr>
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>
+                    <tr  style="display:none;">
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>
+                     <tr style="display:none;">
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                        <td><em></em><br/><span></span></td> 
+                     </tr>                     
+                 </tbody>
+             </table>  
+         </div>
+         <div class="even">
+             <div class="show_date"></div>
+             <div class="show_even">
+                  <ul  id="ul">
+                     <li>打电话</li>
+                     <li>吃饭</li>
+                     <li>约会</li>
+                  </ul>
+             </div>
+         </div>
+    </div>
+     </dd>
+  </dl>
+</div>
+{footer}
+</body>    
+</html>
+
+<script type="text/javascript">
+$(function(){ 
+  getcur();
+  getsch();
+});
+function getsch(){
+   $.post("./srv/rdo.php", {tpl:"get_schedule",y:curyear,m:curmonth}, function (d, e) {
+      v=JSON.parse(d);
+      $("#ul").empty();   
+      for(k=0;k<v.length;k++){
+         s=parseInt(v[k].stime.substr(8));  
+         $("#dt"+s).attr("class","bg");          
+         $("#dt"+s+" span").text(v[k].title);
+         $("#dt"+s+" span").attr("title",v[k].title);
+         $("#dt"+s).data("id",v[k].id);
+         $("#dt"+s).bind("click",function(){showths($(this).data("id"));});
+         
+         $("#ul").append("<li>"+v[k].title+"</li>");
+      }
+  }); 
+}
+function showths(v){
+   readID({tpl:"schedule","do":"r",id:v,frmid:"#form2"});
+   ifrmid="#dlg2"; 
+   $(ifrmid).dialog('setTitle','日程');  
+   //$(ifrmid+' .tips').text('修改日程');  
+   $(ifrmid).dialog("open"); 
+}
+var curdate,curyear,curmonth; //当前月
+function getcur(){
+  nums=30;
+  var dt = new Date();
+  $(".show_date").text("日期："+dt.getFullYear() + "年" + (dt.getMonth() + 1)+"月"); 
+  curdate=new Date(dt); 
+  dt.setDate(1);   
+  w=dt.getDay();//从几号显示
+  curyear=dt.getFullYear();
+  curmonth=dt.getMonth()+1;
+  //var fdt=new Date((dt/1000-86400*dt.getDay())*1000);//第一格是上个月几号  
+  
+  dt.setDate(dt.getDate()+30);
+  if(dt.getDate()==31)nums++;//本月31天
+  r=0;
+  for(k=1,c=w;k<=nums;k++){  
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").text(k);
+    $(".cal_table tbody").children().eq(r).children().eq(c).attr("id","dt"+k);//设置id
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").attr("title",curmonth+"月"+k+"日")
+    if(c++>5){c=0;r++;
+      $(".cal_table tbody").children().eq(r).css("display","");}
+  }  
+}
+function getpre(){
+  //清空
+  $(".cal_table tbody em").text("");
+  $(".cal_table tbody span").text("");
+  $(".cal_table tbody td").attr("class",""); 
+  $(".cal_table tbody tr").css("display","none");     
+  nums=30;                              
+  curdate.setMonth(curdate.getMonth()-1); 
+  dt=new Date(curdate);
+  $(".show_date").text("日期："+dt.getFullYear() + "年" + (dt.getMonth() + 1)+"月");                      
+  dt.setDate(1);  
+  w=dt.getDay(); 
+  curyear=dt.getFullYear();
+  curmonth=dt.getMonth()+1;//月 
+  dt.setDate(31); 
+  if(dt.getDate()==31)nums++;//本月31天
+  r=0;
+  $(".cal_table tbody").children().eq(0).css("display","");
+  for(k=1,c=w;k<=nums;k++){ 
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").text(k);
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").attr("title",curmonth+"月"+k+"日")
+    if(c++>5){c=0;r++;  
+      $(".cal_table tbody").children().eq(r).css("display","");}
+  }  
+}
+function getnxt(){
+  //清空
+  $(".cal_table tbody em").text("");
+  $(".cal_table tbody span").text("");
+  $(".cal_table tbody td").attr("class",""); 
+  $(".cal_table tbody tr").css("display","none");       
+  nums=30;  
+  curdate.setMonth(curdate.getMonth()+1);
+  dt=new Date(curdate);  
+  $(".show_date").text("日期："+dt.getFullYear() + "年" + (dt.getMonth() + 1)+"月"); 
+  dt.setDate(1); //1号
+  w=dt.getDay();//星期几
+  curyear=dt.getFullYear();
+  curmonth=dt.getMonth()+1;//月 
+  dt.setDate(31);
+  if(dt.getDate()==31)nums++;//本月31天
+  r=0;
+  $(".cal_table tbody").children().eq(0).css("display","");
+  for(k=1,c=w;k<=nums;k++){  
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").text(k);
+    $(".cal_table tbody").children().eq(r).children().eq(c).find("em").attr("title",curmonth+"月"+k+"日")
+    if(c++>5){c=0;r++;
+      $(".cal_table tbody").children().eq(r).css("display","");}
+  }  
+}
+
+</script>
+
+<div id="dlg2" class="easyui-dialog dialoga" style="width:500px;height:340px;padding:10px;" title="日程" data-dotype="a"  data-options="closed:true,
+buttons: [ {
+   text:'关闭',
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]">  
+<form id="form2">
+<div id="tips" class="tips"><input type="text" id="title" style="width:300px;border:none;" readonly/></div>
+<table class="">   
+     <tr> 
+        <td><input type="text" id="stime" style="width:160px;border:none;" readonly/></td>
+    </tr>      
+    <tr> 
+        <td><textarea id="des" style="width:400px;height:100px;border:none;overflow:auto;"></textarea></td>
+    </tr>       
+</table>
+</form>
+</div>

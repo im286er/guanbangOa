@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				<label><a href="./?t=zhsz_table_show&uid={uid}">{truename}的综评表</a></label>
+				<label><a href="./?t=zhsz_performance&uid={uid}">日常表现</a></label> 
+				<script type="text/javascript">
+					if({flag_type}==1){
+						//document.write('<label><a href="./?t=zhsz_other_vote&uid={uid}">我要举报</a></label>');
+					}
+					if({flag_type}==2&&{isMaster1}){
+						document.write('<label><a href="./?t=zhsz_master_vote&uid={uid}">班主任评价</a></label>');
+					}
+				 </script>
+				 <label class="current"><a href="./?t=zhsz_other_report&uid={uid}">我要举报</a></label>
+				<label><a href="./?t=zhsz_other_comment&uid={uid}">我要评论</a></label>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<div style="width:100%;height:20px; line-height:20px;font-size:14px;float:left;margin-bottom">您正在对【{truename}同学】进行举报：<font color="#f00"><b>请务必本着客观、公正、实事求事的态度进行评论。</b></font></div>
+			{str}
+			<form action="./srv/zhsz_other_report_submit.php" method="post" onsubmit="return checkComment();">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+				<tr>
+					<td class="tabtd2_L">评论内容</td>
+					<td class="tabtd2_R"><textarea name="comment" id="comment" cols="80" rows="15" style="font-size:12px;height:200px;margin-top:10px;"></textarea></td>
+				</tr>
+			</table>
+			<div class="boxfooter2">
+			  <input type="hidden" name="term_id" id="term_id" value="{sid}" />
+			  <input type="hidden" name="uid" id="uid" value="{uid}" />
+			  
+			  
+			  
+			  <input name="but_add" id="but_add" type="submit" value="保存信息" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />
+			  
+			  <a href="./?t={href}"  id="but_back" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;display:inline-block;text-align: center;line-height: 25px;">返回</a>
+			</div>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+//评价表单提交验证
+function checkComment()
+{
+	if($.trim($("#comment").val())==""){
+		alert("请填写评论内容。");
+		$("#comment").select();
+		return false;
+	}
+	$("#but_add").attr("disabled",true);
+	return true;
+}
+</script> 

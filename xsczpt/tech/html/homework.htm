@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的作业-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('待审核','已审核','注销中'); 
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+<div class="page-header">
+   <h3>作业管理<small></small> 
+    <div class="btn-group pull-right"> 
+   <a href="?t=homework_add&d=a" class="btn btn-primary" >+发布作业</a>       
+   </div>
+   </h3>
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>  
+<th>科目</th> 
+<th>标题</th>     
+<th>班级</th>   
+<th>发布时间</th>  
+<th>提交数</th>
+<th>批阅数</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr id="row{id}">
+<td><code><label data-subject="{subject}"></label></code></td> 
+<td><a href="?t=homework_info&id={id}" target="_blank">{title}</a></td> 
+<td><code><label data-cid="{cid}"></label></code></td> 
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td> 
+<td><em>{submits}/{nums}</em></td>    
+<td><em>{remarks}/{nums}</em></td>                 
+<td> 
+<a href="?t=homework_info&id={id}" title="预览" class="glyphicon glyphicon-zoom-in" target="_blank"></a>
+<a href="?t=homework_result&id={id}" title="批阅/成绩" class="glyphicon glyphicon-edit" target="_blank"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({id:'{id}',do:'d'})"></a>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div>  
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+l_tpl="tech_homework";
+$(function(){
+    $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  }); 
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  }); 
+  $.post("./srv/rdo.php?", {tpl:"get_class"}, function (d, e) {       
+    cid=JSON.parse(d); 
+    for(k=0;k<cid.length;k++){
+       $("label[data-cid='"+cid[k].id+"']").text(cid[k].name);
+    }  
+   }); 
+});    
+function delths(v,obj){
+   if(!confirm("确定要删除数据吗？"))return;
+   $.post("./srv/sdo.php", {tpl:"del_homework",id:v}, function (d, e) {  
+      $(obj).parent().parent().remove();
+  });
+} 
+</script>

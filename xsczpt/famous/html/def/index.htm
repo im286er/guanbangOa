@@ -1,0 +1,116 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}</title>
+<meta charset="gbk">   
+{cssjs}
+<script type="text/javascript" src="html/def/js/myfocus-2.0.1.min.js" charset="utf-8"></script><!--引入myFocus库-->
+<script type="text/javascript">
+myFocus.set({
+    id:'boxID',//焦点图盒子ID
+    pattern:'mF_fancy',//风格应用的名称
+    time:3,//切换时间间隔(秒)
+    trigger:'click',//触发切换模式:'click'(点击)/'mouseover'(悬停)
+    width:391,//设置图片区域宽度(像素)
+    height:207,//设置图片区域高度(像素)
+    txtHeight:'default'//文字层高度设置(像素),'default'为默认高度，0为隐藏
+});
+</script>
+</head>
+<body>
+{top}
+<!-- 公共头部结束-->
+
+<!--页面主体内容-->    
+<div class="container f_index_main"> 
+{head}
+<div class="f_top">
+<div class="f_top_left"  id="slides">
+
+<div id="boxID">
+	<div class="loading"><img src="html/def/images/loading.gif" alt="请稍候..." /></div>
+	<div class="pic">
+<ul>
+<!-- START slide --> 
+<li><img src="/upds/famous/slide/{pic}" onerror="this.src='/error/logo.jpg';" width="391" height="207"/></li>
+<!-- END slide -->
+</ul>
+</div>   
+</div> 			   		
+</div>
+
+<div class="f_top_right">
+
+<div class="f_title">
+<span class="f_title_left">最新更新</span>
+<span class="f_title_right"><a href="./?t=news&f={id}">更多&gt;&gt;</a></span>
+</div><!--title-->
+
+<div class="f_news_list">
+<ul>
+<!-- START news --> 
+<li> 
+<a href="./?t=new&f={fid}&id={id}" target=_blank> {title} <code><script>show_TS("{timestamp}");</script></code></a>
+</li>
+<!-- END news -->  
+</ul>
+</div>
+</div>
+
+</div>
+ 
+<div class="f_slidepic">
+<div class="f_title">
+<span class="f_title_left">团队风采</span>
+<span class="f_title_right"><a href="./?t=mien&f={f}">更多&gt;&gt;</a></span>
+</div>
+<div class="f_sp_content">
+<!-- START pics -->
+<div class="f_sp_pic"><a href="./?t=mien&f={fid}" title="{name}" target="_blank"><img src="/upds/famous/mien/t_{pic}" onerror="this.src='/error/logo.jpg';" style="width:180px;height:120px;"/></a></div>
+<!-- END pics -->
+</div>
+</div>
+
+<div class="f_main"> 
+<!-- START list -->
+<div class="f_m_content">
+<div class="f_title">
+<span class="f_title_left">{name}</span>
+<span class="f_title_right"><a href="./?t=news&f={fid}&c={id}">更多&gt;&gt;</a></span>
+</div>
+<div class="f_news_list1">
+<ul>
+<!-- START rp -->
+<li> 
+<a href="./?t=new&f={fid}&id={id}" target=_blank>{title} <code><script>show_TS("{timestamp}");</script></code></a>
+</li>
+<!-- END rp -->  
+</ul>
+</div>
+</div>
+<!-- END list -->
+
+	</div>
+<div class="f_sidebar">    
+<div class="f_member">
+<div class="f_title">
+<span class="f_title_left">工作室成员</span>
+<span class="f_title_right"><a href="./?t=member&f={id}">更多&gt;&gt;</a></span>
+</div>
+<div class="f_m_container">
+<!-- START member -->
+<div class="f_mem_pic"><a href="/zone/?id={uid}" target=_blank>
+<img src="/upd/face/{uid}.jpg" onerror="this.src='/error/logo.jpg';" width="80px" height="80px"/>
+</a>
+<p>{truename}</p>
+</div>
+<!-- END member -->
+</div>
+
+</div>
+</div>
+</div>
+
+{foot} 
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="common/jquery.min.js"></script>
+<script type="text/javascript" language="javascript">
+//删除联系人
+    function delRelation(id){
+		if(confirm("你确定删除此联系人吗?")){
+			$.ajax({
+				type     : "POST",
+				url      : "./srv/ajax.php",
+				data     : "id="+id+"&flag=del_relation",
+				dataType : "json",
+				success  : function(ajaxData){
+					switch(ajaxData.flag){
+						case "true" :
+							alert(ajaxData.value);
+							$("#relation_"+id).fadeOut("slow");
+						break;
+						case "false" :
+							alert(ajaxData.value);
+						break;
+					}
+				}
+			});
+	    }	
+    }
+</script>
+</head>
+<body>
+	<div class="main">
+		<div class="box">
+				<div class="boxtitle">
+					<label><a href="./?t=stu_modify">基本信息</a></label>{str}<label><a href="./?t=pass_modify">修改密码</a></label>
+                </div>		
+				
+                          <form  id="form1" name="form1" method="post" action="./srv/stu_add_submit.php" >				
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+                            <tr class="tabtitle" height="26">
+                            <td width="8%" class="tabtd">关系</td>
+                             <td width="15%" class="tabtd">姓名</td>
+                             <td width="20%" class="tabtd">工作单位</td>
+                             <td width="15%" class="tabtd">联系方式</td>
+                             <td class="tabtd">操作选项</td>
+                            </tr>
+                        <!-- START list5 --> 
+                         <tr id="relation_{id}" class="tabtr" onmousemove="$(this).css('background-color','#a3c0f9');" onmouseout="$(this).css('background-color','#ffffff');">
+                          <td class="tabtd">{relation}</td>
+                          <td class="tabtd">{truename}</td>
+                          <td class="tabtd">{company}</td>
+                          <td class="tabtd">{telphone}</td>
+                          <td class="tabtd" align="left">&nbsp;&nbsp;
+                            <img src="images/037.gif" /> <a href="./?t=stu_contactmod&id='{id}'">修改</a> 
+                            <img src="images/010.gif" /> <a href="javascript:delRelation({id});">删除</a>
+                          </td>
+                         </tr>
+                        <!-- END list5 -->  
+                    </table>					
+							<div class="boxfooter2">
+							<input type="text" id="id" value="" style="display:none;"/>
+							<a href="./?t=stu_contactadd" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;padding-left: 6px;">添加联系人</a>
+							</div>
+                         </form>				
+                <!--联系人信息-->                   
+		</div>
+	</div>
+{footer}      
+</body>
+</html>

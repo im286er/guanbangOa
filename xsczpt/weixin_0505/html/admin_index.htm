@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>{title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/ionic.min.css">
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+</head>
+<body>
+<header><h1>江苏省海安高级中学学生成长平台</h1><a href="?t=admin_message" target="" class="glyphicon glyphicon-volume-down" style="font-size:1.8rem;line-height:25px;"><i class="num" id="num" style="font-size:.8rem;position:absolute;top:-.7rem;"></i></a></header>
+
+<section class="fl wout">   
+	<ul class="recom_inlist mb10">
+		<!-- <li>
+			<a class="rec_img" href="?t=jiangcheng"><i class="iconfont mes_tips"><img src="images/hi_img1.jpg" /></i></a>
+			<a class="name" href="?t=jiangcheng">学生奖惩管理</a>
+			<i>jiangcheng guanli</i>
+		</li> -->
+		<!--<li>
+			<a class="rec_img" href="?t=zhsz_other"><i class="iconfont mes_tips"><img src="images/hi_img2.jpg" /></i></a>
+			<a class="name" href="?t=zhsz_other">综合素质评价</a>
+			<i>zonghe suzhi pingjia</i>
+		</li>-->
+		<li>
+			<a class="rec_img" href="?t=report_custom_check"><i class="iconfont evaluate"><img src="images/mi_img16.jpg" /></i></a>
+			<a class="name" href="?t=report_custom_check">成长经历审核</a>
+			<i>chengzhang jingli</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=reply_manage"><i class="iconfont mes_tips"><img src="images/hi_img11.jpg" /></i></a>
+			<a class="name" href="?t=reply_manage">他人评价</a>
+			<i>taren pingjia</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=score_manage"><i class="iconfont mes_tips"><img src="images/hi_img3.jpg" /></i></a>
+			<a class="name" href="?t=score_manage">成绩管理</a>
+			<i>chengji guanli</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=stamina_rs_manage"><i class="iconfont mes_tips"><img src="images/hi_img4.jpg" /></i></a>
+			<a class="name" href="?t=stamina_rs_manage">体能管理</a>
+			<i>tineng guanli</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=physique_manage"><i class="iconfont mes_tips"><img src="images/hi_img5.jpg" /></i></a>
+			<a class="name" href="?t=physique_manage">体质管理</a>
+			<i>zonghe suzhi pingjia</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=remarks"><i class="iconfont mes_tips"><img src="images/hi_img12.jpg" /></i></a>
+			<a class="name" href="?t=remarks">友朋寄语</a>
+			<i>youpeng jiyu</i>
+		</li>
+		<li>
+			<a class="rec_img" href="?t=skills_manage"><i class="iconfont cre_inquiry"><img src="images/hi_img7.jpg" /></i></a>
+			<a class="name" href="?t=skills_manage">技能素质管理</a>
+			<i>jineng suzhi guanli</i>
+		</li>
+		<script type="text/javascript">
+		  if({isadmin}){
+			document.write('<li><a class="rec_img" href="?t=course_all_statistics"><i class="iconfont mes_tips"><img src="images/hi_img6.jpg" /></i></a><a class="name" href="?t=course_all_statistics">技能素质统计</a><i>jineng suzhi guanli</i></li>');
+		  }
+		</script> 
+		<!-- <li>
+			<a class="rec_img" href="?t=report_custom_check"><i class="iconfont evaluate"><img src="images/mi_img16.jpg" /></i></a>
+			<a class="name" href="?t=report_custom_check">成长经历审核</a>
+			<i>chengzhang jingli</i>
+		</li> -->
+		
+		<!-- <li>
+			<a class="rec_img" href="?t=reply_manage"><i class="iconfont mes_tips"><img src="images/hi_img11.jpg" /></i></a>
+			<a class="name" href="?t=reply_manage">他人评价</a>
+			<i>taren pingjia</i>
+		</li> -->
+		<!-- <li>
+			<a class="rec_img" href="?t=remarks"><i class="iconfont mes_tips"><img src="images/hi_img12.jpg" /></i></a>
+			<a class="name" href="?t=remarks">友朋寄语</a>
+			<i>youpeng jiyu</i>
+		</li> -->
+		<script type="text/javascript">
+		  if({isadmin}){
+			document.write('<li><a class="rec_img" href="?t=work_exp_search"><i class="iconfont mes_tips"><img src="images/hi_img9.jpg" /></i></a><a class="name" href="?t=work_exp_search">毕业生工作经历</a><i>biyesheng gongzuo jingli</i></li><li><a class="rec_img" href="?t=biye_search"><i class="iconfont mes_tips"><img src="images/hi_img10.jpg" /></i></a><a class="name" href="?t=biye_search">毕业生学习经历</a><i>biyesheng xuexi jingli</i></li>');
+		  }
+		</script> 
+		<script type="text/javascript">
+		  if({ismaster}){
+			document.write('<li><a class="rec_img" href="?t=report_custom_select"><i class="iconfont mes_tips"><img src="images/mi_img5.jpg" /></i></a><a class="name" href="?t=report_custom_select">成长经历查询</a><i>chengzhang select</i></li>');
+		  }
+		</script>
+	</ul>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li class="current"><a href="?t=admin_index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li><a href="?t=admin_user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script>
+var uid="{uid}";
+getmsgs();
+function getmsgs(){
+$.ajax({
+    type: 'POST',
+    url: "./srv/top.php" ,
+    data: {tpl:"get_msgs",uid:uid} ,
+    success: function(d){
+	//alert(d);
+	 if(d >0){
+		$("#num").css("display","inline");
+		$("#num").html(d);
+		$("#num").parent().removeClass("mes").addClass("mes_d");
+	  }else{
+		$("#num").css("display","none");
+		$("#num").parent().removeClass("mes_d").addClass("mes");
+	  }
+	} 
+});
+ setTimeout(function() {   //此处是过一定时间后自动消失
+        getmsgs();
+    }, 3000);
+}
+</script>
+</body>
+</html>

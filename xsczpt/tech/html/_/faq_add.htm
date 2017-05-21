@@ -1,0 +1,128 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>发布问题-{gtitle}</title>   
+{cssjs_edit}  
+<link rel="stylesheet" href="css/forms.css">
+{cssjs_dialog} 
+{editor} 
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+    <h2>FAQ管理</h2>    
+      <ul> 
+    <li><a href="./?t=faq" >学员问答</a></li>
+    <li><a href="./?t=faq1" >我的问答</a></li> 
+    </ul>
+  </div> 
+</dt>
+<dd>
+<form id="form1">      
+  <div class="banner"><label>发布问题</label> 
+  <span><a href="./?t=faq1">返回</a>  </span>    
+  </div> 
+      <table class="table1">             
+        <tr><td></td>        
+          <td><input id="title" placeholder="请用一句话说明您的问题" type="text" style="width:300px;" maxlength="60"/></td>
+        </tr>
+        <tr><td></td>
+          <td><input id="rname" placeholder="问谁" type="text" style="width:150px;" disabled/> 
+          <input type="text" id="rid" value="" style="display:none;"/>
+          <a href="javascript:void(0);" id="btnc" >+选择回答人</a></td>
+        </tr> 
+         <tr><td></td>            
+          <td> 
+          <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>
+<script type="text/plain" id="umdes" style="width:600px;height:250px;">{des}</script>
+          </td>
+        </tr>
+     
+        <tr><td></td>      
+          <td>
+           <input type="text" id="id" value="" style="display:none;"/>
+          <input type="button" id="btn"  value="保存"/>
+          <input type="reset" class="but1" value="取消"/>
+          </td>
+        </tr>
+      </table> 
+</form>       
+</dd>
+</dl>
+</div>
+{footer}
+</body>
+</html>
+
+
+<script type="text/javascript">
+var um = UM.getEditor('umdes'); 
+$(function(){
+  if(queryStr("d")=="m"){
+     readID({tpl:queryStr("t"),"do":"r",id:queryStr("id"),frmid:"#form1"});  
+  }
+    $("#btnc").bind("click", function(){ $('#dlg1').dialog('open'); }); 
+    $.post("./srv/rdo.php?", {tpl:"get_class"}, function (d, e) {                 
+       selectShowData("#class",JSON.parse(d),"id","name");    
+    }); 
+    $("#class").bind("change",function(){
+       if($(this).val()==""){return;}
+      $.post("./srv/rdo.php", {tpl:"get_class_tech","id":$(this).val()}, function (d, e) {                 
+       selectShowData("#tech",JSON.parse(d),"id","name");    
+      }); 
+   });  
+   $("#btn").bind("click", function(){  
+      if($("#rname").val()==""){alert("请选择一个回答人");return;}
+      if($("#name").val()==""){alert("请输入您的问题标题");return;}
+      SaveAM({tpl:queryStr("t"),"do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+      
+});
+function dosome(ed,data){
+  if(queryStr("d")=="m"){
+       location.href="./?t=faq_info&id="+queryStr("id");
+  }
+  else{    
+      location.href="./?t=faq_info&id="+data.substr(data.indexOf('ok')+2);
+  }
+}
+
+function seltech(){
+     if($("#tech").val()==undefined||$("#tech").val()==""){alert("请选择一个教师");return;}
+     $("#rname").val($("#tech").find("option:selected").text());
+     $("#rid").val($("#tech").val());   
+      $('#dlg1').dialog('close');  
+}	
+</script>
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:400px;height:300px;padding:10px;" title="选择" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+      seltech();    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<form id="form">
+<table class="">  
+    <tr>
+        <td style="width:80px;">选择班级：</td>
+        <td> <select id="class"></select>  
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr>
+    <tr>
+        <td>选择教师：</td>
+        <td>        <select id="tech" size="10"><option value="">--选择教师--</option></select> </td>
+    </tr>      
+</table>
+</form>
+</div>

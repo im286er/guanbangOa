@@ -1,0 +1,139 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" /> 
+
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />   
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				<label><a href="./?t=zhsz_table&uid={uid}">{truename}的综评表</a></label> 
+				<label class="current"><a href="javascript:void(0);">日常表现</a></label> 
+				<script type="text/javascript">
+				  if({curTerm_id}=={sid}){
+						if({flag_type}==1){
+							document.write('<label><a href="./?t=zhsz_other_vote&uid={uid}">我要举报</a></label>');
+						}
+						if({flag_type}==2&&{isMaster1}){
+							document.write('<label><a href="./?t=zhsz_master_vote&uid={uid}">班主任评价</a></label><label><a href="./?t=zhsz_master_comment&uid={uid}">班主任评语</a></label>');
+						}
+						document.write('<label><a href="./?t=zhsz_other_comment&uid={uid}">我要评论</a></label>');
+				  }
+				 </script>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<div style="width:100%;height:20px; line-height:20px;font-size:14px;float:left;margin-bottom">您正在对【{truename}同学】的日常表现进行记录：<font color="#f00"><b>请务必本着客观、公正、实事求的态度。</b></font></div>
+			<form action="./srv/zhsz_performance_submit.php" method="post" onsubmit="return checkPerformance();">
+			<table width="960" border="0" class="tab" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+				<tr>
+					<td class="tabtd2_L">日常表现</td>
+				  <td class="tabtd2_R"><textarea name="comment" id="comment" cols="80" rows="15" style="font-size:12px;"></textarea></td>
+				  
+			  </tr>
+			  <div class="ha_boxfile pr"  id="uploadPic">
+					<a class="webuploader_pick" onclick="upImagefj()" href="javascript:void(0);" style="float:left;"><span class="btn-green">上传图片</span></a>
+				  <em style="height:40px;line-height:40px;float:left;width:200px;">（最多3张图片）</em>
+			  <tr>
+					<td class="tabtd2_L">公开状态</td>
+				  <td class="tabtd2_R">
+					<select name="pertype">  
+					  <option value ="0" selected="selected">公开</option>  
+					  <option value ="1">保密</option>
+					  <option value ="2">本班</option> 
+					</select> 
+				  </td>
+			  </tr>
+			</table>
+			<div class="boxfooter2">
+			  <input type="hidden" name="term_id" id="term_id" value="{sid}" />
+			  <input type="hidden" name="uid" id="uid" value="{uid}" />
+			  <input name="but_add" id="but_add" type="submit" value="保存信息" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" />&nbsp;&nbsp;<input name="but_re" id="but_re" type="button" value="返回" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" onclick="location.href='./?t=zhsz_performance&uid={uid}'" />
+			</div>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/plain" id="upload_img" name="upload_img"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+//表单提交验证
+function checkPerformance()
+{
+	if($.trim($("#comment").val())==""){
+		alert("请填写日常表现。");
+		$("#comment").select();
+		return false;
+	}
+	$("#but_add").attr("disabled",true);
+	return true;
+}
+
+ //上传图片
+var editor=UE.getEditor('upload_img');
+editor.ready(function(){
+	editor.setDisabled();
+	editor.hide();
+	editor.addListener('beforeInsertImage',function(t,arg){
+		var limit=(arg.length>3)?3:arg.length;
+		var num=Math.floor(Math.random()*1000);
+		for(i=0;i<limit;i++){
+			var total = "<div style='width:100px;float:left;margin-right:20px;text-align:center;' class='ha_eimglist'>";
+			var str="<input type='hidden' id='PicUrl"+num+"' name='PicUrl[]' value='"+arg[i].src+"'>";
+			var st="<input type='hidden' id='PicName"+num+"' name='PicName[]' value='"+arg[i].title+"'>";
+			var s="<img id='preview"+num+"' style='width:100px;height:100px;margin-top:20px;' src='"+arg[i].src+ "'/><a id='del"+num+"' onclick='delimg2("+num+")' style='display:block;width:100%;line-height:25px;height:25px;cursor:pointer;'>删除</a>";
+			total+=str+st+s;
+			total += "</div>";
+			$('#uploadPic').append(total);               	
+		}
+		
+		
+		$(".ha_eimglist img").each(function(){
+			$(this).bind("click",function(){
+				var src=$(this).attr('src');
+				layer.open({
+				  type: 1,
+				  title: false,
+				  closeBtn: 0,
+				  area: '500px',
+				  skin: 'layui-layer-nobg', //没有背景色
+				  shadeClose: true,
+				  content: '<a href='+src+' target="_blank"><img src="'+src+'" style="width:100%;"></a>'
+				});	
+			})
+		});	
+	})
+})
+function upImagefj(){
+	var myImage=editor.getDialog("insertimage");
+	myImage.open();
+}
+function delimg2(i){
+	$("#preview"+i).remove();
+	$("#del"+i).remove();
+	$("#PicUrl"+i).remove();
+	$("#PicName"+i).remove();
+}
+
+</script> 

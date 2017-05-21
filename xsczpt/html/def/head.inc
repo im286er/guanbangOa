@@ -1,0 +1,46 @@
+<div class="col-sm-12">  
+<div class="row text-center text-danger" style="background:url(/img/logo.png);height:150px;">
+  <h2><b>{gtitle}</b></h2>
+  <h4><b>【教、科、研、平台】</b></h4>
+</div>        
+<br/>
+
+<nav class="navbar navbar-default" >
+ <div class="navbar-header">
+    <a class="navbar-brand" href="/">首页</a>
+ </div>
+ <div>
+    <ul class="nav navbar-nav">
+       <li><a href="/?t=school">机构</a></li>         
+       <li><a href="/?t=famous">名师工作室</a></li>
+       <li><a href="/?t=class">班级</a></li>
+       <li><a href="/?t=group">群组</a></li>         
+       <li><a href="/?t=arts">新闻</a></li>
+       <li><a href="/?t=topics">专题</a></li>
+       <li><a href="/?t=problems">课题</a></li>  
+      <li><a href="/subjecter">学科</a></li>
+      
+       <li><a href="http://lib.kx68.com">资源</a></li>  
+       <li><a href="/?t=actives">活动</a></li>                    
+       <li class="dropdown hide">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">备课<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+             <li><a href="#">个人备课</a></li>
+             <li><a href="#">集备</a></li>  
+          </ul>
+       </li> 
+       <li class="dropdown hide">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">课程<b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+             <li><a href="#">微课</a></li>
+             <li><a href="#">晒课</a></li>  
+          </ul>
+       </li>
+       
+       <li><a href="/man">管理</a></li>  
+    </ul>
+ </div>
+</nav>
+</div>

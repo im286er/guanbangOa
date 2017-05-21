@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+	<div class="main">
+		<div class="box">
+				<div class="boxtitle">
+                  <label class="current"><a href="./?t=search_physique">体能管理</a></label><label><a href="./?t=search_stamina">体质管理</a></label>
+                </div>				
+		<div class="tabbody">
+		    <!--体能信息--> 
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td class="tabtd">检测时间</td>
+					 <td class="tabtd">姓名</td>
+					 <!-- START list -->  
+					 <td class='tabtd'>{name}</td>
+					 <!-- END list -->
+					 <td class="tabtd">操作选项</td>
+				</tr>
+				{str_total}
+			</table>
+		</div>              				 
+                             
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	</div>
+{footer}      
+</body>
+</html> 

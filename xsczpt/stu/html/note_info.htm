@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>± º«œÍ«È-{gtitle}</title> 
+{cssjs}   
+</head>
+<body>
+{top}
+<div class="container"> 
+{head}  
+
+<div class="col-sm-12">
+<div class="page-header">
+   <h3>{title}<small><script>document.write(utctime('{timestamp}'));</script></small>  
+   <a href="./?t=note" class="btn btn-primary pull-right" >∑µªÿ</a>  </h3>
+</div>
+
+<div class="rows">
+{des}
+</div>
+</div>      
+ </div>
+      
+      
+{foot}
+</body>
+</html>
+<script type="text/javascript">      
+$(function(){
+  //see({tbl:"note",id:queryStr("id")});
+  vote({do:"see",id:queryStr("id"),tbl:"stu_note"});
+}); 
+</script>

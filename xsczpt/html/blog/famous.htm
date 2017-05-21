@@ -1,0 +1,432 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<link href="/html/blog/css/famous/studio.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript" src="/html/parent/js/jquery.min.js"></script>
+{meta}
+<script src="/html/blog/js/famous/article_banner.js" type="text/javascript"></script>
+<script type="text/javascript" src="/html/blog/js/famous/jquery.SuperSlide.2.1.1.js"></script>
+<title>同心圆父母学堂工作室汇聚页</title>
+</head>
+
+<body>
+<!--顶部-->
+{top}
+
+{famous_logo}
+{menu}
+{famous_menu}
+
+<!--banner-->
+<div id="lanrenzhijia">
+		<ul id="inner">
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+		</ul>
+		 
+	</div>
+    
+<!--内容-->
+<div class="xst_content_box">
+	<!--left-->
+	<div class="left_box">
+    
+  <!--最新文章-->
+    	<div class="article">
+        	<ul>
+            	<h1>最新文章</h1>
+                <a class="more" href="/?t=art_list&pc=0">更多+</a>
+            <div class="clearfix"></div>
+            </ul>
+            
+            <div class="article_box">
+            	
+            
+  <!-----------图片轮播----------->    
+  <div class="news_content">
+    	 <div id="content">
+  <div id="main">
+    <!-----------图片切换  begin----------->
+    <div class="sub_box">
+      <div id="p-select" class="sub_nav">
+        <div class="sub_more"> </div>
+        <div class="sub_no" id="bd1lfsj">
+          <ul>
+            <!-- START new_num -->
+            <li>{num}</li>
+            <!-- END new_num -->
+          </ul>
+        </div>
+      </div>
+      <div id="bd1lfimg">
+        <div>
+          <dl class="show">
+          </dl>
+          <!-- START new_pic -->
+          <dl>
+            <dt><a href="/?t=art_info&id={id}" target="_blank"><img src="/upds/article/{pic}" alt="{title}"></a></dt>
+            <dd>
+              <h2><a href="/?t=art_info&id={id}" target="_blank" >{title}</a></h2>
+               </dd>
+          </dl>
+          <!-- END new_pic -->
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">movec();</script>
+    
+    <!-----------图片切换  end----------->
+  </div>
+  <div class="clearfix"></div>
+  <!--------main end--------->
+</div>
+</div>
+			
+            <div class="article_list">
+            	<ul>
+                <!-- START new_art -->
+                <li>
+                	<a href="/?t=art_info&id={id}" target="_blank"><span>{title}</span></a>
+                  <span style="height:45px;overflow:hidden;">{des}</span>
+                </li>
+                <!-- END new_art -->
+              </ul> 
+            </div>
+
+	 </div>
+      <div class="clearfix"></div>
+        </div>	
+        
+  <!--特色工作室-->
+    <div class="studio">
+        	<ul>
+            	<h1>特色工作室</h1>
+                <a class="more" href="/?t=famous_search">更多+</a>
+            <div class="clearfix"></div>
+            </ul>
+			<div class="studio_box">
+          <!-- START char_famous -->
+            	<div class="studio1">
+                	<a href="/famous/?f={id}" target="_blank"><img src="/upds/famous/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" /></a>
+                    <ul>
+                    	  <p><a href="/famous/?f={id}" target="_blank" title="{name}">{name}</a></p>
+                        <!-- START rp -->
+                        <p>学科：<span>{name}</span></p>
+                        <p>成员：{fman}</p>
+                        <!-- END rp -->
+                        <!--<p>访问：199924</p>-->
+                    </ul>
+              </div>
+           <!-- END char_famous -->     
+        </div>
+        <div class="clearfix"></div>   
+      </div>
+          
+          
+    
+  <!--发现工作室-->
+    <div class="found_studio">
+        	<ul>
+            	<h1>发现工作室</h1>
+                <a class="more" href="/?t=famous_search">更多+</a>
+            <div class="clearfix"></div>
+            </ul>
+            
+     
+<!--工作室列表-->  
+<div class="list_box">
+	<div class="list">
+  	<div class="add">地区：</div>
+    <div id="addr" class="lists">
+      <a addrid="0" class="red">全部</a>
+    </div>
+  </div>
+  <div class="list">
+  	<div class="add">街道：</div>
+    <div id="street" class="lists">
+      <a streetid="0" class="red">全部</a>
+    </div>
+  </div>
+  <div class="list">
+  	<div class="add">学校：</div>
+    <div id="sch" class="lists">
+      <a schid="0" class="red">全部</a>
+    </div>
+  </div>
+</div> 
+<div class="found_box" id="famous_list">  
+</div>
+</div> 
+    
+  <!--名师课堂-->
+    <div class="study clear">
+        	<ul>
+            	<h1>名师课堂</h1>
+                <a class="more" href="#">更多+</a>
+            <div class="clearfix"></div>
+            </ul> 
+           <div class="stud_vid">
+           		<div class="big_box">
+                	<a href=""><img src="/html/blog/images/famous/-03.png" /></a>
+                    <div class="black_box">
+                    <p>小徐健顺：理解了传统文化，就会理解传统教育。它是一门很难理解的课程...</p>
+					<span>朱德庸      播放：1022次</span>
+					</div>
+                </div>
+                <div class="min_box">
+                	<div class="study1">
+                    	<div class="st">
+                        	<a href=""><img src="/html/blog/images/famous/go_1.png" /></a>
+                        </div>
+                        <a class="sty" href="">课程：国画技巧表现</a>
+                        <span>名师：杨千      播放：23次</span>
+                    </div>
+                    
+                    <div class="study1">
+                    	<div class="st">
+                        	<a href=""><img src="/html/blog/images/famous/go_2.png" /></a>
+                        </div>
+                        <a class="sty" href="">课程：国画技巧表现</a>
+                        <span>名师：杨千      播放：23次</span>
+                    </div>
+                    
+                    <div class="study1">
+                    	<div class="st">
+                        	<a href=""><img src="/html/blog/images/famous/go_3.png" /></a>
+                        </div>
+                        <a class="sty" href="">课程：国画技巧表现</a>
+                        <span>名师：杨千      播放：23次</span>
+                    </div>
+                    
+                    <div class="study1">
+                    	<div class="st">
+                        	<a href=""><img src="/html/blog/images/famous/go_4.png" /></a>
+                        </div>
+                        <a class="sty" href="">课程：国画技巧表现</a>
+                        <span>名师：杨千      播放：23次</span>
+                    </div>
+                </div>
+           </div> 
+            
+      <div class="clearfix"></div>       
+    </div>
+     
+  <!--最新资源-->
+    	<div class="ziyuan">
+        	<ul>
+            	<h1>学科资源</h1>
+                <a class="more" href="#">更多+</a>
+            <div class="clearfix"></div>
+            </ul> 
+            <div class="new_box">
+            	<div class="new">
+            		<div class="yel">最新</div>
+               	 		<li>
+                			<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+               		    </li>
+            		</div>
+            	</div> 
+                <div class="new">
+            		<div class="yel1">热门</div>
+               	 		<li>
+                			<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+                    		<a href="">高中语文：《变成什么好》课件 蔡甸三小杨波.ppt</a>
+               		    </li>
+            		</div>
+            	</div> 
+            </div>     
+            
+    <!--right-->      
+         
+	<div class="right_box">
+    <!--最新活动-->      
+
+    	<div class="active">
+        	<ul>
+            	<h1>最新活动</h1>
+                <a class="more" href="#">更多+</a>
+            <div class="clearfix"></div>
+            </ul> 
+        	<div class="active_box">
+            	<div id="active_banner">
+					<ul id="slides">
+					<li style="background:url(/html/blog/images/famous/active_banner.png) no-repeat center top"><a href="javascript:"></a></li>
+					<li style="background:url(/html/blog/images/famous/bo_active.png) no-repeat center top"><a href="javascript:"></a></li>
+	                </ul>
+				</div>
+                <div class="clearfix"></div>
+                 <ul>
+                  <!-- START new_active -->
+                 	  <li><a href="/activity?t=active&id={id}" target="_blank" >{name}</a><span class="time">{timestamp}</span></li>
+                  <!-- END new_active -->
+                 </ul>
+            </div>
+        
+           <div class="clearfix"></div>  
+        </div>  
+        
+        <!--工作室公告-->
+    <div class="notice">
+        	<ul>
+            	<h1>工作室公告</h1>
+                <a class="more" href="/?t=art_list&pc=2" target="_blank">更多+</a>
+            <div class="clearfix"></div>
+            </ul>  
+            <div class="not_list">
+            	<ul>
+                <!-- START fam_notice -->
+                	<li>
+                    <a href="/famous/?t=new&id={id}&f={fid}">{title}</a>
+                    <span class="time">{timestamp}</span>
+                  </li>
+                <!-- END fam_notice -->
+              </ul>
+            </div>
+             
+    </div>        
+            
+         <!--工作室动态-->
+    <div class="play">
+        	<ul>
+            	<h1>工作室动态</h1>
+                <a class="more" href="/?t=famous_list" target="_blank">更多+</a>
+            <div class="clearfix"></div>
+            </ul>   
+             <!--滚动-->   
+            <div class="pla_list">
+			 
+			<div class="bd">
+				<ul class="infoList">
+          <!-- START fam_dynamics -->
+					<li>
+           	<a href="/zone/?id={uid}" target="_blank"><img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';"></a>
+           	<a class="name" href="/zone/?id={uid}" target="_blank">{truename}</a>
+            <span class="time">{timestamp}</span>
+            <div class="clearfix"></div>
+            <span class="dynamics" >发表文章：<a href="/famous/?t=new&id={id}&f={fid}" target="_blank" >{title}</a></span>
+          </li>
+          <!-- END fam_dynamics -->
+				</ul>
+			</div>
+		</div> 
+       
+ </div>
+</div>         
+</div>
+<div class="clearfix"></div> 
+       
+<script type="text/javascript" src="/html/blog/js/famous/studio_banner.js"></script>
+<script type="text/javascript" src="/html/blog/js/famous/active_banner.js"></script>       
+       
+<!--页脚-->
+{foot}      
+
+
+<script>
+  $(function(){
+    jQuery(".pla_list").slide({mainCell:".bd ul",autoPlay:true,effect:"topMarquee",vis:9,interTime:50});
+		  
+    $(".time").each(function(){
+      $(this).html(jsDateDiff($(this).html()));
+    });
+    
+    getfamous(0,0,0);
+    $.post("/srv/rdo.php?", {tpl:"getaddr2",id:0}, function (d) {
+      d=eval(d);
+      for(var i=0;i<d.length;i++){
+        $("#addr").append('<a addrid="'+d[i].id+'" >'+d[i].name+'</a>'); 
+      }
+      $("#addr a").click(function(){
+         $("#addr a").removeClass("red");
+         $("#addr a[addrid="+$(this).attr("addrid")+"]").addClass("red");
+         if($(this).attr("addrid")==0){
+            $("#street").empty();$("#street").append('<a streetid="0" class="red">全部</a>');
+            $("#sch").empty();$("#sch").append('<a schid="0" class="red">全部</a>');
+            getfamous(0,0,0);
+            return;
+         }
+         getsch($(this).attr("addrid"),0);
+         
+         $.post("/srv/rdo.php?", {tpl:"getaddr2",id:$(this).attr("addrid")}, function (d) {
+            d=eval(d);
+            $("#street").empty();
+            for(var i=0;i<d.length;i++){
+              $("#street").append('<a streetid="'+d[i].id+'" >'+d[i].name+'</a>');
+            }
+            $("#street a").click(function(){
+              $("#street a").removeClass("red");
+              $("#sch a").removeClass("red");
+              $("#street a[streetid="+$(this).attr("streetid")+"]").addClass("red");
+              getsch($("#addr a[class='red']").attr("addrid"),$(this).attr("streetid"));
+            })
+         });
+      });
+    });
+    
+    
+  })
+  
+  function getsch(addrid,strid){
+      $.post("/srv/rdo.php?", {tpl:"get_blog_sch","addrid":addrid,"strid":strid}, function(d){
+          d = eval(d);
+          $("#sch").empty();
+          for(var i=0;i<d.length;i++){
+            $("#sch").append('<a schid="'+d[i].id+'" >'+d[i].name+'</a>')
+          }
+          $("#sch a").click(function(){
+             $("#sch a").removeClass("red");
+             $("#sch a[schid="+$(this).attr("schid")+"]").addClass("red");
+             getfamous(addrid,strid,$(this).attr("schid")); return;
+          })
+      });
+      var schid = 0;
+      if($("#sch a").hasClass("red")){
+        schid = $("#sch a[class='red']").attr("schid"); 
+      }
+      getfamous(addrid,strid,schid);
+  }
+  
+  function getfamous(addrid,strid,schid){
+      $.post("/srv/rdo.php?", {tpl:"get_blog_famous","addrid":addrid,"strid":strid,"schid":schid}, function(d){
+        d =eval(d);
+        $("#famous_list").empty();
+        for(var i=0;i<d.length;i++){
+            $("#famous_list").append('<div class="found1">'+
+		          '<a href="/famous/?f='+d[i].id+'" target="_blank"><img src="/upds/famous/logo/'+d[i].id+'.jpg" onerror="this.src=`/error/logo.jpg`" /></a>'+
+   	          '<div class="rig_ab"><p><a href="/famous/?f='+d[i].id+'" target="_blank">'+d[i].name+'</a></p>'+
+        	    '<p>学科：<span>高中历史</span></p><p>成员：170</p></div></div>');
+        }
+        
+      });
+  }              
+  
+  function jsDateDiff(publishTime){       
+    var d_minutes,d_hours,d_days;       
+    var timeNow = parseInt(new Date().getTime()/1000);       
+    var d;       
+    d = timeNow - publishTime;       
+    d_days = parseInt(d/86400);       
+    d_hours = parseInt(d/3600);       
+    d_minutes = parseInt(d/60);       
+    if(d_days>0 && d_days<4){       
+        return d_days+"天前";       
+    }else if(d_days<=0 && d_hours>0){       
+        return d_hours+"小时前";       
+    }else if(d_hours<=0 && d_minutes>0){       
+        return d_minutes+"分钟前";       
+    }else{       
+        var s = new Date(publishTime*1000);       
+        // s.getFullYear()+"年";
+        return s.getFullYear()+"-"+(s.getMonth()+1)+"-"+s.getDate();       
+    }       
+  }                          
+
+</script>
+</body>
+</html>

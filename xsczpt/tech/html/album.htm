@@ -1,0 +1,140 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}     
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+<div class="page-header">
+<h3>我的相册 <small></small>
+<div class="btn-group pull-right">  
+  <a class="btn btn-primary" id="btn">+添加相册</a>  
+</div>
+</h3>
+</div>
+
+ 
+
+<table class="table table-striped"> 
+<thead>
+<tr> 
+<th>封面</th> 
+<th>名称</th>
+<th>最后更新</th>
+<th>照片</th>
+<th>权限</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr> 
+<td><img src="/upd/album/{uid}/{id}/t_{cover}" onerror="this.src='/error/logo.jpg';" width="100"></td>
+<td><a href="./?t=album_photo&id={id}" target=_blank>{name}</a><br/>
+<small>{pre}</small></td>  
+<td><code>{lastupdate}</code></td>
+<td><code>{nums}</code></td>  
+<td><visit v={visit}></visit></td>   
+<td><a class="glyphicon glyphicon-edit" title="编辑" title="编辑" onclick="moda({id:'{id}'})"></a>&nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a> 
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+
+{foot}
+</body> 
+</html> 
+<script type="text/javascript">    
+l_tpl="zone_album";  
+$(function(){ 
+  $("#btn").bind("click",function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val("");$('#dlg1').modal('show');});
+  $.get("/zone/data/visit.txt",function(d){$('#visit').html(d);});    
+  $.getJSON("/zone/data/visit.json.txt",function(d){for(i=0;i<4;i++)$("visit[v='"+i+"']").html(d[i]);});      
+    
+   $("#visit").bind("change", function(){        
+       if($(this).val()=="2")
+          $("#pwd_div").removeClass("hide");
+       else 
+          $("#pwd_div").addClass("hide");
+    });  
+});   
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_album",id:v}, function (d, e) {     
+      if(d.indexOf("ok")>-1)
+        $(obj).parent().parent().remove();
+      else 
+        alert(d);
+  });
+}  
+
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;}
+   //if($("#odx").val()==""){$("#odx").val("0");}          
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'',callback:"dosome"});  
+}
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1",callback:"rdcb"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){   
+    nid=data.substr(data.indexOf("ok")+2);       
+    $.post("./srv/sdo.php", {tpl:"upd_album",id:nid}, function (d, e) {     
+        location.reload();
+    });
+  }else msg(data);
+}
+ function rdcb(e,d){
+   if($("#visit").val()=="2"){         
+      $("#pwd_div").removeClass("hide");
+   }else　$("#pwd_div").addClass("hide");　  
+} 	
+</script>
+
+<div class="modal " id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+ <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 class="modal-title" id="label">创建相册</h4>
+ </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+<label for="firstname" class="col-sm-2 control-label">名字</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="name"  maxlength="50" placeholder="请输入名字"></div>
+</div> 
+<div class="form-group">
+<label class="col-sm-2 control-label">描述</label>
+<div class="col-sm-10"><textarea class="form-control" id="pre" rows="2" maxlength="250"></textarea></div>  
+</div>
+<div class="form-group">
+<label class="col-sm-2 control-label">权限</label>
+<div class="col-sm-4"><select id="visit" class="form-control"></select> </div>
+</div>  
+<div class="form-group hide" id="pwd_div">
+<label class="col-sm-2 control-label">密码</label>
+<div class="col-sm-10"><input type="text" class="form-control" id="pwd"  style="width:30%" maxlength="30"></div>
+</div> 
+<input type="text" id="id" value="" style="display:none;"/>
+<input type="text" id="nums" value="0" style="display:none;"/>
+<input type="text" id="cover" value="" style="display:none;"/>
+</form>
+</div>
+ <div class="modal-footer">
+  <button type="button" class="btn btn-primary" onclick=savesome()> 确定  </button>
+  <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+ </div></div></div></div>

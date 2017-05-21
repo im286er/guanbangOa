@@ -1,0 +1,81 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>个人中心-{gtitle}</title>
+{cssjs}   
+<script>
+var arr=new Array('','管理员','群主');
+var arr1=new Array('','默认班级');
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>创建记录      <small></small>      </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+<th>口号</th>
+<th>身份</th>  
+<th>状态</th>   
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/group/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/group?g={id}" target=_blank>{name}</a></td>
+<td><label data-school="{school}"></label></td>
+<td>创建者</td>
+<td><label data-state="{state}"></label></td>
+<td>
+
+<a class="glyphicon glyphicon-remove" title="注销" onclick="delths('{id}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+ $(function () {
+  $.getJSON("/data/state.json.txt", function (data) {          
+        for(i=0;i<4;i++)$("label[data-state='"+i+"']").text(data[i]);      
+  }); 
+  $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+       selectShowData("#school",JSON.parse(d),"id","name");    
+  });  
+   $.post("./srv/rdo.php", {tpl:"get_my_sch"}, function (d, e) {        
+       t=JSON.parse(d);  
+       for(k=0;k<t.length;k++){
+          $("label[data-school='"+t[k].id+"']").text(t[k].name);
+       }
+  }); 
+ });   
+
+function delths(v) {  
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"cel_grp","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+}
+
+</script>

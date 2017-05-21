@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>工作室-{gtitle}</title>
+{meta} 
+</head>
+<body> 
+{top}
+<div class="container">
+{head}   
+
+<div class="col-sm-3">
+<div class="panel panel-default">                                          
+   <div class="panel-heading"><h3 class="panel-title">优秀工作室</h3></div>
+   <div class="panel-body">
+  <!-- START lista -->   
+<p><a href="/famous?f={id}" target=_blank><img src="/famous/logo/{id}.jpg" style="max-width:48px;" onerror="this.src='/error/logo.jpg';">
+{name} </a> </p>
+<!-- END lista -->   
+   </div>
+   </div> 
+<div class="panel panel-default">                                          
+   <div class="panel-heading"><h3 class="panel-title">推荐工作室</h3></div>
+   <div class="panel-body">
+ 
+<!-- START listb -->   
+<p><a href="/famous?f={id}" target=_blank><img src="/famous/logo/{id}.jpg" style="max-width:48px;" onerror="this.src='/error/logo.jpg';">
+{name} </a> </p>
+<!-- END listb --> 
+   </div>
+   </div> 
+</div>
+
+
+<div class="col-sm-9">    
+<div class="panel panel-default">
+   <div class="panel-body">
+   <div class="col-sm-3"> <input type="text" class="form-control" id="so" placeholder="请输入名称" ></div>
+    <button type="button" class="btn btn-danger" style="background:#ff6300;" id="btn">查询</button>   
+   </div>
+</div> 
+
+<div class="panel panel-default">                                          
+   <div class="panel-heading"><h3 class="panel-title">最新工作室</h3></div>
+   <div class="panel-body">
+<table class="table table-striped"> 
+   <thead>
+      <tr>
+         <th>logo</th>
+         <th>名称</th>
+         <th>成员</th>
+      </tr>
+   </thead>
+   <tbody>
+<!-- START list -->   
+<tr>
+<td><a href="/famous?f={id}" target=_blank><img src="/famous/logo/{id}.jpg" style="max-width:72px;" onerror="this.src='/error/logo.jpg';"></a></td>
+<td><a href="/famous?f={id}" target=_blank>{name}</a>
+  <br/><code>口号：{slogan}</code></td>
+<td>{nums}</td>
+<td><code>{timestamp}</code></td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table> 
+<ul class="pagination pull-right">
+{page}
+</ul>   
+</div>
+</div> 
+
+ 
+</div>
+  
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() { 
+   if(queryStr("so")!="") $("#so").val(queryStr("so"));
+  //$.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {   
+  //}); 
+  $("#btn").bind("click",function(){ 
+    if($("#so").val()==""){alert("请输入一个名称");return;}
+    location.href="./?t=group&so="+$("#so").val();    
+  });  
+  /*$.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+  $("#addr1").bind("change", function(){getaddr($(this).val());getaddrv($(this).val());}); 
+  $("#addr2").bind("change", function(){getaddrv($(this).val());});  
+  $.post("./srv/rdo.php",{"tpl":"getperiod"},function (s,e) {   
+    d=JSON.parse(s);$("#period").empty();   
+    for(i=0;i<d.length;i++){
+      $("#period").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#period a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#period1").val($(this).attr("v"));
+    });       
+  }); 
+  $.post("./srv/rdo.php",{"tpl":"getorgtype"},function (s,e) {   
+    d=JSON.parse(s);$("#orgtype").empty();   
+    for(i=0;i<d.length;i++){
+      $("#orgtype").append("<li><a v="+d[i].id+">"+d[i].name+"</a></li>");
+    }
+    $("#orgtype a").click(function(){
+      $(this).parent().parent().find(".active").removeClass("active");
+      $(this).parent().toggleClass("active");
+      $("#orgtype1").val($(this).attr("v"));
+    });       
+  }); 
+     */
+ }); 
+
+function getaddr(v){ 
+  $.post("./srv/rdo.php?", {tpl:"getaddr","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");                
+  });
+}
+ 
+</script>

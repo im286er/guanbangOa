@@ -1,0 +1,6 @@
+@charset "gb2312";
+/* CSS Document */
+.navbar-default{width:100%; height:52px;  background:#034259; }
+#navbar-collapse li{ float:left; line-height: 50px; text-align: center; font-size: 14px;color:#fff}
+#navbar-collapse  li a{ color:#fff}
+#navbar-collapse  li a:hover{ color:#fff}

@@ -1,0 +1,57 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>名师工作室-{gtitle}</title>
+{cssjs}     
+</head>
+<body>
+{top}
+<div class="container">  
+{head}              
+
+<div class="col-xs-12 ">      
+<h3>名师工作室</h3>
+ 
+<div class="row">
+   
+<!-- START list -->
+<div class="col-sm-3 col-md-3">
+      <div class="thumbnail">
+        <a href="/famous?f={id}" target=_blank> <img style="width:120px;height:120px;" src="/famous/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';"></a></div>
+      <div class="caption">
+         <h4>{name}</h4>
+         <p>带头人：{foregoer} </p>
+         <p> {pre}</p>
+      </div>
+   </div>     
+<!-- END list -->           
+</div>
+    
+<ul class="pagination pull-right">
+{page}
+</ul> 
+ 
+</div>
+
+ 
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ 
+
+ $(function () { 
+    //$('#myModal').modal({keyboard: true});
+  }); 
+ function replay(d){
+   //$('#myModal').modal({keyboard: true}); 
+   //$('#myModal h4').modal({keyboard: true}); 
+ }
+	
+</script>
+
+
+ 

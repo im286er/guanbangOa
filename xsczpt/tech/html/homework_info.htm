@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>作业详情-作业-{gtitle}</title> 
+{cssjs}  
+<script src="js/local.js" type="text/javascript"></script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main"> 
+
+<div class="page-header">
+   <h3>{title}  <small><script>document.write(utctime('{timestamp}'));</script></code></small>  
+   <div class="btn-group pull-right">
+  <a href="?t=homework_result&id={id}" class="btn btn-primary">批阅/成绩</a>
+  <a href="?t=homework" class="btn btn-primary">返回</a></div>  </h3>
+</div> 
+
+
+<div class="panel panel-default">
+ <div class="panel-heading">
+    <h3 class="panel-title">{title}  <small>起止时间：<code>{stime} 至 {etime}</code></small></h3>
+   </div>  
+<div class="panel-heading">
+    <h3 class="panel-title">老师：{techer} 学科：{subjects}  </h3>
+   </div> 
+<div class="panel-heading">
+    <h3 class="panel-title">提交：<span>{submits}/{nums}</span> 批阅：<span>{remarks}/{nums}</span>  </h3>
+   </div>         
+<div class="panel-body"> 
+ {des}
+</div>  
+</div>
+{foot}
+</body>
+<script type="text/javascript">   
+$(function(){ 
+  vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"tech_homework",col:"see"}); 
+});
+$(function () {  
+     
+ }); 
+  
+</script>
+</html>

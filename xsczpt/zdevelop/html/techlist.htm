@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间—{name}</title>      
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+{cssjs}
+<style type="text/css">
+p{margin:0 !important;padding:0;}
+</style>
+<script type="text/javascript">
+var i=0;
+</script>
+</head>
+<body>
+{top}
+{thead}
+<div class="main" style="position:relative;overflow:visible !important;">
+	<div class="h_left_l">
+	<!-- START list --> 
+		<div class="h_list mt15">
+			<div class="l_tit fs16 fc3"><i>&nbsp;</i><p>{name}</p><a href="./?t=tech&s={s}&type={id}&uid={uid2}" target="">查看更多</a></div>
+			<div class="news_l">
+				<div class="news_img"><script>i++;document.write("<img src='css/images/n_img"+i+".jpg' width='149' height='126' />");</script></div>
+				<div class="n_list">
+					<p><b>标题</b><span>发布时间</span>点击数</span></p>
+					<ul>
+					<!-- START rp --> 
+						<li><a href="./?t=info&id={id}&s={s}&uid={uid2}" target="_blank">{title}</a><span><script>document.write(utctime('{id}'));</script></span><span class="n_click">{see}</span></li>
+					<!-- END rp --> 
+					</ul>
+				</div>
+			</div>
+		</div>
+	<!-- END list --> 
+	</div>
+	<div class="h_right">
+		<div class="h_con mt15">
+			<div class="l_tit fs16 fc3"><p>个人资料</p><a class="tools l_tita" id="{id}" target="" style="display:none"></a><div class="tools_menu"><div class="titarr"></div><ul><li><a href="/teacher/?t=grow&uid={id}&s={s}">个人成长</a></li></ul></div></div>
+			<div class="per_des">
+				<p>姓名：<a href="/teacher/?t=feed&uid={id}&s={s}" class="fwb fs14">{truename}</a></p>
+				<p>科目：<script>document.write(getSub('{subject}'));</script></p>
+				<p>学校：<script>document.write(getSch('{school}'));</script></p>
+			</div>
+		</div>
+		<div class="h_con mt15">
+			<div class="l_tit fs16 fc3"><p>最新文章</p></div>
+			<div class="list_box">
+				<dl class="list_boxdl">
+				<!-- START HotNews --> 
+					<dd class="b_name"><a href="/teacher/?t=info&id={id}&s={s}" tu  target="" title="{title}">{title}</a></dd>
+				<!-- END HotNews --> 
+				</dl>
+			</div>
+			<div class="clear"></div>
+			<a href="#" class="more_b">查看更多</a>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div>
+{foot}
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+<script type="text/javascript" src="css/js/index.js"></script>
+<script type="text/javascript" src="css/js/jquery.js"></script>
+<script type="text/javascript" src="css/js/tabs.js"></script>
+<script type="text/javascript">
+//检测登录
+var uopen="{uopen}";
+var uppen="{uppen}";
+var uid="{uid}";
+if(uid!=""){
+	$("#{uid}").css("display","block");
+}else{
+	$(".tools").remove();
+}
+if(uopen=="1"){
+	$("#uopen").css("display","block");
+}else{
+	$("#uopen").remove();
+}
+if(uopen=="1"){
+	$("#uppen").css("display","block");
+}else{
+	$("#uppen").remove();
+}
+$(".tools").click(function(){
+  $(".tools_menu").toggle();
+});
+</script>
+</body>
+</html>

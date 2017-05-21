@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>群组-{gtitle}</title>
+{cssjs}
+
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<link href="./html/css/group.css" rel="stylesheet" type="text/css" />  
+<script type="text/javascript" src="./html/js/slider.js"></script>
+</head>
+
+<body>
+{top}
+
+<div class="all lf">
+<div class="main ">
+  <div class="top_pic lf"></div>
+  <div class="content lf">
+    <div class="main_left lf">
+      <div class="lf_pic lf">
+	  <!-- 图片切换开始-->
+
+<style type="text/css">
+.flexslider {
+	margin: 0 auto;
+	position: relative;
+	width:741px;  /*控制控件宽*/
+	height:210px; /*控制控件高*/
+	zoom: 1;
+}
+.img {
+	width:741px;  /*控制图片宽*/
+	height:210px  /*控制图片高*/ 
+}
+
+
+.flexslider .slides img {
+	width: 100%;
+	display: block;
+}
+.flex-direction-nav a {
+	width: 60px;
+	height: 90px;
+	margin: -40px 0 0;
+	display: block;
+	background: url(/html/white/images/ad_ctr.png) no-repeat 0 0; /*左右按钮用图*/
+	position: absolute;
+	top: 50%;
+	z-index: 10;
+	cursor: pointer;
+	text-indent: -9999px;
+	opacity: 0;
+	filter:alpha(opacity=0);
+    -webkit-transition: all .3s ease;
+}
+.flex-direction-nav .flex-next {
+	background-position: 0 -90px;
+	right: 0;
+}
+.flex-direction-nav .flex-prev {
+	left: 0;
+}
+.flexslider:hover .flex-next {
+	opacity: 0.8;
+	filter:alpha(opacity=25);
+}
+.flexslider:hover .flex-prev {
+	opacity: 0.8;
+	filter:alpha(opacity=25);
+}
+.flexslider:hover .flex-next:hover, .flexslider:hover .flex-prev:hover {
+	opacity: 1;
+	filter:alpha(opacity=50);
+}
+.flex-control-nav {
+	width: 100%;
+	position: absolute;
+	bottom: 10px;
+	text-align: center;
+	float:left;
+}
+.flex-control-nav li {
+	margin: 0 5px;
+	display: inline-block;
+	zoom: 1;
+*display: inline;
+}
+.flex-control-paging li a {
+	background: url(./html/images/dot.png) no-repeat 0 -16px; /*点用图*/
+	display:block;
+	height: 16px;
+	overflow: hidden;
+	text-indent:-99em;
+	width: 16px;
+	cursor: pointer;
+}
+.flex-control-paging li a.flex-active {
+	background-position: 0 0;
+}
+</style>
+<div class="flexslider">
+<ul class="slides">
+<li>
+<div><a href="#" target="_blank"><img src="./html/images/group_06.jpg" border="0" class="img" /></a></div>
+</li>	
+<li>
+<div><a href="#" target="_blank"><img src="./html/images/group_06.jpg" border="0" class="img" /></a></div>
+</li>	
+<li>
+<div><a href="#" target="_blank"><img src="./html/images/group_06.jpg" border="0" class="img" /></a></div>
+</li>			
+</ul>
+</div>
+<script type="text/javascript">
+    $(function(){
+      $('.flexslider').flexslider({
+        animation: "slide",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+  </script>
+      <!-- 图片切换结束-->
+	  </div>
+      <div class="lf_search lf">
+        <div class="sear_lf lf">
+          <input type="" />
+        </div>
+        <div class="sear_rt lf">
+          <input type=""  value="搜 索"/>
+        </div>
+         <div class="cl"></div>
+    </div>
+        <div class="hot_top lf">
+          <ul>
+            <li class="col_name lf">热门群组</li>
+            <li class="col_more rt">更多>></li>
+          </ul>
+        </div>
+        <div class="col_list lf">          
+		
+		  <!-- START listc -->
+          <ul>
+            <li class="list_pic lf"><a href="/group/?g={id}" target="_blank">
+							<img src="/upds/group/logo/{id}.jpg" width="97" height="97" onerror="this.src='/error/logo.jpg';">
+						</a></li>
+            <li class="list_text lf"> <span><a href="/group/?g={id}" target="_blank">{name}</a></span><br />
+              成员：{nums}<br />
+              访问：{vistit}<br />
+              口号：{slogan} </li>
+          </ul>
+		  <!-- END listc -->
+         
+          <div class="cl"></div>
+        </div>
+        <div class="hot_note lf">
+          <ul>
+            <li class="col_name lf">热门帖子</li>
+            <li class="col_more rt">更多>></li>
+          </ul>
+        </div>
+        <div class="hot_list lf">
+		
+		 <!-- START liste -->
+          <ul>
+            <li class="hot_pic lf"><img src="./html/images/group_32.jpg" width="140" height="104" /></li>
+            <li class="hot_text lf"><span><a href="/group/?t=topic&id={id}&g={gid}" target="_blank">{title}</a></span><br />
+                创建时间：<script>document.write(utctime("{timestamp}"));</script> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 浏览次数：{see}    <br />
+            摘要：<div style=" width:550px; height:60px; line-height:20px;overflow: hidden; text-overflow:ellipsis">{des}</div></li>            
+          </ul>
+         <!-- END liste -->	
+          <div class="cl"></div>
+        </div>
+        <div class="cl"></div>
+      </div>
+     
+    <div class="main_right lf">
+  <div class="new_note lf">
+          <ul>
+            <li class="col_name lf">最新群组</li>
+            <li class="col_more rt">更多>></li>
+          </ul>
+        </div>
+    <div class="new_list lf">
+	<!-- START listf -->
+    <ul>
+    <li class="new_pic lf"><img src="./html/images/group_22.jpg" width="30" height="30" /></li>
+    <li class="new_name lf"><a href="/group/?g={id}" target="_blank" style="color:#222">{name}</a></li>
+    <li class="new_title lf" style="width:230px; white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:24px;">最新帖子：<a href="/group/?t=topic&id={id}&g={gid}" target=_blank>{title}</a></li>
+    </ul>
+	<!-- END listf -->	
+      
+    </div>
+    <div class="top_note lf">
+          <ul>
+            <li class="col_name lf">热门群组排行</li>
+            <li class="col_more rt">更多>></li>
+          </ul>
+        </div>
+        <div class="top_list lf">
+        <ul>
+		<!-- START listg -->
+        <li ><a href="/group/?g={id}" target="_blank" >{name}</a> <span>{visit}</span></li>       
+		<!-- END listg -->	
+        </ul>
+        </div>
+      <div class="cl"></div>
+    </div>
+    <div class="cl"></div>
+  </div>
+  <div class="cl"></div>
+</div>
+<div class="cl"></div>
+</div>
+<div class="bottom lf">
+<div class="copyright">Copyright ? 2015 topnt.cn  All Rights Reserved . 南京冠邦版权所有.    苏ICP备15004037号-1</div>
+<div class="cl"></div>
+</div>
+<script type="text/javascript">
+(function(){
+  if(queryStr("sc")) var sc=queryStr("sc");else var sc=0;
+  if(queryStr("a")) var a=queryStr("a");else var a=0;    
+
+  if(queryStr("so")!="") $("#so").val("{so}"); 
+  $("#btn").bind("click",function(){ 
+	var sc = $("#sch").val();
+    var a = $("#addr").val();
+    //if($("#so").val()==""){alert("请输入一个名称");return;}
+    location.href="./?t=group&sc="+sc+"&a="+a+"&so="+$("#so").val();    
+  });      
+});
+//搜索下拉框
+$(function(){
+	/*$('select').selectlist({
+		zIndex: 10,
+		width: 120,
+		height: 25
+	});*/		
+});
+</script> 
+</body>
+</html>
+

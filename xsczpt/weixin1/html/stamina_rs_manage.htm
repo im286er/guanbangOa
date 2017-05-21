@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>海安中学学生成长系统</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/ionic.min.css">
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">	
+<script src="/ppf/js/jquery-2.min.js"></script> 
+	<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<style>
+
+</style>
+<script type="text/javascript">
+$().ready(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#tid",JSON.parse(d),"id","term_name","year"); $("#tid").prepend("<option selected value='0'>请选择学期</option>");
+		$('#tid').val('{tid}');     
+	});
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$("#cid").html("");
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html="";
+					if(len>0){
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						$("#cid").html(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$("#cid").html("");
+	}	
+}
+ 
+</script>
+</head>
+<body>
+<header><a href="?t=admin_index" target="" style="float:left;"><i class="iconfont evaluate">&#xe604;</i></a><h1>体能管理</h1></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			  <div class="weui-cells__title">选择条件</div>
+			  <form action="./?t=stamina_rs_manage" method="post" id="t_zdy">
+			  <div class="weui-cells mt_5">
+		   <div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">学期：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select name="tid" id="tid" class="weui-select">
+					</select> 
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">年级：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select name="gid" id="gid" class="weui-select" onchange="selectClass(this);">
+					</select> 
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">班级：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<select name="cid" id="cid" class="weui-select">
+					</select> 
+                </div>
+            </div>
+			<div class="weui-cell weui-cell_select weui-cell_select-after">
+                <div class="weui-cell__hd">
+                    <label for="" class="weui-label">姓名：</label>
+                </div>
+                <div class="weui-cell__bd">
+					<input type="text" name="truename" id="truename" value="" class="weui-input"/>
+                </div>
+            </div>
+		 </div>
+		 
+		 <div class="weui-btn-area">
+            <a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+        </div>
+		</form>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow"> 
+		<table width="1500" border="0" class="tb_tp" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td class="tb_td tb_txt_bgc">姓名</td>
+					 <td class="tb_td tb_txt_bgc">班级</td>
+					 <!-- START list -->  
+					 <td class='tb_td tb_txt_bgc'>{name}</td>
+					 <!-- END list --> 
+				</tr>
+				{str_total}
+				<tbody id="class_show"></tbody>
+		</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+		<ul class="pagination wx_center">
+					{page}
+		</ul>
+		</div>
+		
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<a href="?t=admin_index"><i class="iconfont">&#xe606;</i>首页</a>
+	<a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a>
+</nav>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>幻灯片样式-{gtitle}</title>
+{cssjs}
+<script type="text/javascript" src="js/func.js"></script>
+<style>
+		a {cursor:pointer;}
+</style>
+</head>
+<body>
+{top}     
+<div class="container">
+	<div class="col-sm-3">
+	{menu}    
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>首页模板设置<small></small>
+			</h3>
+		</div>
+		<table class="table"> 
+			<tbody>      
+				<tr>    
+					{tmp_imgs}
+				</tr>
+				<tr>  
+					{tmp_radios}
+				</tr>
+				<!--
+				<tr>
+					<td align="left" style="color:blue;">&lt;&lt; 上一组</td>
+					<td align="right" style="color:blue;">下一组 &gt;&gt;</td>
+				</tr>
+				-->
+			</tbody>
+		</table>   
+	</div> 
+</div>
+<br><br><br><br>
+<br><br><br>
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">
+function choose(id) {
+	chs_rdo_id = "#rdo" + id;
+	chs_span_id = "#span" + id;
+	$('input,span').html("");
+	$(chs_span_id).html(" 当前模板");
+	$('input').removeProp("checked");
+	$(chs_rdo_id).prop("checked", "checked");
+	
+	$.post("./srv/sdo.php", {tpl:"chs_tmplate",id:id}, function (d, e) { 
+		if(d.indexOf("ok")>-1) {
+			alert("设置模板成功！");
+		}
+		else 
+			alert("模板切换失败，请重试！");
+	});
+}
+
+function movein(obj) {
+	$(obj).attr("style", "background-color:#F5F5F5; border:0;");
+}
+
+function moveout(obj) {
+	$(obj).attr("style", "background-color:#FFFFFF; border:0;");
+}
+</script>

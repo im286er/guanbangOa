@@ -1,0 +1,187 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>学科空间</title>
+{cssjs}
+        <link rel="stylesheet" type="text/css" href="./css/subject.css">
+        <script type="text/javascript" src="./js/banner_slider.js"></script>
+    </head>
+    <body>
+{top}
+{head}
+        <!--页面主体内容-->
+        <div class="main-content mc">
+            <div class="subject-nav clearfix">
+                <div class="sub-nav-left">
+                    <div class="sn-box">
+                        <div class="sn-header">通知公告</div>
+                        <div class="sn-body">
+                            <ul class="list">
+								<!-- START list_notice -->
+                                <li>
+                                    <a class="lst-lft" href="?t=article&s={s}&sid={subid}&id={id}" target="_blank">
+										{title}
+										<span class="pull-right">{postdate}</span>
+									</a>
+                                </li>
+								<!-- END list_notice -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="sub-nav-right">
+                    <div class="sn-box">
+                        <div class="sn-body clearfix">
+                            <div class="sn-banner">
+								<div class="flexslider" id="section_banner">
+									<ul class="slides">
+										<!-- START list_slides -->
+										<li><div class="img"><a target="_blank" href="{url}"><img src="./{pic}" title="{des}" /></a></div></li>
+										<!-- END list_slides -->
+									</ul>
+								</div>
+                            </div>
+                            <div class="sn-list">
+                                <div class="list-box">
+                                    <div class="easyui-tabs tabs-more" plain="true" border="false">
+                                        <div title="最新发布">
+                                            <ul class="list">
+												<!-- START list_new -->
+                                                <li>
+													<a class="lst-lft" href="?t=article&s={s}&sid={subid}&id={id}" target="_blank">
+														&nbsp;<script>document.write("{title}".length > 15 ? "{title}".substr(0,15) + ".." : "{title}");</script>
+														<span class="pull-right">{postdate}</span>
+													</a>
+												</li>
+												<!-- END list_new -->
+                                            </ul>
+                                        </div>
+                                        <div title="热点精品">
+                                            <ul class="list">
+												<!-- START list_hot -->
+                                                <li>
+													<a class="lst-lft" href="?t=article&s={s}&sid={subid}&id={id}" target="_blank">
+														&nbsp;<script>document.write("{title}".length > 15 ? "{title}".substr(0,15) + ".." : "{title}");</script>
+														<span class="pull-right">{postdate}</span>
+													</a>
+												</li>
+												<!-- END list_hot -->
+                                            </ul>
+                                        </div>
+                                        <!--<a class="more">更多>></a>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="content-box"><a name="res"></a>
+                <div class="sch-header clearfix">
+                    <div class="sch-title">精品资源检索</div>
+                    <div class="sch-options pull-right">
+                        <ul id="lstResSubject" class="list">
+							<li>
+                                <label>选择年级：</label>
+                                <select id="sltGrade" onchange="resByGrade(this);">
+									<option value="">全部</option>
+									<!-- START list_grade -->
+                                    <option value="{id}">{periods}{name}</option>
+									<!-- END list_grade -->
+                                </select>
+                            </li>
+							<li class="on"><a class="s-option" data-subject="" onclick="resBySubject(this);">全部</a></li>
+							<!-- START list_subject2 -->
+                            <li><a class="s-option" data-subject="{id}" onclick="resBySubject(this, {id});">{name}</a></li>
+							<!-- END list_subject2 -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-box">
+                    <ul id="lstRes" class="grid clearfix">
+						<!-- START list_resources -->
+                        <li>
+                            <div class="item">
+                                <div class="grid-pic">
+									<a href="?t=resource&s={school}&sid={sid}&id={id}" target="_blank">
+										<img title="{title}" src="/upds/subject/reslogo/{reslogo}">
+									</a>
+								</div>
+                                <div class="grid-desc">
+									<a href="?t=resource&s={school}&sid={sid}&id={id}" target="_blank">
+									{title}
+									</a>
+								</div>
+                                <div class="grid-footer">总浏览：<span class="em">{visit}</span>人</div>
+                            </div>
+                        </li>
+						<!-- END list_resources -->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-box"><a name="art"></a>
+                <div class="sch-header clearfix">
+                    <div class="sch-title">精品文章检索</div>
+                    <div class="sch-options pull-right">
+                        <ul id="lstArtsSubject" class="list">
+							<li>
+                                <label>学科：</label>
+                            </li>
+                            <li class="on"><a class="s-option" onclick="artBySubject(this);">全部</a></li>
+							<!-- START list_subject -->
+                            <li><a class="s-option" onclick="artBySubject(this, {id});">{name}</a></li>
+							<!-- END list_subject -->
+                        </ul>
+                    </div>
+                </div>
+                <div class="cols clearfix">
+                    <div class="col-double">
+                        <ul class="list">
+                            <li>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="lstArts" class="cols clearfix">
+					{list_articles}
+                </div>
+            </div>
+        </div>
+		<!--footer-->
+{foot}
+    </body>
+</html>
+<script type="text/javascript">	
+	$('#section_banner').flexslider({
+		animation: "slide",
+		direction:"horizontal",
+		easing:"swing"
+	});
+	
+	function artBySubject(obj,subjectid) {
+		$("#lstArtsSubject li[class='on']").removeAttr("class");
+		$(obj).parent().attr("class", "on");
+		if(subjectid == null) subjectid="";
+		$.post("./srv/rdo.php?", {tpl:"chg_art_by_subject", ntid:{noticeId}, sch:{s}, sub:{subid}, sjt:subjectid}, function (d, e) {
+			$("#lstArts").html(d);
+		});
+	}
+	
+	function resBySubject(obj,subjectid) {
+		$("#lstResSubject li[class='on']").removeAttr("class");
+		$(obj).parent().attr("class", "on");
+		if(subjectid == null) subjectid="";
+		$.post("./srv/rdo.php?", {tpl:"chg_res_by_subject", sch:{s}, sub:{subid}, sjt:subjectid, gra:$("#sltGrade").val()}, function (d, e) {
+			$("#lstRes").html(d);
+		});
+	}
+	
+	function resByGrade(obj) {
+		var subjectid = $("#lstResSubject li[class='on'] a").attr("data-subject");
+		$.post("./srv/rdo.php?", {tpl:"chg_res_by_subject", sch:{s}, sub:{subid}, sjt:subjectid, gra:$(obj).val()}, function (d, e) {
+			$("#lstRes").html(d);
+		});
+	}
+</script>

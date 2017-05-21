@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{cssjs}
+</head>
+<body> 
+{top}        
+<div class="sidebar-nav">
+{left}
+</div>  
+
+ <div class="content">          
+        <div class="header"><h1 class="page-title">{name}</h1> </div>  
+                
+        <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li class="active">{name}</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+    <a class="btn btn-primary" href="?t={tpl}_am&d=a" target=_blank><i class="icon-plus"></i> 添加</a>   
+  <div class="btn-group">
+    
+  </div>
+</div>
+<div class="search-well">  
+    <form class="form-inline" id="qry">
+<!-- START query -->{name}<input id="{col}" type="text" style="width:100px"/><!-- END query -->
+<button class="btn btn-primary" type="button" onclick="loadPage({page:1})"><i class="icon-search"></i> 查询</button>          
+<a class="btn btn-info" type="button" onclick="location.href=location.href;">刷新</a>
+<input type="text" id="__order"  flag="no" value="{tblorder}" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="{tblorderby}" title="排序方向" style="display:none;"/>
+跳转到：  
+<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" 
+onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:30px;"/>
+    </form>
+</div>
+
+<div class="well">
+    <table class="table">
+      <thead>  
+<tr>
+<!-- START display --><th name="{col}">{name}</th>
+<!-- END display -->
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr  class="" name="{id}">
+<!-- START displayc --><td>{{col}}</td>
+<!-- END displayc --> 
+<td>
+<a href="./?t={tpl}_am&d=m&id={id}" target=_blank title="修改"><i class="icon-pencil"></i></a>
+<a onclick="delRow({id:'{id}'});" title="删除"><i class="icon-remove"></i></a>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+</div>
+<div class="pagination">
+<ul id="page"> 
+</ul>
+</div>
+{foot}                       
+</div>
+</div>
+</div>
+
+</body>
+</html>
+<script>
+  formatunixs = "{formatdates}";
+  $(function () {		
+		loadPage({l_tpl:queryStr("t"),l_page:1});  
+	});
+         
+ </script>

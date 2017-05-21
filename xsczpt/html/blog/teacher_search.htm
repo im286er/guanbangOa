@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">   
+<link rel="stylesheet" type="text/css" href="css/vircom.css">
+<title>教师-{gtitle}</title>
+{meta}
+<script type="text/javascript" src="/html/blog/js/plat_common.js"></script>
+<style>
+:after, :before{box-sizing:inherit;}
+</style>
+</head>
+<body>
+<!--顶部-->
+{top}
+<!--logo-->
+{sch_logo}
+<!--icon-->
+{menu}
+<!--li-->
+{icon_list}
+
+<div class="wrap">
+	<div class="main">
+		<div class="sear_tit mt40">
+			<h2 style="font-size:1.5em;">人气教师<span>筛选：</span></h2>
+			<select id="addr" name="addr" class="select-wrapper sea_show">
+			</select>
+			<select id="sch" name="school" class="select-wrapper sea_show">
+        <option value=0 >学校</option>
+			</select>
+			<select id="period" name="period" class="select-wrapper sea_show">
+			</select>
+			<select id="subject" name="subject" class="select-wrapper sea_show">
+        <option value=0 >学科</option>
+			</select>
+			<div class="search"  style="width:355px;">
+				  <input class="keyword_s search_text fl" id="so" type="text" name="keyword" placeholder="请输入名称" >
+					<input type="button" align="absmiddle" value="搜索" class="search_button" id="btn">
+			</div>
+		</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<div id="list"> 
+			<ul class="qjf_teachlist clearfix">
+        <!-- Start list -->
+				<li class="">
+					<div class="pic">
+						<a href="/zone/?id={id}" target="_blank">
+							<img src="/upd/face/{id}.jpg" width="97" height="97" onerror="this.src='/error/face.jpg';">
+						</a>
+					</div>
+					<div class="text">
+						<a class="tit" href="/zone/?id={id}" target="_blank">{truename}</a>
+						<p>{pname}{sname}</p>
+						<p class="intro">{scname}</p>
+					</div>
+				</li>
+        <!-- End list -->
+			</ul>
+  </div>
+ 
+	</div>
+  <div class="tc">
+     <ul class="pagination ">
+			{page}
+     </ul>
+	</div>
+</div>
+{foot}
+<script type="text/javascript">
+(function(){
+
+    if(queryStr("sc")) var sc=queryStr("sc");else var sc=0;
+    if(queryStr("a")) var a=queryStr("a");else var a=0;
+    if(queryStr("per")) var per=queryStr("per");else var per=0;
+    if(queryStr("sub")) var sub=queryStr("sub");else var sub=0; 
+    
+    $.get("/data/two.php?t=sys_addr&f=txt",function (d) {$("#addr").html("<option value=0 >地区</option>");$("#addr").append(d);$("#addr").val(a);getsch();});//txt类型/json类型
+    $("#addr").change(function(){
+      $.get("/data?t=school&f=txt&pn=addr&pv="+$("#addr").val(), function(d){$("#sch").html("<option value=0 >学校</option>");$("#sch").append(d);});
+    });
+    $.get("/data?t=sys_period&f=txt", function (d) {$("#period").html("<option value=0 >学段</option>");$("#period").append(d);$("#period").val(per);getsub();}); 
+    $("#period").change(function(){
+      $.get("/data?t=sys_subject&f=txt&pn=period&pv="+$("#period").val(), function(d){$("#subject").html("<option value=0 >学科</option>");$("#subject").append(d);});
+    });  
+    
+    function getsch(){
+      $.get("/data?t=school&f=txt&pn=addr&pv="+$("#addr").val(), function(d){$("#sch").html("<option value=0 >学校</option>");$("#sch").append(d);$("#sch").val(sc);}); 
+    }
+    function getsub(){
+      $.get("/data?t=sys_subject&f=txt&pn=period&pv="+$("#period").val(), function(d){$("#subject").html("<option value=0 >学科</option>");$("#subject").append(d);$("#subject").val(sub);});
+    }  
+    
+    /*setTimeout(showoption();, 3000 )
+    function showoption(){
+       $('select').selectlist({
+      		zIndex: 10,
+      		width: 120,
+      		height: 25
+       });
+    }*/
+    
+    if(queryStr("so")!="") $("#so").val("{so}");
+    $("#btn").bind("click",function(){
+      var sc = $("#sch").val();
+      var a = $("#addr").val();
+      var per = $("#period").val();
+      var sub = $("#subject").val();
+      //if($("#so").val()==""){alert("请输入一个名称");return;}
+      location.href="./?t=teacher_search&sc="+sc+"&a="+a+"&per="+per+"&sub="+sub+"&so="+$("#so").val();    
+    });
+	
+})();
+</script> 
+</body>
+</html>

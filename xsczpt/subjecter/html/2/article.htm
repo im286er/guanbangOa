@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>文章阅读-{gtitle}</title>
+{cssjs}
+<link rel="stylesheet" type="text/css" href="html/{tplno}/css/comments.css">
+    </head>
+    <body>
+{top}
+	<!--页面主体内容-->
+	<div class="container">
+{head}
+		<div class="col-xs-8">
+			<div class="page-header">
+				<h3>{title}<small></small></h3>
+			</div>
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<span style="font-size:14px;">
+							发布：<a href="/zone?id={uid}" target="_blank" style="color:#1db177;">{nickname}</a> - 
+							<a href="/school?s={schoolid}" target="_blank" style="color:#1db177;">{schoolname}</a>
+							&nbsp;&nbsp;&nbsp;&nbsp;{postdate}
+							&nbsp;&nbsp;&nbsp;&nbsp;学科：<script>document.write("{sbjName}".length == 0 ? "全部" : "{sbjName}");</script>
+							&nbsp;&nbsp;&nbsp;&nbsp;分类：{typeName}
+							&nbsp;&nbsp;&nbsp;&nbsp;浏览：<span>{visit}次</span>
+						</span>
+						<span class="pull-right" style="color:red;">
+							<script>document.write({state} != 2 ? "该文章尚未通过审核，无法显示在首页！" : "")</script>
+						</span>
+					</h3>
+				</div>
+				<div class="panel-body">
+				{content}
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-8">
+			<div id="mycom">
+				<textarea id="wordtext" class="form-control" rows="5"></textarea><br>
+				<div id="wordage"></div>
+				<a class="btn btn-success pull-right" onclick="docomment(1);">发表评论</a>
+			</div>
+			<div id="gotoLogin" class="form-control" style="height:120px; text-align:center;line-height:105px;">
+				<a href="/?t=login" target="_blank">登录后才可以发表评论，请先登录！</a>
+			</div>
+			<input type="hidden" id="isLogin" value="{uid}" />
+			<br><br>
+		</div>
+		<div class="col-xs-8">
+			<div id="comments-section">
+				<div class="mod-bd">
+					<div class="tab-hd">
+						<a id="new-comments-tab" data-id="new" class="on">最新评论</a>
+						<!--&nbsp;&nbsp;/&nbsp;
+						<a id="following-comments-tab" href="#" data-id="following" class="">我关注的人</a>-->
+					</div>
+					<div class="tab-bd">
+						<div id="hot-comments" style="display: block;">
+							<!-- START list -->
+							<div class="comment-item" id="c_item{cmtid}">
+								<div class="comment" id="cmt{cmtid}">
+									<h3>
+										<span class="comment-vote">
+											<span id="use{cmtid}">{use}</span>
+											<a onclick="douse('{cmtid}', true);">鲜花</a>
+											<span id="nouse{cmtid}">{nouse}</span>
+											<a onclick="douse('{cmtid}', false);">鸡蛋</a>
+										</span>
+										<span class="comment-info">
+											<a href="/zone?id={uid}" target="_blank">{nickname}</a>&nbsp;
+											<span class="allstar40 rating" title="推荐"></span>&nbsp;
+											<span>评论于</span>&nbsp;&nbsp;
+											<span class="">
+												{postdate}&nbsp;&nbsp;
+											</span>
+											<span class="comment-del">
+												{delstate}
+											</span>
+										</span>
+										<br><br>
+									</h3>
+									<p class="">
+										{content}
+									</p>
+								</div>
+							</div>
+							<!-- END list -->
+						</div>
+						<div id="following-comments" style="display: none;">
+							<div class="comment-item">
+							你关注的人还没写过短评
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!--footer-->
+{foot}
+    </body>
+</html>
+<script type="text/javascript">
+	$(function () {
+		vote({tpl:"sbj_vote",do:"visit",showok:"",callback:"dosome",id:queryStr("id"),tb:"subjecter_articles",col:"visit"});
+		
+		$("#mycom").css("display", $("#isLogin").val() == "" ? "none" : "block");
+		$("#gotoLogin").css("display", $("#isLogin").val() == "" ? "block" : "none");
+	});
+</script>

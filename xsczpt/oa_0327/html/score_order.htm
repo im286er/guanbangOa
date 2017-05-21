@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">学生成绩排名</a></label> 
+			</div>
+			<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+						<tr>
+							 <td width="20%" class="tabtd2_L">说明：</td>
+							 <td class="tabtd2_R" style="color:#f00;">
+								1. 该操作仅对当前学期有效。<br />
+								2. 年级排名仅计算年级名次。<br />
+								3. 班级排名仅计算班级名次。<br />
+								4. 排名计算依据三分总分进行计算<br />
+							  </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">排名类型</td>
+							 <td width="80%" class="tabtd2_R">
+								<select name="order_type" id="order_type">
+									<option value="1">年级排名</option>
+									<option value="2">班级排名</option>
+								</select>
+							  </td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">年级：</td>
+							 <td class="tabtd2_R">
+								<select name="gid" id="gid">
+								</select>
+							 </td>
+						</tr>
+						<tr>
+						 <td width="20%" class="tabtd2_L">考试类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+						
+							</select> 
+						  </td>
+					</tr>
+					</table>
+			</div>
+		<div class="boxfooter2">
+		<input id="but_update" name="but_update" type="button" value="确定" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" onclick="checkOrder();" />&nbsp;&nbsp;<img id="img_load" style="display:none;" src="images/loading.gif" width="43" height="11" border="0" align="absmiddle" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        selectShowDataNoH("#exam_type",JSON.parse(d),"name","name"); $("#exam_type").prepend("");
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("");
+	});
+});
+
+//检查排名
+function checkOrder()
+{
+	var orderType = $("#order_type").val();
+	var examType  = $("#exam_type").val();
+	var gid = $("#gid").val();
+	
+	$("#but_update").val("计算中...");
+	$("#but_update").attr("disabled",true);
+	$("#img_load").css("display","");
+	
+	$.post("./srv/sdo.php?", {tpl:"exam_order","grade_id":gid,"order_type":orderType,"exam_type":examType}, function (d, e) {
+		var d = eval('(' + d + ')');
+		alert(d.value);
+		$("#but_update").val("重新计算");
+		$("#but_update").attr("disabled",false);
+		$("#img_load").css("display","none");
+	});
+}
+
+</script> 

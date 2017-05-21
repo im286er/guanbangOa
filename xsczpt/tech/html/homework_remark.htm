@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>批阅/成绩-作业-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('--','未完成','已交','批阅');  
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">
+
+<div class="page-header">
+   <h3>作业批阅  <small><script>document.write(utctime('{timestamp}'));</script></code></small>  
+   <div class="btn-group pull-right">
+
+  <a href="?t=homework" class="btn btn-primary">返回</a></div>  </h3>
+</div> 
+ 
+<div class="panel panel-default">
+ <div class="panel-heading">
+    <h3 class="panel-title">状态:<b><script>document.write('{state}'==''?'----':arr['{state}']);</script></b> 
+    分数：{score} <small>提交时间：<script>document.write(utctime('{timestamp}'));</script> </small>  
+     <a id="btn" class="btn btn-primary">批阅</a></h3>
+   </div>  
+<div class="panel-heading">
+    <h3 class="panel-title">学生：{truename}</h3>
+   </div>          
+<div class="panel-body"> 
+附件：<a href="{PAN_URL}api/yun?t=dl&id={resmd5}" target="_blank" class="blue0">{resname}</a> 
+{des}
+</div>  
+</div>
+
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+  $("#btn").bind("click",function(){     $('#dlg1').modal('show');     });    
+});    
+function setscore(){
+   if($("#score").val()==""){alert("请输入成绩");return;}
+   $.post("./srv/sdo.php", {tpl:"homework_remark",id:queryStr("id"),sc:$("#score").val(),hid:"{hid}"}, function (d, e) {       
+     $('#dlg1').modal('hide');
+  });
+  
+} 
+</script>
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">批阅</h4>
+         </div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">成绩</label>
+    <div class="col-sm-3">
+       <input type="text" class="form-control" id="score"   onkeyup="this.value=this.value.replace(/[^0-9.]/g,'')" maxlength="5" placeholder="请输入"> 
+       <input type="text" id="id" value="" style="display:none;"/> 
+    </div>
+ </div>
+</form> 
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="setscore()"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

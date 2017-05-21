@@ -1,0 +1,126 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script type="text/javascript" src="common/jquery.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<style>
+#myEditor{
+	width:100% !important;
+}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			
+			<form method="post" action="./srv/senior_message_submit.php" enctype="multipart/form-data" onsubmit="return checkEvent();">
+			
+			<textarea id="myEditor" name="content" ></textarea>
+			
+			<input type="hidden" name="term_id" value="{curTerm_id}" />
+			<input type="hidden" name="main_id" value="{mainId}" />
+			<input type='hidden' id='geter' name="geter" value='{master_val}'>
+			<input type='hidden' id='menu1' name="menu1" value=''>
+			<input type='hidden' id='menu2' name="menu2" value=''>
+			<input type="hidden" name="subject" id="subject" value=""/>
+			<input type="hidden" name="uid" value="{uid}"/>
+			<input name="but_exp" id="but_exp" type="submit" value="保 存" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;    margin-left: 500px;margin-bottom: 20px;margin-top: 20px;" />
+				 
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0" style="margin-bottom:10px;">
+
+				<tr>
+					<td class="tabtd2_L" style="text-align:center;"  width="20%">时间</td>
+					<td class="tabtd2_L" style="text-align:center;">留言</td>
+					<td class="tabtd2_L" style="text-align:center;" width="10%">状态</td>
+				</tr>
+				{str_event}
+
+			</table>
+			</form>
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="h_id" id="h_id"  value=""/>
+<input type="hidden" name="flag" id="h_flag" value=""/>
+<input type="hidden" name="mop" id="h_mop" value=""/>
+<input type="hidden" name="flag2" id="flag2" value=""/>
+<input type="hidden" name="subject" id="subject" value=""/>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+var ueditor = UE.getEditor('myEditor',{
+	initialFrameHeight:200
+});
+
+$(function(){
+
+});
+
+//社会实践表单验证
+function checkEvent()
+{
+	var content = $("textarea[name='content']").val();
+	
+	if(content==""){
+		alert("内容不能为空。");
+		return false;
+	}
+
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+
+//获取顶部和左侧的栏目id
+var menu2="";
+function getUrlParam(name)
+{
+var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+if (r!=null) return unescape(r[2]); return null; //返回参数值
+} 
+menu2=getUrlParam('id');
+
+//var uid="{uid}";
+var menu1=""; 
+var menu2=""; 
+menu1=self.parent.frames.lef_m.menu1;
+menu2=self.parent.frames.lef_m.menu2;
+$("#menu1").val(menu1);
+$("#menu2").val(menu2);
+
+//console.log(menu1);
+//console.log(menu2);
+
+
+//删除经历感悟
+function delEvent(id)
+{
+	if(confirm("你确定删除该条学习经历记录吗？")){
+		$.post("./srv/sdo.php", {tpl:"del_biye","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#exp_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>海安中学移动端-列表页</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link rel="dns-prefetch" href="#" id="static"/>
+	<link rel="stylesheet" href="css/css.css">
+</head>
+<body>
+<header><a href="javascript:history.go(-1);" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>个人资料</h1><a href="user_edit.html" target="">编辑</a></header>
+<section class="fl wout mt10">
+	<form action="form_action.asp" method="post">
+		<ul class="check_list">
+			<div class="check_box che_all" title="全选">
+				<input type="checkbox" id="_checkall" onclick="checkall(this.checked)"> 
+			   <label class="check" for="" onclick="$('#_checkall').click()">  
+					<i class="iconfont">&#xe628;</i>
+				</label> 全选
+			</div> 
+			<li>
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="check_1" name="check" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="check_1">  
+							<i class="iconfont">&#xe628;</i>
+						</label> 
+					</div> 
+				张三</a>
+			</li>
+			<li>
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="check_2" name="check" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="check_2">  
+							<i class="iconfont">&#xe628;</i>
+						</label> 
+					</div> 
+				张三</a>
+			</li>
+			<li>
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="check_3" name="check" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="check_3">  
+							<i class="iconfont">&#xe628;</i>
+						</label> 
+					</div> 
+				张三</a>
+			</li>
+			<li>
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="check_4" name="check" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="check_4">  
+							<i class="iconfont">&#xe628;</i>
+						</label> 
+					</div> 
+				张三</a>
+			</li>
+			<li>
+				<a href="#" target="">
+					<div class="check_box che_input">
+						<input id="check_5" name="check" type="checkbox" class="everyvb">  
+						<label class="check checkchild" for="check_5">  
+							<i class="iconfont">&#xe628;</i>
+						</label> 
+					</div> 
+				张三</a>
+			</li>
+		</ul>
+	</form>
+</section>
+
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<a href="index.html"><i class="iconfont">&#xe606;</i>首页</a>
+	<a href="group_list.html"><i class="iconfont">&#xe601;</i>成长</a>
+	<a href="user.html"><i class="iconfont">&#xe60a;</i>我的</a>
+</nav>
+</body>
+<script src="js/jquery.min.js"></script>
+<script type="text/javascript">
+function checkall(v){
+	$('.everyvb').each(function(){
+		this.checked=v;
+	})
+};
+$(".checkchild").bind("click",function(){
+	$("#_checkall").attr("checked", false);
+});
+</script>
+</html>

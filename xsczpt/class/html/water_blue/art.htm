@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-班级空间</title>
+{cssjs}
+</head>
+<body class="cl_bg">
+{top}
+    <!--头部文件-->
+      <div class="logo_out w1" style="background:url(/upds/class/logo/{c}_1000.jpg);">
+      	<div class="logo">
+      		<img src="/upds/class/logo/{c}.jpg" onerror="this.src='/error/logo.jpg';" width="100" height="100"/>
+      	</div>
+      	<div class="text_logo">
+      		<p>{cname} </p>
+      		<span>{slogan} 寄语：{wishes}</span>
+      	</div>
+      </div>
+      <div class="w1 nav">
+      	<div class="main">
+      		<div class="menu">
+      			<ul>                                
+      				<li><a href="./?c={c}" target="">首页</a></li>
+              <li><a href="./?t=cls_album&c={c}" target="">相册</a></li>
+              <!-- START cate -->
+              <li><a href="./?t=arts&cc={id}&c={c}">{name}</a></li>     
+              <!-- END cate -->
+      				<li><a href="./?t=members&c={c}" target="">成员</a></li>
+      				<li><a href="./man/?c={c}" target=_blank>管理</a></li>
+      			</ul>
+      		</div>
+      		<div class="menu_r">
+      			<ul> 
+      				<li><a href="/subject?s={s}" target="">学科</a></li>
+      				<li><a href="/school?s={s}" target="">学校</a></li>
+      			</ul>
+      		</div>
+      	</div>
+      </div>
+      
+<div class="w1">
+	<div class="main" style="padding:0 20px 0;">
+    <div class="page-header">
+       <h3>{name}</h3>
+        <small> </small>
+    </div>
+      
+    <div class="panel panel-default">
+       <div class="panel-heading">
+          <h3 class="panel-title"> {name} <small>{truename} <script>document.write(utctime("{timestamp}"));</script> </small>  
+          </h3>
+       </div>
+       <div class="panel-body">
+          {des}
+       </div>
+    </div>
+    
+    <div class="clear"></div>
+			<h3 class="all_message">全部评论</h3>
+			<ul class="talkList1 clearfix" style="border-top: 1px solid #eee;">
+        <!-- START list -->
+        <li class="clearfix fl" id="row{id}" style="border-bottom: 1px dotted #dfdfdf;padding:13px 0 13px 0;">
+        <div class="userPic" style="float:left;"><a><img src="/upd/face/{uid}.jpg" width="48" height="48"></a></div>
+        <div class="msgBox">
+        <div class="userName" style="margin-top:3px;float:left"><strong><a class="blue">{truename}&nbsp;&nbsp;</a></strong></div>
+        <div class="msgCnt" style="line-height:31px;">{des}</div>
+        <div class="pubInfo clearfix"> <span class="fl">{created}</span> <span class="fr" onclick="delths('{id}')" style="cursor:pointer;float:right;">删除</span></div>
+        </div>
+        </li>
+        <!-- END list -->   
+        </ul>
+        <form role="form" id="form2">
+        <div class="form-group">
+        <label for="name" style="line-height:30px;height:30px;">发表评论</label>
+        <textarea id="des" class="form-control" rows="3" style="width:95%;"></textarea>
+        <input type="text" id="cid" value="{ccid}" style="display:none;">
+        <input type="text" id="reid" value="{id}" style="display:none;">
+        <input type="text" id="tid" value="" style="display:none;">
+        <button type="button" class="btn btn-primary" style="margin:10px auto 0;width:100px;" id="btn_re">发表</button>
+        </div>
+        </form>
+      </div> 
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+var curpage=1;
+var ouid="{ouid}";
+$(function() { 
+    $("#btn_re").bind("click", function(){
+	  if(ouid==''){$('#Login').modal('show');return false;}	
+	  var des=$("#des").val();
+      if(des<1){alert("请勿发空内容！");return;}    
+      if(des>250){alert("内容太长！(5-250)");return;} 
+      //$("#des").val(clearQuote(des));
+      SaveAM({tpl:"cls_comments","do":"a",frmid:"#form2",showok:"评论成功",callback:"dosome"});     
+   });  
+ }); 
+if(queryStr("goto")!="")location.hash="#row"+queryStr("goto");
+function dosome(ed,data){ 
+  if(data.indexOf("ok")>-1){
+    id=data.substr(data.indexOf("ok")+2);
+    location.reload();  
+  }
+} 
+function delths(v){
+    $.post("./srv/sdo.php?",{tpl:"del_cmts",id:v,"cid":"{c}"},function (d, e) {  
+        if(d.indexOf('ok')>-1){
+           $("#row"+v).remove();        
+			  }else alert(d);
+      });  
+}
+
+function checklogin(){
+	if($("#usr").val()=="帐号/手机/邮箱"){alert("帐号不能为空");return false;}
+    if($("#pwd").val()==""){alert("密码不能为空");return false;} 
+    $.post("/srv/plg.php?", { u: $("#usr").val(), p: $("#pwd").val(),s:($("#sav").is(":checked")?"1" :"0") }, function (d, e) {
+      d1=JSON.parse(d);
+       if (d1.ret=="ok") {
+		   $("#Login").modal("hide");
+           location.reload();
+        }
+        else if(d1.ret=="err"){
+           alert(d1.msg);
+        }
+        else{
+            alert(d);
+        }      
+    });
+}
+	
+</script>
+
+<div class="modal" id="Login" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">用户登录</h4>
+         </div>
+<div class="modal-body"> 
+<form role="form">    
+   <div class="form-group">
+      <label for="name"></label>
+      <input type="text" class="form-control" id="usr"  placeholder="用户名/邮箱/手机号" style="width:80%;">
+   </div>
+   <div class="form-group">     
+      <input type="password" class="form-control" id="pwd"   placeholder="登录密码"  style="width:80%;" onkeydown="if(event.keyCode==13) {dosome();}">
+   </div> 
+
+   <div class="form-group" style="display:none;">
+   <p class="help-block col-sm-10"><a class="" href="/?t=reg" >注册帐号</a></p> 
+   </div> 
+    <div class="form-group">         
+      <p class="help-block col-sm-10"></p>
+   </div> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="checklogin();"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

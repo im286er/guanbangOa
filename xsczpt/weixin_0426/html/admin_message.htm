@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script src="js/limit.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+.check_cont span{
+	text-overflow:ellipsis;
+	-o-text-overflow:ellipsis;
+	-webkit-text-overflow:ellipsis;
+	-moz-text-overflow:ellipsis;
+	-webkit-line-clamp:1;
+	width:200px;
+	overflow:hidden;
+}
+#wrapper {
+position:relative;
+height:400px;
+}
+</style>
+</head>
+<body>
+<header><a href="javascript:history.go(-1);" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>海安中学学生成长系统</h1><a href="#" target=""></a></header>
+<section class="block_home_slider">
+	<div id="home_slider" class="flexslider">
+		<ul class="slides">
+			<!-- START wx_top_pic -->
+				<li>
+				<div class="slide">
+					<img src="{pic}" alt="" />
+					<div class="caption">
+						<p class="title">{title}</p>
+					</div>
+				</div>
+			</li>
+			<!-- END wx_top_pic -->
+		</ul>
+	</div>
+</section>
+<div class="clearfix"></div>
+
+<div class="clearfix"></div>
+<form action="./?t=admin_message" method="post" id="form1">
+	<input type="hidden" name="status" id="_st" value=""/>
+	<input type="hidden" name="read_select" id="_st1" value=""/> 
+	<input type='hidden' id='partner_id' name='partner_id' value=''>
+	<input type='hidden' id='geter' name="geter" value='{master_val}'>
+	<input type='hidden' id='menu1' name="menu1" value=''>
+	<input type='hidden' id='menu2' name="menu2" value=''>
+	<input type="hidden" name="h_id" id="h_id" value=""/>
+	<input type="hidden" name="subject" id="subject" value=""/>
+	<input type="hidden" name="uid" value="{uid}"/>
+	<input type="hidden" id="title_mess" name="title_mess" value=""/>
+	<input type="hidden" name="flag" id="h_flag" value=""/>
+	<input type="hidden" name="flag2" id="flag2" value=""/>
+</form>
+<section class="fl wout mt10">
+	<div class="hots">	
+		<div class="pad5" style="overflow:auto;" id="wrapper">
+			<table width="900px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+				<tr class="tabtitle" height="30">
+				 <td width="8%" class="tb_td tb_txt_center">学生信息</td>
+				  <td width="10%" class="tb_td tb_txt_center">模块</td>
+				  <td width="" class="tb_td tb_txt_center">内容描述</td>
+				  <td width="10%" class="tb_td tb_txt_center">记录时间</td>
+				  <td width="7%" class="tb_td tb_txt_center">审核状态</td>
+				  <td width="7%" class="tb_td tb_txt_center">消息状态</td>
+				  <td width="10%" class="tb_td tb_txt_center">操作</td>
+				</tr>
+				{str_total}
+			</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+		<ul class="pagination wx_center">
+					{page}
+		</ul>
+		</div>
+	</div>
+<script>
+/*$().ready(function(){
+	$("f_red").each(function(a,b){
+     if($(b).attr("v1")=="1")
+	 {
+		$(b).text("已读");
+	 }else{
+		$(b).text("未读");
+	 }
+    });
+		
+}); */
+$(function(){
+  $(".checkread").each(function(){
+    if($(this).attr("is_read")=='1') $(this).html("已读");
+	if($(this).attr("is_read")=='0') $(this).html("<font color=\'#ff0000\'>未读</font>");
+  });
+})
+
+$(".caozuo").each(function(){
+	var _n=$(this).attr("n");
+	if(_n.indexOf("寄语")>0){
+		$(this).remove();
+	}
+});
+
+$(".check_cont").each(function(){
+	var _v=$(this).attr("v");
+	if(_v==""){
+		$(this).remove();
+	}
+	var checkNum = /<(?!img).*?>/g;
+	_v= _v.replace(checkNum,"");
+	$(this).children("span").html(_v);
+});
+
+</script>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<script type="text/javascript" src="js/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#home_slider').flexslider({
+		animation : 'slide',
+		controlNav : true,
+		directionNav : true,
+		animationLoop : true,
+		slideshow : false,
+		useCSS : false
+	});
+});
+//标记为已读
+function yread(id){
+	if(confirm('是否确认')) 
+     { 
+	   $("#h_but_op").val("确定");
+	   $("#h_flag").val("1");
+	   $.ajax({
+		type: 'POST',
+		url: "./srv/read_set.php" ,
+		data: {tpl:"set_yd",id:id,is_read:1} ,
+		success: function(d){	
+		//console.log(d);
+		//return false;
+		 if(d=="ok"){
+				location.reload();
+		 }
+		 }
+	   }); 
+	}
+}
+//标记为未读
+function wread(id){
+	if(confirm('是否确认')) 
+     { 
+	   $("#h_but_op").val("确定");
+	   $("#h_flag").val("0");
+	   $.ajax({
+		type: 'POST',
+		url: "./srv/read_set.php" ,
+		data: {tpl:"set_wd",id:id,is_read:0} ,
+		success: function(d){	
+		 if(d=="ok"){
+				location.reload();
+		 }
+		 }
+	   }); 
+	}
+}
+</script>
+</body>
+</html>

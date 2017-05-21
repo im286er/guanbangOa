@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{title}-群组论坛-{gtitle}</title>
+{cssjs}
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<script charset="utf-8" src="/widget/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/widget/kindeditor/lang/zh_CN.js"></script>
+<script type="text/javascript" src="/widget/layer/layer.js"></script> 
+</head>
+<body>
+{top}
+<div class="container">  
+{head}                 
+<div class="col-xs-8 ">
+<div class="page-header">
+  <h3> {title} <small>浏览：{see} 回复：{comments}</small></h3>
+</div>
+
+<div class="panel panel-default">
+ <div class="panel-heading"><img class="img-circle" src="/upd/face/{uid}.jpg" width="40" alt='' onerror="this.src='/error/face.jpg';"/>  {nick}
+ <code><script>show_TS('{timestamp}');</script></code>
+</div>
+   <div class="panel-body">
+      {des}
+	<p>
+   </div>
+</div>
+
+<div class="page-header" id="_comment"><h3>评论区</h3></div>
+
+<!-- START list -->
+<div class="panel panel-default" id="row{id}">
+<div class="panel-heading"> <img src="/upd/face/{uid}.jpg" class="img-circle" width="40" alt='' onerror="this.src='/error/face.jpg';"/>     
+{nick}  <code><script>show_TS("{timestamp}");</script></code></div>
+<div class="panel-body">
+{des}
+<p>
+<p class="pull-right">
+	<a onclick="vote({tbl:'grp_forum_comment',do:'up',id:{id}},this)" class="glyphicon glyphicon-hand-up" title="顶一下">({up})</a>   
+	<a onclick="vote({tbl:'grp_forum_comment',do:'bad',id:{id}},this)" class="glyphicon glyphicon-thumbs-down" title="踩一下">({bad})</a>
+	<a onclick="delths('{id}',this);" class="glyphicon glyphicon-minus" title="删除"> </a>  
+</p>
+</p>
+</div>
+</div>  
+<!-- END list -->   
+<ul class="pagination pull-right">
+{page}
+</ul> 
+<div style="clear:both;"></div>
+
+<div class="panel panel-default">
+<form id="form1">
+<div class="panel-heading"> 评论： </div>
+<div class="panel-body" style="position:relative;">
+<p>
+<textarea  type="text" id="des" name="des" data-edit="ke" class="form-control" style="width:100%;height:100px;visibility:hidden;"></textarea>
+</p>
+<p>
+<p style="position:absolute;right:20px;top:13px;">
+	<span class="word_count1">0</span>/<span class="word_count2">0</span>
+</p>
+<button type="button" class="btn btn-success" id="btn"> 发 布 </button>
+<input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="gid" value="{g}" style="display:none;"/> 
+<input type="text" id="fid" value="{id}" style="display:none;"/>  
+</p>
+</div>
+</form> 
+</div> 
+
+</div>
+
+<div class="col-xs-4">
+<!-- right -->
+<div class="">
+<div class="page-header">
+   <h3>  </h3>
+    <div class="panel-body">      
+   </div>
+</div>
+</div>
+ 
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+vote({tbl:"grp_forum",do:"see",showok:"",callback:"",id:queryStr("id")},null);
+	//var isopen="{isopen}";
+	//if(isopen=="0"){$(".isopen").remove();}
+  //see({tpl:"vote",do:"vod",showok:"",callback:"",id:queryStr("id"),tb:"grp_forum",col:"see"},null);
+	//页面ajax调用全局设置,异步改成同步
+	/*$.ajaxSetup({
+  async: false
+	});*/
+	var keditor=[];
+	KindEditor.ready(function(K) {
+		keditor["des"] = K.create('#des',{ 
+			allowFileManager : true,
+			themeType : 'simple',
+			items : ['emoticons', 'link','unlink'],
+			   afterChange : function() {
+    				K('.word_count1').html(this.count('text'));
+    				K('.word_count2').html(300-this.count('text'));
+    				if(K('.word_count2').html()<0){
+    					K('.word_count2').html("0");
+    				}
+			},
+			pasteType : 1
+		});  
+	}); 
+ if(queryStr("goto")!="")location.hash="#row"+queryStr("goto");
+ $(function () { 
+    $("#btn").bind("click", function(){      
+	     //if(isopen=="0"){layer.msg("非本组成员无法发表内容！");return;}
+	    var word_count=$(".word_count1").html();
+      if(word_count<1){layer.msg("请勿发空内容！");return;}    
+      if(word_count>300){layer.msg("内容太长！");return;} 
+      SaveAM({tpl:"grp_forum_comment","do":"a",frmid:"#form1",showok:"评论成功",callback:"dosome"});
+	  	//layer.msg("评论成功！");
+   }); 
+  }); 
+function dosome(ed,data){ 
+  if(data.indexOf("ok")>-1){
+    id=data.substr(data.indexOf("ok")+2);
+    $.post("./srv/sdo.php?",{tpl:"upd_comment",g:"{g}",fid:"{id}","id":id},function (d, e) {  
+        if(d.indexOf('ok')>-1){
+           //location.reload();
+			     location.href="./?t=topic&id={id}&g={g}&goto="+id;            
+			  }else alert(d);
+      });   
+  }
+}
+
+function delths(v,obj){     
+  if(!confirm('确定删除吗？'))return;
+	//layer.confirm('确定删除吗？', {icon: 3,title: false,shadeClose:true}, function(index){
+	//	layer.close(index);
+	   $.post("./srv/sdo.php", {tpl:"del_forum_comment",id:v,g:"{g}"}, function (d, e) { 
+		  if(d.indexOf("ok")>-1){
+			   $(obj).parent().parent().parent().remove();
+			   //layer.msg("删除成功！");
+      }
+		  else 
+		    layer.msg(d);
+	  });
+	//});
+}  	
+
+</script>

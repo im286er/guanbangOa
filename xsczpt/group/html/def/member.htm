@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群组成员-{gtitle}</title>
+{cssjs}    
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>    
+ 
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header"><h3>
+群成员：<b>{nums}</b> 
+ 
+</h3>
+    
+</div>
+ 
+ 
+<div class="row">
+<!-- START list -->     
+<div class="col-sm-3" style="">
+<div class="col-sm-4"><div class="thumbnail">
+<a href="/zone?id={uid}" target="_blank"><img src="/upd/face/{uid}.jpg" style="width:48px;height:48px;" onerror="this.src='/error/face.jpg';" /></a></div></div>
+<div class="caption col-sm-8">
+<h5><a href="/zone?id={uid}" target="_blank">{nick}</a> <small><script>document.write(arr[{isman}]);</script></small></h5>
+<p>{truename}</p>
+<p> </p>    
+</div>
+</div> 
+<!-- END list -->     
+</div>
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">    
+ $(function () {  
+  }); 
+</script>

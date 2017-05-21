@@ -1,0 +1,36 @@
+<div class="main-content su">
+	<div class="banner" style="background: url('./{pic}{template}{picname}') rgb(29, 120, 200) center center no-repeat;height: 250px;">
+		<h1>{banner_title}</h1>
+	</div>
+	<div class="menu_bg">                                                            
+		<div class="main menu">
+			<ul>                                     
+				<li class="nav_menu-item {index}"><a href="?t=index" target="">首页</a></li>
+				<li class="nav_menu-item {articles}"><a href="?t=articles" target="">文章</a></li>
+				<li class="nav_menu-item {resources}">
+					<a href="?t=resindex">资源</a>
+					<div class="nav_submenu transSub">
+					
+						<!-- START list_res -->
+						<dl class="transN clearfix">
+							<div class="speech-bubble speech-bubble-right" style="float:left;width:43px;">
+								<span style="color:#fff;">{name}</span>
+							</div>
+							<dd class="fl">
+							
+								<!-- START rp -->
+								<a href="?t=resources&per={period}&s={id}">{name}</a>
+								<!-- END rp -->
+								
+							</dd>
+						</dl>
+						<!-- END list_res -->
+						
+					</div>
+				</li>
+				<li class="nav_menu-item {activity}"><a href="?t=activity" target="">活动</a></li>
+				{admin}
+			</ul>
+		</div>
+	</div>
+</div>

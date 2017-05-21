@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>访问受限-{gtitle}</title>
+{cssjs}
+
+</head>
+<body>  
+{top}
+<div class="container">
+
+ <div class="col-sm-6 col-sm-offset-3 "> 
+ <div class="page-header">
+   <h3>访问受限——主人设置了访问密码 <small></small></h3>
+</div> 
+ <div class="panel panel-primary">
+   <div class="panel-heading">
+      <h3 class="panel-title">ZONE访问密码 <small class="pull-right"></small></h3>
+   </div>
+   <div class="panel-body">
+     <form class="form-horizontal" role="form">     
+   <div class="form-group">
+      <label for="usr" class="col-sm-2 control-label">访问密码</label>
+      <div class="col-sm-9">
+         <input type="text" class="form-control" id="vp"  placeholder="请输入访问密码">
+      </div>
+   </div>  
+   <div class="form-group">
+      <div class="col-sm-10 col-sm-offset-2"><button type="button" id="btn1" class="btn btn-primary">确定</button>
+      <a href="/" class="btn btn-warning">返回首页</a> </div>　
+   </div> 
+</form>
+   </div>
+</div> 
+</div>
+</div>   
+{foot}   
+</body>
+</html>
+
+<script type="text/javascript">
+$(function(){
+   $("#btn1").bind("click",function(){
+        if($("#vp").val()==""){alert("请输入访问密码");return;}
+        $.post("./srv/rdo.php", {tpl:"album_visit",data:$("#vp").val(),id:queryStr("aid")}, function (d, e) { 
+          if(d.indexOf("ok")>-1)
+                location.reload();
+           else{
+                location.href='/?t=error&no=Z112&name=相册禁止访问&msg=您输入的密码不正确';
+           }
+       }); 
+    });
+}); 
+</script>

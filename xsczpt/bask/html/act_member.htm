@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>用户管理-{gtitle}</title>
+{cssjs}
+</head>
+<body> 
+<div class="c12 centered">
+<p class="note info"> 
+<form class="hform" id="qry" onsubmit="return false">     
+<select id="idtype" style="width:100px"></select>  
+学校id<input id="school" type="text" style="width:100px"/> 
+uid<input id="id" type="text" style="width:100px"/>
+昵称<input id="nick" type="text" style="width:100px"/>
+用户名<input id="username" type="text" style="width:100px"/>
+姓名<input id="truename" type="text" style="width:100px"/>
+手机<input id="mobile" type="text" style="width:100px"/>
+
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="asc" title="排序方向" style="display:none;"/>
+ 
+<button class="small skyblue" onclick="loadPage({l_page:1})">查询</button> 
+<button class="small blue"  id="cbtn"  >新建</button>
+<button class="skyblue" onclick="auditPage({})">审核本页</button> 
+<button class="small green" onclick="location.reload();">刷新</button>    
+跳转到：  
+<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" 
+onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:50px;"/>   
+</form>
+</p>
+</div> 
+ 
+    <table class="table">
+      <thead>  
+<tr>
+<th name="id">编号</th> <th>头像</th>
+<th name="username">用户名</th><th name="nick">昵称</th><th name="truename">姓名</th><th name="lgnums">登录次数</th>
+ <th name="school">学校</th>
+<th name="idtype">身份</th><th name="grade">年级</th><th name="subject">学科</th>
+<th name="state">审核</th> 
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr id="row{id}" data-id="{id}">       
+<td><a href="/zone?id={id}" target=_blank>{id}</a></td>  
+<td><img id="logo{id}" src="/upd/face/{id}.jpg" width="32px" /></td>
+<td>{username}</td>
+<td>{nick}</td>
+<td>{truename}</td>
+<td>{lgnums}</td>   
+<td><sch v="{school}" /></td>
+<td><idtype v="{idtype}" /></td>
+<td><period v="{period}" ></period>/<grade v="{grade}" /></td>
+<td><subject v="{subject}" /></td>  
+<td><st v="{state}"></st></td>
+ 
+<td>
+<button class="small orange" onclick="auditID({id:'{id}'})">审</button> 
+<button class="small orange" onclick="Mod({id:'{id}'})">改</button> 
+<button class="small orange" onclick="openUpd('{id}','#dlg2')">图</button> 
+<button class="small red" onclick="delRow({id:'{id}'});">删</button>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+<div class="pagination">
+<ul class="pagin text-center" id="page"></ul>
+</div>
+
+</body>
+</html>
+
+ 
+<div id="dlg1" title="添加/修改" class="easyui-dialog dialog1" style="width:600px;height:550px;padding:10px;" data-dotype="a"  data-options="closed:true,buttons: [{text:'确认',handler:function(){  
+SaveAM({'do':$('#dlg1').data('dotype'),frmid:'#dlg1',showok:'','callback':'bkcallback'});
+}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]">
+<form id="form1" class="hform">
+<label>用户名</label><input type="text" id="username" value="" maxlength="30"/><br/>
+<label>手机</label><input type="text" id="mobile" value="" maxlength="20" /> <br/> 
+<label>邮箱</label><input type="text" id="email" value="" maxlength="20" /> <br/> 
+<label>昵称</label><input type="text" id="nick" value="" maxlength="20" /> <br/>       
+<label>姓名</label><input type="text" id="truename" value="" maxlength="20" /> <br/> 
+<label>密码</label><input type="password" id="pass" value="" style="display:;" /><br/>    
+
+
+<label>址址</label><select id="addr"></select><br/> 
+<label>学校</label><select id="school"  style="width:100px;"></select>
+<input type="text" id="schools" style="display:no ne;" placeholder="检索学校" style="width:100px;"/>  
+<a id="btn_sch">查询</a> <br/>    
+          
+<label>入学时间</label><input type="text" id="intoyear" value="" maxlength="20"  onfocus="WdatePicker({dateFmt:'yyyy',isShowClear:false,readOnly:true})" />     <br/>
+<br/>
+<label>身份</label><select id="idtype"></select><br/>  
+<label>学段</label><select id="period" style="width:100px;"></select>  <a id="btn_period">刷新</a>
+年级<select id="grade" style="width:100px;"></select>
+学科 <select id="subject" style="width:100px;"></select> <br/>  
+<input type="text" id="id"  value="" style="display:none;"/>    
+</form>
+</div>
+
+<div id="dlg2" title="【image】" style="width:400px;height:300px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ $('#from2').submit();}},{text:'取消',handler:function(){$('#dlg2').dialog('close');}}]"> 
+<div id="tips" class="alert succes">上传宽度120px的图片</div>  
+<form action="srv/upd_face.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<label>图标</label> <input id="file" name="file" type="file" accept="image/*" />
+<input type="text" id="id" name="id" value="" style="display:none;"/> 
+<input type="text" id="flag" name="flag"  value="0" style="display:none;"/> 
+</form>
+</form>
+</div> 
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+<script> 
+   formatunixs = ",timestamp,lasttime";
+formatstate=","; 
+var state=new Array('','','&radic;','');
+  obj_id=null,obj_p=null,obj_g=null,obj_su=null,obj_sh=null;
+
+  $(function () {		
+    $.get("/data?t=sys_type&f=txt", function(d){selectAddHead("#idtype","身份");$("#idtype").append(d);$("#dlg1 #idtype").html(d);});
+    $.get("/data?t=sys_period&f=txt", function (d) {$("#dlg1 #period").html(d);});             
+    //$.get("/data?t=sys_grade&f=txt", function (d) {$("#dlg1 #grade").html(d);}); 
+    //$.get("/data?t=sys_subject&f=txt", function(d){$("#dlg1 #subject").html(d);}); 
+    //$.get("/data?t=sys_org_type&f=txt", function (d) {selectAddHead("#orgtype","学校类型");$("#orgtype").append(d);}); 
+    $.get("/data/two.php?t=sys_addr&f=txt",function (d) {$("#dlg1 #addr").append(d);}); 
+
+	  $.getJSON("/data?t=sys_type&f=obj",function(d){obj_id=d;});
+    $.getJSON("/data?t=sys_period&f=obj",function(d){obj_p=d;});
+    $.getJSON("/data?t=sys_grade&f=obj",function(d){obj_g=d;});
+    $.getJSON("/data?t=sys_subject&f=obj",function(d){obj_su=d;});
+    $.getJSON("/data?t=school&f=obj",function(d){obj_sh=d;       
+     loadPage({l_page:1});	
+    });
+    
+    $("#sav").click(function(){
+        SaveAM({"do":$("#dlg1").data("dotype"),id:$("#dlg1 #id").val(),frmid:"#dlg1",showok:"",callback:"bkcallback"});
+    });
+    initAddBtn({btn:"#cbtn",frmid:"#dlg1"});  
+    dlgBindEvent();
+	});
+  
+initState=true;   
+function reinitStates(){          
+  $("#list sch").each(function(a,b){$(b).text(obj_sh[$(b).attr("v")]);});
+     $("#list idtype").each(function(a,b){$(b).text(obj_id[$(b).attr("v")]);});
+     $("#list period").each(function(a,b){$(b).text(obj_p[$(b).attr("v")]);});
+     $("#list grade").each(function(a,b){$(b).text(obj_g[$(b).attr("v")]);});
+     $("#list subject").each(function(a,b){$(b).text(obj_su[$(b).attr("v")]);});
+  $("#list st[v=2]").html(state[2]);
+} 
+function dlgBindEvent(){
+    $("#btn_sch").bind("click",function(){         
+      $.post("./srv/rdo.php", {"tpl":"get_sch_byname","data":$("#schools").val()}, function (d, e) {                   
+         selectShowData('#dlg1 #school', JSON.parse(d), "id", "name");            
+      });
+    }); 
+    $("#dlg1 #period").change(function(){
+        getPeriodChild($("#dlg1 #period").val());
+    });  
+    $("#btn_period").click(function(){
+      getPeriodChild($("#dlg1 #period").val());
+    });  
+  
+} 
+function getPeriodChild(v){      
+  $.get("/data?t=sys_grade&f=txt&pn=period&pv="+v, function (d) {$("#dlg1 #grade").html(d);}); 
+  $.get("/data?t=sys_subject&f=txt&pn=period&pv="+v, function(d){$("#dlg1 #subject").html(d);}); 
+}
+function openUpd(id,did){        
+   $('#dlg2 #id').val(id);     
+	 $('#dlg2').dialog('open').window("resize",{top:$(document).scrollTop()+($(window).height())* 0.25});
+    
+}     
+  function ifrm_dosome(e){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);   
+       if(d.ret=="ok"){           
+         $("#logo"+ $("#dlg2 #id").val()).attr("src",'/upd/face/'+d.fname+'?'+Math.random());           
+         $('#dlg2').dialog('close'); 
+       }
+       else{
+         ralert(d.des);
+       }        
+    }
+}    
+ </script> 

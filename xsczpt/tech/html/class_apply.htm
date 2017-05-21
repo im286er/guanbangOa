@@ -1,0 +1,86 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}       
+</head>
+<body>
+{top}
+<div class="container">   
+{head1}       
+<div class="col-sm-10">
+<div class="page-header">
+   <h3>查找班级      <small></small> <div class="btn-group pull-right">  
+  <a href="?t=class" class="btn btn-default"><i class="fa fa-arrow-left"></i>返回</a>
+</div>
+ </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" id="from1">
+  <div class="form-group">      
+    <label for="firstname" class="col-sm-2 control-label">选择学校</label>
+    <div class="col-sm-2"><select id="sch" class="form-control"><option value="">选择学校</option></select></div>      
+     <div class="col-sm-2"><input  type="text" class="form-control" value="" id="so" placeholder="群名称"/></div>  
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+<th>口号</th>
+<th>状态</th>   
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/class?c={id}" target=_blank>{name}</a></td>
+<td>{slogan}</td>
+<td>{des}</td> 
+<td>
+
+<a class="glyphicon glyphicon-plus" title="申请加入" onclick="joinths('{id}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+$(function () {
+    $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+      selectShowData("#sch",JSON.parse(d),"id","name");  
+      if(queryStr("so")!="") $("#so").val(queryStr("so"));
+      if(queryStr("s")!="") $("#sch").val(queryStr("s"));    
+      //sid:queryStr("s") 
+  }); 
+  $("#btn").bind("click",function(){ 
+    if($("#sch").val()==""){alert("请选择一个学校");return;}
+    location.href="?t=class_apply&s="+$("#sch").val()+"&so="+$("#so").val();    });  
+ });   
+
+function joinths(v){      
+  $.post("./srv/sdo.php?", {tpl:"join_cls",id:v}, function (d, e) {                     
+     alert(d); 
+  });
+} 
+
+</script> 

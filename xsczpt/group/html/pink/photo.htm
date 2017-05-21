@@ -1,0 +1,199 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-群组相册-{gtitle}</title>
+
+{cssjs}    
+<script type="text/javascript">
+
+function getHeight() { 
+	if (document.getElementById("main-left").offsetHeight>= document.getElementById("main-right").offsetHeight){
+		document.getElementById("main-right").style.height=document.getElementById("main-left").offsetHeight + "px";
+	}
+	else{
+		document.getElementById("main-left").style.height=document.getElementById("main-right").offsetHeight + "px";
+	}	
+}
+window.onload = function() {
+	getHeight();
+}
+</script>
+ <style type="text/css">
+.col-sm-2{ width:23%;word-wrap:break-word;word-break:break-all;}
+  .btn-primary{color:#fff;background-color:#BF4570;border-color:#BF4570}
+.btn-primary.active, .btn-primary.focus, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.dropdown-toggle.btn-primary{color:#fff;background-color:#f73f56;border-color:#f73f56}
+
+</style>
+   
+</head>
+<body>
+{top}
+
+<div class="main lf">
+  <div class="mainpage" id="main-left">
+      <div class="mp-right lf"  id="main-right">
+     <div class="right-text lf">
+    <ul>
+    
+    <li class="title lf">{name}<br>
+
+    <span> {des}</span>
+     </li>
+     <li  class="sub-tilte lf">{slogan}</li>
+     
+     <li class="detail lf">人数：{nums}<br>
+管理员：{mannums}<br>
+单位：{schools}</li>
+    {head}  
+   
+    <div class="cl"></div>
+    </div>
+    <div class="mp-left lf">
+      <div class="group-name lf">
+        <ul>
+          <li><img src="/upds/group/logo/{g}.jpg"   onerror="this.src='/error/logo.jpg';" ></li>
+          <li class="pdlf20">{name} <br>
+            <span>{slogan}</span></li>
+        </ul>
+      </div>
+      <div class="main-body lf">
+      <div class="page-header"><h3> 
+<a class="btn btn-primary glyphicon glyphicon-open" href="./?t=photo_ad&g={g}&id={id}" target=_blank> 上传照片 </a>
+</h3>
+</div>
+
+<div class="row">
+<!-- START list --> 
+<div class="col-sm-2" style="">
+  <div class="thumbnail">
+   <a href="/upds/group/album/{gid}/{aid}/{pic}" target="_blank" title="{ofname}">
+   <img width="120" src="/upds/group/album/{gid}/{aid}/t_{pic}" onerror="this.src='/error/logo.jpg';" /></a>
+  </div>
+  <p>{ofname}<a class="glyphicon glyphicon-remove isopen" title="删除" onclick="delths('{id}',this)"></a></p>
+</div>
+<!-- END list -->    
+</div>  
+
+<hr/>
+<ul class="pagination pull-right">
+{page}
+</ul>
+      </div>
+      <div class="cl"></div>
+    </div>
+    
+    <div class="cl"></div>
+ {foot}  </div>
+  <div class="cl"></div>
+  
+</div>
+
+
+
+
+
+
+</body>
+</html>
+<script type="text/javascript">    
+//群组空间权限
+var isopen="{isopen}";
+if(isopen=="0"){$(".isopen").remove();}
+ $(function () {  
+   $("#btn").click(function(){ $('#dlg1').modal('show');}); 
+  });
+function as_info(data){				 
+if(data.info=="err")
+  $("#finfo").text("错误:"+data.msg);//+" 类型:"+data.type data.name+ +" 大小:"+data.size
+else{
+  $("#finfo").text("上传:"+data.name+" 大小:"+data.size); //+" 类型:"+data.type
+  $("#finfo").text('大小:'+data.size);
+}
+}
+//进度
+function as_progress(data){
+  $("#finfo").text('上传:'+((data.loaded / data.total)*100.00).toFixed(2)+"%");//data.name+  
+}
+//completed
+function as_complete(data){    
+//data.info+"|"+data.name+"|"+data.size+"|"+data.type+"<br/>"; 
+  if(data.ret=="err")
+    $("#finfo").text("错误:No("+data.errno+")"+data.msg);  
+  else{
+    $("#finfo").text('上传完成'); //
+    addnew(data);
+  } 
+}
+function addnew(d){
+  d.tpl='add_photo';
+  d.id='{id}';
+  d.g='{g}'; 
+  $.post("./srv/sdo.php?" + Math.random(),d,function (d, e) {     
+      if(d.indexOf('ok')>-1){
+        location.reload(); 
+        //$('#dlg1').modal('hide');
+        //$("#finfo").text('');  data.fname,data.ofname       
+      }    
+      else{
+          alert(d);
+      } 
+  });  
+}
+
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_photo",id:v,g:"{g}",a:queryStr("id")}, function (d, e) {     
+      if(d.indexOf("ok")>-1)
+        $(obj).parent().parent().remove();
+      else 
+        alert(d);
+  });
+}  
+function savephoto(v){
+  $.post("./srv/sdo.php?" + Math.random(), {tpl:"add_photo",id:"{id}",g:"{g}",fname:v.fname,ofname:v.ofname,size:v.size},  function (d, e) {         
+    alert(d);
+  });   
+}	
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){ 
+		   savephoto(d);
+          $('#dlg1').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+    }    
+}
+</script>
+
+
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">上传Logo</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_album.php?g={g}&id={id}" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block">上传不大于2MB的.jpg图片 尺寸5:3</span>
+    </div>
+  </div>
+</form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+         </div>
+      </div>
+   </div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

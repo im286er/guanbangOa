@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{title}-{gtitle}</title>
+{cssjs}    
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="col-xs-8 ">
+<div class="page-header">
+   <h3>{title}  <small>[×¨Ìâ]</small>
+    </h3>         
+</div>
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">        {truename}  <script>document.write(utctime('{timestamp}'));</script>  
+       ä¯ÀÀ£º{see}  
+      </h3>
+   </div>
+   
+   <div class="panel-body">
+    <center><img src="pic/{s}/{pic}"></center>
+    
+      {des}
+   </div>
+</div>
+
+</div>
+
+<div class="col-xs-4">
+<!-- right -->  
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">   
+
+ $(function () {     
+   vote({tpl:"vote",do:"see",showok:"",callback:"",id:queryStr("id"),tb:"sch_topic",col:"see"});
+  }); 
+               
+	
+</script>

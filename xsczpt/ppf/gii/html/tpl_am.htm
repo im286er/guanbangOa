@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<title>{name}-编辑-{gtitle}</title>
+{cssjs}   
+</head>
+<body class="">
+{top}       
+        <div class="header"> <h1 class="page-title">{name}-编辑</h1></div>        
+         <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li> 
+            <li class="active">{name}</li>
+        </ul>
+
+<div class="container-fluid">
+            <div class="row-fluid">                     
+<div class="btn-toolbar">
+ <button class="btn btn-primary" id="btn1"><i class="icon-save"></i>确定</button>         
+  <div class="btn-group">
+  </div>
+</div>
+<div class="well"> 
+    <div id="myTabContent" class="tab-content">
+      <div class="tab-pane active in" id="home">
+ <form id="form1">
+<!-- START edit --><label>{name}</label><input type="text" id="{col}" value="{default}" maxlength="{maxlength}" /> 
+<!-- END edit -->
+<!-- START pass --><label>密码*</label><input type="password" id="{ctrlpassid}" value=""  />
+<!-- END pass -->
+<!-- START editdate --><label>{name}</label><input type="text" id="{col}" value=""  onfocus="WdatePicker()" readOnly/>
+<!-- END editdate --> 
+<!-- START editsel --><label>{name}</label><select id="{col}"><option value=""></option></select> 
+<!-- END editsel -->
+<!-- START editchk --><label>{name}<input type="checkbox" id="{col}"/> 
+<!-- END editchk -->
+<!-- START editupd --><label>{name} 上传图片</label> <span id="fupd"></span><input type="text" id="{col}" value="" readonly  />  
+<!-- END editupd -->
+<!-- START edit1 --><label>{name}</label><textarea id="{col}" edit="{valtype}" rows="5" ></textarea>
+<!-- END edit1 --> 
+<!-- START edit0 --><input type="text" id="{col}"  value="{default}" style="display:none;"/>
+<!-- END edit0 -->
+
+    </form>
+      </div> 
+  </div>
+
+</div>
+
+{foot}  
+</div>
+</div>   
+ </form>
+</body>
+</html>
+ <script> 
+     $(function () {
+        dotype=queryStr("d");         
+         if(queryStr("d")=="m")
+            readID({ "tpl":"{tpl}", "do": "r", "id": queryStr("id"), frmid: "#form1" });         
+         $("#btn1").bind("click", function(){
+           SaveAM({tpl:"{tpl}","do":queryStr("d"),id:queryStr("id"),frmid:"#form1",showok:"保存成功",callback:""});
+         });
+     }); 
+ </script>    

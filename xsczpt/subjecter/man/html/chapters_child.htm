@@ -1,0 +1,45 @@
+<div id="h_menuart" title="可对章节进行拖动排序">
+	<h1 style="background-color:rgba(0,0,0,0.5);padding-left:10px;color:white;font-size:14px;">
+		{chapter_title}
+		<span class="pull-right" style="padding-right:10px;" onclick="hideMenu();">关闭</span>
+		<span class="pull-right" style="padding-right:10px;" onclick="saveSort();">保存</span>
+	</h1>
+	<ul id="songListEdit" class="">
+		<!-- START parts_list -->
+		<li style="cursor:move;" id="{id}">
+			<i>- </i><span class="num">{odx}</span>. {title}
+		</li>
+		<!-- END parts_list -->
+	</ul>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('#songListEdit').sortable().bind('sortupdate',function() {
+		changeNum();
+	});
+});
+function changeNum(){
+	$("#songListEdit li").each(function(){
+		var indexNum = $("#songListEdit li").index(this);
+		var a = indexNum + 1;
+		$(this).find(".num").text(a);
+	})
+}
+function saveSort() {
+	var odx = 1;
+	var data = "";
+	var len = $("#songListEdit li").length - 1;
+	
+	$("#songListEdit li").each(function(index){
+		data = data + $(this).attr("id") + ":" + odx + ";";
+		odx++;
+		if(index == len) {
+			// 取到最后一个元素
+			$.post("./srv/sdo.php?" + Math.random(), {tpl:"save_parts_sort", data:data}, function (d, e) {
+				alert(d == "ok" ? "排序保存成功。" : "排序保存失败！");
+				hideMenu();
+			});
+		}
+	})
+}
+</script>

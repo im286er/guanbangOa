@@ -1,0 +1,149 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script>  
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="./srv/score_export_submit.php" enctype="multipart/form-data" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">批量导出学生成绩记录</a></label> 
+			</div>
+			<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+						<tr>
+							 <td width="22%" class="tabtd2_L">说明：</td>
+							 <td class="tabtd2_R" style="color:#f00;">如果数据量大，请进行条件筛选进行分批导出。</td>
+						</tr>
+						<tr>
+							 <td width="20%" class="tabtd2_L">选择学期：</td>
+							 <td class="tabtd2_R">
+								<select name="term_id" id="term_id">
+								</select>
+							 </td>
+						</tr>
+						
+						<script type="text/javascript">
+						  if({isadmin}){
+							document.write("<tr> <td width=\"20%\" class=\"tabtd2_L\">导出班级：</td><td class=\"tabtd2_R\"><select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select> </td></tr> ");
+						  }
+						</script> 
+							
+						<tr>
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							<select name="exam_type" id="exam_type">
+							</select>
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">导出字段</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="checkbox" name="truename" value="1" checked="checked" />&nbsp;姓名&nbsp; 
+							<input type="checkbox" name="user_card" value="1" checked="checked" />&nbsp;身份证&nbsp; 
+							<input type="checkbox" name="class_name" value="1" checked="checked" />&nbsp;班级&nbsp; 
+							<input type="checkbox" name="yw" value="1" checked="checked" />&nbsp;语文&nbsp; 
+							<input type="checkbox" name="sx" value="1" checked="checked" />&nbsp;数学&nbsp; 
+							<input type="checkbox" name="wy" value="1" checked="checked" />&nbsp;外语&nbsp; 
+							<input type="checkbox" name="wl" value="1" checked="checked" />&nbsp;物理&nbsp;
+							<input type="checkbox" name="hx" value="1" checked="checked" />&nbsp;化学&nbsp;
+							<input type="checkbox" name="sw" value="1" checked="checked" />&nbsp;生物&nbsp;
+							<input type="checkbox" name="zz" value="1" checked="checked" />&nbsp;政治&nbsp;
+							<input type="checkbox" name="ls" value="1" checked="checked" />&nbsp;历史&nbsp;
+							<input type="checkbox" name="dl" value="1" checked="checked" />&nbsp;地理&nbsp;
+							<input type="checkbox" name="xxjs" value="1" checked="checked" />&nbsp;信息技术&nbsp;
+							<input type="checkbox" name="tyjs" value="1" checked="checked" />&nbsp;通用技术&nbsp;
+							<input type="checkbox" name="ty" value="1" checked="checked" />&nbsp;体育&nbsp;
+							<input type="checkbox" name="yy" value="1" checked="checked" />&nbsp;音乐&nbsp;
+							<input type="checkbox" name="ms" value="1" checked="checked" />&nbsp;美术&nbsp;
+							<input type="checkbox" name="xl" value="1" checked="checked" />&nbsp;心理&nbsp;
+							<input type="checkbox" name="xx" value="1" checked="checked" />&nbsp;选修&nbsp;
+							<input type="checkbox" name="szf" value="1" checked="checked" />&nbsp;总分&nbsp;
+							<script type="text/javascript">
+							if({isadmin}){
+								document.write('<input type="checkbox" name="sc_order" value="1" checked="checked" />&nbsp;班级名次&nbsp;<input type="checkbox" name="sg_order" value="1" checked="checked" />&nbsp;年级名次&nbsp;');
+							}
+							</script> 
+						  </td>
+					</tr>
+					</table>
+			</div>
+			<div class="boxfooter2">
+			<input id="but_update" name="but_update" type="submit" value="导出" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+		</div>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"exam_type",push_type:"4"}, function (d, e) {
+        selectShowDataNoH("#exam_type",JSON.parse(d),"name","name");
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option selected value='0'>请选择学期</option>");     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>全部</option>;");
+	});
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+//检查提交表单
+function checkForm()
+{
+	if($("#term_id").val()==0){
+		alert("请选择学期。");
+		return false;	
+	}
+	return true;
+}
+</script> 

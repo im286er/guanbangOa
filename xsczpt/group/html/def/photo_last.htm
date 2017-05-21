@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{name}-群组相册-{gtitle}</title>
+{cssjs}          
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+<div class="page-header"><h3> 
+{name}
+</h3>
+</div>
+
+<div class="row">
+<div class="col-sm-1"><a title="上一组" id="pre_group" class="btn btn-warning glyphicon glyphicon-fast-backward" style="cursor:pointer;" > </a>
+</div>
+<div class="col-sm-10" id="list"> </div> 
+<div class="col-sm-1"><a title="上一组" id="nxt_group" class="btn btn-warning glyphicon glyphicon-fast-forward" style="cursor:pointer;" > </a></div>
+</div>  
+<hr/>
+<div class="row" >
+
+</div> 
+
+<div id="pic" style="min-height:500px;background:#efefef;border:1px solid #ccc;text-align:center;padding:20px;" >
+ 
+<img id="img" src="/class/album/{curimg}" onerror="this.src='/error/logo.jpg';"/>
+ 
+</div>
+<div id="">
+<a id="btn1" href="#" class="btn btn-warning glyphicon glyphicon-picture">查看原图</a>
+<a id="btn2" href="#" class="btn btn-primary glyphicon glyphicon-arrow-left" >返回相册</a>
+<a id="btn3"  class="btn btn-danger glyphicon glyphicon-remove"  onclick="delths('{id}',this)">删除</a>    
+</div> 
+<ul class="pagination pull-right">
+{page}
+</ul>  
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">     
+ var aid=queryStr("a");
+var curid=queryStr("id");
+var firstid=0;
+var lastid=0;
+cid="{g}";
+$(function(){
+  $("#pic img").mousemove(function(e){ 
+   // var positionX=e.originalEvent.x||e.originalEvent.layerX||0; //offsetX
+    //$("#text").text(e.scrollLeft +"|"+$(this).width());
+    if(e.offsetX<=$(this).width()/2){     
+      this.style.cursor='url("imgs/pre.cur"),auto'; 
+      $(this).attr('title','点击查看上一张'); 
+      //prePhoto();
+    }else{ 
+      this.style.cursor='url("imgs/next.cur"),auto'; 
+      $(this).attr('title','点击查看下一张'); 
+      //nxtPhoto();
+    } 
+  });
+  $("#pic img").bind("click",function(e){ 
+    if(e.offsetX<=$(this).width()/2)
+      prePhoto();
+    else       
+      nxtPhoto();     
+  });      
+ $("#pre_group").bind("click",function(){
+     $.post("./srv/rdo.php", {tpl:"pre_photo_grp",id:firstid,a:aid}, function (d, e) {           
+         t=JSON.parse(d);      
+          if(t.length>0){
+            setGroupInfo(t);
+          }
+      });         
+   }); 
+   $("#nxt_group").bind("click",function(){
+     $.post("./srv/rdo.php", {tpl:"nxt_photo_grp",id:lastid,a:aid}, function (d, e) {           
+         t=JSON.parse(d);      
+          if(t.length>0){
+          setGroupInfo(t);
+          }
+      });         
+   }); 
+   getfirst();
+   $("#btn1").bind("click",function(){
+      location.href=$("#img").attr("src");
+   }); 
+   $("#btn2").bind("click",function(){
+      location.href="./?t=photo&g={g}&id="+aid;
+   });
+});
+function getfirst(){
+  $.post("./srv/rdo.php", {tpl:"get_photo_last",id:curid,a:queryStr("a")}, function (d, e) {           
+      t=JSON.parse(d);      
+      if(t.length>0){
+        firstid=t[0].id;
+        lastid=t[t.length-1].id;        
+      }
+      $("#list").empty();
+      for(k=0;k<t.length;k++){
+        $("#list").append('<div class="col-sm-1"><div class="thumbnail"><a><img src="/group/album/{g}/'+aid+'/t_'+t[k].pic+'" data-pic="'+t[k].pic+'" data-id="'+t[k].id+'" onerror=this.src="/error/logo.jpg";/></a></div></div>');
+        if(t[k].id==curid)$("#img").attr('src','/group/album/{g}/'+aid+'/'+t[k].pic);
+      }
+      $("#list img").bind("click",function(){
+        $("#img").attr('src','/group/album/{g}/'+aid+'/'+$(this).data("pic"));
+        curid=$(this).data("id");
+      });
+  });    
+}       
+   
+function setGroupInfo(d){     
+    firstid=t[0].id;
+    lastid=t[t.length-1].id;  
+   $("#list").empty();
+    for(k=0;k<d.length;k++){
+        $("#list").append('<div class="col-sm-1"><div class="thumbnail"><a><img src="/group/album/{g}/'+aid+'/t_'+t[k].pic+'" data-pic="'+t[k].pic+'" data-id="'+t[k].id+'" onerror=this.src="/error/logo.jpg";/></a></div></div>');    
+    }
+   $("#list img").bind("click",function(){
+        $("#img").attr('src','/group/album/{g}/'+aid+'/'+$(this).data("pic"));
+        curid=$(this).data("id");
+      }); 
+}
+function prePhoto(){
+  $.post("./srv/rdo.php", {tpl:"pre_photo",id:curid,a:aid}, function (d, e) {           
+     t=JSON.parse(d);      
+     if(t.length>0){
+       setphotoInfo(t);
+      }
+      else alert("已经是第一张");
+    }); 
+}
+function nxtPhoto(){
+ $.post("./srv/rdo.php", {tpl:"nxt_photo",id:curid,a:aid}, function (d, e) {           
+     t=JSON.parse(d);      
+      if(t.length>0){
+       setphotoInfo(t);
+      }
+      else alert("已经是最后一张");
+  }); 
+}  
+function setphotoInfo(d){
+    curid=d[0].id;
+    $("#img").attr('src','/group/album/{g}/'+aid+'/'+d[0].pic);
+}
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_photo",id:curid,a:aid,g:"{g}"}, function (d, e) { 
+        alert(d);
+  });
+}
+</script> 

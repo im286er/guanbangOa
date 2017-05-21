@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}  
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+
+<div class="col-sm-9">
+<div class="page-header">
+  <h3>班级相册<small></small>
+  <div class="btn-group pull-right"> 
+    <a href="../?t=cls_album&c={c}" class="btn btn-primary"  target="_blank">+添加</a> 
+</div> </h3> 
+</div>
+<div class="col-sm-12">
+
+<form class="form-inline" role="form" id="qry">
+  <div class="form-group">标题<input id="so" type="text" value="{su}" placeholder="请输入标题" class="form-control" /></div>
+  <div class="form-group"><input  type="button" class="btn btn-success" value="搜索" id="btnq"/></div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr> 
+<th></th>   
+<th>名称</th>
+<th>姓名</th>  
+<th>状态</th> 
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>     
+<!-- START list -->              
+<tr id="row{id}">
+<td><a href="../?t=cls_photo&c={c}&id={id}" target=_blank>
+<img src="/upds/class/album/{cid}/{id}/t_{logo}" width="100" /></a></td>
+<td>{name}<br/>
+照片：{nums}   <br/> 
+<code>{des}</code></td>
+<td>{truename}</td>
+<td><script>show_TS('{timestamp}');</script></td> 
+<td> 
+<a href="./?t=data_photo&c={cid}&id={id}" target=_blank>照片管理</a> &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}'})"></a>  
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+ 
+{foot} 
+</body> 
+</html>  
+
+<script type="text/javascript"> 
+l_tpl="cls_album";
+$(function(){     
+   $("#btnq").bind("click",function(){  
+     location.href="./?t=data_album&c={c}&so="+$("#so").val();  
+  });  
+}); 
+
+  
+</script>

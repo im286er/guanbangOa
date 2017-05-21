@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>文章审核-{gtitle}</title>
+{cssjs}  
+<script type="text/javascript" src="/widget/layer/layer.js"></script>
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>文章审核      <small></small>     
+<div class="btn-group pull-right">
+<a class="btn btn-primary" onclick="addlayopen();"  target=_blank>+添加文章</a>
+</div>
+   </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">      
+    <div class="col-sm-1">名称</div>
+ 
+  <div class="col-sm-2">
+       <input id="so" type="text" value="" class="form-control" placeholder="请输入关键字"/>  
+    </div>        
+    <div class="col-sm-2">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+       <input  type="button" class="btn btn-success" value="刷新" onclick="location.reload();"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+<th>名称</th>
+
+<th>创建者</th> 
+<th>时间</th> 
+<th>类别</th> 
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr> 
+<td><a onclick="editlayopen('{id}');">{title}</a></td>
+<td>{truename}</td>          
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><c n={cid}></c></td>
+<td><em data-state="{state}"></em></td>
+<td>
+<a class="glyphicon glyphicon-ok-sign" title="审核" onclick="audit('{id}','2')"></a>
+<a class="glyphicon glyphicon-remove-sign" title="取消审核" onclick="audit('{id}','0')"></a>
+<a class="glyphicon glyphicon-pencil" title="编辑" onclick="editlayopen('{id}');"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var idtype='{idtype_1}';
+ $(function () {
+   $.getJSON("/data/state.json.txt", function (data) {   
+        for(i=0;i<5;i++)$("em[data-state='"+i+"']").html(data[i]);      
+  });     
+    $.post("./srv/rdo.php?", {tpl:"getnewstype",id:"{s}"}, function (d, e) { 
+      l=JSON.parse(d); 
+     for(i=0;i<l.length;i++)$("c[n="+l[i].id+"]").text(l[i].name);            
+  });
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  }); 
+  $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+  $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+      
+    $("#btnq").bind("click",function(){ 
+      if($("#so").val()=="")return;   
+     location.href="./?t=news&s={s}&so="+$("#so").val();  
+    });  
+ });  
+function audit(v,s) {   
+   $.post("./srv/sdo.php?", {tpl:"aud_tech","id":v,"state":s}, function (d, e) {             
+      location.reload();          
+  });
+}
+function delths(v,obj) {
+   if (!confirm("确认删除吗？")) return;  
+   $.post("./srv/sdo.php?", {tpl:"del_tech","id":v}, function (d, e) {                  
+      //location.reload();   
+      $(obj).parent().parent().remove();
+	  layer.msg("删除成功！");
+  });
+} 
+function addlayopen(){
+	layer.open({
+		type: 2,
+		title: '添加文章',
+		shadeClose: true,
+		shade: false,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['1150px', '650px'],
+		content: './?t=news_send&s='+{s},
+		end : function(){
+		location.reload();  
+		}
+	});
+}
+function editlayopen(id){
+	layer.open({
+		type: 2,
+		title: '修改文章',
+		shadeClose: true,
+		shade: false,
+		maxmin: true, //开启最大化最小化按钮
+		area: ['1150px', '650px'],
+		content: './?t=news_send&d=m&id='+id+'&s='+{s},
+		end : function(){
+		location.reload();  
+		}
+	});
+}
+</script>

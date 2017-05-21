@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+{cssjs} 
+</head>
+<body> 
+<h4>系统管理员 </h4> 
+
+<div class="c12 centered">
+<p class="note info"> 
+<form class="hform" id="qry" onsubmit="return false">       
+
+
+<input type="text" id="__order"  flag="no" value="id" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="asc" title="排序方向" style="display:none;"/>
+ 
+<button class="skyblue" onclick="loadPage({l_page:1})">查询</button> 
+<button class="blue"  id="cbtn"  >新建</button>
+<button class="green" onclick="location.reload();">刷新</button>    
+跳转到：  
+<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" 
+onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:50px;"/>页   
+</form>
+</p>
+</div>
+
+<table class="table-stripped">
+<thead>
+<tr>
+<th name="uname">用户名</th><th name="name">名称</th><th name="lgnums">登录次数</th><th name="lasttime">最后登录</th><th name="lastip">最后ip</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr name="{id}" id="row{id}">
+<td>{username}</td>
+<td>{name}</td>
+<td>{lgnums}</td>
+<td>{lasttime}</td>
+<td>{lastip}</td>
+<td>  
+<button class="small orange" onclick="Mod({id:'{id}'})">改</button> 
+<button class="small red" onclick="delRow({id:'{id}'});">删</button>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>
+<tr>
+<td class="page" colspan="10"> 
+<ul class="pagin text-center" id="page"></ul>
+</td>
+</tr>
+</table> 
+
+
+
+<div id="dlg1" title="【添加/编辑】" style="width:400px;height:300px;padding:10px;" class="easyui-dialog" 
+data-options="closed:true,buttons: [{text:'确认',handler:function(){ SaveAM({frmid:'#dlg1'});}},{text:'取消',handler:function(){$('#dlg1').dialog('close');}}]"> 
+<div id="tips" class="alert succes"></div>
+<form class="hform" onsubmit="return false">  
+<label>用户名</label><input type="text" id="username" value="" maxlength=""/><br> 
+<label>名称</label><input type="text" id="name" value="" maxlength=""/><br>  
+<label style="display:;">密码*</label><input type="password" id="pass" value="" style="display:;"/> <br>   
+<input type="text" id="id"  value="" style="display:none;"/> 
+</form>
+</div>
+</body>
+</html>
+<script>
+formatunixs = ",lasttime,";
+$(function () {		
+    loadPage({l_page:1});
+    initAddBtn({btn:"#cbtn",frmid:"#dlg1"});		
+});     
+</script>

@@ -1,0 +1,170 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>成员管理-{gtitle}</title>
+{cssjs}      
+<style type="text/css">
+a{
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>成员管理
+      <small></small>
+      <div class="btn-group pull-right">  
+    <button type="button" class="btn btn-primary"  id="btna">+添加成员</button>
+    <a onclick="location.reload()" class="btn btn-success">刷新</a>
+</div> 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th>头像 </th>
+ <th>姓名</th>
+ <th>昵称</th>
+ <th>职务</th>
+ <th>时间</th>
+ <th>状态</th> 
+ <th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id1}">
+<td><img class="img-thumbnail" id="logo{uid}" width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /> </td>
+<td><a target="_blank" href="/zone/?id={uid}">{truename}</a></td>
+<td>{nick}</td>
+<td><im v="{isman}"/>{isman}</td></td>
+<td><code><script>show_TS('{timestamp}');</script></code></td> 
+<td><st v="{state}"></st></td>  
+<td>
+<a class="glyphicon glyphicon-ok-circle" title="审核" onclick="auditID({id:'{id1}',do:'o',v:0})"></a> &nbsp;
+<a class="glyphicon glyphicon-cog" title="修改" onclick="modths('{id1}','{isman}')"></a>   &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d','id':'{id1}'})"></a></td> 
+</tr> 
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+ 
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+var arr=new Array('成员','管理员','群主'); 
+ l_tpl="grp_member";
+ var obj_st;
+$(function () { 
+  //$('#myModal').modal({keyboard: true});
+  $.getJSON("/data?t=sys_state&f=obj", function (d) {obj_st=d;  
+      for(i=0;i<5;i++)$("st[v='"+i+"']").html(d[i]);     
+  }); 
+  for(i=0;i<3;i++)$("im[v='"+i+"']").html(arr[i]);    
+  $("#btna").bind("click",function(){      $('#dlg3').modal('show');      });  
+}); 
+function modths(v,v1){
+    $('#dlg1').modal('show'); 
+    $('#dlg1 #label').text('修改数据');
+    $('#dlg1').data('dotype',"m"); 
+    $('#dlg1 #id').val(v); 
+    $('#dlg1 #isman').val(v1); 
+} 
+function save1(){
+   $.post("./srv/sdo.php", {tpl:"set_grp_man",id:$("#dlg1 #id").val(),gid:"{g}",val:$("#dlg1 #isman").val()}, function (d, e) {
+      if(d.indexOf("ok")>-1){
+        $('#dlg1').modal('hide');
+	     location.reload();
+	  }
+	  else
+        layer.msg(d);      
+  });  
+}  	
+function adduser() { 
+   if($("#dlg3 #uname").val()==""){alert("请输入用户名");return;}  
+   $.post("./srv/sdo.php?", {tpl:"add_user","gid":"{g}","u":$("#dlg3 #uname").val()}, function (d, e) {                  
+      if(d.indexOf("ok")>-1){
+         location.reload();   
+      }else 
+        alert($.trim(d).substr(3));              
+  });
+}	
+</script>
+
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">模态框（Modal）标题</h4>
+         </div>
+         <div class="modal-body">
+       <form class="form-horizontal" role="form" action="/tech/srv/upd_logo_group.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">职务</label>
+    <div class="col-sm-10">
+      <select id="isman" class="form-control" style="width:50%;">
+         <option value="0">成员</option>
+         <option value="1">管理员</option>
+         <option value="2">群主</option> 
+      </select>
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block"></span>
+    </div>
+  </div>
+ 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="save1()">提交更改</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            
+         </div>
+      </div>
+   </div>
+</div>
+
+
+<div class="modal" id="dlg3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">添加用户</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">用户名</label>
+<div class="col-sm-6"><input type="text" id="uname" class="form-control" maxlength="50"/></div> 
+</div>
+<input type="text" id="id" value="" style="display:none;"/>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="adduser()">提交</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div>
+</div>
+</div>
+</div>

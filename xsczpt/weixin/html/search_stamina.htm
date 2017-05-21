@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:1000px;
+}
+</style>
+</head>
+<body>
+<header><a href="?t=index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>体能体质</h1></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+				<ul class="s_tit">
+					<li><a href="?t=search_physique" target="">体能记录</a></li>
+					<li class="current"><a href="?t=search_stamina" target="">体质管理</a></li>
+				</ul>
+				<div class="weui-cells__title">查询结果</div>
+				<div class="tb_flow" id="wrapper">
+					<table width="1000px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+						<tr class="tabtitle" height="26">
+							 <td width="13%" class="tb_td tb_txt_bgc">检测时间</td>
+							 <td width="6%" class="tb_td tb_txt_bgc">姓名</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">身高</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">体重</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">左眼</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">右眼</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">肝</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">胆</td>
+							 <td width="8%" class="tb_td tb_txt_bgc">心肺听诊</td>
+							 <td width="8%" class="tb_td tb_txt_bgc">外科常规</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">血压</td>
+							 <td width="8%" class="tb_td tb_txt_bgc">肺活量</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">脾</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">眼科</td>
+							 <td width="5%" class="tb_td tb_txt_bgc">口腔</td>
+						</tr>
+						<!-- START list1 --> 
+						<tr>
+							<td class="tb_td">{year}&nbsp;({term_name})</td>
+							<td class="tb_td">{truename}</td>
+							<td class="tb_td">{height}</td>
+							<td class="tb_td">{weight}</td>
+							<td class="tb_td">{left_eye}</td>
+							<td class="tb_td">{right_eye}</td>
+							<td class="tb_td">{liver}</td>
+							<td class="tb_td">{guts}</td>
+							<td class="tb_td">{xf_ting}</td>
+							<td class="tb_td">{wkcg}</td>
+							<td class="tb_td">{blood}</td>
+							<td class="tb_td">{vc}</td>
+							<td class="tb_td">{spleen}</td>
+							<td class="tb_td">{yanke}</td>
+							<td class="tb_td">{mouth}</td>
+						</tr>
+						<!-- END list1 --> 
+					</table>
+				</div>
+				<div style="height:15px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper');
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+</script>
+</body>
+</html>

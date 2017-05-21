@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<title>{gtitle}</title> 
+{cssjs} 
+</head>
+<body>
+{top}
+ 
+<div class="container">   
+<div class="col-sm-3">	
+	{menu}     
+</div>
+<div class="col-sm-9">
+<div class="page-header">
+	   <h3>基本信息 <small></small>  
+<div class="btn-group pull-right">  
+  <a href="./?t=info_mod&f={f}" class="btn btn-primary"> 修改 </a>
+  <a onclick="location.reload()" class="btn btn-success">刷新</a>
+</div> 
+      </h3>
+	</div>
+  
+	<form class="form-horizontal" role="form"  id="form1">
+	    
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">用户ID：</label>
+	    <div class="col-sm-10"><p class="form-control-static">{uid}</p>
+	    
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">空间ID：</label>
+	    <div class="col-sm-10"><p class="form-control-static">{id}</p></div>
+	  </div> 
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">空间名称：</label>
+	    <div class="col-sm-10"><p class="form-control-static">{name}</p></div>
+
+	  </div>
+     <div class="form-group">
+      <label for="inputfile" class="col-sm-2 control-label">logo</label>
+       <div class="col-sm-10">
+       <img src="/upds/famous/logo/{id}.jpg" id="clogo" width="48" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd">上传logo</button>
+        <p class="help-block">*100x100的(jpg图片)，尺寸不大于200k</p>
+       </div>
+   </div>
+       <div class="form-group">
+      <label for="inputfile" class="col-sm-2 control-label">banner</label>
+       <div class="col-sm-10">
+       <img src="/upds/famous/logo/bnr_{id}.jpg" id="clogo1" width="240" height="60" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd1">上传横幅</button>
+        <p class="help-block">(后缀名为jpg格式的图片)，尺寸为宽1200px，高200px，不大于1024kb</p>
+       </div>
+			 </div>  
+	  <div class="form-group">
+	    <label class="col-sm-2 control-label">空间描述：</label>
+	    <div class="col-sm-10"><p class="help-block">{des}</p></div>
+	  </div>
+	        
+	</form>	          
+	</div>
+</div>
+
+</body>
+</html>
+
+<script type="text/javascript"> 
+ $(function () {    
+    $("#btn_upd").bind("click",function(){$('#dlg1').modal('show');});  
+    $("#btn_upd1").bind("click",function(){$('#dlg2').modal('show');});  
+ }); 
+ 	
+ 
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo").attr("src","/upds/famous/logo/"+d.fname+"?"+Math.random());           
+          $('#dlg1').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+function ifrm_dosome1(){    
+    v=$("#ifrm1").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo1").attr("src","/upds/famous/logo/"+d.fname+"?"+Math.random());           
+         $('#dlg2').modal('hide'); 
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+	
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="myModalLabel">上传Logo</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_logo_class.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">logo</label>
+<div class="col-sm-10">
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="{f}" style="display:none;"/>
+<span class="help-block">(上传不大于200kb的.jpg图片 尺寸 100x100)。</span>
+</div></div></form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+</div></div></div></div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+
+<div class="modal" id="dlg2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">上传头部横幅</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_logo_big.php" enctype="multipart/form-data" method="post" id="from3" name="from3" target="ifrm1">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">横幅</label>
+<div class="col-sm-10">
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="{f}" style="display:none;"/>
+<span class="help-block">图片最好不大于1024KB</span>
+</div></div>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="$('#from3').submit();">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div></div></div></div>
+<iframe src="" name="ifrm1" id="ifrm1" style="display:none" onload="ifrm_dosome1()"></iframe>

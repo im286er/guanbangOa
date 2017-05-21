@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>群管理-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog} 
+<link rel="stylesheet" href="css/list.css"> 
+
+<script>
+var arr=new Array('待审核','已审核','注销中','禁用','删除');  
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+  <div class="menu_a">
+<h2>群管理</h2>
+<div >
+<ul> 
+<li><a href="./?t=group">我加入的群</a></li> 
+<li><a href="./?t=group1">我创建的群</a></li>
+<li><a href="./?t=group_new">+创建群</a></li>
+    </ul>
+    </div>
+  </div>
+</dt>
+<dd>  
+  <div class="banner"><label>我创建的群</label> 
+  <span><a href="./?t=group_new" target="_blank" class="btn">创建群</a>
+  </span>    
+  </div>
+
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+<th>号码</th>
+<th>logo</th>
+<th>名称</th>
+<th>学校</th>
+<th>类型</th> 
+<th>人数</th> 
+<th>时间</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td>{id}</td>
+<td><img id="logo{id}" width="40" src="/group/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" /></td>
+<td>{name}</td>
+<td>{school}</td>
+<td>{}</td>
+<td>{nums}</td>
+<td><script>document.write(utctime('{timestamp}'));</script></td>                     
+<td>
+<span class="drop_btn" style="width:80px;height:26px;line-height:26px;">
+管理 <i class="ico ico_arr_down"></i>
+<ul style="width:80px;"> 
+<li onclick="updlogo('{id}')">上传logo</li>
+<li onclick="modths('{id}')">修改</li>
+<li onclick="delths('{id}')">删除</li>
+</ul>
+</span>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+     //$.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+     $("#grade").bind("change",function(){
+   if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period);
+      $('#grades').val($.trim($(this).find('option:selected').text()));
+      $('#periods').val($('#grade optgroup:eq('+(period-1)+')').attr('label')); 
+   }); 
+});
+ 
+function modths(v){
+   readID({tpl:"group","do":"r",id:v,frmid:"#form1"});
+   ifrmid="#dlg1";
+   $(ifrmid).dialog('setTitle','修改');  
+   $(ifrmid+' #tips').text('修改');        
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid).data('dotype',"m");  
+   $(ifrmid).dialog("open"); 
+} 
+
+function delths(v){
+   $.post("./srv/sdo.php", {tpl:"del_group",id:v}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+      location.reload();
+      else alert(d);
+  });
+}   
+function updlogo(v){
+   ifrmid="#dlg2";
+   $(ifrmid).dialog('setTitle','上传logo');     
+   $(ifrmid+' #id').val(v);   
+   $(ifrmid).data('dotype',"a");  
+   $(ifrmid).dialog("open");    
+}
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);   
+       if(d.ret=="ok"){           
+         $("#logo"+ $("#dlg2 #id").val()).attr("src",'/group/logo/'+d.fname+'?'+Math.random());           
+         $("#dlg2").dialog("close");   
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+}
+
+</script>
+
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:500px;height:340px;padding:10px;" title="创建新班" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+       SaveAM({tpl:'group','do':$('#dlg1').data('dotype'),id:$('#dlg1 #id').val(),frmid:'#dlg1',showok:'','callback':''}); 
+       $('#dlg1').dialog('close');    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<form id="form1">
+<table class="">  
+    <tr>
+        <td style="width:80px;">名称：</td>
+        <td><input type="text" id="name" style="width:300px;" />
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr> 
+    <tr>
+        <td>口号</td>
+        <td>
+       <input type="text" id="slogan" style="width:300px;"/>
+        </td>
+    </tr>  
+    <tr>
+        <td>简介：</td>
+        <td><textarea id="des" style="width:300px;height:50px;"></textarea></td>
+    </tr>  
+</table>
+</form>
+</div>
+
+
+<div id="dlg2" title="创建" class="easyui-dialog dialoga" style="width:400px;height:150px;padding:10px;" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',          
+    handler:function(){  
+       $('#from2').submit(); 
+    }
+},{
+   text:'取消',        
+    handler:function(){
+        $('#dlg2').dialog('close');
+    }
+}]"> 
+<form action="srv/upd_logo_group.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<label>上传logo</label> 
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="" style="display:none;"/><br/> 
+<label>(上传不大于200kb的.jpg图片 尺寸 100x100)</label> 
+</form>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

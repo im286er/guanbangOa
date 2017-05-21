@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>管理-{gtitle}</title>      
+{cssjs}         
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>    
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>基本信息
+      <small>子标题</small>
+   </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">
+  <div class="form-group">
+    <label class="col-sm-2 control-label">编号：</label>
+    <div class="col-sm-10"><p class="form-control-static">{id}</p></div>
+  </div>     
+  <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">名称</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="name"  style="width:50%" placeholder="请输入名称">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">组织机构代码</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="scode"  style="width:50%" placeholder="" maxlength="50">
+      </div>
+   </div>
+   <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">短名</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="mininame"  style="width:50%" placeholder="请输入名称">
+      </div>
+   </div>
+    <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">域名</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="dns"  style="width:50%" placeholder="" maxlength="50">
+        <p class="help-block">*独立的域名，注：使用独立的域名以后</p>
+      </div>
+   </div>
+   <div class="form-group">
+    <label class="col-sm-2 control-label">所在区域：</label>
+    <div class="col-sm-3"><select id="addr" class="form-control"></select> </div>     
+    
+      <p class="help-block"><addr v="{addr}"></addr></p>          
+    
+    
+  </div>
+   <div class="form-group">
+    <label class="col-sm-2 control-label">学校类型：</label>
+    <div class="col-sm-3"><select id="typeid" class="form-control"></select></div>   
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">学段：</label>
+    <div class="col-sm-3"><select id="period" class="form-control"></select> </div>   
+  </div>
+  
+   <div class="form-group"> 
+    <label class="col-sm-2 control-label">创建日期</label>
+    <div class="col-sm-10">
+<input type="text" id="creation" class="form-control" style="width:50%;" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
+readonly onclick="WdatePicker({dateFmt:'yyyy-MM-dd'})"/>
+    </div>
+  </div> 
+  
+     <div class="form-group">
+      <label for="firstname" class="col-sm-2 control-label">箴言</label>
+      <div class="col-sm-10">
+         <input type="text" class="form-control" id="motto"  style="width:50%" placeholder=""  maxlength="250">
+      </div>
+   </div> 
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">简介</label>
+    <div class="col-sm-10">
+    <textarea id="des" class="form-control" style="width:80%" rows="4" placeholder="请输入简介"></textarea>
+    </div>
+  </div>     
+  <div class="form-group">
+      <label for="inputfile" class="col-sm-2 control-label">logo</label>
+       <div class="col-sm-10">
+       <img src="/upds/school/logo/{id}.jpg" id="clogo" width="48" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd">上传logo</button>
+        <p class="help-block">*100x100的(jpg,gif,png图片)，尺寸不大于200k</p>
+       </div>
+   </div> 
+    <div class="form-group">
+      <label for="inputfile" class="col-sm-2 control-label">banner</label>
+       <div class="col-sm-10">
+       <img src="/upds/school/logo/bnr_{id}.jpg" id="clogo1" width="240" height="60" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd1">上传横幅</button>
+        <p class="help-block">(后缀名为jpg格式的图片)，尺寸为宽1200px，高200px，不大于2MB</p>
+       </div>
+			</div>  
+     <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 保 存 </button>  
+      <button type="button" class="btn btn-primary"> 取 消 </button>
+      <input type="text" id="id" value="0" style="display:none;"/>
+      <input type="text" id="addrs" value="" style="display:none;"/>
+   </div>
+    </div>
+</form>
+
+
+
+</div>
+ 
+ 
+ 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ $(function () {
+  $.get("/data/two.php?t=sys_addr&f=txt", function (d) {$("#addr").html(d);
+    $("#addr").bind("change",function(){
+      $.get("/data/id.php?t=sys_addr&col=names&v="+$(this).val(),function(d){$("addr").text(d);});
+      $.get("/data/id.php?t=sys_addr&col=pidlist&v="+$(this).val(),function(d){$("#addrs").val(d);});
+    });
+  });  
+  $.get("/data/?t=sys_org_type&f=txt", function (d) {$("#typeid").html(d);});
+  $.get("/data/?t=sys_period&f=txt", function (d) {$("#period").html(d);});       
+   
+   readID({tpl:"school","do":"r",id:"{id}",frmid:"#form1"});  
+    $("#btn").bind("click", function(){
+      if($("#name").val()==""){alert("请输入名称");return;}    
+     if($("#typeid").val()==""){alert("请选择类型");return;}  
+     if($("#period").val()==""){alert("请选择学段");return;}  
+      if($("#creation").val()==""){alert("请选择创建日期");return;}  
+      if($("#scode").val()==""){alert("请输入编号");return;}      
+       SaveAM({tpl:"school","do":"am",frmid:"#form1",showok:'修改完成',callback:"desome"});
+    
+    }); 
+    $("#btn_upd").bind("click",function(){$('#myModal').modal('show');});   
+    $("#btn_upd1").bind("click",function(){$('#dlg2').modal('show');});  
+    
+    $.get("/data/id.php?t=sys_addr&v="+$("addr").attr("v")+"&col=names",function (d) { 
+        $("addr").text($.trim(d));         
+      });    
+ }); 
+ function desome(e,data){
+   if(data.indexOf('ok')>-1){   
+      //SaveAM({tpl:"user_reg1","do":"m","id":$("#id").val(),frmid:"#form1",showok:false});
+      //alert("保存成功");          
+   }
+   else
+      alert(data);
+}  	
+
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo").attr("src","/upds/school/logo/"+d.fname+"?"+Math.random());           
+          $('#myModal').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+    }    
+}
+function ifrm_dosome1(){    
+    v=$("#ifrm1").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         $("#clogo1").attr("src","/upds/school/logo/"+d.fname+"?"+Math.random());           
+         $('#dlg2').modal('hide'); 
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+} 
+/* 
+function getaddr2(v){ 
+  $.post("./srv/rdo.php?" + Math.random(), {tpl:"getaddr2","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");            
+  });
+}  */
+</script>
+
+
+<div class="modal " id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="myModalLabel">上传Logo</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="../srv/upd_logo_sch.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">logo</label>
+<div class="col-sm-10">
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="{s}" style="display:none;"/>
+<span class="help-block">(上传不大于200kb的.jpg图片 尺寸 100x100)。</span>
+</div>
+</div>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+</div>
+</div>
+</div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+
+<div class="modal" id="dlg2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">上传头部横幅</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_logo_big.php" enctype="multipart/form-data" method="post" id="from3" name="from3" target="ifrm1">
+<div class="form-group"> 
+<label class="col-sm-2 control-label">横幅</label>
+<div class="col-sm-10">
+<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+<input type="text" id="id" name="id" value="{s}" style="display:none;"/>
+<span class="help-block">1200x200 不大于2MB</span>
+</div></div>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="$('#from3').submit();">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div></div></div></div>
+<iframe src="" name="ifrm1" id="ifrm1" style="display:none" onload="ifrm_dosome1()"></iframe>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="common/jquery.min.js"></script>  
+<link rel="stylesheet" href="css/ionic.min.css">
+<script src="/ppf/js/jquery-2.min.js"></script> 
+	<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/common.js"></script>  
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" language="javascript" src="js/layer/layer.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:420px;
+}
+</style>
+<script type="text/javascript">
+$().ready(function(){	
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+
+$(function(){
+	$("#truename").val("{truename}");
+	$("#status").val("{status}");
+});
+
+function shwtg(id,geter,flag){
+	$("#h_id").val(id);
+	$("#geter").val(geter);
+	$("#flag2").val(flag);
+	//$("#subject").val(subject);
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc')
+	});
+}
+
+function shwtg_jiyu(){
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#tc_jiyu')
+	});
+}
+//删除寄语
+function delEvent(id)
+{
+	if(confirm("你确定删除该条寄语记录吗？")){
+		$.post("./srv/sdo.php", {tpl:"del_jiyu","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				$("#exp_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+
+function checkForm()
+{
+	var content = $("textarea[name='content']").val();
+	
+	if(content==""){
+		alert("内容不能为空。");
+		return false;
+	}
+
+	$("#but_exp").attr("disabled",true);
+	return true;
+}
+
+function abc(id,geter){
+	if(confirm('确定要执行此操作吗?')) 
+     { 
+   $("#h_but_op").val("确定");
+   $("#h_flag").val("已审核");
+   $("#h_mop").val("1");
+   $("#h_id").val(id);
+   //$("#subject").val(subject);
+   $.ajax({
+    type: 'POST',
+    url: "./srv/senior_message_search.php" ,
+    data: {tpl:"set_tg",uid:uid,geter:geter,id:id,flag:"已审核",menu1:0,menu2:34} ,
+    success: function(d){
+	
+	 if(d=="ok"){
+			layer.closeAll();
+			layer.msg('提交成功！');
+			location.reload();
+		  }else{
+			layer.msg('提交失败！');
+		  }
+		} 
+	});
+     } else{
+	location.reload(); 
+	 }
+}
+
+var uid="{uid}";
+
+function check_btg(){
+	var geter=$("#geter").val();
+	var content=$("#btg_content").val();
+	var id=$("#h_id").val();
+	var flag=$("#flag2").val();
+	$.ajax({
+		type: 'POST',
+		url: "./srv/senior_message_search.php" ,
+		data: {tpl:"set_checked",uid:uid,geter:geter,content:content,id:id,flag:flag,menu1:0,menu2:34} ,
+		success: function(d){
+		 if(d=="ok"){
+			layer.closeAll();
+			layer.msg('提交成功！');
+			location.reload();
+		  }else{
+			layer.msg('提交失败！');
+		  }
+		} 
+	});
+}
+
+//提交表单处理
+function checkSubmit()
+{
+	if (confirm("是否确认")){
+		var len = $("input[name='id[]']:checked").size();
+		if($("#op").val()=="0"){
+			alert("请选择要进行的操作");
+			return false;	
+		}
+		if(len==0){
+			alert("请选择记录");
+			return false;
+		}
+	}else{
+		return false;
+	}
+}
+
+</script>
+</head>
+<body>
+<header><a href="?t=admin_index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>友朋寄语</h1><a href="?t=remarks&jiyu=jiyu" class="glyphicon glyphicon-heart" style="font-size:1.6rem;line-height:55px;"></a><a onclick="shwtg_jiyu();" class="glyphicon glyphicon-plus-sign" style="font-size:1.6rem;line-height:55px;"></a></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			  <div class="weui-cells__title" style="display:none;">选择条件</div>
+			  <form action="./?t=remarks" method="post" id="t_zdy" style="display:none;">
+			  <div class="weui-cells mt_5">
+				<div class="weui-cell weui-cell_select weui-cell_select-after" id="grade_id">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">状态：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select name="status" id="status" class="weui-select">
+							<option value="">全部</option>
+							<option value="待审核">待审核</option>
+							<option value="已审核">已审核</option>
+							<option value="未通过">未通过</option>
+						</select> 
+					</div>
+				</div>
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">姓名：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<input type="text" name="truename" id="truename" value="" class="weui-input" />
+					</div>
+				</div>
+			 </div>
+		 
+			 <div class="weui-btn-area">
+				<a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+				
+			</div>
+			<input type="hidden" name="h_but_op" id="h_but_op"  value=""/>
+			<input type="hidden" name="h_id" id="h_id"  value=""/>
+			<input type="hidden" name="flag" id="h_flag" value=""/>
+			<input type="hidden" name="mop" id="h_mop" value=""/>
+			<input type="hidden" name="flag2" id="flag2" value=""/>
+			<input type="hidden" name="from_id" id="from_id" value="{from_id}"/>
+		    <input type='hidden' id='geter' name="geter" value='{master_val}'>
+            <input type="hidden" name="uid" value="{uid}"/>
+			<input type="hidden" name="id" id="id" value="{id}"/>
+		</form>
+		<div id="frm_show" style="width:100%;text-align:center;font-size:1rem;" class="weui-btn weui-btn  weui-btn_default" onclick="slide()">点击查看条件筛选</div>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow" id="wrapper">
+			<table width="800" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+			<tr class="tabtitle" height="26">
+				 <td width="50" class="tb_td tb_txt_bgc"> <style="text-align:center;">序号</td>
+				 <td width="50" class="tb_td tb_txt_bgc">姓名</td>
+				 <td width="50" class="tb_td tb_txt_bgc">班级</td>
+				 <td width="100" class="tb_td tb_txt_bgc">时间</td>
+				 <td width="200" class="tb_td tb_txt_bgc">留言</td>
+				 {str_show}
+			</tr>
+			{str_event}
+		</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+		<ul class="pagination wx_center">
+				{page}
+		</ul>
+		</div>
+		
+         </div>
+        </div>
+    </div>
+</div>
+<div id="power" style="display:none;padding:10px;">
+	<div class="ha_row">
+		<div class="ha_content ha_stext" id="tr_stamina" style="border:1px solid #dfdfdf;padding:5px;border-radius:5px;">
+			<label>公开权限：</label>
+			<div style="width:100%;margin-top:10px;">
+				<input type="hidden" id="reply_id" value="" />
+				<input type="radio" name="priv" id="priv1" value="1"  />&nbsp;全体学生公开&nbsp;
+				<input type="radio" name="priv" id="priv2" value="2"  />&nbsp;只对本班公开&nbsp;
+				<input type="radio" name="priv" id="priv3" value="3"  />&nbsp;只对这个学生公开&nbsp;
+				<input type="radio" name="priv" id="priv0" value="0" checked="checked"  />&nbsp;不公开&nbsp;
+			</div>
+		</div>
+		<div class="ha_content ha_stext" style="border:1px solid #dfdfdf;padding:5px;border-radius:5px;margin-top:10px;"><label>审&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;核：</label>
+		<div style="width:100%;margin-top:10px;">
+				<input type="radio" name="flag_status" id="flag_status2" value="已审核"/>&nbsp;审核通过&nbsp;
+				<input type="radio" name="flag_status" id="flag_status3" value="未通过" />&nbsp;审核不通过&nbsp;
+				<span style="color:red">(审核不通过必须注明原因)</span>
+			</div>
+		</div>
+		<div class="ha_content ha_stext" style="margin-top:10px;">
+			<label>回复内容：</label>
+			<div class="ha_text_right">
+				<textarea width="" id="reason" name="reason" style="border:1px solid #dfdfdf;width:100%;" rows="4"></textarea>
+			</div>
+		</div>
+		
+		<div class="clear"></div>
+		<div class="ha_bot" style="text-align:center;">
+			<input class="ha_save" type="button" name="Submit" style="background: #45c8dc;color: #fff;border: 0;border-radius: 5px;text-align:center;margin:5px auto;padding:5px;" value="保存" onclick="checkReply()"/> 
+		</div>
+	</div>
+</div>
+<div id="tc" style="display:none;padding:10px;">
+<p>说明:</p>
+	<div><textarea id="btg_content" cols=40 rows=4 style="border:1px solid #ddd;"></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="button" onclick="check_btg();" value="确定"  style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div>
+
+<form action="./srv/remarks_submit.php" method="post" id="fm1" onsubmit="return checkForm();">
+<div id="tc_jiyu" style="display:none;padding:10px;">
+<p>接收人:</p>
+    <div><textarea id="collection" name="collection" cols=32 rows=4 style="border:1px solid #ddd;"></textarea><div style="float:right;position:relative;bottom:20px;"><p><a href="javascript:void(0);" onclick="showAccept()">添加</a></p></div></div>
+	<!-- <input id="_recid" type="text" /> -->
+	<input type="hidden" name="_recid" id="_recid">
+<p>内容:</p>
+	<div><textarea id="content" name="content" cols=40 rows=4 style="border:1px solid #ddd;"></textarea></div>
+	<div style="text-align:center;margin-top:1rem;"><input type="submit"  name="Submit" value="确定"  style="padding: 0 20px;background: #45c8dc;color: #fff;border: 0;border-radius: 5px;"/></div>
+</div>
+</form>
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=admin_index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=admin_user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	$("#wrapper").height($(document.body).height()-250);
+	myScroll = new iScroll('wrapper',{
+		momentum:false,
+		onScrollMove:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		},
+		onScrollEnd:function(){
+			if(-this.y>40){
+				$(".tabtitle").attr("style","position:absolute;top:"+(-this.y-1)+"px;width:100%;z-index:999;");
+			}else{
+				$(".tabtitle").attr("style","");
+			}
+		}
+	});
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+function slide(){
+	$("#frm_show").hide();
+	$("#t_zdy").fadeIn();
+}
+
+//清空收信人
+function clear_user()
+{
+  document.form1.TO_NAME.value="";
+  document.form1.TO_ID.value="";
+}
+
+
+$(function(){
+	$("#truename").val("{truename}");
+	$("#status").val("{status}");
+});
+
+function showReply(id){
+    $("#id").val(id);
+	$.post("./srv/sdo.php", {tpl:"other_remarks_edit",id:id}, function (d, e) {
+		l=JSON.parse(d); 
+		if(l.flag=="true"){
+			$("#reason").val(l.value[0].reason);
+			var val = l.value[0].flag_checked;
+			var status = l.value[0].flag_status;
+			$("#priv"+val).attr("checked",true);
+			$("#flag_status"+status).attr("checked",true);
+			$("#reply_id").val(l.value[0].id)
+		}else{
+			alert(l.value);
+			return false;
+		}
+	});
+	layer.open({
+	  type: 1,
+	  title: false,
+	  skin: 'layui-layer-rim', //加上边框
+	  content: $('#power')
+	});
+}
+
+//审核寄语
+function checkReply(){
+	var val=$('input:radio[name="flag_status"]:checked').val();
+	if(val==0){
+		if($.trim($("#reason").val())==""){
+			alert("请填写回复内容。");
+			$("#reason").select();
+			return false;
+		}
+	}
+	 if(val==null){
+		alert("请选择审核状态。");
+		return false;
+	 }
+	
+	var val = $("input[name='priv']:checked").val();
+	var status = $("input[name='flag_status']:checked").val();
+	var id  = $("#reply_id").val();
+	var reason  = $("#reason").val();
+	$.post("./srv/rdo.php", {tpl:"check_other_remarks","id":id,"val":val,"status":status,"reason":reason}, function (d, e) {
+		if(l.flag=="true"){
+		    layer.msg('提交成功！');
+			$("#reply_"+id).fadeOut("slow");
+			location.reload();
+		}else{
+			layer.msg('提交失败！');
+		}
+		
+	});
+}
+
+function showAccept(){
+	//iframe层
+	layer.open({
+	  type: 2,
+	  title: '寄语接收人选择',
+	  shadeClose: true,
+	  shade: 0.8,
+	  area: ['100%', '90%'],
+	  content: './?t=accept_message' //iframe的url
+	}); 
+}
+/* function showReply(id)
+{
+	$.post("./srv/sdo.php", {tpl:"other_remarks_edit",id:id}, function (d, e) {
+		l=JSON.parse(d); 
+		if(l.flag=="true"){
+			$("#reason").val(l.value[0].reason);
+			var val = l.value[0].flag_checked;
+			var status = l.value[0].flag_status;
+			$("#priv"+val).attr("checked",true);
+			$("#flag_status"+status).attr("checked",true);
+			$("#reply_id").val(l.value[0].id)
+		}else{
+			alert(l.value);
+			return false;
+		}
+		
+	});
+} */
+</script>
+</body>
+</html>

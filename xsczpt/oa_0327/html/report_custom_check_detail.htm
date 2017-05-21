@@ -1,0 +1,376 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title></title>
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="common/jquery.min.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="/ppf/js/jquery.base64.js"></script>
+<style>
+.select-main{float:right !important;}
+._ha_content{margin-top:15px;float:left;}
+.layer-anim{top:20%!important;}
+</style>
+</head>
+<body>
+<div class="main">
+	<div class="ha_cls">
+	<div id="table_content">
+				<div id="">
+					<div class="ha_row">
+						<div class="ha_selbox">
+							<span class="ha_editse" style=" margin-right:10px;width:110px;">分&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类：</span>
+							<select name="report_type" id="report_type" >
+								<option value="">请选择分类</option>
+								{str_report}
+							</select>
+						</div>
+						{str_content}
+						<div class="clear"></div>
+						<div class="ha_editform">
+							<div class="ha_inlist" id="partner_all" style="display:none;">
+								<p>合作人：</p>
+								<input type="text" name="partner" id="partner" class="ha_einput" value="{partner}" readonly/>
+							</div>
+							<div class="ha_inlist" id="captain_show" style="display:none;">
+								<p>组员/组长：</p>
+								<em class="except"><input id="is_captain" type="radio" name="is_captain" value="0"  {check2} class="ha_einput">组员</em>
+								<em class="except"><input id="is_captain" type="radio" name="is_captain" value="1" {check1}>组长</em>
+							</div>
+							<div class="ha_inlist" id="task_show" style="display:none;"><p>承担任务：</p><input type="text" name="task" id="task" value="{task}" class="ha_einput"/></div>
+							<div class="ha_inlist" id="is_teacher" style="display:none;"><p>审核老师：</p><input type="text" name="teacher" id="teacher" value="{teacher}" class="ha_einput" readonly/><input type="hidden" id="teacher_id" value="{teacher_id}" name="teacher_id" size="15" /></div>
+							<div class="ha_inlist" id="content_all"><p>内&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;容：</p>
+								<textarea rows="3" cols="20" class="ha_einput" name="content" id="content" style="height:90px;">{content}</textarea>
+							</div>
+							
+							<div class="ha_inlist" id="is_attshow" style="display:none;"><p>附&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;件：</p>
+								<div id="ha_fileupload">
+									<div class="ha_boxfile pr"  id="uploadPic">
+										<div class="clear"></div>
+										{str_pic}
+									</div>
+									<div class="clear"></div>
+									<div class="ha_content pr fl">
+										<input type='text' name='path_name' value="{path_name}" id='path_name' class='txt fl' readonly />  
+										<a href="{path_att}" class="ha_dowfile" target="_blank" id="path_att">下载文件</a>
+										<input style="width:26%;" type="file" name="att_file" id="att_file" class="ha_filerar" size="28" disabled/>
+									</div>
+								</div>
+							</div>
+							<div class="ha_inlist"><p>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注：</p>
+								<textarea rows="3" cols="20" class="ha_einput" name="note" id="note" style="height:90px;">{note}</textarea>
+							</div>
+							<div class="clear"></div>
+							<input type='hidden' id='partner_id' name='partner_id' value='{partner_id}'>
+							<input type='hidden' id='id' name='id' value='{id}'>
+							<input type='hidden' id='if_partner' name='if_partner' value='{if_partner}'>
+							<div class="ha_bot haedit_save">
+								<input class="ha_save" type="text" name="Submit" onclick="window.close()" value="关闭" /> 
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="common/jquery-ui.min.js"></script>
+<script type="text/javascript" src="common/select-widget-min.js"></script>
+<script type="text/plain" id="upload_img" name="upload_img"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/oa/plugins/ueditor/ueditor.all.js"></script>
+<script src="js/layer/layer.js"></script>
+<script type="text/javascript">
+
+</script>
+<script type="text/javascript">
+$(function(){
+	//menu
+	$('.ha_menu li').hover(function(){
+		$('span',this).stop().css('height','2px');
+		$('span',this).animate({
+			left:'0',
+			width:'100%',
+			right:'0'
+		},200);
+	},function(){
+		$('span',this).stop().animate({
+			left:'50%',
+			width:'0'
+		},200);
+	});
+
+	/*if($("#partner").val()==""){
+		document.getElementById("captain_show").style.display="none";
+		document.getElementById("task_show").style.display="none";
+	}else{
+		document.getElementById("captain_show").style.display="";
+		document.getElementById("task_show").style.display="";
+	}*/
+	
+	$(".ha_eimglist img").each(function(){
+		$(this).bind("click",function(){
+			var src=$(this).attr('src');
+			layer.open({
+			  type: 1,
+			  title: false,
+			  closeBtn: 0,
+			  area: '500px',
+			  skin: 'layui-layer-nobg', //没有背景色
+			  shadeClose: true,
+			  content: '<a href='+src+' target="_blank"><img src="'+src+'" style="width:100%;"></a>'
+			});	
+		})
+	});	
+	if($("#path_name").val()!=""){   //判断是否可以下载文件
+		document.getElementById("path_att").style.display="";
+	}else{
+		document.getElementById("path_att").style.display="none";
+	}
+
+});
+
+$(document).ready(function(){		
+	$(".ui-select").selectWidget({
+		change       : function (changes) {
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	$("#report_type").selectWidget({
+		change: function (changes) {
+			if($(".select-list").length>1){
+				var index=$(".select-list").eq(1).children("li").index($(".active")[1])-1;
+			}else{
+				var index=$(".select-list").eq(0).children("li").index($(".active")[0])-1;
+			}
+			if(index!=-1){
+				$(".s2_tips").hide();
+				cont=$(".s1_tips .ha_cont pre").eq(index).html();
+				if(cont!=""){
+					$(".s1_tips").hide();
+					$(".s1_tips").eq(index).show();
+				}else{
+					$(".s1_tips").hide();
+				}
+			}else{
+				$(".s1_tips").hide();
+				$(".s2_tips").hide();
+			}
+			selectType($("#report_type"));
+			
+			return changes;
+		},
+		effect       : "slide",
+		keyControl   : true,
+		speed        : 200,
+		scrollHeight : 250
+	});
+	
+	$('.select-set').unbind("click"); //下拉框锁定不让点击
+	
+	$("#report_type").val({subject_id});
+	report_index=$("#report_type").get(0).selectedIndex;
+	cont=$(".s1_tips .ha_cont pre").eq(report_index-1).html();
+	if(cont==""||cont=="null"){
+		$(".s1_tips").eq(report_index-1).hide();
+	}
+	$("._ha_content").eq(report_index-1).removeClass("_ha_content");
+	$(".select-list").eq(0).children("li").removeClass("active");
+	$(".select-list").eq(0).children("li").eq(report_index).addClass("active");
+	$(".select-set").eq(0).text($("#report_type option:selected").text());
+	
+	$("._itmnum").remove();//删除动态取出的栏目
+	var sub_id = $("#report_type").val();
+	if(sub_id>0){
+		$.post("./srv/sdo.php", {tpl:"select_report_custom","sub_id":sub_id}, function (d, e) {// 获取自定义栏目内容
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				if(l.is_partner=="1"){
+					document.getElementById("partner_all").style.display="";
+					document.getElementById("captain_show").style.display="";
+					document.getElementById("task_show").style.display="";
+				}else{
+					document.getElementById("partner_all").style.display="none";
+					document.getElementById("captain_show").style.display="none";
+					document.getElementById("task_show").style.display="none";
+				}
+				
+				if(l.is_teacher=="1"){
+					document.getElementById("is_teacher").style.display="";
+				}else{
+					document.getElementById("is_teacher").style.display="none";
+				}
+				
+				if(l.is_att=="1"){
+					document.getElementById("is_attshow").style.display="";
+				}else{
+					document.getElementById("is_attshow").style.display="none";
+				}
+				
+				var len = l.value.length;
+				if(len>0){
+					var items='{report_item}';
+					items = eval('(' + items + ')');
+					
+					for(var i=0;i<len;i++){
+						var str = "";
+						str += '<div class="ha_inlist _itmnum"><p>'+l.value[i].item_name+'：</p><input type="text" id="item_'+l.value[i].id+'" name="item_name[]" value="" class="ha_einput"/><input type="hidden" name="item_real_name[]" value="'+l.value[i].id+'" class="ha_einput"/></div>';
+						$("#content_all").before(str);
+					}
+					for(var j=0;j<items.length;j++){    //把自定义栏目的内容对应到相应的位置
+						var item = items[j].split(":");
+						console.log(item[1]);
+						$("#item_"+item[0]).val($.base64.atob(item[1],true));
+					}
+				}
+			}else{
+				alert(l.value);
+				return false;
+			}
+		});
+	}
+	selectType($("#report_type"));
+	
+});	
+
+//选择报表子类
+function selectType(obj)
+{
+	var val = $(obj).val();
+	//if($(obj).nextAll(".select-main").length>1){return false;};
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_report","id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			var len = d.value.length;
+
+			if($(obj).nextAll(".select-main").length>1){
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select").remove();
+				$(obj).next(".select-main").remove();
+			};
+			
+			if(len>0){
+				$("._itmnum").remove();//删除动态取出的栏目
+				
+				//动态生成下拉框
+				var html = "<select name='rid' id='rid' class='ui-select'>";
+				html += "<option value=''>请选择分类</option>";
+				var content='';
+				$(".s2_tips").remove();
+				for(var i=0;i<len;i++){
+					html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["code_name"]+"</option>"
+					content += "<div class=\"ha_content ha_stext _ha_content s2_tips\"><label>说&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;明：</label><div class=\"ha_cont\"><pre>"+d.value[i]["content"]+"</pre></div></div>";
+				}
+				html += "</select>";
+				$(obj).after(html);
+				$(".ha_selbox").after(content);
+				
+				var sub_id =  "{subject_son_id}";
+				if(sub_id>0){
+					$.post("./srv/sdo.php", {tpl:"select_report_custom","sub_id":sub_id}, function (d, e) {     // 获取自定义栏目内容
+						l1=JSON.parse(d);
+						if(l1.flag=="true"){
+							if(l1.is_partner=="1"){
+								document.getElementById("partner_all").style.display="";
+								document.getElementById("captain_show").style.display="";
+								document.getElementById("task_show").style.display="";
+							}else{
+								document.getElementById("partner_all").style.display="none";
+								document.getElementById("captain_show").style.display="none";
+								document.getElementById("task_show").style.display="none";
+							}
+							
+							if(l1.is_att=="1"){
+								document.getElementById("is_attshow").style.display="";
+							}else{
+								document.getElementById("is_attshow").style.display="none";
+							}
+							
+							if(l1.is_teacher=="1"){
+								document.getElementById("is_teacher").style.display="";
+							}else{
+								document.getElementById("is_teacher").style.display="none";
+							}
+							
+							var len = l1.value.length;
+							if(len>0){
+								var items='{report_item}';
+								items = eval('(' + items + ')');
+								
+								for(var i=0;i<len;i++){
+									var str = "";
+									str += '<div class="ha_inlist _itmnum"><p>'+l1.value[i].item_name+'：</p><input type="text" id="item_'+l1.value[i].id+'" name="item_name[]" value="" class="ha_einput"/><input type="hidden" name="item_real_name[]" value="'+l1.value[i].id+'" class="ha_einput"/></div>';
+									$("#content_all").before(str);
+								}
+								
+								for(var j=0;j<items.length;j++){  //把自定义栏目的内容对应到相应的位置
+									var item = items[j].split(":");
+									$("#item_"+item[0]).val($.base64.atob(item[1],true));
+								}
+							}
+						}else{
+							alert(l1.value);
+							return false;
+						}
+					});
+				}
+			}
+			
+			$("#rid").selectWidget({
+				change       : function (changes) {
+
+					return changes;
+				},
+				effect       : "slide",
+				keyControl   : true,
+				speed        : 200,
+				scrollHeight : 250
+			});
+			$('.select-set').unbind("click"); 
+			
+			var rid = "{subject_son_id}";
+			if(rid&&rid!="0"){
+				$("#rid").val({subject_son_id});
+				rid_index=$("#rid").get(0).selectedIndex;
+				report_index=$("#report_type").get(0).selectedIndex;
+				cont=$(".s2_tips .ha_cont pre").eq(rid_index-1).html();
+				if(cont!=""&&cont!="null"){
+					$(".s2_tips").eq(rid_index-1).css("display","block");
+				}
+				$(".s1_tips").eq(report_index-1).addClass("_ha_content");
+				$(".select-list").eq(0).children("li").removeClass("active");
+				$(".select-list").eq(0).children("li").eq(rid_index).addClass("active");
+				$(".select-set").eq(0).text($("#rid option:selected").text());
+			}
+			removenull();
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select").remove();
+		if($(obj).nextAll(".select-main").length>1){
+			$(obj).next(".select-main").remove();
+		}
+	}	
+
+}
+
+function removenull(){
+  $(".ha_content .ha_cont pre").each(function(){
+	if($(this).text()=="null"){
+		$(this).parent().parent().remove();
+	}
+  });
+}
+
+</script>
+</body>
+</html>

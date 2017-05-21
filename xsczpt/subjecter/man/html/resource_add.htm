@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>发布资源-{gtitle}</title>   
+	{cssjs}
+	<script type="text/javascript" src="js/func.js"></script>
+	<link rel="stylesheet" type="text/css" href="/widget/easyui/themes/default/tree.css">
+	<script type="text/javascript" src="/widget/easyui/jquery.easyui.min.js"></script>
+	<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+	<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"></script>
+	<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>
+</head>
+<body>
+{top}
+<div class="container">
+	<div class="col-sm-12">
+		<div class="page-header">
+			<h3><script>document.write(queryStr("d")=="m" ? "编辑资源" : "发布资源");</script>
+				<a onclick="window.close();" class="btn btn-primary pull-right">关闭</a>
+			</h3>
+		</div>
+
+		 
+		<form id="form1" class="form-horizontal" action="./srv/res_mgr.php" enctype="multipart/form-data" method="post" target="ifrm">   
+			<div class="form-group"> 
+				<label class="col-sm-1 control-label">标题</label>
+				<div class="col-sm-4">
+					<input type="text" id="title" class="form-control" placeholder="资源标题"  maxlength="50"/>
+				</div>
+				<div class="col-sm-2" style="position:relative; top:15px;">
+					<a onclick="loadFilter();" style="color:red;">快捷：粘贴分类</a>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<label class="col-sm-1 control-label">学段学科</label>  
+				<div class="col-sm-2">
+					<select id="period" onchange="fillOpts(this, 'res_add', 'book', 'chapter');resetBook();" style="cursor:auto;" class="form-control">
+						<option value="">—学段—</option>
+						<!-- START list_period -->
+						<option value="{id}">{name}</option>
+						<!-- END list_period -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="subject" onchange="fillBooks(true);" class="form-control" style="cursor:auto;" title="请选择学段！">
+						<option value="">—学科—</option>{init_subject}
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="grade" onchange="fillBooks(true);" class="form-control" style="cursor:auto;" title="请选择学段！">
+						<option value="">—年级—</option>{init_grade}
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<span id="post_loading" style="position:relative; top:6px; right:0px; display:none;">
+						<img src="./html/images/indicator.gif"/>
+					</span>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<label class="col-sm-1 control-label">课本章节</label>  
+				<div class="col-sm-2">
+					<select id="book" class="form-control" disabled="disabled" onchange="fillChapters(this);" style="cursor:auto;"><option value="">—课本—</option>{init_book}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="chapter" class="form-control" disabled="disabled" onchange="fillParts(this);" style="cursor:auto;"><option value="">—章—</option>{init_chapter}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="part" class="form-control" disabled="disabled" style="cursor:auto;"><option value="">—节—</option>{init_part}</select>
+				</div>
+				<div class="col-sm-2">
+					<span id="img_notice" style="position:relative; top:6px; right:0px; display:none;">
+						<img style="width:20px;" src="./html/images/info_icon2.png" title="课本信息发现数据！"/>
+					</span>
+				</div>
+			</div>
+			<div class="form-group"> 
+				<label class="col-sm-1 control-label">教材属性</label>  
+				<div class="col-sm-2">
+					<select id="edition" class="form-control" onchange="fillBooks(true);">
+						<option value="">—版本—</option>
+						<!-- START list_edition -->
+						<option value="{id}">{name}</option>
+						<!-- END list_edition -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="volume" class="form-control" onchange="fillBooks(true);">
+						<option value="">—版别—</option>
+						<!-- START list_volume -->
+						<option value="{id}">{name}</option>
+						<!-- END list_volume -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="year" class="form-control" onchange="fillBooks(true);">
+						<option value="">—年份—</option>
+						{list_year}
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="required" class="form-control" onchange="fillBooks(true);">
+						<option value="">—选必修—</option>
+						<option value="1">必修</option>
+						<option value="2">选修</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">   
+				<label class="col-sm-1 control-label">描述</label>   
+				<div class="col-sm-11">
+					<textarea id="des" name="des" placeholder="资源简要描述" rows="2" class="form-control"></textarea> 
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-1 control-label">详细说明</label>   
+				<div class="col-sm-11">
+					<textarea id="content" name="content" data-edit="ue" style="display:none;"></textarea>
+					<script type="text/plain" id="uecontent" style="width:100%;height:200px;"></script>
+				</div>
+			</div>
+			<div class="form-group" >
+				<label class="col-sm-1 control-label">资源</label>
+				<div class="col-sm-3">       
+					<input type="text" id="resname" class="form-control" style="cursor:auto;" readonly disabled />
+					<input type="text" id="resmd5" style="display:none;"/>
+					<input type="text" id="ressuffix" style="display:none;"/>
+				</div>
+				<div class="col-sm-8">    
+					<a href="javascript:void(0);" id="btn1" class="btn btn-success">+选择网盘资源</a>
+					<a href="{PAN_URL}api/yun?t=relogin" id="btnup" class="btn btn-success"  target="_blank">+上传资源</a> 
+				</div>
+			</div>
+			<div class="form-group" id="upddiv">
+				<label class="col-sm-1 control-label">Logo</label>
+				<div class="col-sm-3">
+					<img src="/upds/subjecter/img/reslogo/{pic}" id="pic" width="48" onerror="javascript:this.src='./html/images/error.jpg';" />
+					&nbsp;&nbsp;
+					<button type="button" class="btn btn-warning"  id="btn_upd">上传Logo</button>
+				</div>
+			</div>
+			<div class="form-group" > 
+				<label class="col-sm-1 control-label">类型</label>  
+				<div class="col-sm-2">
+					<select id="restype" class="form-control">
+						<option value="">—类型—</option>
+						<!-- START list_restype -->
+						<option value="{id}">{name}</option>
+						<!-- END list_restype -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="original" class="form-control">
+						<option value="1">原创</option>
+						<option value="0">转载</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">  
+				<label class="col-sm-1 control-label"></label>     
+				<div class="col-sm-11">
+					<button type="button" class="btn btn-success" id="btn" onclick="save();"><script>document.write(queryStr("d")=="m" ? "确认修改" : "发布资源");</script></button>     
+					<input type="text" id="id" value="{id}" style="display:none;"/>
+					<input type="text" id="postdate" value="" style="display:none;"/>
+					<input type="text" id="state" value="2" style="display:none;"/>
+				</div>
+			</div>  
+		</form>
+	</div>  
+</div>
+<input id="admin_level" value="{admin_level}" style="display:none;" />
+{subject_and_grade_cache}
+{foot}
+</body>
+</html>
+<script type="text/javascript">
+	var ue = UE.getEditor('uecontent',{   
+		elementPathEnabled:false,
+		autoHeightEnabled: false,
+		autoFloatEnabled: false,
+		enableContextMenu:false,
+		maximumWords:4000,
+		wordCountMsg:"还可以输入{#leave} 个字符"
+	}); 
+	UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+	UE.Editor.prototype.getActionUrl = function(action) {            
+		if (action == 'uploadimage' || action == 'uploadscrawl') {
+			return '/subjecter/updb/imageUp.php';
+		}else if (action == 'uploadvideo') {
+			return '/subjecter/updb/videoUp.php';
+		}else {
+			return this._bkGetActionUrl.call(this, action);
+		} 
+	}
+$(function(){
+	$("#btn1").bind("click", function(){ $('#dlg1').modal('show');});
+	
+	//$("#upddiv").css("display", queryStr("id")=="" ? "none" : "block");
+	
+	$("#btn_upd").bind("click",function(){$('#myModalupd').modal('show');});
+	
+	if($("#admin_level").val() != "top" ) {
+		$("#period").val($("#user_period").val());
+		$("#subject").html($("#hide_subjects_" + $("#user_period").val()).html());
+		$("#subject").val($("#user_subject").val());
+		$("#period").prop("disabled", "disabled");
+		$("#subject").prop("disabled", "disabled");
+	}
+	
+	if(queryStr("d")=="m"){
+		// 回调函数再执行其他判断
+		$("#post_loading").css("display", "block");
+		readID({tpl:"subjecter_resources","do":"r",id:queryStr("id"),frmid:"#form1", callback:"initPage"});
+	}
+});
+function initPage(d, e){
+	$('#book').prop("disabled", $.trim($('#book').html()) == '<option value="">—课本—</option>' ? "disabled" : "");
+	$('#chapter').prop("disabled", $.trim($('#chapter').html()) == '<option value="">—章—</option>' ? "disabled" : "");
+	$('#part').prop("disabled", $.trim($('#part').html()) == '<option value="">—节—</option>' ? "disabled" : "");
+	
+	if($('#book').val() == null) $('#book').val("");
+	if($('#chapter').val() == null) $('#chapter').val("");
+	if($('#part').val() == null) $('#part').val("");
+	
+	if($('#edition').val() == null) $('#edition').val("");
+	if($('#volume').val() == null) $('#volume').val("");
+	if($('#year').val() == null) $('#year').val("");
+	if($('#required').val() == null) $('#required').val("");
+	
+	$("#post_loading").css("display", "none");
+}
+// 开始检索章数据
+function fillChapters(obj) {
+	if($(obj).val() == "") {
+		$("#chapter").html('<option value="">—章—</option>').val("");
+		$("#part").html('<option value="">—节—</option>').val("");
+		$('#chapter').prop("disabled", "disabled");
+		$('#part').prop("disabled", "disabled");
+		return;
+	}
+	
+	$("#post_loading").css("display", "block");
+	$('#chapter').prop("disabled", "disabled");
+	$('#part').prop("disabled", "disabled");
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_chapters", book:$(obj).val()}, function (d, e) {
+		$("#chapter").html(d);
+		$("#post_loading").css("display", "none");
+		$("#part").html('<option value="">—节—</option>').val("");
+		
+		if(d != '<option value="">—章—</option>') {
+			$("#chapter").focus();
+			$('#chapter').prop("disabled", "");
+		} else {
+			// 无数据则禁用
+			$('#chapter').prop("disabled", "disabled");
+			$('#part').prop("disabled", "disabled");
+		}
+	});
+}
+// 开始检索子节数据
+function fillParts(obj) {
+	if($(obj).val() == "") {
+		$("#part").html('<option value="">—节—</option>').val("");
+		$('#part').prop("disabled", "disabled");
+		return;
+	}
+	
+	$("#post_loading").css("display", "block");
+	$('#part').prop("disabled", "disabled");
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_part_options", chapter:$(obj).val()}, function (d, e) {
+		$("#part").html(d);
+		$("#post_loading").css("display", "none");
+		
+		if(d != '<option value="">—节—</option>') {
+			$("#part").focus();
+			$('#part').prop("disabled", "");
+		} else {
+			$('#part').prop("disabled", "disabled");
+		}
+	});
+}
+function fillBooks(both) {
+	var period = $("#period").val();
+	var subject = $("#subject").val();
+	var grade = $("#grade").val();
+	var volume = $("#volume").val();
+	var edition = $("#edition").val();
+	var year = $("#year").val();
+	var required = $("#required").val();
+	
+	var objBook = $("#book");
+	var objChapter = $("#chapter");
+	var objPart = $("#part");
+	
+	var objBook_val = objBook.val();			// 暂存之前的值
+	var objChapter_val = objChapter.val();		// 暂存之前的值
+	var objPart_val = objPart.val();			// 暂存之前的值
+	
+	// 满足三项内容即可开始检索
+	if(period == null || period == "") {resetOptions("books_clear_add");return;}
+	if(subject == null || subject == "") {resetOptions("books_clear_add");return;}
+	if(grade == null || grade == "") {resetOptions("books_clear_add");return;}
+	
+	// 开始检索课本数据
+	$('#book').prop("disabled", "disabled");
+	$('#chapter').prop("disabled", "disabled");
+	$('#part').prop("disabled", "disabled");
+	$("#post_loading").css("display", "block");
+	
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_books", period:period, subject:subject, grade:grade, edition:edition, volume:volume, year:year, required:required}, function (d, e) {
+		objBook.html(d);
+		
+		if(d != '<option value="">—课本—</option>') {
+			// 找到课本数据
+			$("#img_notice").css("display", "block");
+			$('#book').prop("disabled", "");
+		} else {
+			resetBook();
+			$("#post_loading").css("display", "none");
+			return;
+		}
+		
+		$("#post_loading").css("display", "none");
+		
+		if(objBook_val == "") return;	// 点击前如果为空，则正常加载课文的下拉框信息
+		
+		if(both) {
+			objBook.val(objBook_val);	// 尝试让新的select加载旧的选中项，判断选中项是否为空
+			if(objBook.find("option:selected").text() == "" || objBook.find("option:selected").text() == '—课本—') {
+				objBook.val("");
+				$("#chapter").html('<option value="">—章—</option>').val("");
+				$("#part").html('<option value="">—节—</option>').val("");
+				$('#chapter').prop("disabled", "disabled");
+				$('#part').prop("disabled", "disabled");
+			} else {
+				$('#book').prop("disabled", "");
+				objChapter.val(objChapter_val);
+				if(objChapter.find("option:selected").text() == "" || objChapter.find("option:selected").text() == '—章—') {
+					objChapter.val("");
+					$("#part").html('<option value="">—节—</option>').val("");
+					$('#part').prop("disabled", "disabled");
+					if($('#chapter').html() != '<option value="">—章—</option>') $('#chapter').prop("disabled", "");
+				} else {
+					$('#chapter').prop("disabled", "");
+					objPart.val(objPart_val);
+					if(objPart.find("option:selected").text() == "" || objPart.find("option:selected").text() == '—节—') {
+						objPart.val("");
+						if($('#part').html() != '<option value="">—节—</option>') $('#part').prop("disabled", "");
+					} else {
+						$('#part').prop("disabled", "");
+					}
+				}
+			}
+		}
+	});
+}
+
+function loadFilter() {
+	var content = readCookie("filter");
+	if (content == ',,,,,,,,,') alert("未选择分类信息，忽略加载！");
+	// 根据内容填充下拉框
+	// 下拉框重置
+	$("#img_notice").css("display", "none");
+	$("#period").val("");
+	$("#subject").html('<option value="">—学科—</option>').val("");
+	$("#grade").html('<option value="">—年级—</option>').val("");
+	$("#book").html('<option value="">—课本—</option>').val("");
+	$("#chapter").html('<option value="">—章—</option>').val("");
+	$("#part").html('<option value="">—节—</option>').val("");
+	
+	var valArray = content.split(',');
+	var period = valArray[0];
+	var subject = valArray[1];
+	var grade = valArray[2];
+	var book = valArray[3];
+	var chapter = valArray[4];
+	var part = valArray[5];
+	var edition = valArray[6];
+	var volume = valArray[7];
+	var year = valArray[8];
+	var required = valArray[9];
+	
+	$("#period").val(period);
+	
+	// 无级联更新的直接绑定
+	$("#edition").val(edition);
+	$("#volume").val(volume);
+	$("#year").val(year);
+	$("#required").val(required);
+	
+	if(period == "") {
+		$("#subject").html("<option value=''>—学科—</option>").val("");
+		$("#grade").html("<option value=''>—年级—</option>").val("");
+		$("#book").html('<option value="">—课本—</option>').val("");
+		$("#chapter").html('<option value="">—章—</option>').val("");
+		$("#part").html('<option value="">—节—</option>').val("");
+	} else {
+		$("#subject").html($("#hide_subjects_" + period).html());
+		$("#grade").html($("#hide_grades_" + period).html());
+		
+		$("#subject").val(subject);
+		$("#grade").val(grade);
+		
+		if(subject != "" && grade != "") {
+			// 填充课本
+			$("#post_loading").css("display", "block");
+			$("#book").prop("disabled", "disabled");
+			$("#chapter").prop("disabled", "disabled");
+			$("#part").prop("disabled", "disabled");
+			$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_all_by_book_chapter_part", period:period, subject:subject, grade:grade, edition:edition, volume:volume, year:year, required:required, book:book, chapter:chapter}, function (d, e) {
+				d = JSON.parse(d);
+
+				$("#book").html(d.books).val(book);
+				
+				$("#chapter").html(d.chapters.replace('章节', '章')).val(chapter);
+				
+				$("#part").html(d.parts).val(part);
+				
+				$("#book").prop("disabled", d.books != '<option value="">—课本—</option>' ? "" : "disabled");
+				$("#chapter").prop("disabled",  d.chapters != '<option value="">—章—</option>' ? "" : "disabled");
+				$("#part").prop("disabled",  d.parts != '<option value="">—节—</option>' ? "" : "disabled");
+				$("#post_loading").css("display", "none");
+				
+				if(d.books != '<option value="">—课本—</option>') $("#img_notice").css("display", "block");
+			});
+		}
+	}
+}
+
+function seltreenod(d){
+	var t = $(d.tree);
+	var node = t.tree('getSelected');
+	if(node==undefined){alert("请选择一个节点！");return;}
+	if(!node||node==null){alert("请选择一个节点！");return;}
+	if(node.ftype==1){alert("请选择一个文件！");return;}
+	
+	var tmp = node.text.split('.');
+	$("#ressuffix").val(tmp[tmp.length-1]);
+	$("#resname").val(node.text);
+	$("#resmd5").val(node.md5);
+	$('#dlg1').modal('hide');
+}
+
+function ifrm_dosome(){    
+	v = $("#ifrm").contents().find("body").html();
+	if(v!=""){       
+		d=JSON.parse(v);
+		if(d.ret=="ok") {
+			alert(d.des);
+			$("#pic").attr("src","/upds/subjecter/img/reslogo/" + d.fname + "?" + Math.random());
+			$('#myModalupd').modal('hide');
+			return;
+		}
+		
+		alert(d.des);
+	}    
+}
+
+function save() {
+	if($("#title").val()==""){alert("请输入资源标题！");$("#title").focus();return;}
+	
+	// 发布的资源，最小标签范围必须选择学段、学科、年级 版本（版别可不选）、年份、选必修
+	// 课本、章、节 可以不选
+	if($("#period").val()==""){alert("请选择 学段！");$("#period").focus();return;}
+	if($("#subject").val()==""){alert("请选择 学科！");$("#subject").focus();return;}
+	if($("#grade").val()==""){alert("请选择 年级！");$("#grade").focus();return;}
+	
+	if($("#edition").val()==""){alert("请选择 版本！");$("#edition").focus();return;}
+	//if($("#volume").val()==""){alert("请选择 版别！");$("#volume").focus();return;}
+	if($("#year").val()==""){alert("请选择 年份！");$("#year").focus();return;}
+	if($("#required").val()==""){alert("请选择 选必修！");$("#required").focus();return;}
+	
+	if($("#des").val()==""){alert("请为资源添加简要描述！");$("#des").focus();return;}
+	if($("#resname").val()==""){alert("请选择文件！");$("#resname").focus();return;}
+	if($("#restype").val()==""){alert("请选择资源类型！");$("#restype").focus();return;}
+	
+	$("#postdate").val(getDate());
+	
+	$.post("./srv/sdo.php?" + Math.random(), 
+		{tpl:"edit_resource", dotype:queryStr("d"), id:queryStr("id"), title:$("#title").val(), des:$("#des").val(), 
+		content:UE.getEditor('uecontent').getContent(), restype:$("#restype").val(), original:$("#original").val(), 
+		ressuffix:$("#ressuffix").val(), resname:$("#resname").val(), resmd5:$("#resmd5").val(), 
+		period:$("#period").val(), subject:$("#subject").val(), grade:$("#grade").val(), 
+		edition:$("#edition").val(), volume:$("#volume").val(), year:$("#year").val(), required:$("#required").val(), 
+		book:$("#book").val(), chapter:$("#chapter").val(), part:$("#part").val(), 
+		postdate:$("#postdate").val()}, 
+		function (d, e) {
+		
+		if(d == "ok") {
+			alert(queryStr("d") == "m" ? "修改成功！" : "发布成功！");
+			
+			if(queryStr("d") == "m") {
+				window.close();
+			} else {
+				window.opener.location.reload();
+				window.close();
+			}
+		}
+		
+	});
+}
+</script>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="label">选择文件</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form">  
+					<div class="form-group">
+						<div class="col-sm-10"> 
+							<ul class="easyui-tree" id="tree" data-options="lines:true"	url="./srv/pan2.php"></ul>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10">
+							<select id="treefile" class="form-control" size="5" style="border:none;">
+							</select>
+						</div>
+					</div>
+				</form>  
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary"  onclick="seltreenod({tree:'#tree'})"> 选择文件  </button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModalupd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">上传Logo</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" action="./srv/upd_reslogo.php" enctype="multipart/form-data" method="post" id="form2" name="form2" target="ifrm">
+					<div class="form-group"> 
+						<label class="col-sm-2 control-label">Logo</label>
+						<div class="col-sm-10">
+							<input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+							<input type="text" id="id" name="id" value="{id}" style="display:none;"/>
+							<span class="help-block">(上传不大于200KB的图片，支持格式.jpg .png .gif，比例100 × 100)。</span>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="$('#form2').submit(); ">提交Logo</button>     
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+		</div>
+	</div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

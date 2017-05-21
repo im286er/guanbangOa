@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script>
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<!--表格头部 begin-->
+		<div class="boxtitle2">
+			<form action="./?t=zhsz_other" method="post">
+				<span>
+					<select name="gid" id="gid" onchange="selectClass(this);">
+					</select> 
+				</span> 
+				<input type="submit" id="choose" name="choose" value="班级筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<!--<div style="height:auto; width:100%; overflow:hidden; margin-top:5px; line-height:30px;">
+				
+				主要填写项目：成长经历&nbsp;&nbsp;&nbsp;&nbsp;有意义的成果&nbsp;&nbsp;&nbsp;&nbsp;研究性学习&nbsp;&nbsp;&nbsp;&nbsp;社区服务&nbsp;&nbsp;&nbsp;&nbsp;社会实践
+				<div>
+					<div style="color:#000000; height:30px; line-height:30px; width:50px; text-align:center; background:#dedede; float:left;">灰色</div>
+					<div style="width:90px; height:30px; line-height:30px; float:left; text-align:center;">未填写任何项</div>
+					<div style="color:#ffff00; height:30px; line-height:30px; width:50px; text-align:center; background:#000099;float:left;">蓝色</div>
+					<div style="width:90px; height:30px; line-height:30px; float:left;text-align:center;">已填写任意一项</div>
+					<div style="color:#ffffff; height:30px; line-height:30px; width:50px; text-align:center; background:#339900;float:left;">绿色</div>
+					<div style="width:90px; height:30px; line-height:30px; float:left;text-align:center;">已填写至少两项</div>
+				</div>
+			</div> -->
+			<div style="height:auto; width:100%; overflow:hidden; margin-top:5px; line-height:30px;">
+				
+			</div>
+			<div style="width;100%; height:30px; line-height:30px; text-align:center; font-size:14px;">{tips}</div>
+			
+			<ul style="width:720px; height:auto; overflow:hidden; margin:0 auto 10px auto; border-left:1px solid #9B0221;">
+				{str}
+			</ul>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+			<div class="boxfooter" style="width:720px; margin:0 auto 15px auto;">
+				
+			</div>
+			<script type="text/javascript">
+			 if({isMaster1} && {cid}=={class_id}){
+				//document.write('<div style="margin:0 auto 10px auto; width:720px; height:auto; overflow:hidden;"><a href="./?t=zhsz_comment_batch" class="b_menu">导入评语</a><a href="./?t=zhsz_research_batch&flag=12" class="b_menu">导入研究性学习等级及学分</a><a href="./?t=zhsz_research_batch&flag=13" class="b_menu">导入社区服务等级及学分</a><a href="./?t=zhsz_research_batch&flag=14" class="b_menu">导入社会活动等级及学分</a></div>');
+				document.write('<div style="margin:0 auto 10px auto; width:720px; height:auto; overflow:hidden;"><a href="./?t=zhsz_comment_batch" class="b_menu">导入评语</a></div>');
+			 }
+			 </script> 
+		</div>
+	<!--表格中间 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+</script> 

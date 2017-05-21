@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+{cssjs}    
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+<div class="page-header">
+   <h3>博客管理 <small></small>  
+   <a href="./?t=blogs" class="btn btn-warning pull-right" >返回</a>  </h3>
+</div>
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">[添加/编辑] </h3>
+   </div>          
+<div class="panel-body">
+<form id="form1" name="form1" class="form-horizontal" > 
+<input type="text" id="state" value=0 style="display:none;"/> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">标题</label>  
+   <div class="col-sm-7"><input type="text" id="title" class="form-control"  placeholder="标题"  maxlength="50"/></div>
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid"  class="form-control"></select></div>    
+</div> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">教师空间显示</label>  
+  <div class="col-sm-1"><input type="checkbox" id="tech_on" class="form-control" style="width:20px;" /></div>    
+  <label class="col-sm-1 control-label">分类</label>  
+  <div class="col-sm-3"><select id="tech_tid"  class="form-control" style="display:none;"></select></div>  
+  <p class="help-block">*在教师空间中相应的类别下显示此博客</p>  
+</div>  
+
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">推送至</label>  
+   <div class="col-sm-1"><input type="checkbox" id="push_on" name="push_on" class="form-control" style="width:20px;" /></div>   
+</div>  
+         
+<div class="form-group">   
+  <label class="col-sm-1 control-label">内容</label>   
+   <div class="col-sm-11">
+<textarea id="des" name="des" data-edit="ue" style="display:none;"></textarea>
+<script type="text/plain" id="uedes" style="width:100%;height:400px;"></script>
+  </div>
+</div>   
+<div class="form-group">  
+  <label class="col-sm-1 control-label"></label>     
+   <div class="col-sm-11">
+    <button type="button" class="btn btn-success" id="btn"> 发 布 </button>     
+    <input type="text" id="id" value="" style="display:none;"/>
+           <input type="text" id="nums" value="0" style="display:none;"/>
+        <input type="text" id="see" value="0" style="display:none;"/>
+        <input type="text" id="comments" value="0" style="display:none;"/> 
+     </div>
+    </div>  
+	
+	<div class="modal" id="dlg1" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" >
+   <div class="modal-dialog" style="width:710px">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">推送管理</h4>
+         </div>
+<div class="modal-body"> 
+<div class="row center">
+<p class="small" style="font-size:14px;font-weight:bold;text-indent:1em;">推送至主页:</p>
+<div class="col-sm-1"><input type="checkbox" id="push_homepage" name="push_homepage" value=0 class="form-control" style="width:20px;" /></div> 
+<div class="col-sm-2"> 
+<a  target=_blank class="btn btn-primary glyphicon glyphicon-tower">
+<br/> 首页主页
+</a>     
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid1"  class="form-control"></select></div>    
+</div> 
+<div class="col-sm-1"><input type="checkbox" id="push_group" name="push_group" class="form-control" style="width:20px;" /></div>  
+<div class="col-sm-2"> 
+ <a  target=_blank class="btn btn-success glyphicon glyphicon-th-large">
+ <br/>群组主页 </a>  
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid2"  class="form-control"></select></div>    
+</div>  
+<div class="col-sm-1"><input type="checkbox" id="push_agency" name="push_agency" class="form-control" style="width:20px;" /></div> 
+<div class="col-sm-2"> 
+ <a target=_blank class="btn btn-success glyphicon glyphicon-flag">
+ <br/> 机构主页</a> 
+</div> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid3"  class="form-control"></select></div>    
+</div> 
+<div class="col-sm-1"><input type="checkbox" id="push_cls" name="push_cls" class="form-control" style="width:20px;" /></div>
+<div class="col-sm-2"> 
+    <a target=_blank class="btn btn-warning glyphicon glyphicon-book">
+<br/> 班级主页</a>    
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid4"  class="form-control"></select></div>    
+</div> 
+<div class="col-sm-1"><input type="checkbox" id="push_studio" name="push_studio" class="form-control" style="width:20px;" /></div> 
+<div class="col-sm-2"> 
+<a target=_blank class="btn btn-success glyphicon glyphicon-star">
+<br/>工作室主页</a> 
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid5"  class="form-control"></select></div>    
+</div> 
+<p class="small" style="font-size:14px;font-weight:bold;text-indent:1em;">推送至空间:</p>
+<div class="col-sm-1"><input type="checkbox" id="push_cls1" name="push_cls1" class="form-control" style="width:20px;" /></div>
+<div class="col-sm-2"> 
+    <a target=_blank class="btn btn-warning glyphicon glyphicon-book">
+<br/> 班级空间</a>    
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid6"  class="form-control"></select></div>    
+</div> 
+<div class="col-sm-1"><input type="checkbox" id="push_group1" name="push_group1" class="form-control" style="width:20px;" /></div>  
+<div class="col-sm-2"> 
+ <a  target=_blank class="btn btn-success glyphicon glyphicon-th-large">
+ <br/>群组空间 </a>  
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid7"  class="form-control"></select></div>    
+</div>
+</div> 
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-default" onclick="confirm()">确定</button>     
+</div></div></div></div>
+
+</form> 
+</div>  
+</div> 
+
+</div> </div>
+{foot}      
+</body>
+</html> 
+<script type="text/javascript">
+
+function pushsome(){
+  $('#dlg1').modal('show');
+  //$('#dlg1 a').val(v);
+} 
+
+function confirm(){
+	if($("#push_homepage").is(":checked")){
+		if($("#cid1").val()==undefined || $("#cid1").val()==""){
+			alert("首页主页请选择一个标题");return false;
+		}else{
+			document.form1.push_homepage.value = 1;
+		}
+	}else{
+		document.form1.push_homepage.value = 0;
+		document.form1.cid1.value = "";
+	}
+	
+	if($("#push_group").is(":checked")){
+		if($("#cid2").val()==undefined || $("#cid2").val()==""){
+			alert("群组主页请选择一个标题");return false;
+		}else{
+			document.form1.push_group.value = 1;
+		}
+	}else{
+		document.form1.push_group.value = 0;
+		document.form1.cid2.value = "";
+	}
+
+	if($("#push_agency").is(":checked")){
+		if($("#cid3").val()==undefined || $("#cid3").val()==""){
+			alert("机构主页请选择一个标题");return false;
+		}else{
+			document.form1.push_agency.value = 1;
+		}
+	}else{
+		document.form1.push_agency.value = 0;
+		document.form1.cid3.value = "";
+	}
+	
+	if($("#push_cls").is(":checked")){
+		if($("#cid4").val()==undefined || $("#cid4").val()==""){
+			alert("班级主页请选择一个标题");return false;
+		}else{
+			document.form1.push_cls.value = 1;
+		}
+	}else{
+		document.form1.push_cls.value = 0;
+		document.form1.cid4.value = "";
+	}
+	
+	if($("#push_studio").is(":checked")){
+		if($("#cid5").val()==undefined || $("#cid5").val()==""){
+			alert("工作室主页请选择一个标题");return false;
+		}else{
+			document.form1.push_studio.value = 1;
+		}
+	}else{
+		document.form1.push_studio.value = 0;
+		document.form1.cid5.value = "";
+	}
+	if($("#push_cls1").is(":checked")){
+		if($("#cid6").val()==undefined || $("#cid6").val()==""){
+			alert("班级空间请选择一个标题");return false;
+		}else{
+			document.form1.push_cls1.value = 1;
+		}
+	}else{
+		document.form1.push_cls1.value = 0;
+		document.form1.cid6.value = "";
+	}
+	
+	if($("#push_group1").is(":checked")){
+		if($("#cid7").val()==undefined || $("#cid7").val()==""){
+			alert("群组空间请选择一个标题");return false;
+		}else{
+			document.form1.push_group1.value = 1;
+		}
+	}else{
+		document.form1.push_group1.value = 0;
+		document.form1.cid7.value = "";
+	}
+	  
+	$('#dlg1').modal('hide');
+}
+
+var ue = UE.getEditor('uedes'); 
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {            
+    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+        return '/tech/updb/imageUp.php';
+    }else if (action == 'uploadvideo') {
+        return '/tech/updb/videoUp.php';
+    }
+    else  if(action == 'uploadfile'){
+       return '/tech/updb/docUp.php'
+    }else {
+        return this._bkGetActionUrl.call(this, action);
+    } 
+}
+l_tpl="blog";
+
+dotype=queryStr("do");
+ue.addListener("ready", function () {   
+    if(dotype=="m")  readID({"do":"r",id:queryStr("id"),frmid:"#form1"}); 
+});
+
+$(function(){  
+
+    $.get("/data?t=teacher_news_type&f=txt&pn=nstate&pv=1",function(d){$("#tech_tid").html(d);}); 
+    $.post("./srv/rdo.php?", {tpl:"get_blog_cate"}, function (d, e) {                 
+        selectShowDataNoH("#cid",JSON.parse(d),"id","name"); $("#cid").prepend("<option value=''>—类别—</option>");     
+    });  
+	$.post("./srv/rdo.php?", {tpl:"get_push_cate",push_type:"1"}, function (d, e) {                 
+        selectShowDataNoH("#cid1",JSON.parse(d),"id","name"); $("#cid1").prepend("<option value=''>—类别—</option>");     
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_push_cate",push_type:"2"}, function (d, e) {                 
+        selectShowDataNoH("#cid2",JSON.parse(d),"id","name"); $("#cid2").prepend("<option value=''>—类别—</option>");     
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_push_cate",push_type:"3"}, function (d, e) {                 
+        selectShowDataNoH("#cid3",JSON.parse(d),"id","name"); $("#cid3").prepend("<option value=''>—类别—</option>");     
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_push_cate",push_type:"4"}, function (d, e) {                 
+        selectShowDataNoH("#cid4",JSON.parse(d),"id","name"); $("#cid4").prepend("<option value=''>—类别—</option>");     
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_push_cate",push_type:"5"}, function (d, e) {                 
+        selectShowDataNoH("#cid5",JSON.parse(d),"id","name"); $("#cid5").prepend("<option value=''>—类别—</option>");     
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_my_cls"}, function (d, e) {            
+        selectShowDataNoH("#cid6",JSON.parse(d),"id","name");  $("#cid6").prepend("<option value=''>—类别—</option>")          
+    });
+	$.post("./srv/rdo.php?", {tpl:"get_my_grp"}, function (d, e) {                 
+       selectShowDataNoH("#cid7",JSON.parse(d),"id","name"); $("#cid7").prepend("<option value=''>—类别—</option>")
+    }); 
+	
+    if(dotype=="")dotype="a";
+		
+	$("#tech_on").bind("click",function(){
+      if($(this).is(":checked")) 
+        $("#tech_tid").css("display","");
+      else
+        $("#tech_tid").css("display","none");
+	});      
+
+	$("#push_on").bind("click",function(){
+      if($(this).is(":checked")) 
+        pushsome();
+      else{
+		document.form1.push_homepage.value = 0;
+		document.form1.push_group.value = 0;
+		document.form1.push_agency.value = 0;
+		document.form1.push_cls.value = 0;
+		document.form1.push_studio.value = 0;
+		document.form1.push_group1.value = 0;
+		document.form1.push_cls1.value = 0;
+		document.form1.cid1.value = "";
+		document.form1.cid2.value = "";
+		document.form1.cid3.value = "";
+		document.form1.cid4.value = "";
+		document.form1.cid5.value = "";
+		document.form1.cid6.value = "";
+		document.form1.cid7.value = "";
+		/*console.log(document.form1.push_homepage.value);
+		console.log(document.form1.push_group.value);
+		console.log(document.form1.push_agency.value);
+		console.log(document.form1.push_cls.value);
+		console.log(document.form1.push_studio.value);*/
+	  }
+        
+   });
+
+   
+	$("#btn").bind("click", function(){  
+		if($("#title").val()==""){alert("请输入一个标题");return;}   
+		if($("#cid").val()==null||$("#cid").val()==""){alert("请选择一个类别");return;}  
+		if(ue.getContent().length<10){alert("请输入内容");return;}     
+		SaveAM({"do":dotype,frmid:"#form1",tpl1:"push",showok:"",callback:"dosome"});
+   }); 
+		
+});
+
+function dosome(ed,data){
+	var array=data.split("ok");
+
+	if(queryStr("do")=="m"){
+		//var id_loc = queryStr("id");
+		var id_push = queryStr("id");
+	}
+	else {
+		var arr_len = array.length;
+		//var id_loc = array[1];
+		var id_push = array[arr_len-1];
+	}
+	if(document.form1.push_cls1.value == 1){
+		$.post("./srv/push.php?", {tpl:"push_cls",id:id_push,cid:$("#cid6").val()}, function (d, e) {  
+		});
+	}
+	if(document.form1.push_group1.value == 1){
+		$.post("./srv/push.php?", {tpl:"push_grp",id:id_push,gid:$("#cid7").val()}, function (d, e) {       
+		});
+	}
+
+	if(queryStr("do")=="m"){
+       location.href="./?t=blog&id="+id_push;
+	}
+	else{  
+		$.post("./srv/sdo.php?", {tpl:"blog_send_end"}, function (d, e) {       
+				location.href="./?t=blog&id="+id_push;  
+				//location.href="./?t=blog&id="+data.substr(data.indexOf('ok')+2);   
+		});       
+	}
+}
+</script> 

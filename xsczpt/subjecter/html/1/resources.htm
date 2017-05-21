@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>学科资源-{gtitle}</title>
+{cssjs}
+<link type="text/css" rel="Stylesheet" href="html/{tplno}/css/sub_list.css">
+<script type="text/javascript" src="html/{tplno}/js/resources/jquery-1.4.2.min.js"></script>	
+<script type="text/javascript" src="html/{tplno}/js/resources/jquery.tree.js"></script>
+</head>
+<body>
+{top}
+{head}
+
+<div class="clear"></div>
+<div class="main">
+	<div class="z_left">
+		<div class="z_lxxk">
+			<div class="left_top xooo">
+				<span id="subjects_info">高中语文</span>
+				<div class="fr" style="margin-right:5px;font-weight:normal;">
+					<span>&nbsp;&nbsp;&nbsp;&nbsp;更换学科</span>
+				</div>
+			</div>
+			<div id="subjects" class="hide666">
+				<!-- START list_period -->
+				<dl>
+					<dt>{name}</dt>
+					<dd>
+						<!-- START list_period_rp -->
+						<p><a href="?t=resources&per={period}&s={id}">{name}</a></p>
+						<!-- END list_period_rp -->
+					</dd>
+				</dl>
+				<!-- END list_period -->
+			</div>	
+		</div>
+		<div class="clear"></div>
+		<div class="height1">
+			<ul>
+				<li class="h_class xa">
+					<span><a>更换年级</a></span>
+					<label id="grades_info" style="font-weight:normal;">年级</label>
+					<div class="clear"></div>
+					<dl id="grades" class="hide_c">
+						<!-- START list_grade -->
+						<dt><a href="{grade_href}&g={id}" style="font-size:12px">{name}</a></dt>
+						<!-- END list_grade -->
+					</dl>    	
+				</li>
+				
+				<li class="h_su xa">
+					<span><a>更换课文</a></span>
+					<label id="books_info" style="font-weight:normal;">课文</label>
+					<dl id="books" class="hide_su">
+						<!-- START list_book -->
+						<dt><a href="{book_href}&b={id}" style="font-size:12px">{title}</a></dt>
+						<!-- END list_book -->
+					</dl> 
+				</li>					
+			</ul>
+		</div>
+		<div class="clear"></div>
+		<ul id="h_files">
+			<li>
+				<!-- START list_chapters -->
+				<a href="{chapter_href}&c={id}" style="font-size:12px; font-weight:bold;color:#0594e7;">
+					<span>{title}</span>
+				</a>
+				<ul>
+					<!-- START list_chapters_rp -->
+					<li><a href="{part_href}&pt={id}">{title}</a></li>
+					<!-- END list_chapters_rp -->
+				</ul>
+				<!-- END list_chapters -->
+			</li>
+		</ul>
+	</div>
+	<div class="z_right1">
+		<div class="h_rightbk">
+			<div class="h_select">
+				<div class="h_line">
+					<div class="h_stit fl">资源类型：</div>
+					<div class="fl h_sedes">
+						{restype_link}
+					</div>
+				</div> 
+				<div class="h_line">
+					<div class="h_stit fl">教材版本：</div>
+					<div class="fl h_sedes">
+						{edition_link}
+					</div>
+				</div>
+				<div class="h_line">
+					<div class="h_stit fl">教材版别：</div>
+					<div class="fl h_sedes">
+						{volume_link}
+					</div>
+				</div>
+				<div class="h_line">
+					<div class="h_stit fl">选修必修：</div>
+					<div class="fl h_sedes">
+						{required_link}
+					</div>
+				</div>
+				<div class="h_line">
+					<div class="h_stit fl">教材年份：</div>
+					<div class="fl h_sedes" id="h_year">
+						{year_link}
+					</div>
+					<p style="float:right" class="sclk_more">
+						<a href="javascript:void(0)" id="show"  onclick="document.getElementById('h_year').style.height='60px';document.getElementById('hidden').style.display='';document.getElementById('show').style.display='none';">更多</a>
+						<a href="javascript:void(0)" id="hidden" style="display:none;" onclick="document.getElementById('h_year').style.height='30px';document.getElementById('hidden').style.display='none';document.getElementById('show').style.display='';">关闭</a> 
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<!-- START list_resources -->
+		<div class="h_sublist">
+			<div class="hs_aloadle">
+				<h1>
+					<a href="?t=res_view&id={id}&per={period}&s={subject}" target="_blank">{school_name} {period_name}{sub_name} {year}{edition_name} {title}</a>
+				</h1>
+				<span>
+					类别：<a href="?t=resources&per={period}">{period_name}</a>
+					&gt; <a href="?t=resources&per={period}&s={subject}">{sub_name}</a>
+					&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}">{grade_name}</a>
+					<script>
+						document.write("{book_name}" != "" ? '&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&b={book}">《{book_name}》</a>' : '');
+					</script>
+					<script>
+						document.write("{volume_name}" != "" ? '&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&v={volume}">{volume_name}</a>' : '');
+					</script>
+					&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&e={edition}">{edition_name}</a>
+					&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&y={year}">{year}</a>
+					&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&r={required}"><script>document.write({required} == 1 ? "必修" : "选修");</script></a>
+					&gt; <a href="?t=resources&per={period}&s={subject}&g={grade}&tp={restype}">{restype_name}</a>
+				</span>
+				<p>时间：{postdate}</p>
+				<p>作者：{truename} {school_name}</p>
+				<p>格式：{ressuffix}</p>
+			</div>
+			<div class="hs_aloadri">
+				<a href="/subjecter/?t=down&id={resmd5}" target="_blank"><img src="html/{tplno}/images/dbxz_01.jpg" /></a>
+				<br>
+				<span><a href="?t=res_view&id={id}&per={period}&s={subject}" target="_blank"><img src="html/{tplno}/images/pg_02.jpg"/>查看</a></span>
+				<span><a><img src="html/{tplno}/images/pg_01.jpg"/>收藏</a></span>
+			</div>
+		</div>
+		<!-- END list_resources -->
+		
+		<div class="clear"></div>
+		
+		<ul class="pagination pull-right">
+		{page}
+		</ul> 
+	</div>
+</div>	
+<script type="text/javascript">
+$(function(){
+	$('#h_files').tree({
+		expanded: 'li:first'
+	});
+	
+	if(queryStr('s') == "") {
+		$("#subjects").css("display", "block");
+		$("#subjects_info").html("请选择学科");
+	} else if (queryStr('g') == "") {
+		$("#grades").css("display", "block");
+		$("#grades_info").html("请选择年级");
+	} else if (queryStr('b') == "") {
+		$("#books").css("display", "block");
+		$("#books_info").html("请选择课文");
+	}
+	
+	if (queryStr('s') != "") {
+		initSubjectTitle();
+	}
+	
+	if (queryStr('g') != "") {
+		initGradeTitle();
+	}
+	
+	if($("#h_files").html().indexOf("</a>") == -1) {
+		$("#h_files").html('<li role="treeitem" aria-expanded="true"><a class="tree-parent" tabindex="0" style="font-size:12px; font-weight:bold;color:#0594e7;"><span>无课文章节。</span></a></li>');
+	}
+});
+function initSubjectTitle() {
+	var sub_href = "?t=resources&per=" + queryStr('per') + "&s=" + queryStr('s');
+	var period = "";
+	var subject = "";
+	
+	$("#subjects a").each( function() {
+		if(sub_href == $(this).attr("href")) {
+			period = $(this).parent().parent().parent().find("dt").html();
+			subject = $(this).html();
+			$("#subjects_info").html(period + subject);
+		}
+	});
+}
+function initGradeTitle() {
+	var grade_href = "?t=resources&per=" + queryStr('per') + "&s=" + queryStr('s') + "&g=" + queryStr('g');
+	
+	$("#grades a").each( function() {
+		if(grade_href == $(this).attr("href")) {
+			$("#grades_info").html($(this).html());
+		}
+	});
+}
+</script>	
+<div class="clear"></div>
+{footer}
+</body>
+</html>

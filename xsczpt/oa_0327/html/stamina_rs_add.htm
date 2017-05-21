@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+<script language="javascript" src="common/autocomplete.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form action="./srv/stamina_rs_add_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">添加当前学期学生体能信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr id="tr_stamina">
+						 <td width="25%" class="tabtd2_L">学生姓名</td>
+						 <td width="75%" class="tabtd2_R">
+							<input type="text" id="truename" name="truename" size="25" />
+							<input type="hidden" id="user_id" name="user_id" />&nbsp;&nbsp;支持即时搜索显示，什么是<a href="javascript:void(0);" style="color:#900;" title="当您在输入框架输入名字时，系统会自动帮您去匹配相关信息，并显示在输入框的下方。例如：您输入”孙“下面会显示所有孙姓人名。">即时搜索显示</a>。
+						  </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input name="but_add" id="but_add" type="submit" value="添 加" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><input name="but_back" id="but_back" type="button" value="返 回" onclick="history.back();" style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#truename").val())==""){
+		alert("请输入学生姓名");
+		$("#truename").select();
+		return false;
+	}
+	var items = $("input[name^='item_']");
+	var len   = items.size();
+	if(len==0){
+		alert("学生不存在或你当前没有选中任何学生，请重新选择。");
+		return false;
+	}
+	for(var i=0;i<len;i++){
+		if($.trim(items.eq(i).val())==""){
+			alert("请填写相应体能项成绩。");
+			items.eq(i).select();
+			return false;
+		}
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+$(document).ready(function(){
+	//初始化auto complete
+	$("#truename").autocomplete("./srv/search_student.php", {
+		selectFirst : false,
+		parse:function(data){//解释返回的数据，把其存在数组里 
+				var parsed = [];
+				var jsonData = eval("("+data+")");
+				for (var i=0;i<jsonData.length;i++){ 
+					parsed[parsed.length] = { 
+						data   : jsonData[i], 
+						value  : jsonData[i].truename, 
+						result : jsonData[i].truename} //返回的结果显示内容 
+				}; 
+				return parsed;
+		},
+		formatItem: function(item) {//显示下拉列表的内容 
+			return item.truename+"("+item.username+")"; 
+		}, 
+		formatMatch: function(item) { 
+			return item.truename; 
+		}, 
+		formatResult: function(item) { 
+			return item.id; 
+		} 
+	});
+	$("#truename").result(function(event,data,formatted){
+		$("#user_id").val(data.id);
+		$.post("./srv/sdo.php?", {tpl:"student_info","uid":data.id}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//清空之前的项目
+				$("#tr_stamina").nextAll("tr").remove();
+				//显示体能项
+				var len = d.value.length;
+				//动态生成下拉框
+				var html;
+				if(len>0){
+					html = "<tr><td class='tabtd2_L'>所在班级</td>";
+					html += "<td class='tabtd2_R'>"+d.tips+"</td></tr>";
+					for(var i=0;i<len;i++){
+						html += "<tr><td class='tabtd2_L'>"+d.value[i]["name"]+"</td>";
+						html += "<td class='tabtd2_R'><input type='text' size='15' value='' name='item_"+d.value[i]["id"]+"' /><input type='hidden' value='"+d.value[i]["id"]+"' name='item[]' /></td></tr>";
+					}
+					html += "<tr><td class='tabtd2_L'>体育成绩</td><td class='tabtd2_R'><input type='text' size='15' value='' name='ty_score' /></td></tr>";
+					$("#tr_stamina").after(html);
+				}
+			}
+		});
+	});	
+});
+</script> 

@@ -1,0 +1,498 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>章 管理-{gtitle}</title>
+{cssjs}
+<script type="text/javascript" src="js/func.js"></script>
+<script type="text/javascript" src="js/jquery.sortable.js"></script>
+<style>
+		a {cursor:pointer;}
+		ul,li,form, dl,dt,dd, span,p,em{ padding: 0px; margin: 0px;}
+		ul,li{text-decoration:none;}
+		#h_menuart{width:300px;margin:20px auto;}
+		#h_menuart h1{cursor:pointer;color:#fff;font-size:14px;padding:5px 0 3px 10px;margin-top:1px;background-color:#63acf4;line-height:30px;height:38px;font-weight:bold;margin:0 0 1px 0!important;}
+		#h_menuart h1 i{float:left;width:22px;font-style:normal;font-size:12px;font-family:'宋体';}
+		#h_menuart li{list-style:none;cursor:pointer;color:#777;font-size:12px;padding:5px 0 3px 10px;border:#E7E7E7 1px solid;border-top-color:#FFF;background-color:#F4F4F4;line-height:25px;height:35px;margin:0!important;}
+		#h_menuart li i{float:left;width:22px;font-style:normal;font-size:12px;}
+		#h_menuart li a {color:#777;}
+		.no{display:none;}
+</style>
+</head>
+<body>
+{top}     
+<div class="container">
+	<div class="col-sm-3">
+	{menu}
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>章 管理<small></small>
+				<div class="btn-group pull-right">
+					<a class="btn btn-primary" id="btn">+ 单个添加</a>
+					<a class="btn btn-primary" id="btn_all">+ 批量导入</a>
+				</div>
+			</h3>
+		</div>
+		
+		<form class="form-horizontal" role="form" method="post" id="from1">
+			<div class="form-group">
+				<div class="col-sm-4">
+					<select id="sltBook" class="form-control" style="border:1px solid blue;" onchange="if($(this).val()!='')$('#btnSearch').click();"><option value="">—课本—</option>{all_books}</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltPeriod" onchange="fillOpts(this, 'index', 'sltBook', '');" class="form-control">
+						<option value="">—学段—</option>
+						<!-- START list_period -->
+						<option value="{id}">{name}</option>
+						<!-- END list_period -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltSubject" class="form-control" onchange="fillBooks(0,false);" disabled="disabled" style="cursor:auto;" title="请选择学段！">
+							<option value="">—学科—</option>
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltGrade" class="form-control" onchange="fillBooks(0,false);" disabled="disabled" style="cursor:auto;" title="请选择学段！">
+							<option value="">—年级—</option>
+					</select>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2">
+					<select id="sltVolume" class="form-control" onchange="fillBooks(0,false);">
+						<option value="">—版别—</option>
+						<!-- START list_volume -->
+						<option value="{id}">{name}</option>
+						<!-- END list_volume -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltEdition" class="form-control" onchange="fillBooks(0,false);">
+						<option value="">—版本—</option>
+						<!-- START list_edition -->
+						<option value="{id}">{name}</option>
+						<!-- END list_edition -->
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltYear" class="form-control" onchange="fillBooks(0,false);">
+						<option value="">—年份—</option>
+						{list_year}
+					</select>
+				</div>
+				<div class="col-sm-2">
+					<select id="sltRequired" class="form-control" onchange="fillBooks(0,false);">
+						<option value="">—选必修—</option>
+						<option value="1">必修</option>
+						<option value="2">选修</option>
+					</select>
+				</div>
+				<div class="col-sm-3">
+					<div class="" style="float:left;width:120px">
+						<input  type="button" class="btn btn-success" value="搜索" id="btnSearch"/>
+						<input  type="button" class="btn btn-success" value="刷新" onclick="location.href='./?t=chapters';"/>
+					</div>
+					<span id="post_loading" style="float:left;line-height:33px;display:none;"><img src="./html/images/indicator.gif"/></span>
+				</div>
+			</div>
+		</form>
+		
+		<table class="table  table-hover"> 
+			<thead>
+				<tr>    
+					<th width="27.5%">章名称</th>
+					<th width="50%" style="text-align:center;">课本名称（点击填充分类）</th>
+					<th width="7.5%" style="text-align:center;">排序</th>
+					<th width="7.5%" style="text-align:center;">操作</th>
+					<th width="7.5%" style="text-align:center;">操作</th>
+				</tr>
+			</thead>
+			<tbody>
+			<!-- START list --> 
+			<tr>  
+				<td>
+					<a title="点击查看子节，拖动排序" onclick="showChapters('{id}', '{title}', this, '{parts_count}');">
+						{title} / 共{parts_count}节
+					</a>
+				</td>
+				<td align="center">
+					<a onclick="fillSearch('{period}','{subject}','{grade}','{edition}','{volume}','{year}','{required}','{book}');">《{book_title}》/{period_name}/{subject_name}/{grade_name}/{volume_name}/{edition_name}/{year}/<script>document.write({required} == "1" ? "必修" : "选修");</script></a>
+				</td>
+				
+				<td align="center">{odx}</td>
+				<td align="center">
+					<a class="glyphicon glyphicon-pencil" title="编辑" onclick="moda('{id}', '{title}', '{book}', '{odx}','{period}', '{subject}', '{grade}', '{edition}', '{volume}', '{year}', '{required}');"></a>
+				</td>
+				<td align="center">
+					<a href='?t=parts&cha={id}&book={book}&per={period}&sub={subject}&gra={grade}&edi={edition}&vol={volume}&yea={year}&req={required}' target='_blank'>添加节</a>
+				</td>
+			</tr>
+			<!-- END list -->   
+			</tbody>
+		</table>
+		
+		<ul class="pagination pull-right">
+			{page}
+		</ul>
+	</div> 
+</div>
+{subject_and_grade_cache}
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">
+$(function(){
+	bindPostBack();
+	
+	do_book_info();
+	
+	$("#btn").bind("click",function(){
+		$('#dlg1').data("dotype","a");
+		$('#dlg1 #id').val("");
+		$('#dlg1 #title').val("");
+		$('#dlg1 #odx').val("");
+		$('#dlg1').modal('show');
+	});
+	
+	$("#btn_all").bind("click",function(){
+		$('#dlg2').data("dotype","a");
+		$("#dlg2 #chapters").val("");
+		$('#dlg2 #chapters_tip').val("示例：\n第一章\n第二章\n第三章\n第四章\n第五章\n第六章\n第七章");
+		$('#dlg2').modal('show');
+	});
+	
+	$("#btnSearch").bind("click",function() {
+		//if($("#sltBook").val()==""){alert("请选择课本！");$("#sltBook").focus();return;}
+		location.href = "./?t=chapters&book="
+			+ $("#sltBook").val()
+			+ "&per=" + $("#sltPeriod").val()
+			+ "&sub=" + $("#sltSubject").val()
+			+ "&gra=" + $("#sltGrade").val()
+			+ "&vol=" + $("#sltVolume").val()
+			+ "&edi=" + $("#sltEdition").val()
+			+ "&yea=" + $("#sltYear").val()
+			+ "&req=" + $("#sltRequired").val();
+	});
+});
+function savesome(){
+	if( $("#title").val()=="" ) { alert("请输入章名称！"); $("#title").focus(); return; }
+	if($("#book").val()==""){alert("请选择课本！");$("#book").focus();return;}
+	if($("#odx").val()==""){$("#odx").val("1");}
+	$("#title").val($.trim($("#title").val()));
+	
+	// 新增数据
+	if($('#dlg1').data("dotype") == "a") {
+		$('#dlg1 #btn').prop("disabled", "disabled");
+		$.post("./srv/rdo.php?" + Math.random(), {tpl:"exist_chapter", title:$("#title").val(), book:$("#book").val()}, function (d, e) {
+			if(d == "1") {
+				alert("相同的章节已存在，请勿重复添加。");
+				$("#title").focus();
+				$('#dlg1 #btn').prop("disabled", "");
+			} else {
+				SaveAM({tpl:"sys_books_chapters","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+			}
+		});
+	} else {
+		// 编辑数据
+		// 1.根据$('#dlg1 #id').val()取数据库对应的值，没改变则直接更新； 2.有改变则判断
+		if($('#dlg1').data("dotype") == "m") {
+			$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_chapter_name",id:$('#dlg1 #id').val()}, function (d, e) {
+				if(d == ($("#title").val() 
+							+ "," + $("#book").val()
+				)) {
+					SaveAM({tpl:"sys_books_chapters","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+				} else {
+					$.post("./srv/rdo.php?" + Math.random(), {tpl:"exist_chapter", title:$("#title").val(), book:$("#book").val()}, function (d, e) {
+						if(d == "1") {
+							alert("相同的章节已存在，请检查数据。");
+							$("#title").focus();
+							$('#dlg1 #btn').prop("disabled", "");
+						} else {
+							SaveAM({tpl:"sys_books_chapters","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+						}
+					});
+				}
+			});
+		}
+	}
+}
+function moda(id, title, book, odx, period, subject, grade, edition, volume, year, required){
+	$('#dlg1').data("dotype","m");
+	
+	$("#title").val(title);
+	$("#odx").val(odx);
+	$("#id").val(id);
+	
+	$('#dlg1 #btn').prop("disabled", "disabled");
+	// 开始检索课本数据
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_books", period:period, subject:subject, grade:grade, edition:edition, volume:volume, year:year, required:required}, function (d, e) {
+		$("#book").html(d);
+		$("#book").val(book);
+		do_book_info();
+		$('#dlg1 #btn').prop("disabled", "");
+		$('#dlg1').modal('show');
+	});
+}
+function fillSearch(period,subject,grade,edition,volume,year,required,book) {
+	$("#sltPeriod").val(period);
+	$("#sltEdition").val(edition);
+	$("#sltVolume").val(volume);
+	$("#sltYear").val(year);
+	$("#sltRequired").val(required);
+	
+	$("#sltSubject").html($("#hide_subjects_" + period).html());
+	$("#sltSubject").prop("disabled", "");
+	$("#sltSubject").val(subject);
+	
+	$("#sltGrade").html($("#hide_grades_" + period).html());
+	$("#sltGrade").prop("disabled", "");
+	$("#sltGrade").val(grade);
+	
+	fillBooks(book, true);
+}
+function dosome(ed,data){
+	if(data.indexOf("ok")>-1){
+		$('#dlg1 #title').val("");
+		$('#dlg1 #odx').val(parseInt($('#dlg1 #odx').val()) + 1);
+		$('#dlg1 #title').focus();
+		$('#dlg1 #btn').prop("disabled", "");
+	}
+}
+// 下拉框控件状态绑定
+function bindPostBack() {
+	var per = getUrlParam('per');
+	if(per!=null && per!="") {
+		$("#sltPeriod").val(per);
+		
+		$("#sltSubject").html($("#hide_subjects_" + per).html());
+		$("#sltSubject").prop("disabled", "");
+		var sub = getUrlParam('sub');
+		if(sub!=null && sub!="") {
+			$("#sltSubject").val(sub);
+		}
+		$("#sltGrade").html($("#hide_grades_" + per).html());
+		$("#sltGrade").prop("disabled", "");
+		var gra = getUrlParam('gra');
+		if(gra!=null && gra!="") {
+			$("#sltGrade").val(gra);
+		}
+	}
+	
+	var edi = getUrlParam('edi');
+	if(edi!=null && edi!="") {
+		$("#sltEdition").val(edi);
+	}
+	var vol = getUrlParam('vol');
+	if(vol!=null && vol!="") {
+		$("#sltVolume").val(vol);
+	}
+	var yea = getUrlParam('yea');
+	if(yea!=null && yea!="") {
+		$("#sltYear").val(yea);
+	}
+	var req = getUrlParam('req');
+	if(req!=null && req!="") {
+		$("#sltRequired").val(req);
+	}
+	
+	if(getUrlParam('book').length > 0) {
+		$('#sltBook').val(getUrlParam('book'));
+		$('#dlg1 #book').val(getUrlParam('book'));
+		$('#dlg2 #books').val(getUrlParam('book'));
+	}
+}
+function do_book_info() {
+	$('#dlg1 #book_info').html(
+		$('#dlg1 #book').html() == '<option value="">—课本—</option>' ? "未发现课本信息，请筛选。" : ""
+	);
+	$('#dlg2 #book_info').html(
+		$('#dlg2 #books').html() == '<option value="">—课本—</option>' ? "未发现课本信息，请筛选。" : ""
+	);
+}
+function fillBooks(book, both) {
+	var period = $("#sltPeriod").val();
+	var subject = $("#sltSubject").val();
+	var grade = $("#sltGrade").val();
+	var volume = $("#sltVolume").val();
+	var edition = $("#sltEdition").val();
+	var year = $("#sltYear").val();
+	var required = $("#sltRequired").val();
+	var init_text = '<option value="">—课本—</option>';
+	var obj = $("#sltBook");
+
+	if(period == null || period == "") {obj.html(init_text);return;}
+	if(subject == null || subject == "") {obj.html(init_text);return;}
+	if(grade == null || grade == "") {obj.html(init_text);return;}
+	// 满足以上三项内容即可开始检索
+	//if(volume == null || volume == "") {obj.html(init_text);return;}
+	//if(edition == null || edition == "") {obj.html(init_text);return;}
+	//if(year == null || year == "") {obj.html(init_text);return;}
+	//if(required == null || required == "") {obj.html(init_text);return;}
+	
+	// 开始检索课本数据
+	$('#dlg1 #btn').prop("disabled", "disabled");
+	$('#dlg2 #btn').prop("disabled", "disabled");
+	$('#sltBook').prop("disabled", "disabled");
+	$("#post_loading").css("display", "block");
+	
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_books", period:period, subject:subject, grade:grade, edition:edition, volume:volume, year:year, required:required}, function (d, e) {
+		obj.html(d);
+		if(book != null && book != "" && book != 0) {
+			obj.val(book);
+		}
+		if(both) {
+			$("#book").html(d);
+			$("#dlg2 #books").html(d);
+			if(book != null && book != "" && book != 0) {
+				$("#book").val(book);
+				$("#dlg2 #books").val(book);
+			}
+		}
+		do_book_info();
+		
+		$('#dlg1 #btn').prop("disabled", "");
+		$('#dlg2 #btn').prop("disabled", "");
+		$('#sltBook').prop("disabled", "");
+		if (d != '<option value="">—课本—</option>') { obj.focus(); }
+		$("#post_loading").css("display", "none");
+	});
+}
+function save_all(obj) {
+	if( $("#dlg2 #chapters").val()=="" ) { alert("请输入章节信息！"); $("#dlg2 #chapters").focus(); return; }
+	if($("#dlg2 #books").val()==""){alert("请选择所属课本！");$("#dlg2 #books").focus();return;}
+	
+	$("#dlg2 #chapters").val($.trim($("#dlg2 #chapters").val()));
+	str = $.base64.btoa( $("#dlg2 #chapters").val(), true );
+	
+	$(obj).prop("disabled", "disabled");	// 确定按钮状态控制
+	
+	$("#dlg2 #chapters").focus();
+	$("#dlg2 #chapters").val($("#dlg2 #chapters").val() + "\n----------------------------------------------\n开始导入数据：\n\n");
+	$("#dlg2 #chapters").scrollTop($("#dlg2 #chapters")[0].scrollHeight);
+	
+	$.post("./srv/sdo.php?" + Math.random(), {tpl:"add_chapters", data:str, book:$("#dlg2 #books").val()}, function (d, e) {
+		$("#dlg2 #chapters").val($("#dlg2 #chapters").val() + d);
+		$("#dlg2 #chapters").scrollTop($("#dlg2 #chapters")[0].scrollHeight);
+		$(obj).prop("disabled", "");
+	});
+}
+function hideMenu() {
+	if($("#chapterTree").css("display") == "block") {
+		$("#chapterTree").css("display", "none");
+	}
+}
+function showMenu(obj,noid){
+	var block = $("#"+noid);
+	
+	if(block.attr("class") == "no"){
+		block.attr("class", "");
+		obj.innerHTML = obj.innerHTML.replace("+","-");
+	}else{
+		block.attr("class", "no");
+		obj.innerHTML = obj.innerHTML.replace("-","+");
+	}
+}
+function showChapters(id, title, obj, parts_count) {
+	var top = $(obj).offset().top;
+	var left = $(obj).offset().left;
+	$("#chapterTree").css("top", top);
+	$("#chapterTree").css("left", left);
+	
+	if(parts_count == "0") {
+		var alink = $(obj).parent().parent().find("td:last-child").html();
+		
+		$("#chapterTree").html('<div id="h_menuart"><h1 style="background-color:rgba(0,0,0,0.5);padding-left:10px;color:white;font-size:14px;" onclick="hideMenu();">' + title + '<span class="pull-right" style="padding-right:10px;">关闭</span></h1><ul><li style="font-size:14px; font-weight:bold;"><i>- </i>尚未添加子节<span class="pull-right" style="padding-right:10px;">' + alink.replace("添加节", "&gt;&gt;&nbsp;点这里去添加") + '</span></li></ul></div>');
+		$("#chapterTree").css("display", "block");
+		return;
+	}
+	
+	$("#chapterTree").html('<div id="h_menuart"><img src="html/images/loading1.gif" /></div>');
+	$("#chapterTree").css("display", "block");
+	$.post("./srv/rdo.php?" + Math.random(), {tpl:"get_parts", parentid:id, title:title}, function (d, e) {
+		if(d != "") {
+			$("#chapterTree").html(d);
+		}
+	});
+}
+</script>
+<div id="chapterTree" style="display:none; position:absolute;">
+</div>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+	<div class="form-group">  
+		<label class="col-sm-2 control-label" style="color:red;">章名称</label>
+		<div class="col-sm-6">
+			<input type="text" id="title" class="form-control" onkeypress="doClick(event, 'dlg1 #btn');" />
+			<label class="help-block" style="font-weight:lighter; color:red;">提示：按回车键可快速连续添加。</label>
+		</div>
+	</div>
+	<div class="form-group">  
+		<label class="col-sm-2 control-label">所属课本</label>    
+		<div class="col-sm-6">
+			<select id="book" class="form-control"><option value="">—课本—</option>{all_books}</select>
+		</div>
+		<label id="book_info" class="col-sm-4 control-label" style="color:blue; font-size:14px; font-weight:lighter; text-align:left; padding-left:0px; padding-top:10px;"></label>
+	</div>
+	<div class="form-group"> 
+		<label class="col-sm-2 control-label">排列顺序</label>
+		<div class="col-sm-3">
+			<input type="text" id="odx" class="form-control" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,''); doClick(event, 'dlg1 #btn');" placeholder="数字">
+			<input type="text" id="id" value="" style="display:none;"/>
+			<input type="text" id="parentid" value="0" style="display:none;"/>
+		</div>
+	</div>
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="modal" id="dlg2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog" style="width:800px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="label">批量导入</h4>
+			</div>
+			<div class="modal-body">
+				<form class="form-horizontal" role="form" method="post" id="from2">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" style="color:red;">章节名称</label>
+						<div class="col-sm-6">
+							<textarea id="chapters" class="form-control" rows="15"></textarea>
+							<label class="help-block" style="font-weight:lighter; color:red;">提示：每一个章节名称用回车键换行区分。</label>
+						</div>
+						<div class="col-sm-3">
+							<textarea id="chapters_tip" class="form-control" rows="8" disabled="disabled" style="cursor:auto;"></textarea>
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label">所属课本</label>    
+						<div class="col-sm-6">
+							<select id="books" class="form-control"><option value="">—课本—</option>{all_books}</select>
+						</div>
+						<label id="book_info" class="col-sm-4 control-label" style="color:blue; font-size:14px; font-weight:lighter; text-align:left; padding-left:0px; padding-top:10px;"></label>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="btn" onclick="save_all(this);">确定</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+			</div>
+		</div>
+	</div>
+</div>

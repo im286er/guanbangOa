@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>教材版别-{gtitle}</title>
+{cssjs}
+<script type="text/javascript" src="js/func.js"></script>
+<style>
+		a {cursor:pointer;}
+</style>
+</head>
+<body>
+{top}     
+<div class="container">
+	<div class="col-sm-3">
+	{menu}    
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+			<h3>教材版别管理<small></small>
+				<div class="btn-group pull-right">
+					<a onclick="location.reload();" class="btn btn-primary" >刷新</a>
+					<a class="btn btn-primary" id="btn">+ 添加</a>
+				</div>
+			</h3>
+		</div>
+		<table class="table  table-hover"> 
+			<thead>
+				<tr>    
+					<th style='width:80%;'>版别名称</th>
+					<th style='width:10%; text-align:center;'>排序</th>
+					<th style='width:10%; text-align:center;'>操作</th>
+				</tr>
+			</thead>
+			<tbody>      
+			<!-- START list --> 
+			<tr>  
+				<td><a>{name}</a></td>
+				<td align="center">{odx}</td>
+				<td align="center">
+					<a class="glyphicon glyphicon-pencil" title="编辑" onclick="moda('{id}', '{name}', '{odx}');"></a>
+					<!--
+					<script>document.write(("{books_count}" != "0" || "{res_count}" != "0") ? "" : "<a class='glyphicon glyphicon-remove' title='删除' onclick='delths({id},this)'></a>");</script>
+					-->
+				</td>
+			</tr> 
+			<!-- END list -->   
+			</tbody>
+		</table>   
+	</div> 
+</div> 
+{foot} 
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+	$("#btn").bind("click",function(){
+		$('#dlg1').data("dotype","a");
+		// 添加时初始化
+		$('#dlg1 #id').val("");
+		$('#dlg1 #name').val("");
+		$('#dlg1 #odx').val("");
+		$('#dlg1').modal('show');
+	});
+});
+
+function savesome(){
+	if($("#name").val()==""){alert("请输入名称");$("#name").focus();return;}
+	if($("#odx").val()==""){$("#odx").val("1");}
+	$("#name").val($.trim($("#name").val()));
+	
+	if($('#dlg1').data("dotype") == "a") {
+		$.post("./srv/rdo.php", {tpl:"exist_volume", name:$("#name").val()}, function (d, e) {
+			if(d == "1") {
+				alert("相同的类型已存在，请勿重复添加。");
+			} else {
+				SaveAM({tpl:"sys_textbook_volume","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+			}
+		});
+	} else {
+		// 编辑数据
+		// 1.根据$('#dlg1 #id').val()取数据库对应的值，没改变则直接更新； 2.有改变则判断
+		if($('#dlg1').data("dotype") == "m") {
+			$.post("./srv/rdo.php", {tpl:"get_volume_name",id:$('#dlg1 #id').val()}, function (d, e) {
+				if(d == $("#name").val()) {
+					SaveAM({tpl:"sys_textbook_volume","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+				} else {
+					$.post("./srv/rdo.php", {tpl:"exist_volume", name:$("#name").val()}, function (d, e) {
+						if(d == "1") {
+							alert("相同的版别已存在，请勿重复添加。");
+						} else {
+							SaveAM({tpl:"sys_textbook_volume","do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作成功！',callback:"dosome"});
+						}
+					});
+				}
+			});
+		}
+	}
+}
+
+function moda(id, name, odx){
+	$('#dlg1').data("dotype","m");
+	$("#name").val(name);
+	$("#odx").val(odx);
+	$("#id").val(id);
+	$('#dlg1').modal('show');
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    location.reload();
+  }
+}
+</script>
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+	<div class="form-group">  
+		<label class="col-sm-2 control-label">教材版别</label>    
+		<div class="col-sm-6">
+			<input type="text" id="name" class="form-control" />
+		</div>   
+	</div>
+	<div class="form-group">  
+		<label class="col-sm-2 control-label"></label>    
+		<div class="col-sm-6">
+			<span style="color:red;">提示：版别添加后只可编辑，不可删除。</span>
+		</div>   
+	</div>
+	<div class="form-group"> 
+		<label class="col-sm-2 control-label">排列顺序</label>
+		<div class="col-sm-3">
+			<input type="text" id="odx" class="form-control" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" placeholder="数字">
+			<input type="text" id="id" value="" style="display:none;"/>
+			<input type="text" id="sid" value="{subid}" style="display:none;"/>
+		</div>
+	</div>     
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>

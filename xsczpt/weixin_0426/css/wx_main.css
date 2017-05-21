@@ -1,0 +1,17 @@
+/**公共样式**/
+body,html{height:100%;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system-font,Helvetica Neue,Helvetica,sans-serif;padding:0px; margin:0px auto;font-size:12px;}
+ul,li,form, dl,dt,dd, span,p,em{ padding: 0px; margin: 0px;}
+ul,li{ list-style:none;text-decoration:none;}
+h1,h2,h3,h4,h5,h6{ padding:0px; margin:0px;}
+select,input,em,textarea,address{  font-style:normal; color:#5A5A5A;}
+img{ border:none; border:0;margin:0;padding:0;}
+*{margin:0;padding:0;} 
+a{text-decoration:none;color:#808080;}
+a:hover ,a:visited ,a:link ,a:active{text-decoration:none!important;}
+i{font-style:normal;}
+.clear{font-size:0px;clear:both;}
+/**公共样式结束**/
+
+/*login*/
+.l_mbg{background:#B8DAF5}

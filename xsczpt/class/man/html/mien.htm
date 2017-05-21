@@ -1,0 +1,127 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级风采-{gtitle}</title>
+{cssjs}                               
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+<div class="container">   
+
+<div class="col-sm-3">   
+{menu}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>班级风采      <small></small>     
+
+  <button type="button" class="btn btn-primary pull-right"  id="btn">+添加</button>
+ 
+   </h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>    
+<th>标题</th>
+<th>时间</th> 
+<th>操作</th> 
+</tr>
+</thead>
+<tbody>      
+<!-- START list -->              
+<tr>
+<td><img src="/upds/class/mien/t_{logo}"/><br/><a>{title}</a></td> 
+<td> <cite><script>document.write(utctime('{timestamp}'));</script></cite></td>   
+<td>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}','{logo}')"></a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+
+</div>
+
+</div>
+
+{foot}  
+</body> 
+</html>
+<script type="text/javascript">  
+$(function(){       
+   $("#btn").bind("click",function(){$('#dlg1').modal('show')}); 
+});
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){       
+       d=JSON.parse(v);
+       if(d.ret=="ok"){  
+        $("#dlg1 #logo").val(d.fname);    
+        if($("#dlg1 #title").val()==""){$("#dlg1 #title").val(d.ofname)}         
+        SaveAM({tpl:"cls_mien","do":"a",frmid:"#form1",showok:"",callback:"dosome"});          
+         $('#dlg1').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+    }
+} 
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    //id=data.substr(data.indexOf("ok")+2);
+    location.href="./?t=mien&c={c}";
+  }
+}
+function delths(v,v1){
+   $.post("./srv/sdo.php", {tpl:"del_mien",id:v,cid:"{c}",data:v1}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+        location.href="./?t=mien&c={c}";
+      else alert(d);
+  });
+}   
+ 
+  
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">上传图片</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_mien.php" enctype="multipart/form-data" method="post" id="form1" name="form1" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+    <input type="text" id="title" class="form-control" style="width:60%;" maxlength="50"/>        
+    <input type="text" id="cid" value="{c}" style="display:none;"/>
+    <input type="text" id="logo" value="" style="display:none;"/> 
+    </div>
+  </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block">(尺寸730x300 大小400kb以内 jpg图片)。</span>
+    </div>
+  </div>
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="$('#form1').submit();">提交</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

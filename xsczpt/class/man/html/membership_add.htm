@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>添加新成员-{gtitle}</title>   
+{cssjs}    
+</head>
+<body>
+{top}
+<div class="container"> 
+<div class="col-sm-3">
+{menu}
+</div>
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>添加新成员      <small>学生</small>    </h3>
+</div>     
+<form class="form-horizontal" role="form">      
+   <span class="help-block">请输入数据到数据中，按照示例格式排版即可批量生成注册帐号 </span>
+   <div class="form-group">
+    <label class="col-sm-1 control-label">密码</label>
+     <div class="col-sm-2"><input id="pwd" value="000000" class="form-control"></div>
+     <p class="help-block">导入用户的默认密码</p>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-1 control-label">字段</label>
+    <div class="col-sm-6">
+        <label class="checkbox-inline">
+          <input id="a" type="checkbox" checked disabled>姓名             
+       </label>
+       <label class="checkbox-inline">
+         <input id="b" type="checkbox" checked disabled>身份证号
+       </label>
+        <label class="checkbox-inline">
+           <input id="c" type="checkbox" checked disabled>邮箱
+       </label>
+       <label class="checkbox-inline">
+           <input id="mobile" type="checkbox" >手机号      
+       </label>             
+    </div> 
+     <span class="help-block"></span>     
+  </div>  
+  <div class="form-group">
+    <label class="col-sm-1 control-label">数据</label>
+     <div class="col-sm-10">
+    <textarea id="des" class="form-control" rows="10"></textarea>
+     <span class="help-block">"，"逗号分隔每个字段<br/>
+     示例：张三,32132419******x,zlen@topnt.cn,189****88 <br/>
+      *每行一个成员信息，不能有空行  <br/>
+      *导入成功 请使用邮箱或者手机号登录，用户名可以在登录成功后自行修改      
+     </span>
+    </div>
+  </div>
+ 
+ 
+     <div class="form-group">
+     <div class="col-sm-11 col-sm-offset-1">   
+       <input type="text" id="id" value="0" style="display:none;"/>      
+   <button type="button" class="btn btn-primary" id="btn"> 开始导入 </button>     
+   </div>     
+    </div>
+    
+      <div class="form-group">
+    <label class="col-sm-1 control-label">结果</label>
+    <div class="col-sm-10">
+    <textarea class="form-control" rows="5" id="des1" readonly></textarea>
+    </div>
+  </div>
+</form> 
+
+</div>
+</div> 
+{foot}  
+</body>
+</html>
+<script type="text/javascript">
+
+$(function () {      
+    $("#btn").bind("click", function(){    
+      if($("#pwd").val()==""){alert("请输入用户默认密码");return;}
+      if($("#des").val()==""){alert("请输入要导入的用户信息");return;}
+      str=$.base64.btoa($("#des").val(),true);        
+      var mob=$("#mobile").is(":checked")?"1":"0";
+      $("#des1").val("正在导入……");
+      $.post("./srv/import.php?" + Math.random(), {"tpl":"adda","cid":"{c}","mob":mob,pwd:$("#pwd").val(),data:str}, function (data, state) {
+             $("#des1").val(data);               
+        });
+    
+    });       
+ });  
+</script>

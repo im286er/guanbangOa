@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>推送-{gtitle}</title>
+{cssjs}           
+<script src="/ppf/js/select.js" type="text/javascript"></script>     
+<script src="/ppf/js/fun.js" type="text/javascript"></script>     
+</head>
+<body>
+{top} 
+<div class="container">  
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>推荐内容到 <small>学校主页</small> </h3>
+</div>
+<form class="form-horizontal" role="form"  id="form1">     
+  <div class="form-group">
+    <label class="col-sm-2 control-label">选择学校：</label>
+    <div class="col-sm-5">
+        <select id="sid" class="form-control"></select>              
+        <p class="help-block">需审核后能才能显示！</p>
+    </div>      
+  </div>    
+   <div class="form-group">
+    <label class="col-sm-2 control-label">选择类别：</label>
+    <div class="col-sm-5">
+        <select id="cid" class="form-control"></select>              
+        <p class="help-block"></p>
+    </div>      
+  </div>  
+    
+    <div class="form-group">
+     <div class="col-sm-10 col-sm-offset-2">         
+      <button type="button" class="btn btn-primary" id="btn"> 立即推送 </button>       
+       <input type="text" id="id" value="0" style="display:none;"/>
+   </div>
+    </div>     
+</form>
+          
+</div>  
+</div>
+ 
+</body>
+</html>
+<script type="text/javascript"> 
+$(function () {
+   // readID({tpl:"zone","do":"r",id:"{id}",frmid:"#form1"});  
+    $("#btn").bind("click", function(){       
+       if($("#sid").val()==undefined||$("#sid").val()==""){alert("请选择学校");return;}
+       if($("#cid").val()==undefined||$("#cid").val()==""){alert("请选择类别");return;}    
+       $.post("./srv/push.php?", {tpl:"push_sch",id:queryStr("id"),sid:$("#sid").val(),cid:$("#cid").val()}, function (d, e) {       
+          alert(d);          
+          if(d.indexOf('ok')>-1){
+            window.close();
+          }
+        }); 
+    });    
+    $.post("./srv/rdo.php?", {tpl:"get_my_sch"}, function (d, e) {                 
+         selectShowData("#sid",JSON.parse(d),"id","name");            
+    }); 
+    $("#sid").bind("change",function(){
+      if($(this).val()=="")return;
+      $.post("./srv/rdo.php?", {tpl:"get_sch_art_cate",id:$(this).val()}, function (d, e) {                 
+        selectShowData("#cid",JSON.parse(d),"id","name");            
+       }); 
+    });             
+ });  
+</script>

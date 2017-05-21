@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0058)http://www.wuhaneduyun.cn/index.php?r=portal/discovery/org -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">   
+<link rel="stylesheet" type="text/css" href="css/vircom.css">
+<title>新闻-{gtitle}</title>
+{meta}
+</head>
+<body>
+{top}
+<div class="wrap">
+	<div class="main">
+		{head}
+		<div class="sear_tit mt40">
+			<h2 style="width:60px;font-size:1.5em;">新闻</h2>
+			<div class="s_tabtit">
+				<ul class="tab-hd">
+          <!-- START lista -->
+					<li artid="{id}"><a href="/?t=arts&c={id}">{name}</a></li>
+          <!-- END lista -->
+				</ul>
+			</div>
+      <div class="search_r" style="width:223px;">
+				<input class="keyword_s search_text fl" id="so" type="text" name="keyword" placeholder="请输入名称" >
+				<input type="button" align="absmiddle" value="搜索" class="search_button" id="btn">
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<div id="list"> 
+			<ul class="tab-bd">
+					<li class="ul_show thisclass">
+            <!-- START list -->
+						<div class="p_newsinfo" style="width:98%;">
+							<a href="/?t=art&id={id}" class="p_newstit" target=_blank>{name}</a>
+							<p class="p_newdat">{froms}{timestamp}<span>浏览：{see}</span></p>
+							<p class="news_info">{pre}<a href="/?t=art&id={id}" target=_blank>查看全文</a></p>
+						</div>
+            <!-- END list -->
+					</li>
+			</ul>
+  </div>
+	</div>
+  <div class="tc">
+     <ul class="pagination ">
+			{page}
+     </ul>
+	</div>
+</div>
+{foot}
+<script type="text/javascript">
+$(function(){
+   var c = queryStr("c");
+   if(!queryStr("c")){ c = 0; }else{ $(".tab-hd li[artid="+c+"]").addClass("active"); }
+   if(queryStr("so")!="") $("#so").val("{so}"); 
+   $("#btn").bind("click",function(){ 
+    location.href="./?t=arts&c="+c+"&so="+$("#so").val();    
+   });
+});
+</script> 
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>微博-{nick}空间</title>
+{cssjs}   
+<script type="text/javascript" src="js/weibo.js"></script>   
+<style>
+.panel-body img{max-width:180px;} 
+
+.well{border-radius:0;}
+.well p{border-bottom:#aaa dotted 1px; }
+</style>
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+
+
+
+<div class="col-xs-12 " style="margin-top:20px;"> 
+ 
+<div class="row" id="list"> 
+<hr id="weibolist"/>
+<!-- START list -->   
+<div class="panel panel-default">
+<div class="panel-heading"><h3 class="panel-title"><img src="/upd/face/{uid}.jpg" width="26px" alt='' onerror="this.src='/error/face.jpg';"/> {nick} <code>{created}</code> 
+
+<small class=" pull-right">
+<a class="glyphicon glyphicon-hand-up" onclick="vote({tbl:'weibo',do:'up',id:{id}},this);" title="赞">({up})</a>  &nbsp;
+<a class="glyphicon glyphicon-share-alt" onclick="share({tbl:'weibo',do:'share',id:{id}},this);" title="转发">({share})</a> &nbsp;  
+<a class="glyphicon glyphicon-comment" onclick="comment('{id}',0,'{nick}')" title="评论">({comments})</a>
+ </small>  
+ </h3>
+ </div>          
+<div class="panel-body" id="pb{id}"> 
+<p>{des}</p>  
+<div class="col-sm-11 well hide">    
+<!-- START rp -->
+<p> 
+<a> {nick} </a> {redo} <a>{renick} </a> ：   
+{des} 
+<small class="pull-right"><code>{created} <a onclick="comment('{wid}','{id}','{nick}')" >回复</a></code>
+</small>  
+</p> 
+<!-- END rp --> 
+<code class="pull-right">
+<a onclick="load_comments('{id}',this)" id="more{id}" data-page="0">点击加载更多……</a>
+</code>      
+</div> 
+         
+</div>
+</div> 
+<!-- END list --> 
+</div>   
+
+<div class="row text-center">       
+<ul class="pagination">{page}</ul> 
+</div>
+
+</div>
+ 
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">
+var uid="{uid}";
+var nick="{nick}";
+var mynick="{mynick}";
+var limit_comment=0,limit_leave=0;
+$(function(){
+  $(".well").each(function(a,b){
+      if($(b).find("p").length>0)
+       $(b).removeClass("hide"); 
+    }); 
+      $.post("./srv/rdo.php", {tpl:"get_limit_do","id":queryStr("id")}, function (d, e) { 
+      d1=JSON.parse(d);
+      limit_comment=d1.comment;
+      limit_leave=d1.leave;
+  }); 
+});
+</script>
+
+<div class="modal small" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">回复</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1"> 
+ <div class="form-group">    
+    <div class="col-sm-12">
+      <textarea id="des" name="des" class="form-control" rows="4"  placeholder="请输入评论内容0-250字" ></textarea>    
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="wid" value="0" style="display:none;"/>
+<input type="text" id="reid" value="0" style="display:none;"/>    
+<input type="text" id="redo" value="" style="display:none;"/>
+<input type="text" id="renick" value="" style="display:none;"/>
+<input type="text" id="floor" value="0" style="display:none;"/> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick=savcomment()> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

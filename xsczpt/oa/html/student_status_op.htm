@@ -1,0 +1,184 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script language="javascript" src="common/autocomplete.js"></script>
+<script src="/ppf/js/select.js"></script>
+<link href="common/autocomplete.css" rel="stylesheet" type="text/css" />
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+</head>
+<body>
+
+<div class="main">
+	<div class="box">
+		<form id="form1" name="form1" action="./srv/student_status_op_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">在这里您可以对奖惩信息进行操作</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<script type="text/javascript">
+						if('{op}'=='add'){
+							if({role})  //学生登录添加
+								document.write('<tr id="tr_height"><td width="30%" class="tabtd2_L">类型</td><td width="80%" class="tabtd2_R"><select name="status_name" id="status_name"></select></td></tr><tr><td width="20%" class="tabtd2_L">学期</td><td width="80%" class="tabtd2_R"><select name="term_id" id="term_id"></select></td></tr>');
+							else
+								document.write('<tr id="tr_score"><td width="30%" class="tabtd2_L">学生姓名</td><td width="70%" class="tabtd2_R"><input type="text" id="user_name" name="user_name" size="25" /><input type="hidden" id="user_id" name="user_id" />&nbsp;&nbsp;支持即时搜索显示，什么是<a href="javascript:void(0);" style="color:#900;" title="当您在输入框架输入名字时，系统会自动帮您去匹配相关信息，并显示在输入框的下方。例如：您输入”孙“下面会显示所有孙姓人名。">即时搜索显示</a>。</td></tr><tr id="tr_height"><td width="20%" class="tabtd2_L">类型</td><td width="80%" class="tabtd2_R"><select name="status_name" id="status_name" style="margin-top:0;"></select></td></tr><tr><td width="20%" class="tabtd2_L">学期</td><td width="80%" class="tabtd2_R"><select name="term_id" id="term_id" style="margin-top:0;"></select></td></tr>');
+						}else{
+							document.write('<tr><td width="30%" class="tabtd2_L">学生姓名</td><td width="70%" class="tabtd2_R">{user_name}</td></tr><tr><td width="28%" class="tabtd2_L">班级名称：</td><td width="72%" class="tabtd2_R"><input type="text" id="Cname" name="Cname" size="25" value="{Cname}" /></td></tr><tr><td width="20%" class="tabtd2_L">年级：</td><td width="80%" class="tabtd2_R"><input type="text" id="Gname" name="Gname" size="25" value="{Gname}" /></select></td></tr><tr><td width="20%" class="tabtd2_L">班主任姓名</td><td width="80%" class="tabtd2_R"><input type="text" id="master_name" name="master_name" size="25" value="{master_name}" /></td></tr><tr><td width="20%" class="tabtd2_L">类型</td><td width="80%" class="tabtd2_R"><input type="text" id="status_name" name="status_name" size="25" value="{status_name}" /></td></tr><tr><td width="20%" class="tabtd2_L">学期</td><td width="80%" class="tabtd2_R">{term_name}</td></tr><tr><td width="20%" class="tabtd2_L">现在学校</td><td width="80%" class="tabtd2_R"><input type="text" id="school" name="school" size="25" value="{school}" /></td></tr>');
+						}
+					</script> 
+					
+					<tr>
+						<td class="tabtd2_L">说明</td>
+						<td class="tabtd2_R" style="padding-top:10px;"><textarea name="content" id="content" cols="80" rows="15" style="font-size:12px;height:150px;">{content}</textarea></td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input type="hidden" name="op" value="{op}" />
+				<input type="hidden" name="id" id="id" value="{id}" />
+				<input type='hidden' id='partner_id' name='partner_id' value=''>
+				<input type='hidden' id='geter' name="geter" value='{master_val}'>
+				<input type="hidden" name="uid" value="{uid}"/>
+				<input type="hidden" name="user_id" value="{user_id}"/>
+				<input type="hidden" name="flag" id="h_flag" value=""/>
+				<input type="hidden" name="subject" id="subject" value="{flag_type}"/>
+				<input name="but_add" id="but_add" type="submit" value="{butV}" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><a href="./?t=student_status"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a>
+			</div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+l_tpl="oa_zhsz_stamina_record";
+readID({"do":"r",id:queryStr("id"),frmid:"#form1"}); 
+
+$(function(){
+    $.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+        selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option value='' selected>—请选择—</option>");     
+    });
+	
+	$.post("./srv/rdo.php?", {tpl:"jiangcheng",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#flag_type",JSON.parse(d),"code_name","code_name"); $("#flag_type").prepend("");  
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");
+		$('#term_id').val('{term_id}');     
+	});
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+				$("#passpwd").select();	
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value=''>—请选择—</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select").remove();
+	}	
+}
+
+//表单提交验证
+function checkForm()
+{
+	if('{op}'=='add' && !{role}){
+		if($.trim($("#truename").val())==""){
+			alert("请输入学生姓名");
+			$("#truename").select();
+			return false;
+		}
+		var userId = $("#user_id").val();
+		if(userId==0){
+			alert("学生不存在或你当前没有选中任何学生，请重新选择。");
+			return false;
+		}
+	}
+	if($.trim($("#content").val())==""){
+		alert("请输入奖惩内容");
+		$("#content").select();
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+$(document).ready(function(){
+	//初始化auto complete
+	$("#truename").autocomplete("./srv/search_student.php", {
+		selectFirst : false,
+		parse:function(data){//解释返回的数据，把其存在数组里 
+				var parsed = [];
+				var jsonData = eval("("+data+")");
+				for (var i=0;i<jsonData.length;i++){ 
+					parsed[parsed.length] = { 
+						data   : jsonData[i], 
+						value  : jsonData[i].truename, 
+						result : jsonData[i].truename} //返回的结果显示内容 
+				}; 
+				return parsed;
+		},
+		formatItem: function(item) {//显示下拉列表的内容 
+			return item.truename+"("+item.username+")"; 
+		}, 
+		formatMatch: function(item) { 
+			return item.truename; 
+		}, 
+		formatResult: function(item) { 
+			return item.id; 
+		} 
+	});
+	$("#truename").result(function(event,data,formatted){
+		$("#user_id").val(data.id);
+		$.post("./srv/sdo.php?", {tpl:"student_info","uid":data.id}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				if($("#tr_score").next().attr("id")!="tr_height"){
+					$("#tr_score").next().remove();
+				}
+				//显示班级信息
+				html = "<tr><td class='tabtd2_L' width='20%'>所在班级</td>";
+				html += "<td class='tabtd2_R' width='80%'>"+d.tips+"</td></tr>";
+				$("#tr_score").after(html);
+			}
+		});
+	});	
+});
+</script> 

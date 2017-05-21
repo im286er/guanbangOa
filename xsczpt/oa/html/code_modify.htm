@@ -1,0 +1,75 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+</head>
+<body>
+<div class="main">
+		<div class="box">
+			<form action="./srv/code_modify_submit.php" method="post" onsubmit="return checkForm();">
+				<div class="boxtitle">
+					<label class="current"><a href="javascript:void(0);">在这里您可以修改微代码信息</a></label> 
+				</div>
+				<div class="tabbody">
+					<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+                        <tr>
+							 <td width="25%" class="tabtd2_L">编码</td>
+							 <td width="75%" class="tabtd2_R">
+                             	{code_no}
+                              </td>
+						</tr>
+                        <tr>
+							 <td width="20%" class="tabtd2_L">名称</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="text" id="code_name" name="code_name" size="15" value="{code_name}" />
+                              </td>
+						</tr>
+                        <tr>
+							 <td width="20%" class="tabtd2_L">排序值</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="text" id="order_value" name="order_value" size="15" value="{order_value}" /> 从小到大 
+                              </td>
+						</tr>
+                        <tr>
+							 <td width="20%" class="tabtd2_L">是否启用</td>
+							 <td width="80%" class="tabtd2_R">
+                             	<input type="radio" name="flag_status" value="1" {ck1} /> 启用
+                                <input type="radio" name="flag_status" value="0" {ck2} /> 停用
+                              </td>
+						</tr>
+					</table>
+				</div>
+				<div class="boxfooter2">
+                	<input type="hidden" name="id" value="{id}" />
+					<input name="but_add" id="but_add" type="submit" value="更 新" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><a href="./?t=code_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a></div>
+		</form>
+		</div>
+	</div>
+	<script type="text/javascript" language="javascript">
+//表单提交验证
+function checkForm()
+{
+	if($.trim($("#code_name").val())==""){
+		alert("名称不能为空。");
+		$("#code_name").select();
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return flag;
+}
+</script>
+</body>
+</html>

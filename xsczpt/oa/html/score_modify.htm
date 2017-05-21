@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script type="text/javascript" language="javascript" src="common/DatePicker/WdatePicker.js"></script>
+<script language="javascript" src="common/autocomplete.js"></script>
+<script src="/ppf/js/select.js"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script> 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form id="form1" name="form1" action="./srv/score_modify_submit.php" method="post" onsubmit="return checkForm();">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">修改当前学期学生成绩信息</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="25%" class="tabtd2_L">学生姓名</td>
+						 <td width="75%" class="tabtd2_R">
+							{truename}
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">所在班级</td>
+						 <td width="80%" class="tabtd2_R">
+							{gradeName}{class_name}
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">类型</td>
+						 <td width="80%" class="tabtd2_R">
+							{exam_type}
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">语文</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="yw" name="yw" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">数学</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="sx" name="sx" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">外语</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="wy" name="wy" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">物理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="wl" name="wl" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">化学</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="hx" name="hx" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">生物</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="sw" name="sw" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">政治</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="zz" name="zz" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">历史</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ls" name="ls" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">地理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="dl" name="dl" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">信息技术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xxjs" name="xxjs" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">通用技术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="tyjs" name="tyjs" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">体育</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ty" name="ty" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">音乐</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="yy" name="yy" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">美术</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="ms" name="ms" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">心理</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xl" name="xl" size="5" value="" />
+						  </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">选修</td>
+						 <td width="80%" class="tabtd2_R">
+							<input type="text" id="xx" name="xx" size="5" value="" />
+						  </td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+				<input type="hidden" name="id" id="id" value="" />
+				<input name="but_add" id="but_add" type="submit" value="更 新" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /><a href="./?t=score_manage"><input name="but_back" id="but_back" type="button" value="返 回"  style="margin-left:15px;background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></a>
+			</div>
+	</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+l_tpl="oa_zhsz_score";
+readID({"do":"r",id:queryStr("id"),frmid:"#form1"});
+ 
+//表单提交验证
+function checkForm()
+{
+	var yw = parseInt($.trim($("#yw").val()));
+	if(isNaN(yw)||yw<0){
+		alert("语文成绩输入错误。");
+		$("#yw").select();
+		return false;
+	}
+	var sx = parseInt($.trim($("#sx").val()));
+	if(isNaN(sx)||sx<0){
+		alert("数学成绩输入错误。");
+		$("#sx").select();
+		return false;
+	}
+	var wy = parseInt($.trim($("#wy").val()));
+	if(isNaN(wy)||wy<0){
+		alert("外语成绩输入错误。");
+		$("#wy").select();
+		return false;
+	}
+	$("#but_add").attr("disabled","disabled");
+	return true;
+}
+
+</script> 

@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>管理-{gtitle}</title>      
+	{cssjs}
+</head>
+<body>
+{top}
+<div class="container">   
+	<div class="col-sm-3">   
+	{menu}
+	</div>
+	<div class="col-sm-9">
+		<div class="page-header">
+		<h3>基本信息
+			<small><!-- 子标题 --></small>
+		</h3>
+		</div>
+		<form class="form-horizontal" role="form"  id="form1">
+			<div class="form-group">
+				<label class="col-sm-2 control-label">编 号</label>
+				<div class="col-sm-10"><p class="form-control-static">{id}</p></div>
+			</div>
+
+			<div class="form-group">
+				<label for="firstname" class="col-sm-2 control-label">名 称</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" id="name"  style="width:50%" placeholder="请输入名称">
+				</div>
+			</div>
+
+			<div class="form-group"> 
+				<label class="col-sm-2 control-label">描 述</label>
+				<div class="col-sm-10">
+					<textarea id="explain" class="form-control" style="width:80%" rows="4" placeholder="请输入简介"></textarea>
+				</div>
+			</div>    
+
+			<div class="form-group">
+				<div class="col-sm-6 col-sm-offset-2">         
+					<button type="button" class="btn btn-success" id="btn"> 保 存 </button>  
+					<button type="button" class="btn btn-success"> 取 消 </button>
+					<input type="text" id="id" value="" style="display:none;"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<br><br><br><br><br>
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+$(function () {
+	readID({tpl:"subject","do":"r",id:"{subid}",frmid:"#form1"});  
+	$("#btn").bind("click", function(){
+		if($("#name").val()=="")
+			{alert("请输入名称");return;}  
+		$("#id").val('{subid}');
+		SaveAM({tpl:"subject","do":"am",frmid:"#form1",showok:'修改完成',callback:""});
+	});
+});
+</script> 

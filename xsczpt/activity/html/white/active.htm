@@ -1,0 +1,400 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{cssjs} 
+<link type="text/css" rel="stylesheet" href="/widget/umeditor/themes/default/css/umeditor.css" >
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/umeditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/umeditor.min.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/umeditor/lang/zh-cn/zh-cn.js"></script>
+<link href="/html/white/css/plat.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+{top}
+<div class="wrap">
+	<div class="main">
+    {head}
+	</div>
+	<div class="main" style="margin-top:15px;">
+		<div class="clear"></div>
+		<div class="breadcrumb_nav">
+			<a href="">活动首页</a> <i class="gt-icon"></i>
+			<a class="current" href="javascript:void(0)">{name}</a>
+		</div>
+		<div class="act_des">
+			<div class="act_img"><img src="/upds/activity/logo/{id}.jpg" onerror="this.src='/error/logo.jpg';" width="210" height="210" />
+        <div style="margin-top:10px;">
+          <!-- baidu share -->
+           <div class="bdsharebuttonbox">
+             <a href="#" class="bds_more" data-cmd="more" data-bdSize="24"></a>
+             <a href="#" class="bds_qzone" data-cmd="qzone"></a>
+             <a href="#" class="bds_tsina" data-cmd="tsina"></a>
+             <a href="#" class="bds_tqq" data-cmd="tqq"></a>
+             <a href="#" class="bds_renren" data-cmd="renren"></a>
+             <a href="#" class="bds_weixin" data-cmd="weixin"></a>
+           </div>
+          <script>
+          	with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+          </script>
+      </div>
+      </div>
+      <div class="act_text">
+				<h4 class="act-name">{name}<i class="ic-file"></i></h4>
+				<!--<div class="act-label"><span class="g2 fl">标签</span>
+					<div class="cell">
+							<span class="wid-alabel">课例分析<i class="rarrow-icon"></i></span>
+							<span class="wid-alabel">集体备课<i class="rarrow-icon"></i></span>
+							<span class="wid-alabel">课题研讨<i class="rarrow-icon"></i></span>
+							<span class="wid-alabel">说课/评课<i class="rarrow-icon"></i></span>
+							<span class="wid-alabel">公开课<i class="rarrow-icon"></i></span>
+					</div> 
+				</div>   --> 
+				<p class="creator">
+					报名方式:<e v="{enroll}"></e> | 访问权限:<v v="{visit}"></v>
+				</p>
+				<p class="creator">
+					级别：<l v="{lvl}"></l> | 类型：<c v="{cid}"></c>
+				</p>
+				<p class="creator">
+					年级：<grades v="{grades}"></grades>&nbsp;&nbsp;&nbsp;学科：<subjects v="{subjects}"></subjects>
+				</p>
+				<p class="creator">
+					<a href="/zone/?id={uid}" target="_userhome"><span title="{truename}" class="g0">{truename}</span></a>
+					（香山路幼儿园）发起
+				</p>
+				<div class="address">
+					<span>地点：{addrs}</span>
+				  <a href="./?t=map_bds&pos={addrs}" class="btn btn-success" target=_blank style="padding: 3px 10px 2px 10px;">查看</a>
+				</div>
+			  <div class="mbottom">
+           <a class="atdnum-wrap">
+						<i class="ic-num-bm"></i><p style="line-height:26px;"><span class="atdNum g2">{amnums}</span>人报名</p>
+					 </a>
+				   <a href="#act-img" class="location">
+						<i class="ic-ph-lg"></i>
+						<p><span class="g2">{photos}</span>张照片</p>
+				   </a>
+				   <a href="#act-comm" class="location">
+						<i class="ic-comment-lg"></i>
+						<p><span class="g2" id="activityCommCount">{comments}</span>条评论</p>
+				   </a> 
+				   <a href="#act-member" class="location">
+						<i class="ic-num-lg"></i>
+						<p>限制<span class="g2">{amaxnum}</span>人</p>
+				   </a>
+					
+					<div class="wid-r"></div>
+			  </div>
+			</div>
+			<div class="wid-r fl">
+			   <div class="wid-tdur-wrap" id="enroll" style="display:none;">
+					<div class="wid-tduration">
+					  <p class="wid-date"><script>var arr = "{rstime}".split(' ');document.write(arr[0]);</script></p>
+					  <p class="wid-time"><script>var arr = "{rstime}".split(' ');document.write(arr[1]);</script></p>
+					</div>
+				  <span class="wid-go">至</span>
+				  <div class="wid-tduration">
+					  <p class="wid-date"><script>var arr = "{retime}".split(' ');document.write(arr[0]);</script></p>
+					  <p class="wid-time"><script>var arr = "{retime}".split(' ');document.write(arr[1]);</script></p>
+				  </div>
+				  <div class="clear"></div>
+			   </div>
+         <div class="wid-tdur-wrap" id="nowing" style="display:none;">
+					<div class="wid-tduration">
+					  <p class="wid-date"><script>var arr = "{stime}".split(' ');document.write(arr[0]);</script></p>
+					  <p class="wid-time"><script>var arr = "{stime}".split(' ');document.write(arr[1]);</script></p>
+					</div>
+				  <span class="wid-go">至</span>
+				  <div class="wid-tduration">
+					  <p class="wid-date"><script>var arr = "{etime}".split(' ');document.write(arr[0]);</script></p>
+					  <p class="wid-time"><script>var arr = "{etime}".split(' ');document.write(arr[1]);</script></p>
+				  </div>
+				  <div class="clear"></div>
+			   </div>
+         <p class="wid-srad" v="{status}"></p>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="act-content act-subcon" id="act-subcon">
+			<div class="widget_hd">活动内容</div>
+			<div class="article">   
+				{des}
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="act-features act-img" id="act-img">
+			<div class="widget_hd">活动随拍</div>
+			<div class="act-features-ajaxPage">
+				<div class="add-actimg">
+						<div class="actimg-btn loginBut">
+							<em class="add" id="btnp">+</em>
+						</div>
+				</div>
+				<ul class="act-imglist clearfix" id="photo"> 
+					<!-- START photo -->
+          <li>
+            <a href="/upds/active/{aid}/{pic}" target=_blank><img class="act-imglist-img" src="/upds/active/{aid}/t_{pic}" onerror="this.src='/error/logo.jpg';" width="120"/></a> 
+          </li>
+          <!-- END photo -->  
+				</ul>
+
+			
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="act-attend act-member" id="act-member">
+			<div class="widget_hd">活动成员</div>
+			<div class="join-web-bd">
+				<ul class="act-member-ul clearfix">
+          <!-- START member -->
+            <li><a target="_blank" href="/zone/?id={id}"><div class="img"><img src="/upd/face/{id}.jpg" onerror="this.src='/error/face.jpg';" width="90" height="90"/></div>{truename}</a>    </li>
+          <!-- END member -->
+				</ul>
+			</div>
+		</div>
+		<div class="clear"></div>
+		<div class="act-ideas act-exper">
+			<div class="widget_hd">活动心得</div>
+			<div class="act-ideas-ajaxPage">
+				<div class="act-exper-btn">
+					<a href="javascript:void(0)" class="loginBut" id="btnart"><em>+</em><span>添加心得</span></a>
+				</div>
+				<ul class="actexper-list clearfix act-blog-list" id="artivelist">
+					<!-- START arts -->
+          <li id="art{id}">
+						<div class="title bg">{truename}发表了一篇活动心得</div>
+						<div class="item">
+							<div class="info">
+								<div class="photo">
+									<a href='/zone/?id={uid}' class="img" target="_blank">
+										<img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" width="90" height="90">
+									</a>
+								</div>
+								<div class="time">
+									<p>{timestamp}</p>
+								</div>
+							</div>
+							<div class="para blog-content">{name}
+							</div>
+						</div>
+						<div class="opt-tool">
+							<a href="./?t=active_art&id={id}" class="see browse-idea-blog wid-i-wrap" target="_blank"><i class="ic-see mr5"></i>查看</a><a onclick="del_art('{id}',this)">删除</a>
+						</div>
+					</li>
+          <!-- END arts -->
+				</ul>
+			</div>
+		<div class="clear"></div>
+		<div class="act-sum act-sum" id="act-sum">
+			<div class="widget_hd">活动总结</div>
+      <a  class="glyphicon glyphicon-plus pull-right" id="btnret" style="cursor:pointer;margin-top:-27px;color: #fff;margin-right: 10px;">添加</a>
+			<ul class="inner-content comm-list" id="rets">
+        <!-- START rets -->
+        <li class="item clearfix" id="ret{id}">
+					<div class="comment-item clearfix">
+						<div class="pic-mod fl clearfix CallUserCard">					
+							<a class="btn-img" href="/zone/?id={uid}" target="_blank">
+							<img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" width="48" height="48"> </a>	
+						</div>
+						<div class="info vbo_item_other" style="width:890px;">
+							<p class="c_name">
+								<span class="pic-title" title="{truename}">								
+									<a class="comment-user-name" href="/zone/?id={uid}" target="_blank">{truename}</a>
+								</span>
+								<span class="comm-time">{timestamp}</span>
+							</p>
+							<p class="comm-cont"><a href="./?t=active_summary&id={id}" target="_blank" >{name}</a></p>
+						</div>
+            <div><a onclick="del_ret('{id}',this)">删除</a></div>
+					</div>
+				</li>
+        <!-- END rets -->
+			</ul>
+			<div class="clear"></div>
+		</div>
+    <div class="clear"></div>
+    <div class="act-comment act-comm" id="act-comm">
+			<div class="widget_hd">活动评论</div>
+			<ul class="inner-content comm-list" id="comments">
+        <!-- START comment -->
+				<li class="item clearfix" id="comment{id}">
+					<div class="comment-item clearfix">
+						<div class="pic-mod fl clearfix CallUserCard">					
+							<a class="btn-img" href='/zone/?id={uid}' target="_userhome">
+							<img src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" width="48" height="48"> </a>	
+						</div>
+						<div class="info vbo_item_other" style="width:890px;">
+							<p class="c_name">
+								<span class="pic-title" title="{truename}">								
+									<a class="comment-user-name" href='/zone/?id={uid}' target="_userhome">{truename}</a>
+								</span>
+								<span class="comm-time">{timestamp}</span>
+							</p>
+							<p class="comm-cont">{des}</p>
+						</div>
+            <div><a onclick="del_comment('{id}',this)">删除</a></div>
+					</div>
+				</li>
+        <!-- END comment -->
+			</ul>
+			<form role="form">
+			  <div class="form-group" style="margin-left:10px;">
+				<label for="name" style="line-height:30px;height:30px;">发表评论</label>
+				<textarea class="form-control" rows="3" style="width:100%;" id="commentdes"></textarea>
+				<button type="button" class="btn btn-primary" style="margin:10px auto 0;width:100px;" onclick="savcomment();">发表</button>
+			  </div>
+			</form>
+		</div>
+		<div class="clear"></div>
+    </div>
+	</div>
+	{foot}
+</div>
+<script type="text/javascript" src="/html/plat/js/plat_common.js"></script> 
+</body>
+</html>  
+
+<div class="modal" id="dlgp" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4 class="modal-title" id="label">上传随拍</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_p.php?id={id}" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="{id}" style="display:none;"/>
+    <span class="help-block">(上传不大于3Mb的.jpg照片)</span>
+    </div>
+  </div> 
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" id="btn" onclick="$('#from2').submit(); ">提交更改</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button></div></div></div></div>     
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>
+
+
+<div class="modal" id="dlgart" tabindex="-1" role="dialog"    aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog" style="width:630px;"><div class="modal-content"><div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">添加心得</h4></div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" id="fromart">
+ <div class="form-group">    
+    <div class="col-sm-12"><input type="text" id="name" class="form-control"  placeholder="请输入标题" /></div>  
+ </div> 
+ <div class="form-group">    
+    <div class="col-sm-12">      
+     <script type="text/plain" id="umdes" style="width:600px;height:200px;"></script>        
+    </div>  
+ </div>   
+ <textarea id="des" name="des" data-edit="um" style="display:none;"></textarea>  
+  <input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="aid" value="{id}" style="display:none;"/>
+<input type="text" id="see" value="0" style="display:none;"/>   
+<input type="text" id="up" value="0" style="display:none;"/>      
+</form>
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-primary" onclick="savart()">立即发布</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button></div></div></div></div>
+  
+
+<script type="text/javascript">
+(function(){
+  $("#actives").addClass("hov");      
+})();
+var um = UM.getEditor('umdes');  
+var  visita=new Array("公开，所有可以访问","登录，需要登录用户","指定人，仅限指定的用户才可访问","秘密活动，参与活动可见");
+var  enrolla=new Array("公开报名","报名需审核","仅限邀请","");
+var nick="{nick}";
+$(function() {
+   $.getJSON("/data/active.object.txt", function (d) {obj_l=d;
+      $("c").text(d.cate["{cid}"]);
+      $("l").text(d.lvl["{lvl}"]);
+      $("e").text(d.enroll["{enroll}"]);
+      $("v").text(d.visit["{visit}"]);
+  }); 
+   $.getJSON("/data/active_status.json.txt", function (d) {
+      $("p.wid-srad").text(d["{status}"]);
+      if(d["{status}"]=="最新" || d["{status}"]=="报名中"){
+         $("#enroll").css("display","");
+         $("#nowing").css("display","none");
+      }else{
+         $("#enroll").css("display","none");
+         $("#nowing").css("display","");
+      }
+    
+  }); 
+  $.post("./srv/rdo.php", {tpl:"get_grades","ids":"{grades}"}, function (d, e) {                     
+    $("grades").text($.trim(d));      
+  });
+  $.post("./srv/rdo.php", {tpl:"get_subjects","ids":"{subjects}"}, function (d, e) {                     
+    $("subjects").text($.trim(d));      
+  });
+ });
+
+function savcomment(){
+  if(my_in_active=="0"){alert("非活动成员，无法操作");return;}
+  if($("#commentdes").val().length<5){alert("内容太短");return;}
+  if($("#commentdes").val().length>250){alert("内容太长"+$("#commentdes").val().length);return;}
+  $.post("./srv/active.php", {tpl:"comment","id":queryStr("id"),"data":$("#commentdes").val()}, function (d, e) {         
+    
+       if(d.indexOf("ok")>-1){
+          alert("评论成功");
+          v=d.substr(d.indexOf("ok")+2);
+          str='<li class="item clearfix" id="comment'+v+'">'+
+					'<div class="comment-item clearfix"><div class="pic-mod fl clearfix CallUserCard"><a class="btn-img" href="/zone/?id={uid}" target="_userhome">'+
+							'<img src="/upd/face/{uid}.jpg" onerror="this.src=/error/face.jpg;" width="48" height="48"> </a>'+	
+						'</div><div class="info vbo_item_other" style="width:890px;"><p class="c_name"><span class="pic-title" title="'+nick+'">'+								
+									'<a class="comment-user-name" href="/zone/?id={uid}" target="_userhome">'+nick+'</a>'+
+								'</span><span class="comm-time">'+getlocaltime()+'</span></p><p class="comm-cont">'+$("#commentdes").val()+'</p></div>'+
+            '<div><a onclick="del_comment('+v+',this)">删除</a></div></div></li>';
+          $("#comments").prepend(str);
+          $("#commentdes").val("");
+          location.href=location.pathname+location.search+"#act-comm";
+       }
+       else alert(d);
+              
+   });    
+} 
+ 
+function ifrm_dosome(){    
+    v=$("#ifrm").contents().find("body").html();
+    if(v!=""){   
+       d=JSON.parse(v);
+       if(d.ret=="ok"){      
+         //$("#clogo").attr("src","?"+Math.random());                  
+         $('#dlgp').modal('hide'); 
+         $("#photo").prepend('<li><a href="/upds/active/{id}/t_'+d.fname+'" target=_blank><img class="act-imglist-img" src="/upds/active/{id}/t_'+d.fname+'" onerror="this.src=/error/logo.jpg;" width="120"/></a></li>');
+         addphoto2(d.fname);
+      }
+       else{
+         alert(d.msg);
+       }        
+    }      
+}
+
+function doartrun(ed,data){ 
+   if(data.indexOf('ok')>-1){     
+      rid=data.substr(data.indexOf('ok')+2);  
+      $('#dlgart').modal('hide');  
+      if($('#dlgart').data("flag")=="1"){                    
+        str='<li id="art'+rid+'"><div class="title bg">'+nick+'发表了一篇活动心得</div>'+
+						'<div class="item"><div class="info"><div class="photo">'+
+								'<a href="/zone/?id={uid}" class="img" target="_blank"><img src="/upd/face/{uid}.jpg" onerror="this.src=/error/face.jpg;" width="90" height="90"></a></div><div class="time"><p>'+getlocaltime()+'</p>'+
+								'</div></div><div class="para blog-content">'+$('#dlgart #name').val()+'</div></div>'+
+						'<div class="opt-tool"><a href="./?t=active_art&id='+rid+'" class="see browse-idea-blog wid-i-wrap" target="_blank"><i class="ic-see mr5"></i>查看</a><a onclick="del_art('+rid+',this)">删除</a></div></li>';
+        $("#artivelist").prepend(str);
+     }else{
+       str='<li class="item clearfix" id="ret'+rid+'"><div class="comment-item clearfix">'+
+						'<div class="pic-mod fl clearfix CallUserCard"><a class="btn-img" href="/zone/?id={uid}" target="_blank">'+
+							'<img src="/upd/face/{uid}.jpg" onerror="this.src=/error/face.jpg;" width="48" height="48"> </a></div>'+
+						'<div class="info vbo_item_other" style="width:890px;"><p class="c_name"><span class="pic-title" title="'+nick+'">'+							
+									'<a class="comment-user-name" href="/zone/?id={uid}" target="_blank">{truename}</a></span><span class="comm-time">'+getlocaltime()+'</span></p>'+
+							'<p class="comm-cont"><a href="./?t=active_summary&id='+rid+'" target=_blank>'+$('#dlgart #name').val()+'</a></p></div><div><a onclick="del_ret('+rid+',this)">删除</a></div></div></li>';
+       $("#rets").prepend(str);
+     }
+   }
+   else
+      alert(data);
+}
+</script>

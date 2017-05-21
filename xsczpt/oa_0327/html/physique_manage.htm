@@ -1,0 +1,183 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+	<!--表格头部 begin-->
+		<div class="boxtitle">
+				
+			<span class="floatright">
+				<script type="text/javascript">
+				  if({isadmin}){
+					document.write('<img src="images/add.gif" class="padding5"/><a href="./?t=physique_add">添加体质记录</a> | <img src="images/add.gif" class="padding5"/><a href="./?t=physique_import">批量导入体质记录</a>');
+				  }
+				</script> 
+			</span>
+			<label class="current"><a href="javascript:void(0);">体质记录列表</a></label> 
+		</div>
+		<div class="boxtitle2">
+			<form action="./?t=physique_manage" method="post">
+				<span>
+					<select name="tyear" id="tyear">
+					<option value="0" >请选择学年</option>
+					<!-- START list --> 
+						<option value="{year}">{year}学年</option>
+					<!-- END list --> 
+					</select>
+					<script type="text/javascript">
+					  if({isMaster1}!=1){
+						document.write("<select name=\"gid\" id=\"gid\" onchange=\"selectClass(this);\"></select> ");
+					  }
+					</script> 
+					姓名：<input type="text" name="truename" id="truename" value="" size="15" />
+				</span> 
+				<input type="submit" id="choose" name="choose" value="体质记录筛选" />	
+			</form>
+		</div>
+	<!--表格头部 end-->
+	<!--表格中间 begin-->
+		<div class="tabbody">
+			<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+				<tr class="tabtitle" height="26">
+					 <td width="5%" class="tabtd">姓名</td>
+					 <td width="5%" class="tabtd">班级</td>
+					 <td width="5%" class="tabtd">身高</td>
+					 <td width="5%" class="tabtd">体重</td>
+					 <td width="5%" class="tabtd">左眼</td>
+					 <td width="5%" class="tabtd">右眼</td>
+					 <td width="8%" class="tabtd">肝</td>
+					 <td width="8%" class="tabtd">胆</td>
+					 <td width="8%" class="tabtd">心肺听诊</td>
+					 <td width="8%" class="tabtd">外科常规</td>
+					 <td width="5%" class="tabtd">血压</td>
+					 <td width="8%" class="tabtd">肺活量</td>
+					 <td width="5%" class="tabtd">脾</td>
+					 <td width="5%" class="tabtd">眼科</td>
+					 <td width="5%" class="tabtd">口腔</td>
+					 <td class="tabtd">操作选项</td>
+				</tr>
+				<!-- START list1 --> 
+				<tr>
+					<td class="tabtd">{truename}</td>
+					<td class="tabtd">{grade_name}{class_name}</td>
+					<td class="tabtd">{height}</td>
+					<td class="tabtd">{weight}</td>
+					<td class="tabtd">{left_eye}</td>
+					<td class="tabtd">{right_eye}</td>
+					<td class="tabtd">{liver}</td>
+					<td class="tabtd">{guts}</td>
+					<td class="tabtd">{xf_ting}</td>
+					<td class="tabtd">{wkcg}</td>
+					<td class="tabtd">{blood}</td>
+					<td class="tabtd">{vc}</td>
+					<td class="tabtd">{spleen}</td>
+					<td class="tabtd">{yanke}</td>
+					<td class="tabtd">{mouth}</td>
+					<td class="tabtd" style="text-align:left; padding-left:10px;">
+					<script type="text/javascript">
+					  if({isadmin}){
+						document.write('<img src="images/037.gif" /> <a href="./?t=physique_modify&id={id}">修改');
+					  }
+					   if({isadmin}){
+						document.write('</a> <img src="images/010.gif" /> <a href="javascript:delPhysique({id});">删除</a>');
+					  }
+					</script> 
+				</tr>
+				<!-- END list1 --> 
+				
+			</table>
+			<ul class="pagination pull-right">
+				{page}
+			</ul>
+		</div>
+	<!--表格中间 end-->
+	<!--表格尾部 begin-->
+		<div class="boxfooter">
+		</div>
+	<!--表格尾部 end-->
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#tid",JSON.parse(d),"id","term_name","year"); $("#tid").prepend("<option selected value='0'>请选择学期</option>");
+		$('#tid').val('{tid}');     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"get_grades",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#gid",JSON.parse(d),"id","grade_name"); $("#gid").prepend("<option selected value='0'>请选择年级</option>;");
+		$('#gid').val('{gid}');	
+		
+		if({gid}){
+			selectClass($("#gid"));
+		}
+	});
+	
+	$("#truename").val("{truename}");
+	$('#tyear').val('{tyear}');
+});
+
+//选择班级
+function selectClass(obj)
+{
+	var val = $(obj).val();
+	if(val>0){
+		//查询是否有下级
+		$.post("./srv/sdo.php?", {tpl:"select_class","grade_id":val}, function (d, e) {
+			var d = eval('(' + d + ')');
+			if(d.flag=="false"){
+				alert(d.value);
+			}else{
+				//删除后面紧邻的下拉框
+				$(obj).nextAll("select[id='cid']").remove();
+				if(d.flag=="true"){
+					var len = d.value.length;
+					//动态生成下拉框
+					var html;
+					if(len>0){
+						html = "<select name='cid' id='cid'>";
+						html += "<option value='0'>请选择班级</option>";
+						for(var i=0;i<len;i++){
+							html +="<option value='"+d.value[i]["id"]+"'>"+d.value[i]["class_name"]+"</option>"
+						}
+						html += "</select>";
+						$(obj).after(html);
+					}
+				}
+			}
+			$("#cid").val("{cid}");
+		});
+	}else{
+		//删除后面紧邻的下拉框
+		$(obj).nextAll("select[id='cid']").remove();
+	}	
+}
+
+//删除体质记录
+function delPhysique(id){
+	if(confirm("你确定删除此体质记录吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_physique","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				location.href = location.href;
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script> 

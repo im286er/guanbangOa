@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}      
+
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+    
+<div class="col-sm-9">
+<div class="page-header">   <h3>查找好友      <small></small> 
+<a class="btn btn-default pull-right" href="./?t=frd"><i class="fa fa-reply"></i>返回 </a> </h3> </div>
+
+<div class="row">
+<form class="form-horizontal" role="form" id="from1">
+  <div class="form-group">      
+    <label for="firstname" class="col-sm-1 control-label">学校</label>
+    <div class="col-sm-2"><select id="sch" class="form-control"><option value="">选择学校</option></select></div>      
+    <div class="col-sm-2"><input  type="text" class="form-control" value="" id="tn" placeholder="姓名"/></div>  
+   <div class="col-sm-2"><input  type="text" class="form-control" value="" id="nk" placeholder="昵称"/></div>  
+   
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th> 
+<th>邮箱/手机</th>  
+<th>身份</th>  
+<th>年级</th>  
+<th>学校</th>    
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}">
+<td><div class="thumbnail"><img  width="60" src="/upd/face/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td>昵称：{nick}</a><br/>姓名：{truename} <br/>英文名：{ename}</td>
+<td>{eamil}/{mboile}</td>
+<td><idtype v="{idtype}"></idtype></td>
+<td><grade v="{grade}"></grade></td>
+<td><sch v="{school}"></sch></td> 
+<td><a class="btn btn-success" title="加为好友" onclick="joinths({id:'{id}'},this)"><i class="fa fa-plus"></i>加为好友</a> 
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+</div>  
+<ul class="pagination pull-right">
+{page}
+</ul>
+
+</div>
+
+</div>
+ 
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+$(function () {
+ $.getJSON("/data/?t=sys_grade&f=json", function (d) {
+    for(k=0;k<d.length;k++)$("grade[v="+d[k].id+"]").text(d[k].name);
+  });
+ $.getJSON("/data/?t=sys_type&f=json", function (d) {
+    for(k=0;k<d.length;k++)$("idtype[v="+d[k].id+"]").text(d[k].name);
+  });
+  $.getJSON("/data/?t=school&f=obj", function (d) {
+    $("sch").each(function(a,b){$(b).text(d[$(b).attr("v")]); });   
+  });
+  $.post("./srv/rdo.php",{tpl:"get_sch"}, function (d, e) {
+      l=JSON.parse(d); 
+      selectShowData('#sch', l, "id", "name");   
+  });
+   $("#btn").bind("click",function(){
+      if($("#sch").val()==""&&$("#tn").val()==""&&$("#nk").val()==""){lalert("请输入至少一个查询条件");return;}
+      location.href="./?t=frd_apply&sch="+$("#sch").val()+"&tn="+$("#tn").val()+"&nk="+$("#nk").val();
+   });
+});   
+
+function joinths(d,obj){ 
+  d.tpl="frd_add";     
+  $.post("./srv/sdo.php?",d, function (d, e) {
+      lalert(d);
+      $(obj).parent().html("<i class='fa fa-check'></i>");
+    //$('#dlg1 .modal-body').text(d);                      
+    //$('#dlg1').modal('show');
+  });
+} 
+ 
+
+</script> 

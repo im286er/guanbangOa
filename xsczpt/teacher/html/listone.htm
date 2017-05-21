@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间-墟沟小学</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+<!--[if IE 6]>
+<script type="text/javascript" src="js/png.js" ></script>
+<script type="text/javascript">
+	DD_belatedPNG.fix(".cion1,.cion2,.cion3,.cion4,.cion5,.cion6,.cion7,img")
+</script>
+<![endif]-->
+{cssjs}
+<script type="text/javascript" src="css/js/index.js"></script>
+<script type="text/javascript" src="css/js/jquery.js"></script>
+<script type="text/javascript" src="css/js/tabs.js"></script>
+<script type="text/javascript">
+var numm=0;
+function getSub(num){
+	var sub=null;
+	$.ajaxSettings.async = false;
+	$.getJSON("/data/subject.json.txt",  function (d,e) {
+		sub=d[num];
+	}); 
+	return sub;
+};
+function getTimeLength(lastStr){
+	T_lth=getTimer(lastStr);
+	return T_lth;
+}
+</script>
+</head>
+<body>
+{top}
+{head}
+<div class="wrap banner">
+	<div class="main pr">
+	<img src="css/images/nbanner.jpg" width="1000" height="351" align="top" />
+	<div class="news_ba pa">
+		<div class="tab_list_n">
+			<ul class="tabbtn_n" id="fadetab_n">
+				<li class="current"><a href="#" target="">精选日志</a></li>
+				<li><a href="#" target="">通知公告</a></li>
+			</ul>
+			<div class="tabcon_n" id="fadecon_n">
+				<ul class="sublist_n">
+				<!-- START Hotnews -->   
+					<li><a href="/teacher/?t=info&id={id}&s={s}" target="">{title}</a></li>
+				<!-- END Hotnews -->   
+				</ul><!--tabcon end-->
+				<ul class="sublist_n">
+				<!-- START Notices -->   
+					<li><a href="/teacher/?t=info&id={id}&s={s}" target="">{title}</a></li>
+				<!-- END Notices -->   
+				</ul>
+			          <!--tabcon end-->
+				<!--tabcon end-->
+			</div><!--tabcon end-->
+		</div>
+	</div>
+	
+	</div>
+</div>
+<div class="wrap">
+	<div class="main">
+		<div class="i_left">
+			<div class="tit"><p class="fs20">{typename}</p><span class="fs16"><a href="./?t=list&s={s}">返回列表>></a></span>
+			</div>
+		  <dl class="group_index_box">
+			<dd>
+			  <ul class="group_news_list">
+	<!-- START TechList -->    
+				<li><span class="sp1 col-sm-9"><a href="/teacher/?t=info&id={id}&s={s}" target="_blank" title="{title}">{title}</a></span><span class="sp2 col-sm-3"><script>document.write(utctime('{id}'));</script></span></li>
+	<!-- END TechList --> 
+			  </ul>
+			  <ul class="pagination pull-right">
+			{page}
+			</ul>
+			</dd>
+		  </dl>
+		</div>
+		<div class="i_right">
+			<div class="news_tit"><p class="fs16">工作室动态</p><span><a href="/teacher/?t=list&s={s}" target="">更多>></a></span></div>
+			<ul class="state btl">
+				<!-- START Working -->  
+				<li><a href="/teacher/?t=info&id={id}&s={s}" target="" title="{title}"><script>document.write(getTimeLength(utctime('{id}')));</script><font class="fcb">{nick}</font>：发表了《{title}》</a></li>
+				<!-- END Working -->
+			</ul>
+			<div class="clear"></div>
+			<div class="news_tit"><p class="fs16">人气成员排行</p><span><a href="/teacher/?t=techlist&s={s}" target="">更多>></a></span></div>
+			<ul class="hot btl">
+				<!-- START HotPop -->  
+				<li><i><script>numm++;document.write(numm);</script></i><a target="/teacher/?t=feed&uid={id}&s={s}">{nick}</a><span>{integral}</span></li>
+				<!-- END HotPop -->  
+			</ul>
+		</div>
+		<div class="clear"></div>
+	</div>
+<div id="footer">{foot}</div>
+</div>
+<a href="#" onclick="gotoTop();return false;" class="totop"></a>
+
+<script type="text/javascript">
+	//检测登录
+	var uopen="{uopen}";
+	var uppen="{uppen}";
+	if(uopen=="1"){
+		$("#uopen").css("display","block");
+	}else{
+		$("#uopen").remove();
+	}
+	if(uopen=="1"){
+		$("#uppen").css("display","block");
+	}else{
+		$("#uppen").remove();
+	}
+	function cksearch(){
+		if (document.getElementById("keyword_s").value=='')
+		{
+			alert('关键字不能为空!');
+			return false;
+		}
+	};
+	$(document).ready(function($){
+		$(".des_all").bind({
+			mouseover:function(){$(this).find(".des").css("display","block");},  
+			mouseout:function(){$(this).find(".des").css("display","none");}  
+		});
+		$("#fadetab_n").tabso({
+			cntSelect:"#fadecon_n",
+			tabEvent:"mouseover",
+			tabStyle:"fade"
+		});
+		$("#fadetab").tabso({
+			cntSelect:"#fadecon",
+			tabEvent:"mouseover",
+			tabStyle:"fade"
+		});
+		$("#fadetab_b").tabso({
+			cntSelect:"#fadecon_b",
+			tabEvent:"mouseover",
+			tabStyle:"fade"
+		});	
+});
+</script>
+</body>
+</html>

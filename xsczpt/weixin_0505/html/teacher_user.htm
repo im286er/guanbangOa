@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>海安中学移动端-我的</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">	
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script type="text/javascript">
+$().ready(function(){
+	$("#btn_close").click(function(){
+		$.post("./srv/logout.php?", {tpl:""}, function (d, e) {
+			location.href ="./?t=index";
+		});
+	});
+});
+</script>
+</head>
+<body>
+<header><h1>我的个人信息</h1></header>
+<section class="wout">  
+	<div class="wout uesr_top">
+		<div class="user_mes">
+			<img src="http://tva2.sinaimg.cn/crop.4.0.742.742.180/76e8b1adjw8f5uoi51522j20ku0kmabm.jpg" />
+			<p>{truename}</p>
+			<a href="?t=user_mes" target="">编辑个人信息</a>
+			<a href="?t=pass_modify" target="">修改密码</a>
+		
+		</div>
+	
+	</div>
+</section>
+ <button class="button button-block button-stable" id="btn_close">退出系统</button>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=teacher_index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class="current"><a href="?t=teacher_user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+</body>
+</html>

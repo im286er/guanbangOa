@@ -1,0 +1,1 @@
+﻿<option value="0">所有人</option><option value="1">好友</option><option value="2">密码</option><option value="3">仅自己</option>

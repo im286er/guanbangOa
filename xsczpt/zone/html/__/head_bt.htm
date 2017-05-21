@@ -1,0 +1,97 @@
+<div class="row" style="background-image:url(img/bg.jpg);">
+<div class="col-sm-1">
+  <img src="{face}"  onerror="this.src='./img/logo.jpg';" alt="{name}" style="width:100px;height:100px;">      
+</div>
+<div class="col-sm-9">
+<div class="top-name" alt="{truename}">
+<h3>{name}<small>{explain}</small> </h3>
+</div>
+<div class="row"> </div>
+</div>
+</div>
+
+
+<nav class="navbar navbar-inverse" role="navigation">
+   <div class="navbar-header">
+       <a class="navbar-brand" class="class1">ZONE</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">           
+            <li><a href="./?t=index&id={zid}">首页</a></li>
+            <li><a href="./?t=weibo&id={zid}">我的微博</a></li>
+            <li><a href="./?t=bloga&id={zid}">博客</a></li>
+            <li><a href="./?t=album&id={zid}">相册</a></li>
+            <li><a href="./?t=frd&id={zid}">我的好友</a></li>
+            <li><a href="./?t=board&id={zid}">留言板</a></li>
+            <li><a href="./?t=fav&id={zid}">收藏夹</a></li>
+            <li class="set-space"><a href="./?t=set&id={zid}">空间设置</a></li>
+            <li class="set-mould"><a href="" data-toggle="modal" data-target="#setModal">模板设置</a></li>
+      </ul>
+   </div>     
+</nav>
+
+<div class="col-xs-3 pull-right" id="navbar-float">
+    <ul class="nav nav-tabs nav-stacked" id="navbar-zone">
+    <li><a href="/zone" title="个人空间"><img src="/zone/img/zone.png" /></a></li>
+    <li class="change_zone"></li>
+    <li><a href="/user" title="账号中心"><img src="/zone/img/account.png" /></a></li>
+    <li><a href="/msg" title="消息中心"><img src="/zone/img/user_msg.png" /></a></li>
+    </ul>
+</div>
+
+<div class="modal fade" id="setModal" tabindex="-1" role="dialog" aria-labelledby="setModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+            <h4 class="modal-title" id="myModalLabel">模板设置</h4>
+         </div>
+         <div class="modal-body">
+            <img src="./img/html.png" width="100" height="130" title="html" />
+            <img src="./img/mould_cat.png" width="100" height="130" title="mould_cat" />
+            <img src="./img/mould_red.png" width="100" height="130" title="mould_red" />
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default" 
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary" onclick="setmould();">
+               提交
+            </button>
+         </div>
+      </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){
+  $(".panel-body img").attr("onerror","this.src='../../error/pic.jpg'");
+  
+  $(".modal-body img").click(function(){
+    $(this).addClass("on").siblings().removeClass("on");
+  });
+  
+  
+  $("#navbar-zone").affix({
+        offset: { 
+            top: 125 
+     	}
+    });
+});
+  
+   function setmould(){
+       if($(".modal-body img.on").length<1){
+          alert("请选择一套模板");
+          return;
+       }
+       var title = $(".modal-body img.on").attr("title");
+       $.post("./srv/sdo.php?", {tpl:"set_mould","mould":title}, function (d, e) {  
+          if(d.indexOf("ok")>-1){
+            $("#setModal").hide();
+            location.reload();
+          }else{
+            alert("模板设置失败");
+          }          
+       });
+   }
+  
+</script>

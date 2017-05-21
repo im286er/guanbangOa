@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级信息-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>班级管理      <small></small>     
+<div class="btn-group pull-right"> 
+<input  type="button" class="btn btn-primary" value="+创建" id="btn"/>
+ <a onclick="location.reload();" class="btn btn-primary" >刷新</a>  
+</div>
+   </h3>
+</div>
+
+
+<div class="row">
+<form class="form-inline" role="form" id="from1">     
+  <div class="form-group">名称
+       <input id="so" type="text" value="" class="form-control" placeholder="请输入名称" style="width:120px;"/>  
+    </div>       
+  <div class="form-group">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+    </div>      
+</form> 
+</div>
+
+ 
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+
+<th>创建者</th> 
+<th>时间</th>
+<th>推荐</th>  
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}">
+<td><div class="thumbnail"><img  width="60" src="/upds/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/class?c={id}" target=_blank>{name}</a></td>
+<td>{truename}</td>          
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><rc v="{recommend}"/></td>
+<td><st v="{state}"/></td>
+<td>
+<a class="glyphicon glyphicon-ok-circle" title="审核" onclick="auditID({id:'{id}',do:'o'})"></a> &nbsp;      
+<a class="glyphicon glyphicon-user" title="管理员" href="./?t=cls_admin&s={s}&c={id}"  target=_blank></a>&nbsp;
+<a class="glyphicon glyphicon-edit" title="编辑" onclick="moda({id:'{id}'})"></a>   &nbsp;
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({'do':'d',id:'{id}'})"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">{page}</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var idtype='{idtype_1}';
+var obj_st;
+ $(function () {      
+ $.get("/data/?t=sys_grade&f=txt&pn=period&pv={period}", function (d) {$("#grade").html(d);});
+ $.getJSON("/data/?t=sys_state&f=obj", function(d) { obj_st=d;for(i=0;i<5;i++)$("st[v='"+i+"']").html(d[i]);});
+ $("rc").each(function(a,b){
+    if($(b).attr("v")!="0"&&$(b).attr("v")!="0")$(b).html('&radic;');
+ });
+ 
+  $("#btn").bind("click", function(){$('#dlg1').data("dotype","a");$('#dlg1').modal('show');  });     
+     $("#btnq").bind("click",function(){  
+       location.href="./?t=class&s={s}&so="+$("#so").val();  
+      });  
+ });  
+ l_tpl="class";
+function rcmd(v,obj) {   
+   $.post("./srv/sdo.php?", {tpl:"rcmd_cls","id":v}, function (d, e) {                  
+       alert(d);     
+  });
+}
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}
+function savesome(){
+   if($("#name").val()==""){alert("请输入名称");return;} 
+   $("#dlg1 #period").val("{period}");       
+   SaveAM({"do":$('#dlg1').data("dotype"),frmid:"#dlg1",showok:'操作完成',callback:"dosome"});  
+}
+function dosome(ed,data){
+  if(data.indexOf("ok")>-1){
+    location.reload();
+  }
+  else alert(data);
+}
+</script> 
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h4 class="modal-title" id="label">[添加/编辑]</h4>
+</div>
+<div class="modal-body">
+<form class="form-horizontal" role="form" method="post" id="from1">
+<div class="form-group">  
+<label class="col-sm-2 control-label">名称</label>    
+<div class="col-sm-6"><input type="text" class="form-control" id="name" maxlength="50"></div>   
+</div>
+<div class="form-group">
+<label for="firstname" class="col-sm-2 control-label">口号</label>
+<div class="col-sm-6"><input type="text" class="form-control" id="slogan"  placeholder="请输入口号"  maxlength="50"></div>
+</div>
+<div class="form-group"> 
+<label class="col-sm-2 control-label">年级</label>
+<div class="col-sm-3"><select id="grade" class="form-control"></select></div>
+</div>
+<div class="form-group"> 
+<label class="col-sm-2 control-label">简介</label>
+<div class="col-sm-10"><textarea id="des" class="form-control"  rows="3" placeholder="请输入简介"></textarea></div>
+</div>  
+<div class="form-group"> 
+<label class="col-sm-2 control-label">推荐</label>
+<div class="col-sm-1"><input type="checkbox" id="recommend" class="form-control" /></div>
+</div>
+<input type="text" id="id" value="" style="display:none;"/> 
+<input type="text" id="period" value="" style="display:none;"/>  
+<input type="text" id="state" value="0" style="display:none;"/>  
+<input type="text" id="school" value="{s}" style="display:none;"/>    
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-primary" id="btn" onclick="savesome()">确定</button>
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div>
+</div>
+</div>
+</div>

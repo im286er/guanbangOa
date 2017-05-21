@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发展空间—{name}</title>      
+<meta "charset=gb2312" />
+<meta http-equiv="Content-Type" content="text/html;"/>
+<link href="css/css.css" type="text/css" rel="Stylesheet">
+{cssjs}
+<style type="text/css">
+p{margin:0 !important;padding:0;}
+body{height:692px;width:973px;background:url('imgs/growmy.jpg') no-repeat center center;}
+</style>
+<script type="text/javascript">
+var arr=new Array('保密','男','女'); 
+</script>
+</head>
+<body>
+	<div style="font-size:16px;font-weight:bold;">
+		<div class="rightmyinfo">
+		<!-- START myinfo -->
+			<div class="grow_username">{username}</div>
+			<div class="grow_sex"><script>document.write(arr["{sex}"]);</script></div>
+			<div class="grow_age">{age}</div>
+			<div class="grow_worktime">{worktime}</div>
+			<div class="grow_education">{education}</div>
+			<div class="grow_prof">{prof}</div>
+			<div class="grow_subject">{subject}</div>
+			<div class="grow_hobbies">{hobbies}</div>
+			<div class="grow_design">{design}</div>
+			<div class="grow_mybook">{mybook}</div>
+			<div class="grow_address">{address}</div>
+		<!-- End myinfo -->
+		</div>
+	</div>
+</body>
+</html>

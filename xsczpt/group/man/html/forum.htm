@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>论坛管理-{gtitle}</title>
+{cssjs}    
+<style type="text/css">
+a{
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+{top}
+<div class="container">  
+{head}  
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>论坛管理
+      <small></small>
+   </h3>
+</div>
+<blockquote class="hide">
+ <p><a class="glyphicon glyphicon-transfer" title="推送"></a>推送到对应学校的群组空间。<span class="label label-success">推送中</span>表示对应群组空间未进行审核。</p>
+</blockquote>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th>头像</th>
+ <th>发帖人</th>
+ <th>标题</th>
+ <th>发帖时间</th> 
+ <th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id}">
+<td><img class="img-thumbnail" id="logo{id}" width="40" src="/upd/face/{uid}.jpg" onerror="this.src='/error/face.jpg';" /> </td>
+<td>{nick}</td>
+<td><div style="width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"><a href="/group/?t=topic&id={id}&g={g}" target="_blank" title="{title}">{title}</a></div></td>
+<td><script>show_TS('{timestamp}');</script></td>   
+<td> 
+<a class="glyphicon glyphicon-remove" title="删除" onclick="deleteID({id:'{id}',do:'d'})"></a></td> 
+</tr> 
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+ 
+ 
+ 
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+ l_tpl="grp_forum";
+ $(function () { 
+    //$('#myModal').modal({keyboard: true});
+  }); 
+ function replay(d){
+   $('#dlg1').modal({keyboard: true}); 
+   //$('#myModal h4').modal({keyboard: true});
+  /*  $.post("./srv/rdo.php", {tpl:"get_tech_duty",id:v,cid:"{c}"}, function (d, e) {
+   v=$.trim(d);
+   $("#dlg1 #duty").val(v);  
+  });     */
+ }
+ /*
+function modths(v){
+	layer.confirm('确定推送吗？', {icon: 6,title: false,shadeClose:true}, function(index){
+		layer.close(index);
+	   $.post("./srv/sdo.php", {tpl:"push_grp_forum",id:v,g:"{g}"}, function (d, e) { 
+		  if(d.indexOf("ok")>-1){
+			layer.msg("推送成功,请等待审核！");setInterval("location.reload();",500);}
+		  else 
+		  layer.msg(d);
+	  });
+	});
+}  
+function save1(){
+   $.post("./srv/sdo.php", {tpl:"set_grp_man",id:$("#dlg1 #id").val(),gid:"{g}",val:$("#dlg1 #isman").val()}, function (d, e) {
+      if(d.indexOf("ok")>-1){
+        $('#dlg1').modal('hide');
+	  location.reload();
+	  }
+	  else
+        alert(d);         
+  });  
+} 
+ */
+</script>
+

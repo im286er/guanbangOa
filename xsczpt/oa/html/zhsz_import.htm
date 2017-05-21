@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<link href="css/css.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" language="javascript" src="common/common.js"></script>
+<script src="/ppf/js/select.js"></script> 
+</head>
+<body>
+<div class="main">
+	<div class="box">
+		<form action="./srv/zhsz_import_submit.php" method="post" onsubmit="return checkBatch();" enctype="multipart/form-data">
+			<div class="boxtitle">
+				<label class="current"><a href="javascript:void(0);">批量导入学生成绩记录</a></label> 
+			</div>
+			<div class="tabbody">
+				<table width="100%" border="0" class="tab" cellpadding="0" cellspacing="0">
+					<tr>
+						 <td width="20%" class="tabtd2_L">说明：</td>
+						 <td class="tabtd2_R" style="color:#f00;">该操作仅对当前学期有效。</td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">可导入的成绩：</td>
+						 <td class="tabtd2_R">
+							<select name="course_id" id="course_id">
+							<option value="0">请选择科目</option>
+							{str}
+							</select>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">选择文件：</td>
+						 <td class="tabtd2_R"><input type="file" name="table_file" id="table_file" value="" onchange="checkXls(this);" /></td>
+					</tr>
+					
+					<tr>
+						 <td width="20%" class="tabtd2_L">重复处理：</td>
+						 <td class="tabtd2_R">
+							<div style="float:left;"><input type="radio" name="repeat_op" value="1" checked="checked" /> 覆盖原有记录 &nbsp;&nbsp;&nbsp;&nbsp;</div> 
+						  <div id="s_type"><input type="radio" name="repeat_op" value="2" /> 跳过重复记录 </div>
+						 </td>
+					</tr>
+					<tr>
+						 <td width="20%" class="tabtd2_L">示例文件：</td>
+						 <td class="tabtd2_R"><a href="#" onclick="return setHref(this);" target="_blank">点击下载</a>（成绩示例文件）</td>
+					</tr>
+				</table>
+			</div>
+			<div class="boxfooter2">
+			<input type="hidden" name="flag" value="11" />
+			<input id="but_update" name="but_update" type="submit" value="上传文件" style="background:url(images/butbg.gif) no-repeat top; width:75px; height:25px; border:0; cursor:hand;" /></div>
+		</form>
+	</div>
+</div>
+{footer}      
+</body>
+</html> 
+<script type="text/javascript">
+$(function(){  
+	
+});
+
+//密码信息提交客户端验证
+function checkBatch()
+{
+	if($.trim($("#course_id").val())==0){
+		alert("请选择导入的科目。");	
+		return false;
+	}
+	if($.trim($("#table_file").val())==""){
+		alert("请选择要上传的文件。");	
+		return false;
+	}
+	if(confirm("您当前选择上传 【"+$("#course_id").find("option:selected").text()+"】 成绩，点击 确定 继续 或 取消 操作。")){
+		$("#but_update").attr("disabled","disabled");
+		return true;
+	}
+	return false;
+}
+
+//设置下载链接
+function setHref(obj)
+{
+	if($.trim($("#course_id").val())==0){
+		alert("请选择导入的科目。");	
+		return false;
+	}
+	
+	var et   = $("#exam_type").val();
+	var courseId = $("#course_id").val();
+	var href = "./srv/download_example.php?flag=11&exam_type="+et+"&course_id="+courseId;
+	$(obj).attr("href",href);
+	return true;
+}
+
+</script> 

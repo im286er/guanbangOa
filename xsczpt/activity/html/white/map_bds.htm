@@ -1,0 +1,63 @@
+<html>
+<head>
+<meta http-equiv='content-type' content='text/html;charset=gbk'/>
+<script type="text/javascript" src="http://api.map.baidu.com/api?ak=XckXd2Kf8TmdTCZDysgmuqzx&v=2.0&services=true"></script>
+</head>
+<body>
+<span onclick="showpos('{pos}')">{pos}</span>
+
+<div id='id1' style="width:600px;height:400px;border:1px solie gray;display:block;" ></div>
+</body>
+
+<script type='text/javascript'>
+	var marker;
+	var map;
+	function showpos(contex){
+		id1.style.display="block";
+//		var buf = Number(180).toString(16);
+//		document.body.bgColor = "#"+buf+buf+buf;
+		//var val = contex.innerText;
+		var tmp = new BMap.Geocoder();
+		tmp.getPoint(contex,test1,"江苏");//江苏
+	}
+
+    
+	function show(){
+		id1.style.display = "block";
+	}
+	function dshow(){
+		//id1.style.display="none";
+	}
+
+	function test1(point){
+		if(point){
+		map = new BMap.Map("id1");
+		map.centerAndZoom(point,17);
+		map.addOverlay(new BMap.Marker(point));
+		map.addControl(new BMap.NavigationControl());   // 默认左上方,
+		map.addControl(new BMap.OverviewMapControl());  // 默认右下方，缩略
+
+		map.addEventListener("click",function(e){
+		if(marker == ""){
+			marker = new BMap.Marker(e.point);
+			map.addOverlay(marker);
+		}else{
+			map.removeOverlay(marker);
+			marker = new BMap.Marker(e.point);
+			map.addOverlay(marker);
+		}
+		});
+
+		map.addEventListener("dblclick",dshow);
+		}
+	}	
+
+    showpos("{pos}"); 
+
+//监听方式，这边写的直接是函数名
+//	var opts ={width:250,height:100,title:"hello"};
+//	var info = new BMap.InfoWindow("world",opts);
+//	map.openInfoWindow(info,map.getCenter());
+//	map.addControl(new BMap.ScaleControl());  //  比例尺  默认左下方
+</script>
+</html>

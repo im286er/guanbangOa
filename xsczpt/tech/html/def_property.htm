@@ -1,0 +1,223 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>默认属性-{gtitle}</title>
+{cssjs} 
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script>
+<script src="/ppf/js/select.js" type="text/javascript"></script>
+<script>
+var arr=new Array('待审核','已审核','注销中'); 
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main"> 
+<div class="page-header">
+   <h3>默认属性<small>管理</small> 
+    <div class="btn-group pull-right"> 
+     <a onclick="location.href=location.href;" class="btn btn-primary" >刷新</a>  
+   <a id="btn" class="btn btn-primary" >+添加</a>       
+   </div>
+   </h3>
+</div>
+
+
+<table class="table  table-hover">  
+<thead>
+<tr>  
+<th>名称</th>     
+<th>学校/班级</th>    
+<th>学段/年级</th>   
+<th>教材</th> 
+<th>学科</th> 
+<th>册/章节</th>  
+
+<th>时间</th>  
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td><a>{name}</a></td>
+<td><label data-school="{school}"></label>/<label data-cid="{cid}"></label></td> 
+<td><label data-period="{period}"></label>/<label data-grade="{grade}"></label></td> 
+<td><label data-edition="{edition}"></label></td> 
+<td><code><label data-subject="{subject}"></label></code></td> 
+<td><label data-volume="{volume}"></label>/<label data-chapter="{chapter}"></label>章</td>
+<td><cite><script>document.write(utctime('{timestamp}'));</script></cite></td>               
+<td> 
+<a onclick="moda({id:'{id}'})" title="编辑" class="glyphicon glyphicon-pencil"></a>  
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a>
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+var subject,period,grade,edition,volume,chapter,restype;
+$(function(){
+    $("#btn").bind("click", function(){$('#dlg1').data("dotype","a");$('#dlg1 #id').val(""); $('#dlg1').modal('show');});
+     $.get("/data/grade_n1.txt", function(d){$("#grade").html(d);$("#grade").prepend("<option value=''>—年级—</option>");});     
+    $.get("/data/subject.txt", function(d){$("#subject").html(d);$("#subject").prepend("<option value=''>—学科—</option>");}); 
+    $.get("/data/textbook_ver.txt", function (d) {$("#edition").html(d);$("#edition").prepend("<option value=''>教材版本</option>");});  
+    $.get("/data/textbook_volume.txt", function (d) {$("#volume").html(d);$("#volume").prepend("<option value=''>—上下册—</option>");}); 
+    $.get("/data/textbook_chapter.txt", function (d) {$("#chapter").html(d);$("#chapter").prepend("<option value=''>章/节/单元</option>");});
+    $.post("./srv/rdo.php", {tpl:"get_my_cls","id":$(this).val()}, function (d, e) {                 
+        l=JSON.parse(d);  selectShowData("#cid",l,"id","name"); 
+        for(i=0;i<l.length;i++){$("label[data-cid='"+l[i].id+"']").text(l[i].name);}           
+    }); 
+    $.post("./srv/rdo.php", {tpl:"get_my_sch","id":$(this).val()}, function (d, e) {
+          l=JSON.parse(d); selectShowDataNoH("#school",l,"id","name");   
+         for(i=0;i<l.length;i++){$("label[data-school='"+l[i].id+"']").text(l[i].name);} 
+      });
+       
+    $("#btn1").bind("click", function(){  
+      if($("#name").val()==""){alert("请输入一个名称");return;}               
+      SaveAM({tpl:"tech_def_property","do":$('#dlg1').data("dotype"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+   $("#grade").bind("change",function(){
+      if($(this).val()==""){ $("#period").val("");return;}
+      period=$(this).find('option:selected').data("period");
+      $("#period").val(period); 
+   });
+   $("#cid").bind("change",function(){
+      if($(this).val()==""){return;}
+      $.post("./srv/rdo.php", {tpl:"get_cls_property","id":$(this).val()}, function (d, e) {                 
+          l=JSON.parse(d);
+          $("#period").val(l[0].period);
+          $("#school").val(l[0].school);
+          $("#grade").val(l[0].grade);     
+      }); 
+   });
+   //显示初始化
+    $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+   $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+  $.getJSON("/data/textbook_ver.json.txt", function (data) {  
+      edition=data;
+      $("label[data-edition]").each(function (a, b) {
+        $(this).text(edition[$(this).data("edition")]);
+      });
+  });
+  $.getJSON("/data/textbook_volume.json.txt", function (data) {  
+      volume=data;
+      $("label[data-volume]").each(function (a, b) {
+        $(this).text(volume[$(this).data("volume")]);
+      });
+  });
+  $.getJSON("/data/textbook_chapter.json.txt", function (data) {  
+      chapter=data;
+      $("label[data-chapter]").each(function (a, b) {
+        $(this).text(chapter[$(this).data("chapter")]);
+      });
+  });
+  $.getJSON("/data/restype.json.txt", function (data) {  
+      restype=data;
+      $("label[data-restype]").each(function (a, b) {
+        $(this).text(restype[$(this).data("restype")]);
+      });
+  });  
+}); 
+function dosome(e,d){  
+  if($('#dlg1').data('dotype')=="a"){
+      location.reload();
+  }
+  else{
+     alert("修改完成");
+    $('#dlg1').modal('hide');
+  }
+}    
+function moda(d){
+  readID({tpl:"tech_def_property","do":"r","id":d.id,frmid:"#dlg1"}); 
+  $('#dlg1').data("dotype","m");
+  $('#dlg1').modal('show');
+}    
+
+function delths(v,obj){
+   $.post("./srv/sdo.php", {tpl:"del_schedule",id:v}, function (d, e) {                   
+      $(obj).parent().parent().remove();
+  });
+}   
+</script>
+
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog"   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加/编辑</h4>
+         </div>
+<div class="modal-body"> 
+<form class="form-horizontal" role="form" id="form1">
+<div class="form-group">
+    <label class="col-sm-2 control-label">名称</label>
+    <div class="col-sm-10">
+       <input type="text" class="form-control" id="name"  maxlength="50" placeholder="请输入标题"> 
+    </div>
+ </div> 
+ <div class="form-group">
+    <label class="col-sm-2 control-label">班级：</label>
+    <div class="col-sm-3">
+      <select id="cid" class="form-control"><option value="">选择班级</option></select> 
+      </div>
+    <div class="col-sm-3"><select id="school"  class="form-control"><option value="">选择学校</option></select>
+      <input type="text" id="school" style="display:none;"/>      
+    </div>
+    
+      
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">年级：</label>
+    <div class="col-sm-3">
+      <select id="grade" class="form-control"><option value="">选择年级</option></select> </div>
+      <div class="col-sm-3"><select id="subject"  class="form-control"><option value="">选择学科</option></select>         
+      <input type="text" id="period" style="display:none;"/>       
+    </div>
+  </div>
+
+ <div class="form-group">   
+ <label class="col-sm-2 control-label">教材</label>
+    <div class="col-sm-10">
+         <select id="edition"><option value="">版本</option></select> 
+          <select id="volume"><option value="">上下册</option></select>
+          <select id="chapter"><option value="">章/节/单元</option></select>
+     </div>  
+ </div>   
+  <input type="text" id="id" value="" style="display:none;"/> 
+</form>
+</div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn1"> 确定  </button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>        
+         </div>
+      </div>
+   </div>
+</div>

@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>文章分类-{gtitle}</title>
+{cssjs}
+<link rel="stylesheet" type="text/css"  href="html/{tplno}/css/articles_css.css">
+<link rel="stylesheet" type="text/css" href="html/{tplno}/css/subject_l.css">
+</head>
+<body>
+{top}
+{head}
+<div class="main-content su">
+	<div class="h_main">
+		<div class="h_left mt15">
+			<div class="navfl_o"><a href="?t=articles" {chs_typeid}>全部分类</a></div>
+			<!-- START cate -->
+			<div class="navfl_o"><a href="./?t=articles&typeid={id}" {chs_typeid{id}}>{name}</a></div>
+			<!-- END cate -->
+		</div>
+		<div class="h_right mt15">
+			<div class="h_con">
+				<h1>【<em>{typename}</em>】</h1>
+				<ul class="list_box">
+					<!-- START list -->
+					<li>
+						<div class="list_date">
+							<p>浏览:<span class="count fcb">{visit}</span></p>
+							<p>评论:<span class="count fcb">{comms}</span></p>
+							{shortdate}
+							<span class="fco"><a href="/zone" target="_blank" style="color:#1db177;">{nickname}</a></span>
+							<span class="fco"><a href="/school?s={schoolid}" target="_blank" style="color:#1db177;">{schoolname}</a></span>
+						</div>
+						<script>document.write("{original}" == "0" ? "[转载]" : "[原创]");</script>
+						<a href="./?t=article&id={id}" target="_blank">{title}</a>
+					</li>
+					<!-- END list -->
+				</ul>
+				<ul class="pagination pull-right">
+				{page}
+				</ul> 
+			</div>
+		</div>
+	</div>
+</div>
+<div style="clear:both;"></div><br>
+{foot}
+</body>
+</html>

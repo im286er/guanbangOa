@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}    
+</head>
+<body>
+{top}
+<div class="container">   
+{head1}
+
+<div class="col-sm-10">
+<div class="page-header">
+   <h3>我的单位(学校)      <small></small> 
+   <div class="btn-group pull-right"> 
+    <a href="?t=school_apply" class="btn btn-primary">加入学校</a>
+  <a href="?t=school_new" class="btn btn-primary">+创建学校</a>
+  <a href="?t=school_me" class="btn btn-primary">创建记录</a>
+</div>
+</h3>
+</div>
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+<th>短名称</th>
+<th>入学年份</th> 
+<th>主校（默认学校）</th>  
+<th>状态</th>     
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr id="row{id1}">
+<td><div class="thumbnail"><img  width="60" src="/upds/school/logo/{sid}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/school?s={id}" target=_blank>{name}</a>  </td>
+<td>{mininame}</td>
+<td>{intoyear}</td>
+<td><default v="{default}" title="默认学校" /></td>
+<td><st v="{state1}"></st></td>
+<td>
+<a class="glyphicon glyphicon-ok-circle hide" title="审核" onclick="auditID({id:'{id1}',do:'o',v:1})"></a> &nbsp;
+<a class="fa fa-home" title="默认学校" onclick="defths('{id1}')"></a>   &nbsp;
+<a class="glyphicon glyphicon-minus" title="退出" onclick="deleteID({'do':'d',id:'{id1}'})"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+</div>  
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+l_tpl="act_school";
+ $(function () { 
+  $("default[v='0']").html("");
+  $("default[v='1']").addClass("fa fa-home");
+$.getJSON("/data/?t=sys_state&f=obj", function (d){for(i=0;i<5;i++)$("st[v='"+i+"']").html(d[i]);      
+  });
+    $.get("/data/addr_a.txt", function (data) {$("#addr1").html(data);$("#addr1").prepend("<option value=''>—地区—</option>");});   
+   $("#addr1").bind("change", function(){getaddr2($(this).val());}); 
+   $("#addr2").bind("change", function(){getunits($(this).val());});       //selectSelValTo("#addr",this);
+   $("#unit").bind("change", function(){selectSelTxtTo("#units",this);}); 
+    $("#btn").bind("click",function(){     $('#dlg1').modal('show');    }); 
+ });   
+
+function addsch(){
+  if($("#units").val()==""){alert("请选择一所学校"); return;} 
+  if($("#year").val()==""){alert("请输入一个年份"); return;}     
+  $.post("./srv/sdo.php?" + Math.random(), {tpl:"addedu","id":$("#unit").val(),"y":$("#year").val()}, function (d, e) {                  
+    if(d.indexOf("ok")>-1)      
+        location.reload();
+    else
+       alert(d);
+    //$("#dlg1").dialog("close");             
+  });
+} 
+function defths(v) {    
+   $.post("./srv/sdo.php?", {tpl:"def_sch","id":v}, function (d, e) {                  
+     msg(d);
+     if(d.indexOf("ok")>-1)
+         location.reload();         
+  });
+}/*  
+function delths(v) {
+  if($("#list").children().length==1){alert('最后一个单位不能删除');return;}
+   $.post("./srv/sdo.php?", {tpl:"cel_sch","id":v}, function (d, e) {                  
+    location.reload();          
+  });
+} 
+function getaddr2(v){ 
+  $.post("./srv/rdo.php?" + Math.random(), {tpl:"getaddr2","id":v}, function (d, e) {                  
+    selectShowData('#addr2', eval(d), "id", "name");            
+  });
+}
+
+function getunits(v){  
+  //$("#addrs").val($.trim($("#addr1").find('option:selected').text()+"-"+$("#addr2").find('option:selected').text()));
+  $.post("./srv/rdo.php?" + Math.random(), {tpl:"get_school","id":v}, function (d, e) {                  
+    selectShowData('#unit', eval(d), "id", "name");            
+  });
+} */ 
+</script>
+
+
+<div class="modal fade" id="dlg1" tabindex="-1" role="dialog" 
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">添加单位</h4>
+         </div>
+         <div class="modal-body">
+       <form class="form-horizontal" role="form" action="" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">所属地区</label>
+    <div class="col-sm-3">
+    <select id="addr1" class="form-control"></select>
+<input id="addr" type="text" style="display:none;"/>
+<input id="addrs" type="text" style="display:none;"/> 
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block"></span>
+    </div>
+     <div class="col-sm-3">
+        <select id="addr2" class="form-control"></select> 
+     </div>
+  </div>
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">单位(学校)</label>
+    <div class="col-sm-10">
+ <select id="unit" class="form-control" style="width:30%;"></select>
+<input id="units" type="text" style="display:none;"/>
+    </div>
+  </div>
+   <div class="form-group"> 
+    <label class="col-sm-2 control-label">入学时间(年)</label>
+    <div class="col-sm-10">
+<input type="text" id="year" class="form-control" style="width:50%;" maxlength="4"  onkeyup="this.value=this.value.replace(/[^0-9]/g,'')" 
+readonly onclick="WdatePicker({dateFmt:'yyyy'})"/>
+    </div>
+  </div> 
+</form>
+         </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="btn" onclick="addsch()">提交更改</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+         </div>
+      </div>
+   </div>
+</div>

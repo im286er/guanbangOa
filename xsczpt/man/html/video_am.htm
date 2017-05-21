@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>添加视频-{gtitle}</title>
+{cssjs}           
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>      
+</head>
+<body>
+ 
+<div class="container">  
+{head}
+ <div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">添加视频 <small>   [添加/编辑]</small>      </h3>
+   </div>
+   <div class="panel-body">
+<form id="form1" class="form-horizontal">   
+   
+    <div class="form-group">    
+      <label class="col-sm-1 control-label">名称</label>  
+        <div class="col-sm-7"><input id="name" type="text" class="form-control" maxlength="50"  placeholder="请输入名称"> </div> 
+    </div> 
+    <div class="form-group">
+     <label class="col-sm-1 control-label">类别</label>  
+       <div class="col-sm-2"><select id="cid" class="form-control"></select></div>
+    </div>      
+    <div class="form-group"> 
+        <label class="col-sm-1 control-label">描述</label>   
+        <div class="col-sm-7"> <textarea id="pre" type="text" class="form-control" > </textarea> </div> 
+    </div>
+    <div class="form-group"> 
+        <label class="col-sm-1 control-label">缩略图</label>
+        <div class="col-sm-7">
+            <input id="thumb" type="text" class="form-control" placeholder="请输入缩略图地址">
+        </div>
+    </div>      
+    <div class="form-group">
+        <label class="col-sm-1 control-label">视频</label>
+        <div class="col-sm-7">
+            <input id="videodir" type="text" class="form-control" placeholder="请输入视频地址">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-1 control-label">标签</label>
+        <div class="col-sm-2">
+            <select id="label" class="form-control">
+              <option value="0">最新</option>
+              <option value="1">最热</option>
+              <option value="2">推荐</option>
+            </select>
+        </div>
+    </div>
+  
+  
+  <input type="text" id="id" value="" style="display:none;"/>  
+  <input type="text" id="uid" style="display:none;"/>  
+  <input type="text" id="state" value="2" style="display:none;"/>  
+</form>    
+<div class="form-group">
+<div class="col-sm-12"><button type="button" class="btn btn-success" id="btn"> 立即发 布 </button> </div>
+</div>
+   
+   </div>
+</div>
+
+
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript"> 
+
+var dotype=queryStr("d"); 
+l_tpl="main_video";
+$(function () {  
+  if(dotype=="")dotype="a";       
+    $("#btn").bind("click", function(){  
+      if($("#name").val()==""){alert("请输入一个标题");return;}   
+      if($("#cid").val()==null||$("#cid").val()==""){$("#cid").val('0');}
+      if($("#thumb").val()==""){alert("请输入缩略图地址");return;}
+      if($("#videodir").val()==""){alert("请输入视频地址");return;}      
+      SaveAM({"do":dotype,frmid:"#form1",showok:"发布成功",callback:"dosome"});
+   });
+   
+    $.post("./srv/rdo.php?", {tpl:"get_videocate"}, function (d, e) {                  
+      $("#cid").html(d);                
+      if(dotype=="m"){               
+         readID({"do":"r",id:queryStr("id"),frmid:"#form1"}); 
+      } 
+    });
+           
+  });
+   
+  function dosome(e,data){
+   if(data.indexOf('ok')>-1){ 
+     window.close();    
+      /*$.post("./srv/sdo.php?" + Math.random(), {tpl:"upd_blog_num",id:$("#sid").val()}, function (d, e) {
+         location.href='./?t=art_last&s={s}&id='+$.trim(d);
+      }); */ 
+   }
+   else
+      alert(data);
+}  
+
+</script>

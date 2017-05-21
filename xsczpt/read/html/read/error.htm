@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>错误-{gtitle}</title>
+{meta}
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css"> 
+</head>
+<body>
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header">
+    <a id="logo" class="navbar-brand" href="/">{gtitle}</a>
+   </div>
+   <div>
+      <!--向左对齐-->
+      <ul class="nav navbar-nav navbar-left">
+        <li><a href="/">首页</a></li>  
+      </ul> 
+       
+      <!--向右对齐-->
+      <ul class="nav navbar-nav navbar-right">
+         <li class="dropdown" id="top_user_login"></li>
+         <li><a>&nbsp;</a></li>
+      </ul>
+     <p class="navbar-text navbar-right"></p>
+   </div>
+</nav>
+
+
+
+
+<div class="container ">   
+
+<div class=" col-sm-10 col-sm-offset-1">
+
+<div class="page-header">
+   <h1><span class="glyphicon glyphicon-remove-sign" style="color: rgb(255, 140, 60);"></span>
+   错误：{name} 
+   <small></small>     </h1>
+</div>   
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">
+         错误编号：{no}
+      </h3>
+   </div>
+   <div class="panel-body">    
+    <p>错误描述：{des}</p>
+   <div>
+    <center> 
+    <a href="javascript:history.back();" class="btn btn-success">返回刚才页面</a>
+    <a href="/" class="btn btn-success">返回首页</a>
+    </center>
+    </div> 
+   </div>
+</div>   
+ 
+</div>
+
+ 
+
+
+
+
+</div>
+ 
+   
+</body>
+<script type="text/javascript">
+  $(function(){
+	
+	});
+	
+</script>
+</html>

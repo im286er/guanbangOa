@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的群-{gtitle}</title>
+{cssjs_edit} 
+{cssjs_dialog}  
+<link rel="stylesheet" href="css/list.css">                                         
+<script>
+var arr=new Array('待审核','已审核','注销中');
+var arr1=new Array('','默认班级');
+</script>
+</head>
+<body>
+{top}
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+<h2>群管理</h2>
+<div >
+<ul> 
+<li><a href="./?t=group">我加入的群</a></li> 
+<li><a href="./?t=group1"  style="display:none;">我创建的群</a></li>
+<li><a href="./?t=group_new"  style="display:none;">+创建群</a></li>
+</ul>
+</div>
+</div>
+</dt>
+<dd>  
+<div class="banner"><label>我的群</label> 
+<span> 
+</span>    
+</div>
+
+<table class="table" cellpadding="0" cellspacing="0">
+<thead>
+<tr>
+<th>号码</th>
+<th>logo</th>
+<th>名称</th>
+<th>学校</th>
+<th>类型</th> 
+<th>人数</th> 
+<th>时间</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td>{gid}</td>
+<td><img id="logo{gid}" width="40" src="/group/logo/{gid}.jpg" onerror="this.src='/error/logo.jpg';" /></td>
+<td><a href="/group?g={gid}">{name}</a></td>
+<td>{school}</td>
+<td>{}</td>
+<td>{nums}</td>  
+<td><script>document.write(utctime('{timestamp}'));</script></td>                          
+<td>
+ >
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<br/><br/>
+<br/><br/>
+<br/><br/>
+</dd>
+</dl>
+</div>
+
+{footer}
+</body> 
+</html>
+
+
+
+<script type="text/javascript">  
+$(function(){
+  //$.get("/data/grade_n1.txt", function (data) {$("#grade").html(data);$("#grade").prepend("<option value=''>—年级—</option>");});
+ // $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#dlg2 #subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");});
+  $.post("./srv/rdo.php?", {tpl:"get_sch"}, function (d, e) {                 
+       selectShowData("#school",JSON.parse(d),"id","name");    
+  });   
+   
+   $("#btnc").bind("click",function(){
+      $("#dlg1").dialog("open");         
+   });  
+}); 	
+function joinths(){
+  if($("#list").val()==undefined||$("#list").val()==""){alert("请选择一个群");return;} 
+  $.post("./srv/sdo.php?", {tpl:"join_group",id:$("#list").val(),sid:$("#school").val()}, function (d, e) {                     
+   // alert(d);
+    if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d); 
+  });
+} 
+function delths(v){
+   $.post("./srv/sdo.php", {tpl:"exit_group",id:v}, function (d, e) {                 
+     if(d.indexOf('ok')>-1)
+      location.reload();
+    else
+      alert(d);
+  });
+}  
+function selv(){//搜索列表
+    if($("#school").val()==""){alert("请选择一个单位");return;}
+    $.post("./srv/rdo.php?", {tpl:"sel_group",sid:$("#school").val(),name:$("#name").val(),no:$("#no").val()}, function (d, e) {                     
+      selectShowData("#list",JSON.parse(d),"id","name");
+  });
+}
+</script>
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:600px;height:500px;padding:10px;" title="加入班级" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'加入',      
+    handler:function(){
+       joinths();
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<table class="">
+    <tr>
+        <td style="width:60px;">学校</td>
+        <td><select id="school"></select>
+        
+        </td>
+    </tr> 
+     <tr>
+        <td>名称：</td>
+        <td>
+         <input type="text" id="name" value="" />
+        群号:<input type="text" id="no" value="" onkeyup="this.value=this.value.replace(/[^0-9]/g,'')"/>
+         <input type="button" value="搜索" onclick="selv()" />
+        </td>
+    </tr>
+    <tr>
+        <td>列表：</td>
+        <td>
+        <select id="list" size="18"></select>  
+        </td>
+    </tr>
+       
+</table>
+</div>
+ 

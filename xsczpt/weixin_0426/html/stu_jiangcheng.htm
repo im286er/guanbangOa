@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">	
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<script src="js/iscroll.js"></script> 
+<style>
+#wrapper {
+position:relative;
+height:300px;
+}
+</style>
+<script type="text/javascript">
+$().ready(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("<option selected value='0'>请选择学期</option>");
+		$('#term_id').val('{term_id}');     
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"jiangcheng",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#flag_type",JSON.parse(d),"code_name","code_name"); $("#flag_type").prepend("<option selected value='0'>全部</option>");
+		var flag_type = "{flag_type}";
+		if(flag_type)
+			$('#flag_type').val('{flag_type}');     
+	});
+	$("#showTooltips").click(function(){
+		$("#t_zdy").submit();
+	});
+});
+
+//删除奖惩记录
+function delJiangcheng(id){
+	if(confirm("你确定删除此奖惩记录吗?")){
+		$.post("./srv/sdo.php", {tpl:"del_jiangcheng","id":id}, function (d, e) {
+			l=JSON.parse(d);
+			if(l.flag=="true"){
+				alert(l.value);
+				$("#tr_c_"+id).fadeOut("slow");
+			}else{
+				alert(l.value);
+			}
+		});
+	}
+}
+</script>
+</head>
+<body>
+<header><a href="?t=index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>学生奖惩管理</h1><a href="?t=jiangcheng_op" target="" class="glyphicon glyphicon-plus-sign" style="font-size:1.6rem;line-height:55px;"></a></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			
+			  <div class="weui-cells__title">选择条件</div>
+			  <form action="./?t=stu_jiangcheng" method="post" id="t_zdy">
+				 <div class="weui-cells mt_5">
+			   <div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">学期：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select name="term_id" id="term_id" class="weui-select">
+						</select> 
+					</div>
+				</div>
+				<div class="weui-cell weui-cell_select weui-cell_select-after">
+					<div class="weui-cell__hd">
+						<label for="" class="weui-label">类型：</label>
+					</div>
+					<div class="weui-cell__bd">
+						<select name="flag_type" id="flag_type" class="weui-select">
+						</select> 
+					</div>
+				</div>
+			 </div>
+				 <div class="weui-btn-area">
+					<a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">搜索</a>
+				</div>
+			</form>
+		<div class="weui-cells__title">查询结果</div>
+		<div class="tb_flow" id="wrapper">
+			<table width="800px" border="0" class="tb_tp" cellpadding="0" cellspacing="0" id="scroller">
+					<tr class="tabtitle" height="30">
+						 <td width="8%" class="tb_td tb_txt_center">姓名</td>
+						 <td width="8%" class="tb_td tb_txt_center">班级</td>
+						 <td width="10%" class="tb_td tb_txt_center">学期</td>
+						 <td width="5%" class="tb_td tb_txt_center">类型</td>
+						 <td  class="tb_td tb_txt_center">奖惩内容</td>
+						 <td class="tb_td tb_txt_center" width="10%">记录日期</td>
+						  <td class="tb_td tb_txt_center" width="6%">状态</td>
+						 <td class="tb_td tb_txt_center" width="6%">操作</td>
+					</tr>
+					<!-- START list --> 
+					<tr id="tr_c_{id}" class="tabtitle" style="line-height:30px; min-height:30px;">
+						<td class="tb_td tb_txt_center">{truename}</td>
+						<td class="tb_td tb_txt_center">{class_name}</td>
+						<td class="tb_td tb_txt_center">{term_name}</td>
+						<td class="tb_td tb_txt_center">{flag_type}</td>
+						<td class="tb_td tb_txt_center">{content}</td>
+						<td class="tb_td tb_txt_center">{create_time}</td>
+						<td class="tb_td tb_txt_center">{flag_status}</td>
+						<td class="tb_td tb_txt_center" style="text-align:center;vertical-align: middle;height: 100%;transform: translateY(0%);">
+						<script type="text/javascript">
+						  if("{flag_status}"!="已审核"){
+							document.write(' <a href="./?t=jiangcheng_op&id={id}" class="glyphicon glyphicon-pencil" title="修改" style="padding-right: .4rem;text-align: center;display: inline-block;" ></a> <a href="javascript:void(0);" class="glyphicon glyphicon-remove" onclick="delJiangcheng({id});"style="display: inline-block;text-align: center;"></a></td> ');
+						  }
+						</script> 
+					</tr>
+					<!-- END list --> 
+				</table>
+		</div>
+		<div style="height:15px;"></div>
+		<div>
+			<ul class="pagination wx_center">
+				{page}
+			</ul>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+<script type="text/javascript">
+var myScroll;
+function loaded() {
+	myScroll = new iScroll('wrapper');
+}
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+</script>
+</body>
+</html>

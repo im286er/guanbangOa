@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>我的作业-{gtitle}</title>
+{cssjs} 
+<script>
+var arr=new Array('--','未完成','已交','批阅');     
+</script>
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}     
+<div class="col-sm-10 main">  
+
+<div class="page-header">
+   <h3>我的作业<small></small>  </h3>
+</div>
+
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">  
+     <div class="col-sm-2">
+       <select id="subject" class="form-control"></select>      
+    </div>     
+    <div class="col-sm-2">      
+<select id="state"  class="form-control"><option value="">-状态-</option><option value="0">全部</option><option value="1">未完成</option><option value="2">已完成</option></select>
+    </div>  
+     <div class="col-sm-2">
+  <input id="tle" type="text"  class="form-control" placeholder="请输入关键字" />  
+    </div>     
+    <div class="col-sm-2">
+      <a class="btn btn-primary" id="btn">查询</a>   
+    </div>  
+   </div>     
+</form>  
+   
+ 
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ 
+<th>科目</th> 
+<th>标题</th> 
+<th>发布者</th>
+<th>作业时间</th>
+<th>发布时间</th>
+<th>成绩</th>
+<th>状态</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr>
+<td><label data-subject="{subject}"></label></td> 
+<td><a href="./?t=homework_info&id={id}" target="_blank">{title}</a></td>    
+<td><cite>{techer}</cite></td> 
+<td><code>{stime}<br/>{etime}</code></td>
+<td><cite>{timestamp}</cite></td>  
+<td><em>{score}</em></td>  
+<td><em><script>document.write('{state}'==''?'----':arr['{state}']);</script></em></td>                  
+<td><a href="./?t=homework_do&id={id}" class="glyphicon glyphicon-pencil" target="_blank"></a>
+ <a class="glyphicon glyphicon-remove" title="删除已交" onclick="delths('{id}',this)"></a> </td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div>  
+{foot}
+</body> 
+</html>
+
+<script type="text/javascript">  
+$(function(){
+  $.get("/data/subject.txt", function (data) {$("#subject").html(data);$("#subject").prepend("<option value=''>—学科—</option>");});  
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  });
+  $("#btn").bind("click",function(){
+     location.href="./?t=homework&sub="+$("#subject").val()+"&stat="+$("#state").val();
+  });
+});
+
+function delths(v,obj){     
+   $.post("./srv/sdo.php", {tpl:"del_homework",id:v}, function (d, e) { 
+      if(d.indexOf("ok")>-1)
+      $(obj).parent().parent().parent().parent().children().eq(5).text("--");
+      else 
+        alert(d);
+  });
+}   
+</script>

@@ -1,0 +1,59 @@
+body{margin:0;padding:0;font-size: 14px;line-height: 20px;color: #333333;}
+/*
+.T{ background:#e6e6e6 url(../img/b3.jpg);border-bottom:1px solid #ccc;height:60px;}
+.T h1{color: #333;font-size:1.3em;line-height: 1em;margin:0;padding:0;line-height:60px;text-indent:15px;}
+.M{background: #eee;border-bottom: 1px solid #aaa;border-top: 1px solid #fafafa;height:38px;line-height:38px;font-size: 14px;color:#333;overflow:hidden;}
+.M a{color: #0088cc;text-decoration: none;}
+*/
+.red{color:Red!important;}
+.blue{color:blue!important;}
+
+a{color:#464646; text-decoration:none;font-size:12px;}
+a:hover{text-decoration:underline;}
+p{line-height:28px;}
+
+input[type=text],input[type=password] {border:1px solid #ccc;height:18px;line-height:18px;}
+input:hover {border-color:rgb(102, 102, 102); color: rgb(0, 0, 0);}
+
+
+textarea{ border:1px solid #ccc;}
+select { border:1px solid #ccc; line-height:20px;}
+.button {height:30px;line-height:30px;background:#4d5b76 linear-gradient(#6c7892,#434a5a);color:White;border: 1px solid #363d4a;padding:0 15px;}
+.button1 {height:30px;line-height:30px;background:#4d5b76 linear-gradient(#3f3f3f,#3c3c3c);color:White;border: 1px solid #363d4a;padding:0 15px;}
+
+.abtn {font-size:12px; padding:4px 10px; border:1px solid #ddd; color:Black!important;background:linear-gradient(#6c7892,#434a5a);white-space:nowrap; }
+.abtn1 {font-size:12px;padding:4px 10px; border:1px solid #363d4a; color:#FFF!important; background:linear-gradient(#3f3f3f,#3c3c3c);white-space:nowrap;}
+
+fieldset{width:98%;margin:10px auto;color:#333;border:1px solid #ccc;padding:2px;line-height:30px;}
+legend{margin-left:20px;}
+
+footer {padding: 1em;margin-top:20px;color:#666;font-size:12px;line-height:30px;border-top:1px solid #ddd;text-align:right;}
+footer a{color: #0088cc;text-decoration:none;}
+
+.note{width:98%;margin:10px auto; border: 1px solid #85c5e5;background:#afd9ee url(../img/b5.jpg);color: #3a87ad;font-size: 14px;line-height: 34px;text-indent:10px;}
+/*data*/
+table{width:98%;margin:10px auto;border-spacing: 0px;border:1px solid #ccc;}
+table thead {border-top: 1px solid #fff;}
+table thead th{height:36px;line-height:36px; color:#505050;text-align:left;text-indent:10px;border-bottom: 1px solid #a6a6a6;white-space:nowrap; 
+  /*background:linear-gradient(#fdfdfd, #dedede);border-top: none;text-shadow: 0 1px 0 rgba(255,255,255,.5);*/
+  	background-color: #f0f0f0;
+	        box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;
+	   -moz-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset;  
+	-webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8) inset; 	
+}
+/*background:-webkit-linear-gradient(left,#fdfdfd, #dedede); background:-moz-linear-gradient(left,#fdfdfd, #dedede); */
+table tbody td{border-top:1px solid #fff;border-bottom:1px solid #ddd;line-height:30px;padding-left:8px;}
+table tbody:nth-last-child(1) td{border-bottom:none;}
+table tbody a{ color:#21759b;}
+table tbody .bg td{ background:#ccc;}
+table tbody .cate1 td:first-child{ text-indent:40px;}
+table tbody .cate2 td:first-child{ text-indent:80px;} 
+table tbody tr:hover td{background:#eee; cursor:pointer;}
+table .page:hover{background:#f4f4f4;}
+ 
+/*¡–±Ì“≥√Ê*/
+.page{ text-align:center;line-height:30px;background:#f4f4f4;}
+.page a{ padding:3px 8px; border:1px solid #ccc;color:#111!important;text-decoration:none; font-size:12px;margin-left:8px; }
+.page a:hover{ border:1px solid #4e6382; background:#394b4d; color:#eee!important;}
+.page b{margin-left:8px;padding:3px 8px;background:#394b4d; color:#eee;}
+

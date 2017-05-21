@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>空间设置-{gtitle}</title>   
+{cssjs_edit}  
+<link rel="stylesheet" href="css/forms.css"> 
+
+</head>
+<body>
+{top}
+<div class="container"> 
+{head}  
+<div class="main">
+<dl>
+<dt>
+<div class="menu_a">
+    <h2>空间设置</h2>    
+    <ul>
+      <li><a href="./?t=info">空间信息</a></li> 
+     <li><a href="./?t=info_mod">空间设置</a></li>
+    </ul>     
+  </div> 
+</dt>
+<dd>
+<form id="form1">
+      <h1>空间信息修改</h1>
+      <hr/>
+      <table class="table1">
+        <tr>
+          <td>空间编号：</td>
+          <td>{id}</td>
+        </tr>
+        <tr>
+          <td>空间名称：</td>
+          <td><input id="name" type="text" style="width:300px;" maxlength="20"/></td>
+        </tr>
+         <tr>
+          <td>空间描述：</td>
+          <td><textarea id="explain" cols="40" style="height:50px;"></textarea> </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><span class="font-c6">你尚未实名认证</span> <a href="" class="font-c4">点此认证</a></td>
+        </tr>
+        <tr>
+          <td >性别：</td>
+          <td><input type="radio" class="put_radio1"/>
+            <span>男</span>
+            <input type="radio" class="put_radio1"/>
+            <span>女</span></td>
+        </tr>
+       
+        <tr>
+          <td>职业：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>头衔：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>个人签名：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>自我介绍：</td>
+          <td><textarea id="textarea" cols="40" rows="5"></textarea></td>
+        </tr>
+        <tr>
+          <td>个人主页：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>微博：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>微信：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>QQ：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td>手机：</td>
+          <td><input type="text"/></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>
+           <input type="text" id="id" value="0" style="display:none;"/>
+          <input type="button" id="btn"  value="保存信息"/>
+          <input type="reset" class="but1" value="取消"/>
+          </td>
+        </tr>
+      </table> 
+</form>       
+</dd>
+</dl>
+</div>
+{footer}
+</body>
+<script type="text/javascript">
+$(function(){
+
+});
+$(function () {
+    readID({tpl:"student","do":"r",id:"{id}",frmid:"#form1"});  
+    $("#btn").bind("click", function(){
+      $("#id").val("{id}");
+       SaveAM({tpl:"student","do":"am",frmid:"#form1",showok:'修改完成',callback:"desome"});
+    
+    });     
+ }); 
+ function desome(e,data){
+   if(data.indexOf('ok')>-1){   
+      //SaveAM({tpl:"user_reg1","do":"m","id":$("#id").val(),frmid:"#form1",showok:false});
+      //alert("保存成功");          
+   }
+   else
+      alert(data);
+}  	
+</script>
+</html>

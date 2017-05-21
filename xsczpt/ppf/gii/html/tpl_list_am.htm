@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{name}-{gtitle}</title>
+{cssjs}
+</head>
+<body> 
+{top}        
+<div class="sidebar-nav">
+{left}
+</div>  
+
+ <div class="content">          
+        <div class="header"><h1 class="page-title">{name}</h1> </div>  
+                
+        <ul class="breadcrumb">
+            <li><a href="./?t=index">首页</a> <span class="divider">/</span></li>
+            <li class="active">{name}</li>
+        </ul>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                    
+<div class="btn-toolbar">
+    <a class="btn btn-primary" id="btn"><i class="icon-plus"></i> 添加</a>   
+  <div class="btn-group">
+    
+  </div>
+</div>
+<div class="search-well">  
+    <form class="form-inline" id="qry">
+<!-- START query -->{name}<input id="{col}" type="text" style="width:100px"/><!-- END query -->
+<button class="btn btn-primary" type="button" onclick="loadPage({page:1})"><i class="icon-search"></i> 查询</button>          
+<a class="btn btn-info" type="button" onclick="location.href=location.href;">刷新</a>
+<input type="text" id="__order"  flag="no" value="{tblorder}" title="排序字段" style="display:none;"/>
+<input type="text" id="__orderby"  flag="no" value="{tblorderby}" title="排序方向" style="display:none;"/>
+跳转到：  
+<input flag="no" onkeyup="value=value.replace(/[^0-9/]/ig,'')" 
+onkeydown="if(event.keyCode==13) {loadPage({l_page:value}); return false;}" type="text" style="width:30px;"/>
+    </form>
+</div>
+
+<div class="well">
+    <table class="table">
+      <thead>  
+<tr>
+<!-- START display --><th name="{col}">{name}</th>
+<!-- END display -->
+<th>操作</th>
+</tr>
+</thead>
+<tbody id="listbase" style="display:none;">
+<tr  class="" name="{id}">
+<!-- START displayc --><td>{{col}}</td>
+<!-- END displayc --> 
+<td>
+<a onclick="Mod({id:'{id}'})" title="修改"><i class="icon-pencil"></i></a>
+<a onclick="delRow({id:'{id}'});" title="删除"><i class="icon-remove"></i></a>
+</td>
+</tr>
+</tbody>
+<tbody id="list"></tbody>        
+</table>
+</div>
+<div class="pagination">
+<ul id="page"> 
+</ul>
+</div>
+{foot}                       
+</div>
+</div>
+</div>
+</body>
+</html>
+
+<script>
+  formatunixs = "{formatdates}";
+  $(function () {		
+		loadPage({l_tpl:queryStr("t"),l_page:1});   
+        
+     $("#sav").click(function(){
+          SaveAM({tpl:queryStr("t"),"do":$("#dlg1").data("dotype"),id:$("#dlg1 #id").val(),frmid:"#dlg1",showok:"",callback:"bkcallback"});
+      });
+      initAddBtn({btn:"#btn",frmid:"#dlg1"});
+	});
+         
+ </script>   
+<div class="modal small hide fade" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">添加/编辑</h3>
+    </div>
+<div class="modal-body">         
+ <form id="form1">
+ <!-- START edit --><label>{name}</label><input type="text" id="{col}" value="{default}" maxlength="{maxlength}" /> 
+<!-- END edit -->
+<!-- START pass --><label>密码*</label><input type="password" id="{ctrlpassid}" value=""  />
+<!-- END pass -->
+<!-- START editdate --><label>{name}</label><input type="text" id="{col}" value=""  onfocus="WdatePicker()" readOnly/>
+<!-- END editdate --> 
+<!-- START editsel --><label>{name}</label><select id="{col}"><option value=""></option></select> 
+<!-- END editsel -->
+<!-- START editchk --><label>{name}<input type="checkbox" id="{col}"/> 
+<!-- END editchk -->
+<!-- START editupd --><label>{name} 上传图片</label> <span id="fupd"></span><input type="text" id="{col}" value="" readonly  />  
+<!-- END editupd -->
+<!-- START edit1 --><label>{name}</label><textarea id="{col}" edit="{valtype}" rows="5" ></textarea>
+<!-- END edit1 --> 
+<!-- START edit0 --><input type="text" id="{col}"  value="{default}" style="display:none;"/>
+<!-- END edit0 --> 
+</form> 
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="sav">确定</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>        
+    </div>
+</div>

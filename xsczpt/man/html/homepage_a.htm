@@ -1,0 +1,178 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{gtitle}</title>   
+{cssjs}    
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>  
+</head>
+<body>
+{top}
+<div class="container"> 
+{head1}  
+
+<div class="col-sm-10 main">  
+
+
+<div class="panel panel-default">
+   <div class="panel-heading">
+      <h3 class="panel-title">首页<small>[添加/编辑] </small></h3>
+   </div>          
+<div class="panel-body">
+<form id="form1" name="form1" class="form-horizontal" > 
+<input type="text" id="state" value=2 style="display:none;"/>
+<input type="text" id="pic" style="display:none;" />
+<input type="text" id="push_type" value=1 style="display:none;"/> 
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">标题</label>  
+   <div class="col-sm-7"><input type="text" id="title" class="form-control"  placeholder="标题"  maxlength="50"/></div>
+</div>
+<div class="form-group"> 
+  <label class="col-sm-1 control-label">类别</label>  
+  <div class="col-sm-3"><select id="cid"  class="form-control"></select></div>    
+</div> 
+ <div class="form-group"> 
+      <div class="col-sm-12" style="margin-left: 20px;">
+      <img src="" id="clogo" width="90" onerror="this.src='/error/logo.jpg';" /> 
+        <button type="button" class="btn btn-warning"  id="btn_upd">上传logo</button>
+        <p class="help-block">*上传专题图片 500x300 小于1MB</p>
+      </div>
+ </div>
+         
+<div class="form-group">   
+  <label class="col-sm-1 control-label">内容</label>   
+   <div class="col-sm-11">
+<textarea id="des" name="des" data-edit="ue" style="display:none;"></textarea>
+<script type="text/plain" id="uedes" style="width:100%;height:400px;"></script>
+  </div>
+</div>   
+<div class="form-group">  
+  <label class="col-sm-1 control-label"></label>     
+   <div class="col-sm-11">
+    <button type="button" class="btn btn-success" id="btn"> 发 布 </button>     
+    <input type="text" id="id" value="" style="display:none;"/>
+           <input type="text" id="nums" value="0" style="display:none;"/>
+        <input type="text" id="see" value="0" style="display:none;"/>
+        <input type="text" id="comments" value="0" style="display:none;"/> 
+     </div>
+    </div>  
+
+
+</form> 
+</div>  
+</div> 
+
+</div> </div>
+{foot}      
+</body>
+</html> 
+<script type="text/javascript">
+
+
+var ue = UE.getEditor('uedes'); 
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {          
+    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+        return '/tech/updb/imageUp.php';
+    }else if (action == 'uploadvideo') {
+        return '/tech/updb/videoUp.php';
+    }
+    else  if(action == 'uploadfile'){
+       return '/tech/updb/docUp.php'
+    }else {
+        return this._bkGetActionUrl.call(this, action);
+    } 
+}
+l_tpl="push";
+
+dotype=queryStr("do");
+
+ue.addListener("ready", function () {  
+    if(dotype=="m")  readID({"do":"r",id:queryStr("id"),frmid:"#form1",callback:"ifrm_dosome"}); 
+});
+
+$(function(){  
+    //$.get("/data?t=teacher_news_type&f=txt&pn=nstate&pv=1",function(d){$("#tech_tid").html(d);}); 
+    $.post("./srv/rdo.php?", {tpl:"get_blog_cate",push_type:"1"}, function (d, e) {                 
+        selectShowDataNoH("#cid",JSON.parse(d),"id","name"); $("#cid").prepend("<option value=''>—类别—</option>");     
+    });  
+    if(dotype=="")dotype="a";
+		
+	$("#btn").bind("click", function(){  
+		if($("#title").val()==""){alert("请输入一个标题");return;}   
+		if($("#cid").val()==null||$("#cid").val()==""){alert("请选择一个类别");return;}  
+		if(ue.getContent().length<10){alert("请输入内容");return;}     
+		
+		SaveAM({"do":dotype,frmid:"#form1",tpl1:"push",showok:"",callback:"dosome"});
+   }); 
+   $("#btn_upd").bind("click",function(){$('#dlg1').modal('show');}); 	
+});
+
+function dosome(ed,data){
+	if(queryStr("do")=="m"){
+       location.href="./?t=homepage&id="+queryStr("id");
+	}
+	else{  
+		$.post("./srv/sdo.php?", {tpl:"blog_send_end"}, function (d, e) {       
+			if(queryStr("do")=="m")
+			  location.href="./?t=homepage&id="+queryStr("id");
+			else {
+				//array=data.split("ok");
+				//location.href="./?t=blog&id="+array[1];  
+				location.href="./?t=homepage&id="+data.substr(data.indexOf('ok')+2);   
+			}
+		});       
+	}
+}
+
+function ifrm_dosome(){ 
+ 
+	v=$("#ifrm").contents().find("body").html();
+	
+	if(v==""){
+	var imgsrc=$("#pic").val(),
+	    imgid=$("#id").val();
+    $("#clogo").attr("src","/upds/article/"+imgsrc);
+	}else{
+	      d=JSON.parse(v);
+       if(d.ret=="ok"){ 
+         $("#pic").val(d.fname);     
+         $("#clogo").attr("src","/upds/article/"+d.fname+"?"+Math.random());  
+
+          $('#dlg1').modal('hide');  
+       }
+       else{
+         alert(d.des);
+       }        
+	}
+}
+</script> 
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="myModalLabel">上传Logo</h4>
+         </div>
+         <div class="modal-body">
+<form class="form-horizontal" role="form" action="./srv/upd_logo_article.php" enctype="multipart/form-data" method="post" id="from2" name="from2" target="ifrm">
+  <div class="form-group"> 
+    <label class="col-sm-2 control-label">logo</label>
+    <div class="col-sm-10">
+    <input id="file" name="file" type="file" class="webuploader-element-invisible" multiple="multiple" accept="image/*" />  
+    <input type="text" id="id" name="id" value="" style="display:none;"/>
+    <span class="help-block">上传不大于1MB的.jpg图片 尺寸5:3</span>
+    </div>
+  </div>
+</form>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="$('#from2').submit(); ">提交更改</button>     
+            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>                                      
+         </div>
+      </div>
+   </div>
+</div>
+<iframe src="" name="ifrm" id="ifrm" style="display:none" onload="ifrm_dosome()"></iframe>

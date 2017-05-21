@@ -1,0 +1,164 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>{gtitle}</title>
+{cssjs}     
+<script src="/ppf/js/select.js" type="text/javascript"></script>     
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+</head>
+<body>
+{top}
+<div class="container">
+ 
+<div class="col-sm-3">   
+{menu}
+</div>  
+<div class="col-sm-9 main">  
+<div class="page-header">
+<h3>图书推荐 <small></small>
+<div class="btn-group pull-right"> 
+  <a href="./?t=recommend_am&do=a" class="btn btn-primary">+添加</a>
+  <a href="./?t=recommend_cate" class="btn btn-primary">类别管理</a>
+</div>
+</h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" id="from1">
+  <div class="form-group">      
+    <div class="col-sm-1" style="margin-left:20px;">名称</div>
+    <div class="col-sm-2">
+       <select id="cid"  class="form-control" ></select>  
+    </div>
+    <div class="col-sm-2"><input  type="text" class="form-control" value="" id="so" placeholder="名称"/></div>  
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="查询" id="btn"/>
+    </div>  
+   </div>     
+</form> 
+</div> 
+
+<table class="table table-striped"> 
+<thead>
+<tr>  
+<th>标题</th>
+<th>时间</th>
+<th>申请人</th>
+<th>浏览/回复</th>
+<th>状态</th>
+<th>操作</th>
+</tr>
+</thead>              
+<tbody>
+<!-- START list -->              
+<tr> 
+<td><a target=_blank>{title}</a></td>  
+<td><code>{timestamp}</code></td> 
+<td>{truename}</td>  
+<td><small>{see}/{comments}</small></td>  
+<td><em data-state="{state}"></em></td>
+<td>
+<a class="glyphicon glyphicon-ok" title="审核" onclick="audit('{id}',this)"></a>
+<!-- <a class="glyphicon glyphicon-edit" title="编辑" href="./?t=recommend_am&do=m&id={id}"></a> -->
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}',this)"></a> &nbsp;
+</td>
+</tr>
+<!-- END list --> 
+</tbody>
+</table>
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+</div> 
+
+{foot}
+</body> 
+</html> 
+<script type="text/javascript">   
+   jsnState=null;   
+$(function(){  
+   $("#so").val("{so}");
+   $.getJSON("/data/state.json.txt", function (data) { 
+     console.log(data);   
+     jsnState=data; 
+        for(i=0;i<5;i++)$("em[data-state='"+i+"']").html(data[i]);      
+  }); 
+  
+  $.post("./srv/rdo.php", {tpl:"get_recommendcate"}, function (d, e) {             
+    $("#cid").html('<option value="">—所有—</option>'+d);
+    if(queryStr("c")!="")$("#cid").val(queryStr("c"));   
+  }); 
+  
+  $("#btn").bind("click",function(){                           
+    location.href="./?t=recommend&c="+$("#cid").val()+"&so="+$("#so").val();          
+  });  
+  
+});          
+function delths(v,obj){
+//询问框
+layer.confirm('确定要取消审核吗？', {
+  btn: ['确定','关闭'] //按钮
+}, function(){
+  $.post("./srv/sdo.php", {tpl:"cancel_recommend",id:v}, function (d, e) {                   
+      location.reload();
+	  layer.closeAll();
+  });
+}, function(){
+ layer.closeAll();
+});
+
+}   
+function pushsome(v){
+  $('#dlg1').modal('show');
+  $('#dlg1 a').val(v);
+}  
+function audit(v,obj) {   
+   $.post("./srv/sdo.php?", {tpl:"audit_recommend","id":v}, function (d, e) {             
+      $(obj).parent().prev().html(jsnState[2]);             
+  });
+}
+</script>
+
+<div class="modal" id="dlg1" tabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" >
+   <div class="modal-dialog" style="width:710px">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h4 class="modal-title" id="label">推送到</h4>
+         </div>
+<div class="modal-body"> 
+<div class="row center">
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_cls&id='+this.value;" target=_blank class="btn btn-primary glyphicon glyphicon-tower">
+<br/> 班级空间</a>       
+</div>
+<div class="col-sm-2"> 
+ <a href="#" onclick="href='./?t=push_grp&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-th-large">
+ <br/>群组空间 </a>    
+</div> 
+<div class="col-sm-2"> 
+ <a href="#" onclick="href='./?t=push_sch&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-flag">
+ <br/> 学校主页</a> 
+</div> 
+<div class="col-sm-2"> 
+    <a href="#" onclick="href='./?t=push_sub&id='+this.value;" target=_blank class="btn btn-warning glyphicon glyphicon-book">
+<br/> 学科空间  </a>   
+</div>
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_tech&id='+this.value;" target=_blank class="btn btn-info glyphicon glyphicon-star">
+<br/>教师空间</a> 
+</div>
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_fmos&id='+this.value;" target=_blank class="btn btn-success glyphicon glyphicon-star">
+<br/>名师工作室</a> 
+</div>
+<div class="col-sm-2"> 
+<a href="#" onclick="href='./?t=push_mobile&id='+this.value;" target=_blank class="btn btn-primary glyphicon glyphicon-tower">
+<br/>移动首页</a>       
+</div>
+
+</div>      
+</div>
+<div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>               
+</div></div></div></div>

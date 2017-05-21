@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>{period_name}{subject_name}-{gtitle}</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>
+<script src="/ppf/js/fun.js" type="text/javascript"></script> 
+{cssjs}
+<script type="text/javascript">
+var arr=0;
+function GetMoth(nS) 
+{
+	return new Date(parseInt(nS) * 1000).getMonth()+1; 
+}
+function GetDay(nS) 
+{
+	return new Date(parseInt(nS) * 1000).getDate(); 
+}
+</script>
+<style type="text/css">
+
+</style>
+</head>
+<body>
+{top}
+{head}
+<div class="main">
+	<div class="l_left mt15">
+		<div class="l_content">
+			<div class="m-slide">
+				<ul class="img" style="position: relative; width: 312px; height: 200px;">
+					<li style="position: absolute; width: 312px; left: 0px; top: 0px; display: list-item;"><a href=""><img src="html/{tplno}/images/banner.jpg"></a></li>
+					<li style="position: absolute; width: 312px; left: 0px; top: 0px; display: none;"> <a href=""><img src="html/{tplno}/images/news_img.jpg"></a></li>
+					<li style="position: absolute; width: 312px; left: 0px; top: 0px; display: none;"> <a href=""><img src="html/{tplno}/images/news_img.jpg"></a></li>
+					<li style="position: absolute; width: 312px; left: 0px; top: 0px; display: none;"> <a href=""><img src="html/{tplno}/images/news_img.jpg"></a></li>
+				</ul>
+				<div class="news_f fr">
+					<div class="l_tit">
+						<p>教研活动</p><a href="/?t=actives&per={pid}&ot={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+					</div>
+					<h3>立足园本研修，展现青春活力......</h3>
+					<ul class="tab_news">
+						<!-- START list_jyhd -->
+						<li><a href="/activity/?t=active&id={id}" target="_blank">{name}</a><span>{timestamp}</span></li>
+						<!-- END list_jyhd -->
+					</ul>
+				</div>
+				<b class="bottom-shadow"></b>
+			</div>
+
+		</div>
+	</div>
+	<div class="l_right mt15">
+		<div class="l_content">
+			<div class="l_tit">
+				<p>通知公告</p><a href="/subjecter/?t=articles&per={pid}&s={sid}" target="_self"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list" style="height:180px;">
+			<!-- START list_tzgg -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=article&id={id}&s={subject}&per={period}" target="_self">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_tzgg -->
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="main">
+	<div class="mid_con mt20">
+		<div class="l_tit">
+			<p>家&nbsp;&nbsp;长</p>
+<!-- 			<div class="a_tit"><a href="#" target="">资源</a><a href="#" target="">试卷</a></div> -->
+			<a href="/subjecter/?t=articles&per={pid}&s={sid}" target="_self"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+		</div>
+		<div class="tab fl">
+			<ul class="tab-bd">
+				<li class="ul_show thisclass">
+					<div class="activ">
+						<div class="ac_img"><img src="html/{tplno}/images/ac_img1.jpg" width="140" height="120" /></div>
+						<ul class="zc_content">
+						<!-- START list_jz -->
+							<li><a href="/subjecter/?t=article&id={id}&s={subject}&per={period}" target="_self">{title}</a></li>
+						<!-- END list_jz -->
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="mid_con mt20">
+		<div class="l_tit">
+			<p>学&nbsp;&nbsp;生</p>
+<!-- 			<div class="a_tit"><a href="#" target="">资源</a><a href="#" target="">试卷</a></div> -->
+			<a href="/subjecter/?t=articles&per={pid}&s={sid}" target="_self"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+		</div>
+		<div class="tab fl">
+			<ul class="tab-bd">
+				<li class="ul_show thisclass">
+					<div class="activ">
+						<div class="ac_img"><img src="html/{tplno}/images/ac_img2.jpg" width="140" height="120" /></div>
+						<ul class="zc_content">
+						<!-- START list_xs -->
+							<li><a href="/subjecter/?t=article&id={id}&s={subject}&per={period}" target="_self">{title}</a></li>
+						<!-- END list_xs -->
+						</ul>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="main">
+	<div class="l_left mt15">
+		<div class="l_content">
+			<div class="l_tit">
+				<p>中心组成员</p><a href="/?t=teacher&sc=1&a=1&per={pid}&sub={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="c_member">
+			<!-- START list_zxz -->
+ 				<li>
+					<div class="m_img"><a href="/zone/?id={id}" target="_blank"><img onerror="this.src='/error/face.jpg';" class="img-circle" src="/upd/face/{id}.jpg " width="90" height="90" /></a></div>
+					<div class="m_des">
+						<p class="m_name">{truename}</p>
+						<span>{pname}-{sname}</span>
+					</div>
+				</li> 
+			<!-- END list_zxz -->
+			</ul>
+		</div>
+	</div>
+	<div class="l_right mt15">
+		<div class="l_content">
+			<div class="l_tit">
+				<p>网站链接</p><a href="#" target=""><!-- <img src="html/{tplno}/images/more.jpg" width="37" height="11" /> --></a>
+			</div>
+			<div class="link_list">
+				<a href="http://www.hxjy.org/" target="_blank"><img src="html/{tplno}/images/link1.jpg" width="281" height="37" /></a>
+				<a href="http://www.fyhxw.cn/" target="_blank"><img src="html/{tplno}/images/link2.jpg" width="281" height="37" /></a>
+				<a href="http://www.huaxue128.com/" target="_blank"><img src="html/{tplno}/images/link3.jpg" width="281" height="37" /></a>
+				<a href="http://chem.cersp.com/" target="_blank"><img src="html/{tplno}/images/link4.jpg" width="281" height="37" /></a>
+				<a href="http://www.njsjys.cn/" target="_blank"><img src="html/{tplno}/images/link5.jpg" width="281" height="37" /></a>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="main">
+	<div class="l_left mt15">
+		<div class="l_content">
+			<div class="l_tit">
+				<p>微课</p><a href="/subjecter/?t=resources&per={pid}&s={sid}&tp=9" target="_self"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<div class="wk_list">
+			<!-- START list_wk -->
+				<a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self">
+					<script>arr++;document.write("<img src='html/{tplno}/images/su_img2_"+arr+".jpg' width='150' height='110' onerror='javascript:this.src='/error/pic.jpg''/>");</script>
+					
+					<p>{title}</p>
+				</a>
+			<!-- END list_wk -->
+			<!-- <img src="/upds/subjecter/img/reslogo/{pic}" width="150" height="110" onerror="javascript:this.src='/error/pic.jpg'"/> -->
+			</div>
+		</div>
+	</div>
+	<div class="l_right mt15">
+		<div class="l_content">
+			<div class="l_tit">
+				<p>课堂实录</p><a href="" target=""><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<div class="kt_list">
+<!-- 				<li>
+					<a class="kt_img" href="#" target="_blank"><img src="html/{tplno}/images/kt_img.jpg" width="72" height="72" /></a>
+					<div class="kt_des">
+						<p class="tit_name">脚尖的精灵在说话</p>
+						<a href="#" target="_blank">授课老师<strong>王小黑</strong></a>
+						<a href="#" target="_blank">播放<strong class="k_red">244</strong></a>
+					</div>
+				</li> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div class="main mt15">
+	<ul class="nb_l">
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>教学案例 </p><a href="/subjecter/?t=resources&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_jxal_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_jxal_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+			<!-- START list_jxal -->
+				<dt><a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a><span>{timestamp}</span></dt>
+			<!-- END list_jxal -->
+			</dl>
+		</div>
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>课件</p><a href="/subjecter/?t=resources&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_kj_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_kj_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+			<!-- START list_kj -->
+				<dt><a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" title="{title}" target="_self">{title}</a><span>{timestamp}</span></dt>
+			<!-- END list_kj -->
+			</dl>
+		</div>
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>文摘推荐</p><a href="/subjecter/?t=articles&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_wztj_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=article&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_wztj_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+			<!-- START list_wztj -->
+				<dt><a href="/subjecter/?t=article&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a><span>{timestamp}</span></dt>
+			<!-- END list_wztj -->
+			</dl>
+		</div>
+		<div class="clear"></div>
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>试题试卷</p><a href="/subjecter/?t=resources&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_stsj_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_stsj_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+			<!-- START list_stsj -->
+				<dt><a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a><span>{timestamp}</span></dt>
+			<!-- END list_stsj -->
+			</dl>
+		</div>
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>研修管理</p><a href="/subjecter/?t=articles&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_yxgl_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=article&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_yxgl_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+				<!-- START list_yxgl -->
+				<dt><a href="/subjecter/?t=article&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a><span>{timestamp}</span></dt>
+				<!-- END list_yxgl -->
+			</dl>
+		</div>
+		<div class="newsb_list">
+			<div class="l_tit">
+				<p>论文</p><a href="/subjecter/?t=resources&per={pid}&s={sid}" target="_blank"><img src="html/{tplno}/images/more.jpg" width="37" height="11" /></a>
+			</div>
+			<ul class="notice_list">
+			<!-- START list_lw_t -->
+				<li>
+					<i>
+						<p class="month"><script>document.write(GetMoth('{timestamp}'));</script>月</p>
+						<p class="date"><script>document.write(GetDay('{timestamp}'));</script></p>
+					</i>
+					<div class="noti_con">
+						<a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a>
+						<span>发布：{truename}</span>
+					</div>
+				</li>
+			<!-- END list_lw_t -->
+			</ul>
+			<dl class="ac_list w98 pt0">
+			<!-- START list_lw -->
+				<dt><a href="/subjecter/?t=res_view&id={id}&per={period}&s={subject}" target="_self" title="{title}">{title}</a><span>{timestamp}</span></dt>
+			<!-- END list_lw -->
+			</dl>
+		</div>
+	</ul>
+</div>
+{footer}
+
+</body>
+</html>
+<!-- <script type="text/javascript">
+function cksearch(){
+		$('.flicker-example').flicker();
+		if (document.getElementById("keyword_s").value=='')
+		{
+			alert('关键字不能为空!');
+			return false;
+		}
+	};
+	$(document).ready(function(){
+		$('.flicker-example').flicker();
+	});
+
+</script> -->

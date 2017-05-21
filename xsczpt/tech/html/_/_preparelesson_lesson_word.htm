@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>WORD-备课-{gtitle}</title>   
+{cssjs_edit}  
+<link rel="stylesheet" href="css/forms.css">        
+{cssjs_dialog} 
+<script language="javascript" type="text/javascript" src="/widget/datepicker/WdatePicker.js"></script>
+{editor}        
+</head>
+<body>
+
+<div class="main">
+<dl> 
+<form id="form1">      
+  <div class="banner"><label>添加WORD</label> 
+  <span>   </span>    
+  </div> 
+      <table class="table1">             
+        <tr><td></td>        
+          <td><input id="title" placeholder="标题" type="text" style="width:400px;" maxlength="60"/>
+          
+          </td>
+        </tr>
+   
+        <tr><td></td><td>
+        <select id="ftype"><option value="">--类型--</option>
+         <option value="0">文档</option>
+         <option value="1">课件</option>
+         <option value="2">作业</option>
+         <option value="3">资源</option>
+        </select>        
+        </td></tr>     
+         <tr><td></td>            
+          <td> 
+          <textarea id="des" name="des" data-edit="ue" style="display:none;"></textarea>
+<script type="text/plain" id="uedes" style="width:100%;height:250px;">{des}</script>
+          </td>
+        </tr>
+     
+        <tr><td></td>      
+          <td>
+          <input type="text" id="id" value="" style="display:none;"/>
+          <input type="text" id="bid" value="" style="display:none;"/>
+          <input type="text" id="tid" value="" style="display:none;"/>
+          <input type="text" id="sid" value="" style="display:none;"/>
+          <input type="text" id="fid" value="0" style="display:none;"/>
+          
+          <input type="button" id="btn"  value="保存"/>
+          <input type="reset" class="but1" value="取消"/>
+          </td>
+        </tr>
+      </table> 
+</form>       
+ 
+</dl>
+</div> 
+</body>
+</html>
+
+
+<script type="text/javascript">
+var ue = UE.getEditor('uedes'); 
+$(function(){      
+    //$("#btnc").bind("click", function(){ $('#dlg1').dialog('open'); });    
+    $("#bid").val(queryStr("id"));
+    $("#tid").val(queryStr("tid"));
+    $("#sid").val(queryStr("step"));
+    //$("#bid").val(queryStr("id"));
+   if(queryStr("d")=="m"){
+     readID({tpl:"beike_list","do":"r",id:queryStr("id"),frmid:"#form1"});  
+  }    
+   $("#btn").bind("click", function(){  
+      if($("#title").val()==""){alert("请输入一个标题");return;}
+      if($("#ftype").val()==""){alert("请选择类型");return;}
+      if(UE.getEditor('uedes').getContent().length<10){alert("内容长度太短");return;}             
+      SaveAM({tpl:"beike_list","do":queryStr("d"),frmid:"#form1",showok:"",callback:"dosome"});
+   }); 
+});
+function dosome(ed,data){ 
+  if(queryStr("d")=="m"){
+      //location.href="./?t=homework_info&id="+queryStr("id");
+  }
+  else{  
+    alert("保存成功");
+    window.close();  
+      //location.href="./?t=homework_info&id="+data.substr(data.indexOf('ok')+2);
+  }
+}  
+function seltech(){
+     if($("#tech").val()==undefined||$("#tech").val()==""){alert("请选择一个教师");return;}
+     $("#rname").val($("#tech").find("option:selected").text());
+     $("#rid").val($("#tech").val());   
+     $('#dlg1').dialog('close');  
+}	
+</script>
+
+<div id="dlg1" class="easyui-dialog dialoga" style="width:400px;height:300px;padding:10px;" title="选择" data-dotype="a"  data-options="closed:true,
+buttons: [{
+    text:'确认',      
+    handler:function(){
+      seltech();    
+    }
+},{
+   text:'取消',
+    handler:function(){
+        $('#dlg1').dialog('close');
+    }
+}]">
+<form id="form">
+<table class="">  
+    <tr>
+        <td style="width:80px;">选择班级：</td>
+        <td> <select id="class"></select>  
+        <input type="text" id="id" value="" style="display:none;"/> 
+        </td>
+    </tr>
+    <tr>
+        <td>选择教师：</td>
+        <td> <select id="tech" size="10"><option value="">--选择教师--</option></select> </td>
+    </tr>      
+</table>
+</form>
+</div>

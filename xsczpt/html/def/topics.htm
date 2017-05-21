@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>专题-{gtitle}</title>
+{meta} 
+</head>
+<body> 
+{top}
+<div class="container">
+{head}   
+
+<div class="col-sm-12">   
+
+<div class="panel panel-default">                                          
+   <div class="panel-heading"><h3 class="panel-title">【专题】</h3></div>
+   <div class="panel-body">
+<table class="table table-striped">   
+   <tbody>
+<!-- START list -->   
+<tr>
+<td><a href="/?t=topic&id={id}" target=_blank><img src="/upds/topic/t_{pic}" width=120/></a></td>
+<td><a href="/?t=topic&id={id}" target=_blank>{name}</a><br/>
+<code>{pre}</code><br/>
+<code>浏览:{see} {timestamp}</code>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table> 
+<ul class="pagination pull-right">
+{page}
+</ul>   
+</div>
+</div>  
+</div>
+ 
+  
+  
+</div>
+   
+{foot}
+</body>
+</html>
+<script>
+var curpage=1;  
+$(function() { 
+    $.post("./srv/rdo.php?", {tpl:"get_art_cate"}, function (d, e) {                  
+     jn=JSON.parse(d);
+     for(i=0;i<jn.length;i++){
+        $("cid[v='"+jn[i].id+"']").text(jn[i].name);
+     }             
+  });
+   
+ }); 
+
+function get(v){ 
+ 
+}
+ 
+</script>

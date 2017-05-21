@@ -1,0 +1,10 @@
+﻿
+.box-zzsc{ width:356px; position:relative;}
+.ctrl-panel{ position:absolute; right:20px; top:220px; z-index:1000; background:#dff6ff; width:118px; height:26px; padding-top:3px; border-radius:10px;}
+.m-page{ display:block; width:20px; height:20px; text-align:center; background:#2f4249; float:left; display:inline; margin-left:3px; line-height:20px; color:#fff; font-size:13px; border-radius:10px;}
+.m-page:hover{ text-decoration:none; color:#fff;}
+.focus{background:#fb772f;}
+.con{ width:100%;}
+.scroll-wrap {OVERFLOW: hidden; WIDTH: 356px; POSITION: relative; HEIGHT: 252px}
+.scroll_box_content {POSITION: absolute}
+.content_list {FLOAT: left; WIDTH: 356px; HEIGHT: 252px; cursor:pointer;}

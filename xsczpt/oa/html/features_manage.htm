@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<link rel="stylesheet" href="css/oa_index.css" type="text/css" /> 
+<link rel="stylesheet" href="css/home.css"  type="text/css"/>
+<link rel="stylesheet" href="/widget/bootstrap/css/bootstrap.min.css">  
+<script src="js/oa_index.js" type="text/javascript"></script>
+<script src="js/bskdlg.js" type="text/javascript"></script>
+<script type="text/javascript" language="javascript" src="common/jquery.js"></script>
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/jquery.base64.js" type="text/javascript"></script>
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/select.js"></script> 
+</head>
+
+<body>
+
+<div class="stu-content">
+  <div class="stu-content-title">功能管理</div>
+  <div class="stu-content-low" >
+  <form action="./?t=features_manage" method="post">
+	   <div style="margin-left:10px;">
+			权限名称：<input type="text" name="truename" id="truename" value="" size="15"><input type="submit" style="margin-left:5px;" id="choose" name="choose" value="查询">
+		</div>
+	</form>
+  <div style="position:absolute;right:0;top:30px;">
+		<div class="stu-content-low-item" data-toggle="modal" data-target="#myModal">
+		   <div class="stu-cnt-menu">
+			<div class="stu-cnt-menu-img"><img src="image/add_24.png" width="24" height="24"  alt=""/></div>
+			<div class="stu-cnt-menu-img"><a href="?t=features_add"><span>添加功能</span></a></div>
+		   </div>
+		</div>
+		<div class="stu-content-low-item" onclick="rfs_page()">
+		   <div class="stu-cnt-menu">
+			<div class="stu-cnt-menu-img"><img src="image/refresh_24.png" width="24" height="24"  alt=""/></div>
+			<div class="stu-cnt-menu-img"><span>刷新功能</span></div>
+		   </div>
+		</div>
+	</div>
+	<!--<div class="stu-content-low-item" onclick="cln()">
+	   <div class="stu-cnt-menu">
+	    <div class="stu-cnt-menu-img"><img src="image/list_24.png" width="24" height="24"  alt=""/></div>
+        <div class="stu-cnt-menu-img"><span>列表选择</span></div>
+       </div>
+	</div>-->
+  </div>
+  <div class="stu-content-list1" style="width:100%;overflow:hidden;">
+    <dl style="width:99.5%;overflow:hidden;">
+	  <dt class="stu-cnt-dt-title1" style="width:20%;"><strong>权限名称</strong></dt> 
+	  <dd class="stu-cnt-dt-title1" style="width:20%;"><strong>权限注释</strong></dd>  
+	  <dd class="stu-cnt-dt-title1" style="width:20%;"><strong>链接地址</strong></dd> 
+	  <dd class="stu-cnt-dt-title1" style="width:10%;"><strong>图标</strong></dd> 
+	  <dd class="stu-cnt-dt-title1" style="width:10%;"><strong>排序</strong></dd> 
+	  <dd class="stu-cnt-dt-title1" style="width:10%;"><strong>状态</strong></dd>
+	  <dd class="stu-cnt-dt-title1 stu-cnt-rgt-bg" style="width:9.5%;"><strong>操作</strong></dd> 
+	  
+	<!-- START qx_list2 -->
+	<dt class="stu-cnt-dt-dl1" style="width:20%;">{fea_name}</dt> 
+	<dd class="stu-cnt-dt-dl1" style="width:20%;">{fea_des}</dd>  
+	<dd class="stu-cnt-dt-dl1" style="width:20%;">{fea_url}</dd> 
+	<dd class="stu-cnt-dt-dl1" style="width:10%;">{fea_icon}</dd> 
+	<dd class="stu-cnt-dt-dl1" style="width:10%;">{fea_sort}</dd> 
+	<dd class="stu-cnt-dt-dl1" style="width:10%;">{fea_states}</dd> 
+	<dd class="stu-cnt-dt-dl1 stu-cnt-rgt-bg" style="width:9.5%;">
+	 <a class="glyphicon glyphicon-pencil" title="编辑" href="?t=features_modify&id={id}"></a> &nbsp;
+     <a class="glyphicon glyphicon-remove" title="删除" onclick="delCode({id})"></a> 
+	</dd> 
+	<!-- END qx_list2 -->	
+	</dl>
+  </div>
+  <div class="oa_clear"></div>
+  <div class="stu-cnt-dt-page">
+   <ul class="pagination pull-right">
+	{page}
+	</ul>
+  </div>
+</div>
+<script type="text/javascript">
+l_tpl="zhsz_privileges"; 
+
+function dosome(e,d){ 
+   location.reload();  
+}
+function moda(d){
+  readID({"do":"r","id":d.id,frmid:"#myModal"}); 
+  $('#myModal').data("dotype","m");
+  $('#myModal').modal('show');
+}
+function rfs_page(){
+   location.reload(); 
+}
+function delCode(id){
+	if(confirm("你确定删除此权限吗?")){
+		 $.post("./srv/rdo.php?", {tpl:"r_features",id:id}, function (d, e) {
+			location.reload();  
+		 });
+	}
+}
+</script>
+</body>
+</html>
+
+

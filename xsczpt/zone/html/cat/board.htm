@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>留言板-{gtitle}</title>
+{cssjs}   
+<script type="text/javascript" src="js/weibo.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript" charset="gbk"  src="/widget/ueditor/lang/zh-cn/zh-cn.js"></script>      
+</head>
+<body>
+{top}
+{head}
+<div class="container main">  
+<div class="row" style="margin:10px 0 0;">
+ 
+
+<div class="col-xs-12 ">
+<div class="row leaveinput"> 
+<form class="form-horizontal" role="form" method="post" id="form1">
+    <textarea id="des" name="des" data-edit="ue" style="display:none;"></textarea>
+    <script type="text/plain" id="uedes" style="width:100%;height:100px;"></script>
+    <input type="text" id="id" value="" style="display:none;"/> 
+    <input type="text" id="see" value="0" style="display:none;"/>
+    <input type="text" id="up" value="0" style="display:none;"/>
+    <input type="text" id="share" value="0" style="display:none;"/>
+    <input type="text" id="comments" value="0" style="display:none;"/>
+    <input type="text" id="fav" value="0" style="display:none;"/>
+    <button type="button" class="btn btn-default btn-submit" id="btn">发表</button>
+</form>
+
+</div> 
+</br>
+<div class="row" id="list">
+<!-- START list -->
+<div class="panel panel-default">
+<div class="panel-heading"> <img src="/upd/face/{uid}.jpg" width="40" alt='' onerror="this.src='/error/face.jpg';"/>     
+{truename}  <script>document.write(utctime("{timestamp}"));</script> 回复{comments}
+</div>
+<div class="panel-body">
+{des}<hr/>
+<div id="p{id}">
+<div id="pa{id}">
+<!-- START rp -->
+<p> <img src="/upd/face/{uid}.jpg" width="30" onerror=this.src="/error/face.jpg" />{truename}：{des}
+</p>
+<!-- END rp -->
+</div>  
+</div> 
+</div>
+</div>  
+<!-- END list --> 
+</div>          
+<ul class="pagination pull-right">
+{page}
+</ul> 
+
+</div>
+</div>
+</div>  
+{foot} 
+</body>
+</html>
+<script type="text/javascript">
+var uid="{uid}";
+  $(function(){
+
+	$("#btn").click(function(){
+     if(uid==""){
+          var url = location.pathname+location.search;
+          window.location.href="/?t=login&url="+$.base64.encode(url);
+          return false;
+     }
+     if(ue.getContent().length<10){alert("内容太短(10-300)");return;}
+	   $.post("./srv/sdo.php?", {"tpl":"msg_send","data":ue.getContent()}, function (data, e) {   
+            if(data.indexOf("ok")>-1&&data.indexOf("ok")<5){
+              location.reload();
+            }else 
+              alert(data);
+        }); 
+    });
+	});
+  
+  var ue = UE.getEditor('uedes',{    
+    toolbars: [
+    ['emotion', 'simpleupload','insertimage','insertvideo','|', 'removeformat', 'cleardoc']
+],
+    elementPathEnabled:false,
+    autoHeightEnabled: false,
+    autoFloatEnabled: false,
+    enableContextMenu:false,
+    maximumWords:300,
+    wordCountMsg:"还可以输入{#leave} 个字符"
+});
+UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+UE.Editor.prototype.getActionUrl = function(action) {            
+    if (action == 'uploadimage' || action == 'uploadscrawl' || action == 'uploadimage') {
+        return '/zone/updb/imageUp.php';
+    }else if (action == 'uploadvideo') {
+        return '/zone/updb/videoUp.php';
+    }else {
+        return this._bkGetActionUrl.call(this, action);
+    } 
+}  
+
+var curpage=0;
+
+</script>

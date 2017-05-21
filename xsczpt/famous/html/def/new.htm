@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>{name}</title> 
+{cssjs}
+</head>
+<body>
+{top}    
+<div class="container f_index_main">
+{head}
+	<div class="fl_main">
+		<div class="fl_list">
+			<div class="f_title">
+				<span class="f_title_left">工作室动态</span>
+			           			</div><!--title-->
+			<div class="fl_news_list">
+			<p style="font-size:20px;text-align:center ;margin:12px 0;overflow:hidden;">{title}</p>
+			
+			<p style="text-align:center;margin:24px 0">来源：<strong>{froms}</strong>
+        &nbsp;&nbsp;浏览量：<strong>{see}</strong>次
+				<small style="margin-left:50px;">时间：<script>document.write(utctime('{timestamp}'));</script>
+				</small>
+        
+			</p>
+			
+			<div style="overflow:hidden;" class="fd_content">{des}</div>
+			</div>
+			
+		</div>
+		
+	</div><!--main-->
+	
+	
+		<div class="f_sidebar">
+		<div class="f_member">
+			<div class="f_title">
+				<span class="f_title_left">最新</span>
+				<span class="f_title_right"></span>
+			</div> 
+<div class="f_m_container f_news_list">
+<ul>
+<!-- START list -->
+<li> 
+<a href="./?t=new&f={f}&id={id}">{title}</a>
+</li>
+<!-- END list -->
+</ul>
+			</div>
+			
+		
+		</div>
+	</div><!--sidebar-->
+</div><!--contain结束-->
+
+{foot}
+</body>  
+</html>
+
+<script type="text/javascript">
+$(function(){
+ vote({tbl:"famous_article",do:"see",showok:"",callback:"",id:queryStr("id")},null);
+});
+</script>

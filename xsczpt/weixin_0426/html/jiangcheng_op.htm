@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>江苏省海安高级中学学生成长平台</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="dns-prefetch" href="#" id="static"/>
+<link rel="stylesheet" href="css/css.css">
+<link rel="stylesheet" href="css/index.css">
+<link rel="stylesheet" href="css/lib/weui.min.css">
+<link rel="stylesheet" href="css/bootstrap.min.css">  
+<link rel="stylesheet" href="css/ionic.min.css">	
+<script src="/ppf/js/frtdo.js" type="text/javascript"></script> 
+<script src="/ppf/js/fun.js" type="text/javascript"></script>  
+<script src="/ppf/js/jquery-2.min.js"></script> 
+<script src="/ppf/js/select.js"></script> 
+<script src="/widget/bootstrap/js/bootstrap.min.js"></script>
+<style>
+
+</style>
+<script type="text/javascript">
+$().ready(function(){
+	$.post("./srv/rdo.php?", {tpl:"get_terms",push_type:"4"}, function (d, e) {
+		selectShowDataNoH1("#term_id",JSON.parse(d),"id","term_name","year"); $("#term_id").prepend("");   
+	});
+	
+	$.post("./srv/rdo.php?", {tpl:"jiangcheng",push_type:"4"}, function (d, e) {
+		selectShowDataNoH("#flag_type",JSON.parse(d),"code_name","code_name"); $("#flag_type").prepend("");   
+	});
+	$("#showTooltips").click(function(){
+		if($.trim($("#content").val())==""){
+			alert("请输入奖惩内容");
+			$("#content").select();
+			return false;
+		}
+		$("#t_zdy").submit();
+	});
+});
+
+</script>
+</head>
+<body>
+<header><a href="?t=index" target=""><i class="iconfont evaluate">&#xe604;</i></a><h1>奖 惩 {butV}</h1></header>
+<div class="page">
+    <div class="page__bd" style="height: 100%;">
+        <div class="weui-tab">
+            <div class="weui-tab__panel">
+			
+			  <div class="weui-cells__title">选择条件</div>
+			  <form action="./srv/jiangcheng_op_submit.php" method="post" id="t_zdy">
+				 <div class="weui-cells mt_5">
+				   <div class="weui-cell weui-cell_select weui-cell_select-after">
+						<div class="weui-cell__hd">
+							<label for="" class="weui-label">学期：</label>
+						</div>
+						<div class="weui-cell__bd">
+							{term_name}
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_select weui-cell_select-after">
+						<div class="weui-cell__hd">
+							<label for="" class="weui-label">类型：</label>
+						</div>
+						<div class="weui-cell__bd">
+							{flag_type}
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_select weui-cell_select-after">
+						<div class="form-group" style="margin-top:.5rem;width:100%;">
+							<label for="name" style="height:2rem;line-height:2rem;">奖惩内容：</label>
+							<textarea class="form-control" rows="3" style="box-shadow:none;border:1px solid #f2f2f2;width:96%;" name="content" id="content">{content}</textarea>
+						</div>
+					</div>
+					
+				 </div>
+				 <div class="weui-btn-area">
+					<a class="weui-btn weui-btn  weui-btn_default" href="javascript:" id="showTooltips">{butV}</a>
+				</div>
+				<input type="hidden" name="op" value="{op}" />
+				<input type="hidden" name="id" id="id" value="{id}" />
+				<input type="hidden" name="geter" id="geter" value="{master_val}">
+			</form>
+		
+		<div style="height:15px;"></div>
+		<div>
+			<ul class="pagination wx_center">
+				{page}
+			</ul>
+		</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</section>
+<div class="clearfix"></div>
+<section class="blank68">&nbsp;</section>
+<nav class="site_nav">
+	<li><a href="?t=index"><i class="iconfont">&#xe606;</i>首页</a></li>
+	<li class=""><a href="?t=user"><i class="iconfont">&#xe60a;</i>我的</a></li>
+</nav>
+</body>
+</html>

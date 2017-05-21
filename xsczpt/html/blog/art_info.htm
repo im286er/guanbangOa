@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>同心圆父母学堂工作室-文章详情</title>
+<meta "charset=gb2312" />
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta http-equiv="Content-Type" content="text/html;"/>  
+{meta}	
+<link href="/html/blog/css/famous/studio.css" type="text/css" rel="stylesheet"/>
+</head>
+<body class="bgf8">
+<!--顶部-->
+{top}
+
+{famous_logo}
+{menu}
+{famous_menu}
+
+<!--banner-->
+<div id="lanrenzhijia">
+		<ul id="inner">
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+		</ul>
+		 
+</div>
+<div class="xst_content_box">
+  <!--left-->
+	<div class="left_box">
+    <!-- START art -->
+			<div class="bk_artinfo bgf">
+				<h3 class="tit">{title}</h3>
+				<span class="time">时间：{created} 人气：{see}</span>
+				{des}
+			</div>
+    <!-- END art -->
+  </div>
+  
+  <!--right-->
+	<div class="right_box" style="border:1px solid #e5e5e5;font-family:微软雅黑;">
+      <div class="act_tit cgres_bb">
+				<p>推荐阅读</p>
+				<a href="{url}" target="">更多+</a>
+			</div>
+			<ul class="lesnews_list">
+        <!-- START art_list -->
+				<li style="width:85%;"><a href="./?t=art_info&id={id}" target="">{title}</a></li>
+				<!-- END art_list -->
+			</ul>
+  </div>
+</div>
+<div class="clearfix"></div>
+{foot}
+<script type="text/javascript">
+	$(function() {   
+	  vote({tbl:"push_list",do:"see",showok:"",callback:"",id:queryStr("id")},null); 
+	 });  
+</script>
+</body>
+</html>

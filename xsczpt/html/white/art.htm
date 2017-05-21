@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0058)http://www.wuhaneduyun.cn/index.php?r=portal/discovery/org -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312">   
+<link rel="stylesheet" type="text/css" href="css/vircom.css">
+<title>新闻详细-{gtitle}</title>
+{meta}
+</head>
+<body>
+{top}
+<div class="wrap">
+	<div class="main">
+		{head}
+		<div class="sear_tit mt40">
+			<h2 style="width:60px;">新闻</h2>
+			<div class="s_tabtit">
+				<ul class="tab-hd">
+					<!-- START lista -->
+					<li artid="{id}"><a href="/?t=arts&c={id}">{name}</a></li>
+          <!-- END lista -->
+				</ul>
+			</div>
+		</div>
+	</div>
+	</div>
+	<div class="main">
+		<div class="clear"></div>
+		<div id="list"> 
+			<div class="news_container clearfix">
+				<h2 class="art_title">{name}</h2>
+				<div class="info_wrap">
+					<div class="info">
+						<i>分类：<cid v="{cid}"></cid></i>
+						<span>发布单位：<a href="#">{froms}</a></span>
+						<span>时间：<stamp v="{timestamp}"></stamp></span>
+						<span>浏览量：<label id="hits">{see}</label></span>
+						<a href="javascript:window.print();" class="print" onclick="window.print();">【打印】</a>
+					</div>
+				</div>
+				<div class="article"> 
+          {des}
+				</div>
+        <div style="float:right;">
+          <!-- JiaThis Button BEGIN -->
+          <div class="jiathis_style_24x24">
+          	<a class="jiathis_button_qzone"></a>
+          	<a class="jiathis_button_tsina"></a>
+          	<a class="jiathis_button_tqq"></a>
+          	<a class="jiathis_button_weixin"></a>
+          	<a class="jiathis_button_renren"></a>
+          	<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+          	<a class="jiathis_counter_style"></a>
+          </div>
+          <script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+          <!-- JiaThis Button END -->
+        </div>
+				<div class="title" style="border-width:2px;">
+					<h2>相关阅读</h2>
+				</div>
+				<div class="rela">
+					<ul class="clearfix">
+             <!-- START list -->
+             <li id="{id}" ><a href="/?t=art&id={id}" target=_blank>{name}</a></li>
+             <!-- END list -->
+					</ul>
+				</div>  
+				<div class="clear"></div>
+				<div class="pr_next">
+          <!-- START listpre -->
+          <li><label>上一篇</label>&nbsp;&nbsp;<a href="/?t=art&id={id}">{name}</a></li>
+          <!-- END listpre -->
+          <!-- START listnext -->
+          <li><label>下一篇</label>&nbsp;&nbsp;<a href="/?t=art&id={id}">{name}</a></li>
+          <!-- END listnext --> 
+				</div>
+		</div>
+	</div>
+</div>
+{foot}
+<script type="text/javascript">
+(function(){
+    var c = "{cid}";
+    $(".tab-hd li[artid="+c+"]").addClass("active"); 
+    $.post("./srv/rdo.php?", {tpl:"get_art_cate_1",id:"{cid}"}, function (d, e) {                  
+        $("cid").text($.trim(d));        
+    });
+    $("stamp").text(utctime("{timestamp}")); 
+    vote({tbl:"main_article",do:"see",showok:"",callback:"",id:"{id}"},null);     
+})();
+</script> 
+</body>
+</html>

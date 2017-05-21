@@ -1,0 +1,92 @@
+<!DOCTYPE>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+{meta}
+<link href="/html/blog/css/famous/studio.css" type="text/css" rel="stylesheet"/>
+<title>同心圆父母学堂工作室列表页</title>
+</head>
+
+<body>
+<!--顶部-->
+{top}
+
+{famous_logo}
+{menu}
+{famous_menu}
+
+<!--banner-->
+<div id="lanrenzhijia">
+		<ul id="inner">
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+			<li><img src="/html/blog/images/famous/go_banner.png" width="1000" height="210"></li>
+		</ul>
+		 
+	</div>
+    
+<!--内容-->
+<div class="xst_content_box" >
+	<!--left-->
+	<div class="content_box" style="margin-bottom:20px;border: 1px solid #e5e5e5;">
+     <div class="f_box">
+				<div class="f_title"><a href="javascript:void(0);" target="">工作室动态</a></div>
+        <div class="fam_search">
+            <input name="search" type="text" class="search" id="so" placeholder="名称" />
+            <button type="submit" id="btn" class="btn">搜索</button>
+         </div>
+		 </div>     
+     <div class="f_nav">&nbsp;</div>
+     <div class="famous_list">
+       <ul class="">
+          <!-- START famous_list --> 
+  					<li><a href="/famous/?t=new&id={id}&f={fid}" target="_blank"><i class="dot"></i>{title}</a><span class="time">{timestamp}</span></li>
+  				<!-- END famous_list -->
+  		 </ul>
+     </div>
+     <div class="pagination" style="margin-left:355px;">
+      {page}
+     </div>      
+  </div>     
+           
+</div>
+<div class="clearfix"></div> 
+          
+<script type="text/javascript" src="/html/blog/js/famous/studio_banner.js"></script>
+<!--页脚-->
+{foot}      
+
+
+<script>
+  $(function(){
+    $("#so").val({so});
+    $(".time").each(function(){
+      $(this).html(jsDateDiff($(this).html()));
+    });
+    
+    $("#btn").click(function(){
+      location.href="./?t=famous_list&so="+$("#so").val();
+    })
+  })
+  
+  function jsDateDiff(publishTime){       
+    var d_minutes,d_hours,d_days;       
+    var timeNow = parseInt(new Date().getTime()/1000);       
+    var d;       
+    d = timeNow - publishTime;       
+    d_days = parseInt(d/86400);       
+    d_hours = parseInt(d/3600);       
+    d_minutes = parseInt(d/60);       
+    if(d_days>0 && d_days<4){       
+        return d_days+"天前";       
+    }else if(d_days<=0 && d_hours>0){       
+        return d_hours+"小时前";       
+    }else if(d_hours<=0 && d_minutes>0){       
+        return d_minutes+"分钟前";       
+    }else{       
+        var s = new Date(publishTime*1000);       
+        // s.getFullYear()+"年";
+        return s.getFullYear()+"-"+(s.getMonth()+1)+"-"+s.getDate();       
+    }       
+  } 
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+ver 2=3.0 db change
+=============================================
+1.model from class
+2.lastupdate from cls_album
+3.cls_photo|size
+4.ppf_tpl 
+5.cls_member|dutys
+6.cls_comments

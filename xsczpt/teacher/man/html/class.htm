@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<head> 
+<title>班级信息-{gtitle}</title>
+{cssjs}  
+<script>
+var arr=new Array('','管理员','群主'); 
+</script>      
+</head>
+<body>
+{top}
+<div class="container">   
+<div class="col-sm-3">
+{menu}    
+</div>
+
+
+<div class="col-sm-9">
+<div class="page-header">
+   <h3>班级管理      <small></small>     
+<div class="btn-group pull-right"> 
+</div>
+   </h3>
+</div>
+
+<div class="row">
+<form class="form-horizontal" role="form" method="post" id="from1">
+  <div class="form-group">      
+    <div class="col-sm-1">名称</div>
+ 
+  <div class="col-sm-2">
+       <input id="so" type="text" value="" class="form-control" placeholder="请输入关键字"/>  
+    </div>        
+    <div class="col-sm-1">
+       <input  type="button" class="btn btn-success" value="搜索" id="btnq"/>
+    </div>  
+   </div>     
+</form> 
+</div>
+
+
+<table class="table  table-hover"> 
+<thead>
+<tr>
+ <th width="80px">logo </th>
+<th>名称</th>
+
+<th>创建者</th> 
+<th>时间</th> 
+<th>状态</th>  
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<!-- START list -->    
+<tr>
+<td><div class="thumbnail"><img  width="60" src="/class/logo/{id}.jpg" onerror="this.src='/error/logo.jpg'" /></div></td>
+<td><a href="/class?c={id}" target=_blank>{name}</a></td>
+<td>{truename}</td>          
+<td><script>document.write(utctime('{timestamp}'));</script></td>
+<td><em data-state="{state}"></em></td>
+<td>
+<a class="glyphicon glyphicon-ok" title="审核" onclick="audit('{id}')"></a>
+<a class="glyphicon glyphicon-remove" title="删除" onclick="delths('{id}')"></a>
+</td>
+</tr>
+<!-- END list -->   
+</tbody>
+</table>
+
+<ul class="pagination pull-right">
+{page}
+</ul>
+</div>
+
+</div>
+
+{foot} 
+</body>
+</html>
+<script type="text/javascript">  
+var idtype='{idtype_1}';
+ $(function () {
+   $.getJSON("/data/state.json.txt", function (data) {   
+        for(i=0;i<5;i++)$("em[data-state='"+i+"']").text(data[i]);      
+  });     
+
+  $.getJSON("/data/subject.json.txt", function (data) {  
+      subject=data;
+      $("label[data-subject]").each(function (a, b) {
+        $(this).text(subject[$(this).data("subject")]);
+      });
+  }); 
+  $.getJSON("/data/period.json.txt", function (data) {  
+      period=data;
+      $("label[data-period]").each(function (a, b) {
+        $(this).text(period[$(this).data("period")]);
+      });
+  });
+  $.getJSON("/data/grade.json.txt", function (data) {  
+      grade=data;
+      $("label[data-grade]").each(function (a, b) {
+        $(this).text(grade[$(this).data("grade")]);
+      });
+  });
+      
+    $("#btnq").bind("click",function(){ 
+      if($("#so").val()=="")return;   
+     location.href="./?t=class&s={s}&so="+$("#so").val();  
+    });  
+ });  
+function audit(v) {   
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"aud_cls","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+}
+function delths(v) {
+   if (!confirm("确认删除吗？")) return;  
+   $.post("./srv/sdo.php?" + Math.random(), {tpl:"del_cls","id":v}, function (d, e) {                  
+      location.reload();          
+  });
+} 
+</script>
